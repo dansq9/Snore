@@ -1,0 +1,48 @@
+<style>
+.ns-search{max-width:800px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-search__h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:0 0 24px;color:#10182B}
+.ns-search__form{display:flex;gap:12px;margin-bottom:32px}
+.ns-search__input{flex:1;padding:14px 18px;border:1px solid rgba(16,24,43,.15);border-radius:12px;font-size:15px;font-family:inherit;background:#fff}
+.ns-search__input:focus{outline:none;border-color:#B27E33}
+.ns-search__submit{background:#10182B;color:#F7F8FA;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+.ns-search__submit:hover{background:#26314D}
+.ns-search__result{padding:20px 0;border-bottom:1px solid rgba(16,24,43,.08)}
+.ns-search__result a{font-size:16px;font-weight:700;color:#10182B;text-decoration:none}
+.ns-search__result a:hover{color:#B27E33}
+.ns-search__result p{font-size:14px;color:#566072;margin:6px 0 0;line-height:1.5}
+.ns-search__empty{font-size:16px;color:#566072}
+</style>
+
+<section class="ns-search">
+  <h1 class="ns-search__h1">
+    {% if search.performed %}
+      Search results for "{{ search.terms }}"
+    {% else %}
+      Search
+    {% endif %}
+  </h1>
+
+  <form action="/search" method="get" class="ns-search__form">
+    <input type="text" name="q" value="{{ search.terms | escape }}" placeholder="Search..." class="ns-search__input">
+    <button type="submit" class="ns-search__submit">Search</button>
+  </form>
+
+  {% if search.performed %}
+    {% if search.results.size > 0 %}
+      {% for result in search.results %}
+        <div class="ns-search__result">
+          <a href="{{ result.url }}">{{ result.title }}</a>
+          <p>{{ result.content | strip_html | truncate: 150 }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="ns-search__empty">No results found. Try a different search term.</p>
+    {% endif %}
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Search Page"
+}
+{% endschema %}

@@ -1,0 +1,24 @@
+<style>
+.ns-404{max-width:600px;margin:0 auto;padding:clamp(80px,15vw,160px) clamp(16px,4vw,32px);text-align:center}
+.ns-404__h1{font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-.02em;margin:0 0 14px;color:#10182B}
+.ns-404__desc{font-size:16px;line-height:1.6;color:#566072;margin:0 0 32px}
+.ns-404__btn{display:inline-block;background:#10182B;color:#F7F8FA;padding:16px 32px;border-radius:999px;font-size:16px;font-weight:700;text-decoration:none}
+.ns-404__btn:hover{background:#26314D}
+</style>
+
+<section class="ns-404">
+  <h1 class="ns-404__h1">{{ section.settings.heading | default: "Page not found" }}</h1>
+  <p class="ns-404__desc">{{ section.settings.description | default: "Sorry, we can't find that page. It may have been moved or no longer exists." }}</p>
+  <a href="/" class="ns-404__btn">{{ section.settings.button_text | default: "Back to home" }}</a>
+</section>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Page not found" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Sorry, we can't find that page. It may have been moved or no longer exists." },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Back to home" }
+  ]
+}
+{% endschema %}

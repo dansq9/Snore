@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "ns-collection",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

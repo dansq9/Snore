@@ -1,15 +1,206 @@
 {
   "sections": {
-    "hero": { "type": "ns-home-hero", "settings": {} },
-    "idea": { "type": "ns-idea-section", "settings": {} },
-    "problem": { "type": "ns-problem-section", "settings": {} },
-    "how-it-works": { "type": "ns-how-it-works", "settings": {} },
-    "benefits": { "type": "ns-benefits-rail", "settings": {} },
-    "comparison": { "type": "ns-comparison-table", "settings": {} },
-    "reviews": { "type": "ns-reviews", "settings": {} },
-    "guarantee": { "type": "ns-guarantee-cta", "settings": {} },
-    "faq": { "type": "ns-faq", "settings": {} },
-    "marquee": { "type": "ns-marquee", "settings": {} }
+    "hero": {
+      "type": "ns-home-hero",
+      "settings": {}
+    },
+    "idea": {
+      "type": "ns-idea-section",
+      "settings": {}
+    },
+    "problem": {
+      "type": "ns-problem-section",
+      "settings": {},
+      "blocks": {
+        "problem_1": {
+          "type": "problem_item",
+          "settings": {
+            "number": "01",
+            "title": "Snoring",
+            "description": "An open mouth can narrow the airway and sets soft tissue vibrating. That's the noise that exiles you to the guest room."
+          }
+        },
+        "problem_2": {
+          "type": "problem_item",
+          "settings": {
+            "number": "02",
+            "title": "Dry mouth & morning breath",
+            "description": "Hours of mouth airflow dries out saliva: sandpaper tongue at 3am, rough breath at 7."
+          }
+        },
+        "problem_3": {
+          "type": "problem_item",
+          "settings": {
+            "number": "03",
+            "title": "Light, restless sleep",
+            "description": "Your nose filters, warms and humidifies every breath. Bypass it all night and you wake tired no matter how long you slept."
+          }
+        }
+      },
+      "block_order": ["problem_1", "problem_2", "problem_3"]
+    },
+    "how-it-works": {
+      "type": "ns-how-it-works",
+      "settings": {},
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Apply",
+            "description": "Center one strip over closed lips before bed. The adhesive grips through beards. Zero prep."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Breathe",
+            "description": "Your nose takes over: filtered, humidified, quiet airflow all night long. You won't feel a thing."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Wake",
+            "description": "Peels off gently, no residue. No dry mouth, no 3am wake-ups. Just an actual morning person."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3"]
+    },
+    "benefits": {
+      "type": "ns-benefits-rail",
+      "settings": {},
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "title": "May reduce snoring",
+            "description": "Sealed lips may help keep the airway clear. Many sleepers notice a difference in the first week."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Less dry mouth",
+            "description": "Wake up without the sandpaper tongue, the water chugging, the morning breath."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Deeper, steadier sleep",
+            "description": "Nasal breathing supports slower, steadier breaths, the kind deep sleep is made of."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Quieter nights for two",
+            "description": "The cheapest marriage counseling you'll ever buy. Partners notice on night one."
+          }
+        }
+      },
+      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"]
+    },
+    "comparison": {
+      "type": "ns-comparison-table",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "ns-reviews",
+      "settings": {},
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "quote_title": "My wife noticed on night one.",
+            "quote_body": "The snoring didn't fully stop until night three, but the difference was immediate. We sleep in the same room again.",
+            "reviewer_name": "Marcus T. — Verified buyer"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "quote_title": "Stays on through a full beard.",
+            "quote_body": "Every other tape peeled off by 2am. This one comes off when I decide it should, and cleanly.",
+            "reviewer_name": "Derek R. — Verified buyer"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "quote_title": "No more 3am dry mouth.",
+            "quote_body": "I used to wake up with my tongue like sandpaper. Gone. I fall asleep in minutes and stay asleep.",
+            "reviewer_name": "Sam K. — Verified buyer"
+          }
+        }
+      },
+      "block_order": ["review_1", "review_2", "review_3"]
+    },
+    "guarantee": {
+      "type": "ns-guarantee-cta",
+      "settings": {}
+    },
+    "faq": {
+      "type": "ns-faq",
+      "settings": {},
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is mouth taping safe?",
+            "answer": "For healthy adults who can breathe comfortably through their nose, yes. NightSeals uses a gentle, hypoallergenic adhesive and peels off easily by hand. It's not for children, and it's not a treatment for sleep apnea. If you suspect you have it, talk to your doctor first."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What if my nose gets congested?",
+            "answer": "Skip that night. Tape is for nights you can breathe freely through your nose. Many sleepers pair NightSeals with a hot shower or nasal rinse before bed during allergy season."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will it rip off my beard?",
+            "answer": "No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments."
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does it work with a CPAP?",
+            "answer": "Yes. Many CPAP users tape to stop mouth leaks with nasal masks and nasal pillows. If your pressure settings assume mouth breathing, check with your sleep specialist first."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I open my mouth if I need to?",
+            "answer": "Yes. It's a reminder, not a lock. A gentle yawn or deliberate effort parts your lips easily. It just stops the unconscious falling-open while you sleep."
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does a pack last?",
+            "answer": "One strip per night: the 30-pack lasts a month, the 90-pack a quarter, and the 180-pack half a year. Subscribers get a fresh pouch right as the last one runs out."
+          }
+        },
+        "faq_7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's it made of?",
+            "answer": "A soft, breathable, latex-free fabric with a skin-safe acrylic adhesive. Hypoallergenic, residue-free, and tested on sensitive skin."
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5", "faq_6", "faq_7"]
+    },
+    "marquee": {
+      "type": "ns-marquee",
+      "settings": {}
+    }
   },
-  "order": ["hero","idea","problem","how-it-works","benefits","comparison","reviews","guarantee","faq","marquee"]
+  "order": ["hero", "idea", "problem", "how-it-works", "benefits", "comparison", "reviews", "guarantee", "faq", "marquee"]
 }
