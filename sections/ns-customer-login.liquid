@@ -1,0 +1,71 @@
+<style>
+.ns-login{max-width:460px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-login__h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:0 0 8px;color:#10182B;text-align:center}
+.ns-login__sub{font-size:15px;color:#566072;text-align:center;margin:0 0 32px;line-height:1.6}
+.ns-login__field{margin-bottom:16px}
+.ns-login__label{display:block;font-size:13px;font-weight:700;color:#10182B;margin-bottom:8px}
+.ns-login__input{width:100%;padding:14px 18px;border:1px solid rgba(16,24,43,.15);border-radius:12px;font-size:15px;font-family:inherit;background:#fff;box-sizing:border-box}
+.ns-login__input:focus{outline:none;border-color:#B27E33}
+.ns-login__submit{width:100%;background:#10182B;color:#F7F8FA;padding:14px 28px;border-radius:999px;font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit;margin-top:8px}
+.ns-login__submit:hover{background:#26314D}
+.ns-login__links{text-align:center;margin-top:20px;font-size:14px;color:#566072}
+.ns-login__link{color:#B27E33;text-decoration:none;font-weight:600;cursor:pointer}
+.ns-login__link:hover{text-decoration:underline}
+.ns-login__errors{background:rgba(194,86,78,.08);border:1px solid rgba(194,86,78,.25);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:14px;color:#C2564E}
+.ns-login__errors ul{margin:0;padding-left:18px}
+.ns-login__success{background:rgba(16,24,43,.04);border:1px solid rgba(16,24,43,.1);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:14px;color:#566072;line-height:1.5}
+.ns-login__recover{display:none}
+#recover:target{display:block}
+#recover:target ~ .ns-login__main{display:none}
+</style>
+
+<section class="ns-login">
+  <div id="recover" class="ns-login__recover">
+    <h1 class="ns-login__h1">Reset password</h1>
+    <p class="ns-login__sub">We'll send you an email to reset your password.</p>
+    {% form 'recover_customer_password' %}
+      {% if form.errors %}
+        <div class="ns-login__errors">{{ form.errors | default_errors }}</div>
+      {% endif %}
+      {% if form.posted_successfully? %}
+        <div class="ns-login__success">We've sent you an email with a link to update your password.</div>
+      {% endif %}
+      <div class="ns-login__field">
+        <label class="ns-login__label" for="RecoverEmail">Email</label>
+        <input type="email" name="email" id="RecoverEmail" class="ns-login__input" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <button type="submit" class="ns-login__submit">Send reset link</button>
+      <p class="ns-login__links"><a href="#login" class="ns-login__link">Cancel</a></p>
+    {% endform %}
+  </div>
+
+  <div id="login" class="ns-login__main">
+    <h1 class="ns-login__h1">{{ section.settings.heading | default: 'Log in' }}</h1>
+    <p class="ns-login__sub">Welcome back. Sign in to your account.</p>
+    {% form 'customer_login' %}
+      {% if form.errors %}
+        <div class="ns-login__errors">{{ form.errors | default_errors }}</div>
+      {% endif %}
+      <div class="ns-login__field">
+        <label class="ns-login__label" for="CustomerEmail">Email</label>
+        <input type="email" name="customer[email]" id="CustomerEmail" class="ns-login__input" autocomplete="email" placeholder="you@example.com">
+      </div>
+      <div class="ns-login__field">
+        <label class="ns-login__label" for="CustomerPassword">Password</label>
+        <input type="password" name="customer[password]" id="CustomerPassword" class="ns-login__input" autocomplete="current-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+      </div>
+      <button type="submit" class="ns-login__submit">Sign in</button>
+      <p class="ns-login__links"><a href="#recover" class="ns-login__link">Forgot your password?</a></p>
+    {% endform %}
+    <p class="ns-login__links">New customer? <a href="{{ routes.account_register_url }}" class="ns-login__link">Create an account</a></p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Login",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Log in" }
+  ]
+}
+{% endschema %}

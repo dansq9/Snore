@@ -1,0 +1,43 @@
+<style>
+.ns-activate{max-width:460px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-activate__h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:0 0 8px;color:#10182B;text-align:center}
+.ns-activate__sub{font-size:15px;color:#566072;text-align:center;margin:0 0 32px;line-height:1.6}
+.ns-activate__field{margin-bottom:16px}
+.ns-activate__label{display:block;font-size:13px;font-weight:700;color:#10182B;margin-bottom:8px}
+.ns-activate__input{width:100%;padding:14px 18px;border:1px solid rgba(16,24,43,.15);border-radius:12px;font-size:15px;font-family:inherit;background:#fff;box-sizing:border-box}
+.ns-activate__input:focus{outline:none;border-color:#B27E33}
+.ns-activate__submit{width:100%;background:#10182B;color:#F7F8FA;padding:14px 28px;border-radius:999px;font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit;margin-top:8px}
+.ns-activate__submit:hover{background:#26314D}
+.ns-activate__decline{width:100%;background:transparent;color:#566072;padding:14px 28px;border-radius:999px;font-size:15px;font-weight:700;border:1px solid rgba(16,24,43,.15);cursor:pointer;font-family:inherit;margin-top:12px}
+.ns-activate__decline:hover{background:#EAEDF2;color:#10182B}
+.ns-activate__errors{background:rgba(194,86,78,.08);border:1px solid rgba(194,86,78,.25);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:14px;color:#C2564E}
+.ns-activate__errors ul{margin:0;padding-left:18px}
+</style>
+
+<section class="ns-activate">
+  <h1 class="ns-activate__h1">Activate your account</h1>
+  <p class="ns-activate__sub">Create a password to activate your account.</p>
+
+  {% form 'activate_customer_password' %}
+    {% if form.errors %}
+      <div class="ns-activate__errors">{{ form.errors | default_errors }}</div>
+    {% endif %}
+    <div class="ns-activate__field">
+      <label class="ns-activate__label" for="ActivatePassword">Password</label>
+      <input type="password" name="customer[password]" id="ActivatePassword" class="ns-activate__input" autocomplete="new-password">
+    </div>
+    <div class="ns-activate__field">
+      <label class="ns-activate__label" for="ActivatePasswordConfirm">Confirm password</label>
+      <input type="password" name="customer[password_confirmation]" id="ActivatePasswordConfirm" class="ns-activate__input" autocomplete="new-password">
+    </div>
+    <button type="submit" class="ns-activate__submit">Activate account</button>
+    <button type="submit" name="decline" class="ns-activate__decline">Decline invitation</button>
+  {% endform %}
+</section>
+
+{% schema %}
+{
+  "name": "Customer Activate",
+  "settings": []
+}
+{% endschema %}

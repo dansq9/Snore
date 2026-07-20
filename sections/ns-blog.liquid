@@ -1,0 +1,81 @@
+<style>
+.ns-blog{max-width:1100px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-blog__head{max-width:640px;margin:0 0 40px}
+.ns-blog__kicker{font-size:11.5px;letter-spacing:.24em;font-weight:800;color:#D9A04B;margin:0 0 12px}
+.ns-blog__h1{font-size:clamp(28px,5vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0;color:#10182B}
+.ns-blog__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:28px}
+.ns-blog__card{display:flex;flex-direction:column;background:#fff;border:1px solid rgba(16,24,43,.08);border-radius:18px;overflow:hidden;text-decoration:none;color:#10182B;transition:box-shadow .2s ease,transform .2s ease}
+.ns-blog__card:hover{box-shadow:0 14px 34px rgba(16,24,43,.1);transform:translateY(-2px)}
+.ns-blog__img{aspect-ratio:16/9;background:#EAEDF2;overflow:hidden}
+.ns-blog__img img{width:100%;height:100%;object-fit:cover;display:block}
+.ns-blog__body{padding:22px 24px 26px;display:flex;flex-direction:column;flex:1}
+.ns-blog__date{font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;color:#8A93A3;margin:0 0 10px}
+.ns-blog__title{font-size:19px;font-weight:800;letter-spacing:-.01em;line-height:1.25;margin:0 0 10px}
+.ns-blog__card:hover .ns-blog__title{color:#B27E33}
+.ns-blog__excerpt{font-size:14.5px;line-height:1.6;color:#566072;margin:0 0 16px;flex:1}
+.ns-blog__more{font-size:14px;font-weight:700;color:#10182B}
+.ns-blog__card:hover .ns-blog__more{color:#B27E33}
+.ns-blog__empty{font-size:16px;color:#566072}
+.ns-blog__pagination{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:48px}
+.ns-blog__pagination a,.ns-blog__pagination span{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:42px;padding:0 12px;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;color:#566072;border:1px solid rgba(16,24,43,.12)}
+.ns-blog__pagination a:hover{border-color:#B27E33;color:#10182B}
+.ns-blog__pagination .ns-blog__current{background:#10182B;color:#F7F8FA;border-color:#10182B}
+</style>
+
+<section class="ns-blog">
+  <div class="ns-blog__head">
+    <p class="ns-blog__kicker">{{ section.settings.kicker | default: 'JOURNAL' }}</p>
+    <h1 class="ns-blog__h1">{{ blog.title }}</h1>
+  </div>
+
+  {% paginate blog.articles by 12 %}
+    {% if blog.articles.size > 0 %}
+      <div class="ns-blog__grid">
+        {% for article in blog.articles %}
+          <a href="{{ article.url }}" class="ns-blog__card">
+            {% if article.image %}
+              <div class="ns-blog__img">
+                {{ article.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '300,400,600,800', sizes: '(min-width:800px) 33vw, 100vw', alt: article.title }}
+              </div>
+            {% endif %}
+            <div class="ns-blog__body">
+              <p class="ns-blog__date">{{ article.published_at | date: '%B %d, %Y' }}</p>
+              <h2 class="ns-blog__title">{{ article.title }}</h2>
+              <p class="ns-blog__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 160 }}</p>
+              <span class="ns-blog__more">Read more &rarr;</span>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <nav class="ns-blog__pagination" role="navigation" aria-label="Pagination">
+          {% if paginate.previous %}
+            <a href="{{ paginate.previous.url }}" aria-label="Previous page">&larr;</a>
+          {% endif %}
+          {% for part in paginate.parts %}
+            {% if part.is_link %}
+              <a href="{{ part.url }}">{{ part.title }}</a>
+            {% else %}
+              <span class="ns-blog__current">{{ part.title }}</span>
+            {% endif %}
+          {% endfor %}
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}" aria-label="Next page">&rarr;</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% else %}
+      <p class="ns-blog__empty">No articles have been published yet. Check back soon.</p>
+    {% endif %}
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "Blog",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "JOURNAL" }
+  ]
+}
+{% endschema %}

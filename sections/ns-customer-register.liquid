@@ -1,0 +1,59 @@
+<style>
+.ns-register{max-width:460px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-register__h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:0 0 8px;color:#10182B;text-align:center}
+.ns-register__sub{font-size:15px;color:#566072;text-align:center;margin:0 0 32px;line-height:1.6}
+.ns-register__row{display:flex;gap:12px}
+.ns-register__row .ns-register__field{flex:1}
+.ns-register__field{margin-bottom:16px}
+.ns-register__label{display:block;font-size:13px;font-weight:700;color:#10182B;margin-bottom:8px}
+.ns-register__input{width:100%;padding:14px 18px;border:1px solid rgba(16,24,43,.15);border-radius:12px;font-size:15px;font-family:inherit;background:#fff;box-sizing:border-box}
+.ns-register__input:focus{outline:none;border-color:#B27E33}
+.ns-register__submit{width:100%;background:#10182B;color:#F7F8FA;padding:14px 28px;border-radius:999px;font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit;margin-top:8px}
+.ns-register__submit:hover{background:#26314D}
+.ns-register__links{text-align:center;margin-top:20px;font-size:14px;color:#566072}
+.ns-register__link{color:#B27E33;text-decoration:none;font-weight:600}
+.ns-register__link:hover{text-decoration:underline}
+.ns-register__errors{background:rgba(194,86,78,.08);border:1px solid rgba(194,86,78,.25);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:14px;color:#C2564E}
+.ns-register__errors ul{margin:0;padding-left:18px}
+</style>
+
+<section class="ns-register">
+  <h1 class="ns-register__h1">{{ section.settings.heading | default: 'Create account' }}</h1>
+  <p class="ns-register__sub">Join us for faster checkout and order tracking.</p>
+
+  {% form 'create_customer' %}
+    {% if form.errors %}
+      <div class="ns-register__errors">{{ form.errors | default_errors }}</div>
+    {% endif %}
+    <div class="ns-register__row">
+      <div class="ns-register__field">
+        <label class="ns-register__label" for="RegisterFirstName">First name</label>
+        <input type="text" name="customer[first_name]" id="RegisterFirstName" class="ns-register__input" autocomplete="given-name">
+      </div>
+      <div class="ns-register__field">
+        <label class="ns-register__label" for="RegisterLastName">Last name</label>
+        <input type="text" name="customer[last_name]" id="RegisterLastName" class="ns-register__input" autocomplete="family-name">
+      </div>
+    </div>
+    <div class="ns-register__field">
+      <label class="ns-register__label" for="RegisterEmail">Email</label>
+      <input type="email" name="customer[email]" id="RegisterEmail" class="ns-register__input" autocomplete="email" placeholder="you@example.com">
+    </div>
+    <div class="ns-register__field">
+      <label class="ns-register__label" for="RegisterPassword">Password</label>
+      <input type="password" name="customer[password]" id="RegisterPassword" class="ns-register__input" autocomplete="new-password">
+    </div>
+    <button type="submit" class="ns-register__submit">Create account</button>
+  {% endform %}
+
+  <p class="ns-register__links">Already have an account? <a href="{{ routes.account_login_url }}" class="ns-register__link">Log in</a></p>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Register",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Create account" }
+  ]
+}
+{% endschema %}

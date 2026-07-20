@@ -1,0 +1,194 @@
+<style>
+.ns-addr{max-width:820px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-addr__back{display:inline-block;font-size:14px;font-weight:600;color:#B27E33;text-decoration:none;margin-bottom:16px}
+.ns-addr__back:hover{text-decoration:underline}
+.ns-addr__h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:0 0 32px;color:#10182B}
+.ns-addr__panel{background:#fff;border:1px solid rgba(16,24,43,.08);border-radius:16px;margin-bottom:16px;overflow:hidden}
+.ns-addr__summary{list-style:none;cursor:pointer;padding:20px 24px;font-weight:700;color:#10182B;font-size:15px;display:flex;justify-content:space-between;align-items:center}
+.ns-addr__summary::-webkit-details-marker{display:none}
+.ns-addr__summary::after{content:'+';font-size:20px;color:#8A93A3;font-weight:600}
+details[open]>.ns-addr__summary::after{content:'\2212'}
+.ns-addr__card{padding:22px 24px}
+.ns-addr__display address{font-style:normal;font-size:14px;line-height:1.7;color:#566072;margin-bottom:16px}
+.ns-addr__default-tag{display:inline-block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:#B27E33;background:rgba(217,160,75,.12);border-radius:999px;padding:4px 10px;margin-bottom:12px}
+.ns-addr__row{display:flex;gap:14px;flex-wrap:wrap}
+.ns-addr__row .ns-addr__field{flex:1;min-width:160px}
+.ns-addr__field{margin-bottom:16px}
+.ns-addr__label{display:block;font-size:13px;font-weight:700;color:#10182B;margin-bottom:8px}
+.ns-addr__input,.ns-addr__select{width:100%;padding:14px 18px;border:1px solid rgba(16,24,43,.15);border-radius:12px;font-size:15px;font-family:inherit;background:#fff;box-sizing:border-box}
+.ns-addr__input:focus,.ns-addr__select:focus{outline:none;border-color:#B27E33}
+.ns-addr__check{display:flex;align-items:center;gap:8px;font-size:14px;color:#566072;margin-bottom:16px}
+.ns-addr__actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.ns-addr__submit{background:#10182B;color:#F7F8FA;padding:12px 24px;border-radius:999px;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+.ns-addr__submit:hover{background:#26314D}
+.ns-addr__delete{background:transparent;color:#C2564E;padding:12px 20px;border:1px solid rgba(194,86,78,.35);border-radius:999px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.ns-addr__delete:hover{background:rgba(194,86,78,.08)}
+.ns-addr__edit-tools{display:flex;gap:12px;margin-top:16px}
+.ns-addr__errors{background:rgba(194,86,78,.08);border:1px solid rgba(194,86,78,.25);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:14px;color:#C2564E}
+.ns-addr__errors ul{margin:0;padding-left:18px}
+.ns-addr__list-title{font-size:20px;font-weight:800;letter-spacing:-.01em;color:#10182B;margin:36px 0 20px}
+</style>
+
+<section class="ns-addr">
+  <a href="{{ routes.account_url }}" class="ns-addr__back">&larr; Back to account</a>
+  <h1 class="ns-addr__h1">Your addresses</h1>
+
+  <details class="ns-addr__panel">
+    <summary class="ns-addr__summary">Add a new address</summary>
+    <div class="ns-addr__card">
+      {% form 'customer_address', customer.new_address %}
+        {% if form.errors %}
+          <div class="ns-addr__errors">{{ form.errors | default_errors }}</div>
+        {% endif %}
+        <div class="ns-addr__row">
+          <div class="ns-addr__field">
+            <label class="ns-addr__label" for="AddressFirstNameNew">First name</label>
+            <input type="text" id="AddressFirstNameNew" name="address[first_name]" class="ns-addr__input" autocomplete="given-name">
+          </div>
+          <div class="ns-addr__field">
+            <label class="ns-addr__label" for="AddressLastNameNew">Last name</label>
+            <input type="text" id="AddressLastNameNew" name="address[last_name]" class="ns-addr__input" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="ns-addr__field">
+          <label class="ns-addr__label" for="AddressCompanyNew">Company</label>
+          <input type="text" id="AddressCompanyNew" name="address[company]" class="ns-addr__input" autocomplete="organization">
+        </div>
+        <div class="ns-addr__field">
+          <label class="ns-addr__label" for="AddressAddress1New">Address</label>
+          <input type="text" id="AddressAddress1New" name="address[address1]" class="ns-addr__input" autocomplete="address-line1">
+        </div>
+        <div class="ns-addr__field">
+          <label class="ns-addr__label" for="AddressAddress2New">Apartment, suite, etc.</label>
+          <input type="text" id="AddressAddress2New" name="address[address2]" class="ns-addr__input" autocomplete="address-line2">
+        </div>
+        <div class="ns-addr__row">
+          <div class="ns-addr__field">
+            <label class="ns-addr__label" for="AddressCityNew">City</label>
+            <input type="text" id="AddressCityNew" name="address[city]" class="ns-addr__input" autocomplete="address-level2">
+          </div>
+          <div class="ns-addr__field">
+            <label class="ns-addr__label" for="AddressZipNew">ZIP / Postal code</label>
+            <input type="text" id="AddressZipNew" name="address[zip]" class="ns-addr__input" autocomplete="postal-code">
+          </div>
+        </div>
+        <div class="ns-addr__row">
+          <div class="ns-addr__field">
+            <label class="ns-addr__label" for="AddressCountryNew">Country / Region</label>
+            <select id="AddressCountryNew" name="address[country]" class="ns-addr__select">{{ country_option_tags }}</select>
+          </div>
+          <div class="ns-addr__field">
+            <label class="ns-addr__label" for="AddressProvinceNew">State / Province</label>
+            <input type="text" id="AddressProvinceNew" name="address[province]" class="ns-addr__input" autocomplete="address-level1">
+          </div>
+        </div>
+        <div class="ns-addr__field">
+          <label class="ns-addr__label" for="AddressPhoneNew">Phone</label>
+          <input type="tel" id="AddressPhoneNew" name="address[phone]" class="ns-addr__input" autocomplete="tel">
+        </div>
+        <label class="ns-addr__check">
+          <input type="checkbox" name="address[default]" value="1"> Set as default address
+        </label>
+        <div class="ns-addr__actions">
+          <button type="submit" class="ns-addr__submit">Add address</button>
+        </div>
+      {% endform %}
+    </div>
+  </details>
+
+  {% if customer.addresses.size > 0 %}
+    <h2 class="ns-addr__list-title">Saved addresses</h2>
+    {% for address in customer.addresses %}
+      <div class="ns-addr__panel">
+        <div class="ns-addr__card ns-addr__display">
+          {% if address == customer.default_address %}
+            <span class="ns-addr__default-tag">Default</span>
+          {% endif %}
+          <address>{{ address | format_address }}</address>
+          <div class="ns-addr__edit-tools">
+            <form method="post" action="{{ address.url }}">
+              <input type="hidden" name="_method" value="delete">
+              <button type="submit" class="ns-addr__delete" onclick="return confirm('Delete this address?');">Delete</button>
+            </form>
+          </div>
+        </div>
+        <details class="ns-addr__panel" style="border:none;border-top:1px solid rgba(16,24,43,.08);border-radius:0;margin:0">
+          <summary class="ns-addr__summary">Edit address</summary>
+          <div class="ns-addr__card">
+            {% form 'customer_address', address %}
+              {% if form.errors %}
+                <div class="ns-addr__errors">{{ form.errors | default_errors }}</div>
+              {% endif %}
+              <div class="ns-addr__row">
+                <div class="ns-addr__field">
+                  <label class="ns-addr__label" for="AddressFirstName{{ address.id }}">First name</label>
+                  <input type="text" id="AddressFirstName{{ address.id }}" name="address[first_name]" value="{{ address.first_name }}" class="ns-addr__input" autocomplete="given-name">
+                </div>
+                <div class="ns-addr__field">
+                  <label class="ns-addr__label" for="AddressLastName{{ address.id }}">Last name</label>
+                  <input type="text" id="AddressLastName{{ address.id }}" name="address[last_name]" value="{{ address.last_name }}" class="ns-addr__input" autocomplete="family-name">
+                </div>
+              </div>
+              <div class="ns-addr__field">
+                <label class="ns-addr__label" for="AddressCompany{{ address.id }}">Company</label>
+                <input type="text" id="AddressCompany{{ address.id }}" name="address[company]" value="{{ address.company }}" class="ns-addr__input" autocomplete="organization">
+              </div>
+              <div class="ns-addr__field">
+                <label class="ns-addr__label" for="AddressAddress1{{ address.id }}">Address</label>
+                <input type="text" id="AddressAddress1{{ address.id }}" name="address[address1]" value="{{ address.address1 }}" class="ns-addr__input" autocomplete="address-line1">
+              </div>
+              <div class="ns-addr__field">
+                <label class="ns-addr__label" for="AddressAddress2{{ address.id }}">Apartment, suite, etc.</label>
+                <input type="text" id="AddressAddress2{{ address.id }}" name="address[address2]" value="{{ address.address2 }}" class="ns-addr__input" autocomplete="address-line2">
+              </div>
+              <div class="ns-addr__row">
+                <div class="ns-addr__field">
+                  <label class="ns-addr__label" for="AddressCity{{ address.id }}">City</label>
+                  <input type="text" id="AddressCity{{ address.id }}" name="address[city]" value="{{ address.city }}" class="ns-addr__input" autocomplete="address-level2">
+                </div>
+                <div class="ns-addr__field">
+                  <label class="ns-addr__label" for="AddressZip{{ address.id }}">ZIP / Postal code</label>
+                  <input type="text" id="AddressZip{{ address.id }}" name="address[zip]" value="{{ address.zip }}" class="ns-addr__input" autocomplete="postal-code">
+                </div>
+              </div>
+              <div class="ns-addr__row">
+                <div class="ns-addr__field">
+                  <label class="ns-addr__label" for="AddressCountry{{ address.id }}">Country / Region</label>
+                  <select id="AddressCountry{{ address.id }}" name="address[country]" class="ns-addr__select" data-default="{{ address.country }}">{{ country_option_tags }}</select>
+                </div>
+                <div class="ns-addr__field">
+                  <label class="ns-addr__label" for="AddressProvince{{ address.id }}">State / Province</label>
+                  <input type="text" id="AddressProvince{{ address.id }}" name="address[province]" value="{{ address.province }}" class="ns-addr__input" autocomplete="address-level1">
+                </div>
+              </div>
+              <div class="ns-addr__field">
+                <label class="ns-addr__label" for="AddressPhone{{ address.id }}">Phone</label>
+                <input type="tel" id="AddressPhone{{ address.id }}" name="address[phone]" value="{{ address.phone }}" class="ns-addr__input" autocomplete="tel">
+              </div>
+              <label class="ns-addr__check">
+                <input type="checkbox" name="address[default]" value="1" {% if address == customer.default_address %}checked{% endif %}> Set as default address
+              </label>
+              <div class="ns-addr__actions">
+                <button type="submit" class="ns-addr__submit">Update address</button>
+              </div>
+            {% endform %}
+          </div>
+        </details>
+      </div>
+    {% endfor %}
+  {% endif %}
+</section>
+
+<script>
+  document.querySelectorAll('.ns-addr__select[data-default]').forEach(function (select) {
+    var value = select.getAttribute('data-default');
+    if (value) { select.value = value; }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Customer Addresses",
+  "settings": []
+}
+{% endschema %}

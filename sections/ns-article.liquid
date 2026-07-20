@@ -1,0 +1,118 @@
+<style>
+.ns-article{max-width:760px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-article__back{display:inline-block;font-size:14px;font-weight:600;color:#B27E33;text-decoration:none;margin-bottom:20px}
+.ns-article__back:hover{text-decoration:underline}
+.ns-article__meta{font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;color:#8A93A3;margin:0 0 12px}
+.ns-article__h1{font-size:clamp(30px,5.5vw,46px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0 0 28px;color:#10182B}
+.ns-article__hero{aspect-ratio:16/9;background:#EAEDF2;border-radius:18px;overflow:hidden;margin:0 0 36px}
+.ns-article__hero img{width:100%;height:100%;object-fit:cover;display:block}
+.ns-article__body{font-size:16.5px;line-height:1.75;color:#566072}
+.ns-article__body h2{font-size:24px;font-weight:800;letter-spacing:-.01em;color:#10182B;margin:36px 0 14px}
+.ns-article__body h3{font-size:20px;font-weight:700;color:#10182B;margin:30px 0 12px}
+.ns-article__body p{margin:0 0 18px}
+.ns-article__body a{color:#B27E33;text-decoration:underline;text-underline-offset:2px}
+.ns-article__body a:hover{color:#10182B}
+.ns-article__body img{max-width:100%;height:auto;border-radius:14px;margin:12px 0}
+.ns-article__body ul,.ns-article__body ol{padding-left:22px;margin:0 0 18px}
+.ns-article__body li{margin-bottom:8px}
+.ns-article__body blockquote{margin:24px 0;padding:4px 0 4px 22px;border-left:3px solid #D9A04B;font-size:19px;color:#10182B;font-style:italic}
+.ns-article__comments{margin-top:56px;padding-top:40px;border-top:1px solid rgba(16,24,43,.1)}
+.ns-article__comments-title{font-size:22px;font-weight:800;letter-spacing:-.01em;color:#10182B;margin:0 0 24px}
+.ns-article__comment{background:#fff;border:1px solid rgba(16,24,43,.08);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+.ns-article__comment-body{font-size:15px;line-height:1.65;color:#566072;margin:0 0 12px}
+.ns-article__comment-author{font-size:13px;font-weight:700;color:#10182B}
+.ns-article__comment-date{font-size:13px;color:#8A93A3;font-weight:500}
+.ns-article__form-title{font-size:18px;font-weight:800;color:#10182B;margin:36px 0 18px}
+.ns-article__field{margin-bottom:16px}
+.ns-article__row{display:flex;gap:14px;flex-wrap:wrap}
+.ns-article__row .ns-article__field{flex:1;min-width:180px}
+.ns-article__label{display:block;font-size:13px;font-weight:700;color:#10182B;margin-bottom:8px}
+.ns-article__input,.ns-article__textarea{width:100%;padding:14px 18px;border:1px solid rgba(16,24,43,.15);border-radius:12px;font-size:15px;font-family:inherit;background:#fff;box-sizing:border-box}
+.ns-article__textarea{min-height:130px;resize:vertical;line-height:1.6}
+.ns-article__input:focus,.ns-article__textarea:focus{outline:none;border-color:#B27E33}
+.ns-article__submit{background:#10182B;color:#F7F8FA;padding:14px 28px;border-radius:999px;font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit}
+.ns-article__submit:hover{background:#26314D}
+.ns-article__note{font-size:13px;color:#8A93A3;margin:12px 0 0}
+.ns-article__errors{background:rgba(194,86,78,.08);border:1px solid rgba(194,86,78,.25);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:14px;color:#C2564E}
+.ns-article__errors ul{margin:0;padding-left:18px}
+.ns-article__success{background:rgba(16,24,43,.04);border:1px solid rgba(16,24,43,.1);border-radius:12px;padding:14px 18px;margin-bottom:24px;font-size:14px;color:#566072;line-height:1.5}
+</style>
+
+<section class="ns-article">
+  <a href="{{ blog.url }}" class="ns-article__back">&larr; {{ blog.title }}</a>
+
+  <p class="ns-article__meta">
+    {{ article.published_at | date: '%B %d, %Y' }}
+    {% if article.author != blank %} &middot; {{ article.author }}{% endif %}
+  </p>
+  <h1 class="ns-article__h1">{{ article.title }}</h1>
+
+  {% if article.image %}
+    <div class="ns-article__hero">
+      {{ article.image | image_url: width: 1200 | image_tag: widths: '600,900,1200,1600', sizes: '(min-width:760px) 760px, 100vw', alt: article.title }}
+    </div>
+  {% endif %}
+
+  <div class="ns-article__body rte">
+    {{ article.content }}
+  </div>
+
+  {% if blog.comments_enabled? %}
+    <div class="ns-article__comments" id="comments">
+      <h2 class="ns-article__comments-title">
+        {% if article.comments_count == 1 %}1 comment{% elsif article.comments_count > 1 %}{{ article.comments_count }} comments{% else %}Comments{% endif %}
+      </h2>
+
+      {% paginate article.comments by 20 %}
+        {% for comment in article.comments %}
+          <div class="ns-article__comment" id="{{ comment.id }}">
+            <p class="ns-article__comment-body">{{ comment.content }}</p>
+            <span class="ns-article__comment-author">{{ comment.author }}</span>
+            <span class="ns-article__comment-date">&middot; {{ comment.created_at | date: '%B %d, %Y' }}</span>
+          </div>
+        {% endfor %}
+      {% endpaginate %}
+
+      <h3 class="ns-article__form-title">Leave a comment</h3>
+      {% form 'new_comment', article %}
+        {% if form.errors %}
+          <div class="ns-article__errors">{{ form.errors | default_errors }}</div>
+        {% endif %}
+        {% if form.posted_successfully? %}
+          <div class="ns-article__success">
+            {% if blog.moderated? %}
+              Thanks! Your comment was submitted and will appear once approved.
+            {% else %}
+              Thanks! Your comment was posted successfully.
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="ns-article__row">
+          <div class="ns-article__field">
+            <label class="ns-article__label" for="CommentAuthor">Name</label>
+            <input type="text" name="comment[author]" id="CommentAuthor" class="ns-article__input" value="{{ form.author }}" autocomplete="name">
+          </div>
+          <div class="ns-article__field">
+            <label class="ns-article__label" for="CommentEmail">Email</label>
+            <input type="email" name="comment[email]" id="CommentEmail" class="ns-article__input" value="{{ form.email }}" autocomplete="email">
+          </div>
+        </div>
+        <div class="ns-article__field">
+          <label class="ns-article__label" for="CommentBody">Comment</label>
+          <textarea name="comment[body]" id="CommentBody" class="ns-article__textarea">{{ form.body }}</textarea>
+        </div>
+        <button type="submit" class="ns-article__submit">Post comment</button>
+        {% if blog.moderated? %}
+          <p class="ns-article__note">Comments are reviewed before they are published.</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,86 @@
+<style>
+.ns-account{max-width:900px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-account__head{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin:0 0 8px}
+.ns-account__h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:0;color:#10182B}
+.ns-account__welcome{font-size:15px;color:#566072;margin:0 0 32px}
+.ns-account__actions{display:flex;gap:12px;flex-wrap:wrap}
+.ns-account__btn{display:inline-block;background:#10182B;color:#F7F8FA;padding:12px 22px;border-radius:999px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap}
+.ns-account__btn:hover{background:#26314D}
+.ns-account__btn--ghost{background:transparent;color:#10182B;border:1px solid rgba(16,24,43,.15)}
+.ns-account__btn--ghost:hover{background:#EAEDF2;color:#10182B}
+.ns-account__section-title{font-size:20px;font-weight:800;letter-spacing:-.01em;color:#10182B;margin:0 0 20px}
+.ns-account__empty{font-size:15px;color:#566072;background:#fff;border:1px solid rgba(16,24,43,.08);border-radius:14px;padding:24px}
+.ns-account__table{width:100%;border-collapse:collapse;background:#fff;border:1px solid rgba(16,24,43,.08);border-radius:14px;overflow:hidden}
+.ns-account__table th{text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#8A93A3;font-weight:700;padding:14px 18px;border-bottom:1px solid rgba(16,24,43,.08)}
+.ns-account__table td{font-size:14px;color:#566072;padding:16px 18px;border-bottom:1px solid rgba(16,24,43,.06)}
+.ns-account__table tr:last-child td{border-bottom:none}
+.ns-account__order-link{font-weight:700;color:#10182B;text-decoration:none}
+.ns-account__order-link:hover{color:#B27E33}
+.ns-account__cards{display:none}
+@media(max-width:640px){
+  .ns-account__table{display:none}
+  .ns-account__cards{display:block}
+  .ns-account__card{background:#fff;border:1px solid rgba(16,24,43,.08);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+  .ns-account__card-row{display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#566072;margin-top:6px}
+  .ns-account__card-row span:first-child{color:#8A93A3}
+}
+</style>
+
+<section class="ns-account">
+  <div class="ns-account__head">
+    <h1 class="ns-account__h1">My account</h1>
+    <div class="ns-account__actions">
+      <a href="{{ routes.account_addresses_url }}" class="ns-account__btn ns-account__btn--ghost">Manage addresses</a>
+      <a href="{{ routes.account_logout_url }}" class="ns-account__btn">Log out</a>
+    </div>
+  </div>
+  <p class="ns-account__welcome">Signed in as {{ customer.name | default: customer.email }}.</p>
+
+  <h2 class="ns-account__section-title">Order history</h2>
+
+  {% if customer.orders.size > 0 %}
+    <table class="ns-account__table">
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Date</th>
+          <th>Payment</th>
+          <th>Fulfillment</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in customer.orders %}
+          <tr>
+            <td><a href="{{ order.customer_url }}" class="ns-account__order-link">{{ order.name }}</a></td>
+            <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+            <td>{{ order.financial_status_label }}</td>
+            <td>{{ order.fulfillment_status_label }}</td>
+            <td>{{ order.total_price | money }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="ns-account__cards">
+      {% for order in customer.orders %}
+        <div class="ns-account__card">
+          <a href="{{ order.customer_url }}" class="ns-account__order-link">{{ order.name }}</a>
+          <div class="ns-account__card-row"><span>Date</span><span>{{ order.created_at | date: '%b %d, %Y' }}</span></div>
+          <div class="ns-account__card-row"><span>Payment</span><span>{{ order.financial_status_label }}</span></div>
+          <div class="ns-account__card-row"><span>Fulfillment</span><span>{{ order.fulfillment_status_label }}</span></div>
+          <div class="ns-account__card-row"><span>Total</span><span>{{ order.total_price | money }}</span></div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="ns-account__empty">You haven't placed any orders yet.</p>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Customer Account",
+  "settings": []
+}
+{% endschema %}

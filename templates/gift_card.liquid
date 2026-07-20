@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>{{ shop.name }} gift card</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box}
+    html{-webkit-font-smoothing:antialiased}
+    body{margin:0;background:#F7F8FA;color:#10182B;font-family:'Archivo',system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:clamp(20px,5vw,48px)}
+    .ns-gc{width:100%;max-width:440px;text-align:center}
+    .ns-gc__wordmark{font-weight:800;font-size:18px;letter-spacing:.18em;color:#10182B;margin:0 0 24px}
+    .ns-gc__card{position:relative;background:#10182B;color:#F7F8FA;border-radius:24px;padding:clamp(28px,6vw,40px);overflow:hidden;box-shadow:0 24px 60px rgba(16,24,43,.22)}
+    .ns-gc__card::after{content:'';position:absolute;top:-40%;right:-30%;width:70%;height:180%;background:radial-gradient(circle,rgba(217,160,75,.28),transparent 70%);pointer-events:none}
+    .ns-gc__label{position:relative;font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#D9A04B;margin:0 0 14px}
+    .ns-gc__balance{position:relative;font-size:clamp(44px,12vw,60px);font-weight:800;letter-spacing:-.03em;line-height:1;margin:0}
+    .ns-gc__balance-caption{position:relative;font-size:13px;color:rgba(247,248,250,.65);margin:10px 0 0}
+    .ns-gc__initial{position:relative;font-size:13px;color:rgba(247,248,250,.6);margin:6px 0 0}
+    .ns-gc__expired{position:relative;display:inline-block;margin-top:16px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#F7F8FA;background:rgba(194,86,78,.9);border-radius:999px;padding:6px 14px}
+    .ns-gc__codebox{margin:24px 0 0;background:#fff;border:1px solid rgba(16,24,43,.1);border-radius:16px;padding:22px 20px}
+    .ns-gc__code-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#8A93A3;margin:0 0 10px}
+    .ns-gc__code{font-size:clamp(20px,5.5vw,26px);font-weight:800;letter-spacing:.08em;color:#10182B;font-variant-numeric:tabular-nums;word-break:break-all;margin:0}
+    .ns-gc__actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+    .ns-gc__btn{display:inline-block;background:#10182B;color:#F7F8FA;padding:14px 28px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
+    .ns-gc__btn:hover{background:#26314D}
+    .ns-gc__btn--ghost{background:transparent;color:#10182B;border:1px solid rgba(16,24,43,.15)}
+    .ns-gc__btn--ghost:hover{background:#EAEDF2}
+    .ns-gc__note{font-size:13px;line-height:1.6;color:#566072;margin:22px auto 0;max-width:360px}
+    .ns-gc__wallet{margin-top:16px}
+    .ns-gc__wallet img{display:inline-block;height:44px;width:auto}
+    @media print{
+      body{background:#fff}
+      .ns-gc__actions,.ns-gc__wallet{display:none}
+      .ns-gc__card{box-shadow:none}
+    }
+  </style>
+</head>
+<body>
+  <main class="ns-gc">
+    <p class="ns-gc__wordmark">{{ shop.name }}</p>
+
+    <div class="ns-gc__card">
+      <p class="ns-gc__label">Gift card</p>
+      <p class="ns-gc__balance">{{ gift_card.balance | money }}</p>
+
+      {% if gift_card.enabled and gift_card.expired == false %}
+        <p class="ns-gc__balance-caption">Current balance</p>
+      {% endif %}
+
+      {% if gift_card.balance != gift_card.initial_value %}
+        <p class="ns-gc__initial">Initial value {{ gift_card.initial_value | money }}</p>
+      {% endif %}
+
+      {% if gift_card.expired or gift_card.enabled == false %}
+        <span class="ns-gc__expired">
+          {%- if gift_card.expired -%}
+            Expired{% if gift_card.expires_on %} on {{ gift_card.expires_on | date: '%B %d, %Y' }}{% endif %}
+          {%- else -%}
+            Inactive
+          {%- endif -%}
+        </span>
+      {% elsif gift_card.expires_on %}
+        <p class="ns-gc__initial">Valid until {{ gift_card.expires_on | date: '%B %d, %Y' }}</p>
+      {% endif %}
+
+      <div class="ns-gc__codebox">
+        <p class="ns-gc__code-label">Gift card code</p>
+        <p class="ns-gc__code">{{ gift_card.code | format_code }}</p>
+      </div>
+    </div>
+
+    {% comment %} QR identifier available for wallet/scanning integrations: {{ gift_card.qr_identifier }} {% endcomment %}
+
+    {% if gift_card.pass_url %}
+      <div class="ns-gc__wallet">
+        <a href="{{ gift_card.pass_url }}">
+          <img src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" alt="Add to Apple Wallet" width="120" height="44">
+        </a>
+      </div>
+    {% endif %}
+
+    <div class="ns-gc__actions">
+      <a href="{{ shop.secure_url }}" class="ns-gc__btn">Shop now</a>
+      <button type="button" class="ns-gc__btn ns-gc__btn--ghost" onclick="window.print()">Print</button>
+    </div>
+
+    <p class="ns-gc__note">Use this code at checkout to redeem your gift card. Keep it somewhere safe &mdash; it works like cash.</p>
+  </main>
+</body>
+</html>

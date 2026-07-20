@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "ns-customer-register",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

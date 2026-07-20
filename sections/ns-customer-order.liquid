@@ -1,0 +1,108 @@
+<style>
+.ns-order{max-width:900px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
+.ns-order__back{display:inline-block;font-size:14px;font-weight:600;color:#B27E33;text-decoration:none;margin-bottom:16px}
+.ns-order__back:hover{text-decoration:underline}
+.ns-order__h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:0 0 6px;color:#10182B}
+.ns-order__meta{font-size:14px;color:#566072;margin:0 0 32px}
+.ns-order__table{width:100%;border-collapse:collapse;background:#fff;border:1px solid rgba(16,24,43,.08);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.ns-order__table th{text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#8A93A3;font-weight:700;padding:14px 18px;border-bottom:1px solid rgba(16,24,43,.08)}
+.ns-order__table td{font-size:14px;color:#566072;padding:16px 18px;border-bottom:1px solid rgba(16,24,43,.06);vertical-align:top}
+.ns-order__table .ns-order__num{text-align:right;white-space:nowrap}
+.ns-order__item-title{font-weight:700;color:#10182B;text-decoration:none}
+.ns-order__item-title:hover{color:#B27E33}
+.ns-order__variant{font-size:13px;color:#8A93A3;margin-top:2px}
+.ns-order__totals td{border-bottom:none;padding-top:10px;padding-bottom:10px}
+.ns-order__totals tr:first-child td{padding-top:18px;border-top:1px solid rgba(16,24,43,.08)}
+.ns-order__total-label{text-align:right;color:#566072}
+.ns-order__grand td{font-size:16px;font-weight:800;color:#10182B}
+.ns-order__addresses{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:8px}
+.ns-order__addr{background:#fff;border:1px solid rgba(16,24,43,.08);border-radius:14px;padding:20px 22px}
+.ns-order__addr h3{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#8A93A3;font-weight:700;margin:0 0 12px}
+.ns-order__addr address{font-style:normal;font-size:14px;line-height:1.7;color:#566072}
+</style>
+
+<section class="ns-order">
+  <a href="{{ routes.account_url }}" class="ns-order__back">&larr; Back to account</a>
+  <h1 class="ns-order__h1">Order {{ order.name }}</h1>
+  <p class="ns-order__meta">
+    Placed on {{ order.created_at | date: '%B %d, %Y' }}
+    &middot; Payment: {{ order.financial_status_label }}
+    &middot; Fulfillment: {{ order.fulfillment_status_label }}
+  </p>
+
+  <table class="ns-order__table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th class="ns-order__num">Price</th>
+        <th class="ns-order__num">Qty</th>
+        <th class="ns-order__num">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for line_item in order.line_items %}
+        <tr>
+          <td>
+            {% if line_item.product %}
+              <a href="{{ line_item.product.url }}" class="ns-order__item-title">{{ line_item.title }}</a>
+            {% else %}
+              <span class="ns-order__item-title">{{ line_item.title }}</span>
+            {% endif %}
+            {% unless line_item.variant.title == 'Default Title' or line_item.variant.title == blank %}
+              <div class="ns-order__variant">{{ line_item.variant.title }}</div>
+            {% endunless %}
+          </td>
+          <td class="ns-order__num">{{ line_item.price | money }}</td>
+          <td class="ns-order__num">{{ line_item.quantity }}</td>
+          <td class="ns-order__num">{{ line_item.final_line_price | money }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot class="ns-order__totals">
+      <tr>
+        <td colspan="3" class="ns-order__total-label">Subtotal</td>
+        <td class="ns-order__num">{{ order.line_items_subtotal_price | money }}</td>
+      </tr>
+      {% for discount in order.cart_level_discount_applications %}
+        <tr>
+          <td colspan="3" class="ns-order__total-label">Discount ({{ discount.title }})</td>
+          <td class="ns-order__num">&minus;{{ discount.total_allocated_amount | money }}</td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="3" class="ns-order__total-label">Shipping</td>
+        <td class="ns-order__num">{{ order.shipping_price | money }}</td>
+      </tr>
+      <tr>
+        <td colspan="3" class="ns-order__total-label">Tax</td>
+        <td class="ns-order__num">{{ order.tax_price | money }}</td>
+      </tr>
+      <tr class="ns-order__grand">
+        <td colspan="3" class="ns-order__total-label">Total</td>
+        <td class="ns-order__num">{{ order.total_price | money }}</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="ns-order__addresses">
+    {% if order.shipping_address %}
+      <div class="ns-order__addr">
+        <h3>Shipping address</h3>
+        <address>{{ order.shipping_address | format_address }}</address>
+      </div>
+    {% endif %}
+    {% if order.billing_address %}
+      <div class="ns-order__addr">
+        <h3>Billing address</h3>
+        <address>{{ order.billing_address | format_address }}</address>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Order",
+  "settings": []
+}
+{% endschema %}
