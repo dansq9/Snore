@@ -19,12 +19,12 @@
     {%- comment -%} Right column {%- endcomment -%}
     <div class="ns-header__right">
       <div class="ns-header__nav ns-desktop-only">
-        <a href="#how-it-works" class="ns-header__link">How it works</a>
-        <a href="#reviews" class="ns-header__link">Reviews</a>
-        <a href="#faq" class="ns-header__link">FAQ</a>
+        <a href="/#how-it-works" class="ns-header__link">How it works</a>
+        <a href="/#reviews" class="ns-header__link">Reviews</a>
+        <a href="/#faq" class="ns-header__link">FAQ</a>
       </div>
 
-      <a href="{{ section.settings.product_url }}" class="ns-header__shop-btn ns-desktop-only">Shop</a>
+      <a href="{{ section.settings.product_url | default: '/products/nightseals-mouth-tape' }}" class="ns-header__shop-btn ns-desktop-only">Shop</a>
 
       <button class="ns-header__cart-btn ns-mobile-only" aria-label="Open cart" type="button" onclick="if(window.NightSeals&&NightSeals.Cart)NightSeals.Cart.open()" style="display:none">
         <svg width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true">
@@ -40,10 +40,10 @@
 
   {%- comment -%} Mobile menu {%- endcomment -%}
   <div class="ns-mobile-menu" style="display:none">
-    <a href="#how-it-works" class="ns-mobile-menu__link">How it works</a>
-    <a href="#reviews" class="ns-mobile-menu__link">Reviews</a>
-    <a href="#faq" class="ns-mobile-menu__link">FAQ</a>
-    <a href="{{ section.settings.product_url }}" class="ns-mobile-menu__link ns-mobile-menu__link--shop">Shop mouth tape &rarr;</a>
+    <a href="/#how-it-works" class="ns-mobile-menu__link">How it works</a>
+    <a href="/#reviews" class="ns-mobile-menu__link">Reviews</a>
+    <a href="/#faq" class="ns-mobile-menu__link">FAQ</a>
+    <a href="{{ section.settings.product_url | default: '/products/nightseals-mouth-tape' }}" class="ns-mobile-menu__link ns-mobile-menu__link--shop">Shop mouth tape &rarr;</a>
   </div>
 </header>
 
@@ -210,10 +210,12 @@ document.addEventListener('DOMContentLoaded', function() {
   var btn = document.querySelector('.ns-hamburger');
   var menu = document.querySelector('.ns-mobile-menu');
   if (btn && menu) {
+    var svgOpen = btn.innerHTML;
+    var svgClose = '<svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><line x1="3" y1="3" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="19" y1="3" x2="3" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
     btn.addEventListener('click', function() {
       var open = menu.style.display === 'flex';
       menu.style.display = open ? 'none' : 'flex';
-      btn.textContent = open ? '☰' : '✕';
+      btn.innerHTML = open ? svgOpen : svgClose;
     });
   }
 });
@@ -224,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
   "name": "Header",
   "settings": [
     {
-      "type": "url",
+      "type": "text",
       "id": "product_url",
       "label": "Product page link",
       "default": "/products/nightseals-mouth-tape"
