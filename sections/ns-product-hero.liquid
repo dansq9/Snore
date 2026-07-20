@@ -565,11 +565,13 @@
     <div class="ns-pdp__buybox">
 
       <!-- Hidden product form -->
+      {%- if product != blank -%}
       <div class="ns-pdp__form">
         {% form 'product', product, id: 'product-form' %}
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ns-variant-input">
         {% endform %}
       </div>
+      {%- endif -%}
 
       <!-- Description -->
       <p class="ns-pdp__description">
@@ -587,6 +589,18 @@
 
       <!-- Tier selector -->
       <p class="ns-pdp__tier-label">CHOOSE YOUR SUPPLY</p>
+      {%- if product == blank or product.variants.size == 0 -%}
+        <div class="ns-pdp__tiers">
+          <div class="ns-pdp__tier ns-pdp__tier--active">
+            <div class="ns-pdp__tier-left">
+              <div>
+                <p class="ns-pdp__tier-title">Add a product to see supply options</p>
+                <p class="ns-pdp__tier-per-night">Create the NightSeals product with 30/90/180-night variants in Shopify admin.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- else -%}
       <div class="ns-pdp__tiers">
         {% for variant in product.variants %}
           <div
@@ -627,6 +641,7 @@
           </div>
         {% endfor %}
       </div>
+      {%- endif -%}
 
       <!-- Subscribe & Save toggle -->
       <p class="ns-pdp__purchase-label">PURCHASE TYPE</p>
@@ -651,7 +666,7 @@
       <!-- Dual CTA buttons -->
       <div class="ns-pdp__ctas">
         <button type="button" class="ns-pdp__btn-buy" id="ns-buy-now">
-          Buy now &middot; {{ product.selected_or_first_available_variant.price | money }}
+          Buy now{% if product.selected_or_first_available_variant %} &middot; {{ product.selected_or_first_available_variant.price | money }}{% endif %}
         </button>
         <button type="button" class="ns-pdp__btn-cart" data-add-to-cart>
           Add to cart

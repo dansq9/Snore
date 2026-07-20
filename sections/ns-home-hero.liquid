@@ -1,5 +1,3 @@
-{{ 'ns-home-hero.css' | asset_url | stylesheet_tag }}
-
 <style>
   .ns-hero {
     max-width: 1200px;
@@ -193,7 +191,7 @@
       </p>
 
       <div class="ns-hero__cta-row">
-        <a href="{{ section.settings.cta_link | default: '/products/nightseals-mouth-tape' }}" class="ns-hero__cta-btn">
+        <a href="{% render 'shop-url' %}" class="ns-hero__cta-btn">
           {{ section.settings.cta_text | default: 'Get NightSeals from $24.95' }}
         </a>
         <a href="#how-it-works" class="ns-hero__cta-link">How it works</a>
@@ -244,12 +242,6 @@
       "id": "description",
       "label": "Description",
       "default": "Quieter nights, no dry mouth, and mornings that actually feel like mornings. NightSeals is a single strip of beard-proof mouth tape that trains you to breathe through your nose while you sleep. Try it for 30 nights or get your money back."
-    },
-    {
-      "type": "text",
-      "id": "cta_link",
-      "label": "CTA link",
-      "default": "/products/nightseals-mouth-tape"
     },
     {
       "type": "text",

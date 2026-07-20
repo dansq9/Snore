@@ -8,6 +8,17 @@
     "theme_support_url": ""
   },
   {
+    "name": "Shop",
+    "settings": [
+      {
+        "type": "product",
+        "id": "featured_product",
+        "label": "Main product",
+        "info": "The product all 'Shop' / 'Buy' buttons link to. Leave empty to fall back to the first product in your store, then to /collections/all."
+      }
+    ]
+  },
+  {
     "name": "NightSeals Brand",
     "settings": [
       { "type": "color", "id": "color_navy", "label": "Navy", "default": "#10182B" },

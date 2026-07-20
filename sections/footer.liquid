@@ -37,24 +37,24 @@
       <div class="ns-footer__links-grid">
         <div class="ns-footer__links-col">
           <h4 class="ns-footer__col-header">SHOP</h4>
-          <a href="/products/nightseals-mouth-tape" class="ns-footer__link">Mouth tape</a>
-          <a href="/products/nightseals-mouth-tape" class="ns-footer__link">Subscribe &amp; Save</a>
+          <a href="{% render 'shop-url' %}" class="ns-footer__link">Mouth tape</a>
+          <a href="{% render 'shop-url' %}" class="ns-footer__link">Subscribe &amp; Save</a>
         </div>
 
         <div class="ns-footer__links-col">
           <h4 class="ns-footer__col-header">LEARN</h4>
-          <a href="#how-it-works" class="ns-footer__link">How it works</a>
-          <a href="#reviews" class="ns-footer__link">Reviews</a>
-          <a href="#faq" class="ns-footer__link">FAQ</a>
+          <a href="/#how-it-works" class="ns-footer__link">How it works</a>
+          <a href="/#reviews" class="ns-footer__link">Reviews</a>
+          <a href="/#faq" class="ns-footer__link">FAQ</a>
         </div>
 
         <div class="ns-footer__links-col">
           <h4 class="ns-footer__col-header">SUPPORT</h4>
           <a href="mailto:help@nightseals.com" class="ns-footer__link">Contact us</a>
-          <a href="/pages/shipping-policy" class="ns-footer__link">Shipping</a>
-          <a href="/pages/refund-policy" class="ns-footer__link">Returns</a>
-          <a href="/pages/terms-of-service" class="ns-footer__link">Terms</a>
-          <a href="/pages/privacy-policy" class="ns-footer__link">Privacy</a>
+          {%- if shop.shipping_policy.url != blank -%}<a href="{{ shop.shipping_policy.url }}" class="ns-footer__link">Shipping</a>{%- endif -%}
+          {%- if shop.refund_policy.url != blank -%}<a href="{{ shop.refund_policy.url }}" class="ns-footer__link">Returns</a>{%- endif -%}
+          {%- if shop.terms_of_service.url != blank -%}<a href="{{ shop.terms_of_service.url }}" class="ns-footer__link">Terms</a>{%- endif -%}
+          {%- if shop.privacy_policy.url != blank -%}<a href="{{ shop.privacy_policy.url }}" class="ns-footer__link">Privacy</a>{%- endif -%}
         </div>
       </div>
     </div>

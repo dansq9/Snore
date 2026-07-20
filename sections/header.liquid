@@ -24,7 +24,7 @@
         <a href="/#faq" class="ns-header__link">FAQ</a>
       </div>
 
-      <a href="{{ section.settings.product_url | default: '/products/nightseals-mouth-tape' }}" class="ns-header__shop-btn ns-desktop-only">Shop</a>
+      <a href="{% render 'shop-url' %}" class="ns-header__shop-btn ns-desktop-only">Shop</a>
 
       <button class="ns-header__cart-btn ns-mobile-only" aria-label="Open cart" type="button" onclick="if(window.NightSeals&&NightSeals.Cart)NightSeals.Cart.open()" style="display:none">
         <svg width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true">
@@ -43,7 +43,7 @@
     <a href="/#how-it-works" class="ns-mobile-menu__link">How it works</a>
     <a href="/#reviews" class="ns-mobile-menu__link">Reviews</a>
     <a href="/#faq" class="ns-mobile-menu__link">FAQ</a>
-    <a href="{{ section.settings.product_url | default: '/products/nightseals-mouth-tape' }}" class="ns-mobile-menu__link ns-mobile-menu__link--shop">Shop mouth tape &rarr;</a>
+    <a href="{% render 'shop-url' %}" class="ns-mobile-menu__link ns-mobile-menu__link--shop">Shop mouth tape &rarr;</a>
   </div>
 </header>
 
@@ -226,10 +226,8 @@ document.addEventListener('DOMContentLoaded', function() {
   "name": "Header",
   "settings": [
     {
-      "type": "text",
-      "id": "product_url",
-      "label": "Product page link",
-      "default": "/products/nightseals-mouth-tape"
+      "type": "paragraph",
+      "content": "The Shop button links to your Main product, set under Theme settings → Shop."
     }
   ]
 }

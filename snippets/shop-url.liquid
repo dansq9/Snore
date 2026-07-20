@@ -1,0 +1,16 @@
+{%- comment -%}
+  Resolves the best available "shop" URL so CTAs never 404:
+  1. The product picked in Theme settings (settings.featured_product), if set
+  2. Otherwise the first product in the store
+  3. Otherwise the /collections/all route (always exists)
+  Usage: href="{% render 'shop-url' %}"
+{%- endcomment -%}
+{%- liquid
+  assign _shop_url = routes.all_products_collection_url
+  if settings.featured_product != blank
+    assign _shop_url = settings.featured_product.url
+  elsif collections.all.products.first != blank
+    assign _shop_url = collections.all.products.first.url
+  endif
+  echo _shop_url
+-%}
