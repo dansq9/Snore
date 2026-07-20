@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "hero": { "type": "ns-home-hero", "settings": {} },
+    "idea": { "type": "ns-idea-section", "settings": {} },
+    "problem": { "type": "ns-problem-section", "settings": {} },
+    "how-it-works": { "type": "ns-how-it-works", "settings": {} },
+    "benefits": { "type": "ns-benefits-rail", "settings": {} },
+    "comparison": { "type": "ns-comparison-table", "settings": {} },
+    "reviews": { "type": "ns-reviews", "settings": {} },
+    "guarantee": { "type": "ns-guarantee-cta", "settings": {} },
+    "faq": { "type": "ns-faq", "settings": {} },
+    "marquee": { "type": "ns-marquee", "settings": {} }
+  },
+  "order": ["hero","idea","problem","how-it-works","benefits","comparison","reviews","guarantee","faq","marquee"]
+}

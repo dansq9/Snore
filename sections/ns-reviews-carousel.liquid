@@ -1,0 +1,298 @@
+<style>
+  .ns-reviews-carousel {
+    padding: clamp(52px, 9vw, 88px) 0;
+    overflow: hidden;
+  }
+
+  .ns-reviews-carousel__header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    margin-bottom: clamp(28px, 5vw, 44px);
+  }
+
+  .ns-reviews-carousel__kicker {
+    font-size: 11.5px;
+    letter-spacing: .18em;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #8A93A3;
+    margin: 0 0 14px;
+  }
+
+  .ns-reviews-carousel__heading {
+    font-size: clamp(28px, 5.5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #10182B;
+    margin: 0 0 14px;
+  }
+
+  .ns-reviews-carousel__subtitle {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: clamp(16px, 2.2vw, 19px);
+    font-style: italic;
+    color: #566072;
+    margin: 0;
+  }
+
+  .ns-reviews-carousel__track {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 24px 20px;
+    scrollbar-width: none;
+  }
+
+  .ns-reviews-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ns-reviews-carousel__card--video {
+    width: min(300px, 80vw);
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background: #F7F8FA;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(16, 24, 43, .06);
+  }
+
+  .ns-reviews-carousel__video-area {
+    height: 340px;
+    background: #EAEDF2;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ns-reviews-carousel__video-area img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ns-reviews-carousel__play-btn {
+    width: 56px;
+    height: 56px;
+    background: rgba(16, 24, 43, .85);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ns-reviews-carousel__caption-area {
+    padding: 16px 18px;
+  }
+
+  .ns-reviews-carousel__caption {
+    font-size: 15px;
+    font-weight: 700;
+    color: #10182B;
+    margin: 0;
+  }
+
+  .ns-reviews-carousel__reviewer {
+    font-size: 12.5px;
+    color: #8A93A3;
+    margin: 4px 0 0;
+  }
+
+  .ns-reviews-carousel__card--text {
+    width: min(300px, 80vw);
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background: #EAEDF2;
+    border-radius: 18px;
+    padding: 28px 24px;
+    height: 404px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .ns-reviews-carousel__stars {
+    font-size: 16px;
+    color: #D9A04B;
+    margin: 0;
+  }
+
+  .ns-reviews-carousel__quote {
+    font-size: 16.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #10182B;
+    margin: 0;
+  }
+
+  .ns-reviews-carousel__name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #10182B;
+    margin: 0;
+  }
+
+  .ns-reviews-carousel__verified {
+    font-size: 11px;
+    font-weight: 600;
+    color: #B27E33;
+    margin: 4px 0 0;
+  }
+</style>
+
+<section class="ns-reviews-carousel">
+  <div class="ns-reviews-carousel__header">
+    <p class="ns-reviews-carousel__kicker">REVIEWS</p>
+    <h2 class="ns-reviews-carousel__heading">2,300+ verified reviews and counting</h2>
+    <p class="ns-reviews-carousel__subtitle">Real sleepers, real partners, real quiet. Swipe through what they tell us.</p>
+  </div>
+
+  <div class="ns-reviews-carousel__track">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'video_review' -%}
+        <div class="ns-reviews-carousel__card--video" {{ block.shopify_attributes }}>
+          <div class="ns-reviews-carousel__video-area">
+            {%- if block.settings.thumbnail -%}
+              <img
+                src="{{ block.settings.thumbnail | image_url: width: 600 }}"
+                alt="{{ block.settings.caption | escape }}"
+                loading="lazy"
+                width="300"
+                height="340"
+              >
+            {%- endif -%}
+            <div class="ns-reviews-carousel__play-btn">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 1l16 10L2 21V1z" fill="#fff"/></svg>
+            </div>
+          </div>
+          <div class="ns-reviews-carousel__caption-area">
+            <p class="ns-reviews-carousel__caption">{{ block.settings.caption }}</p>
+            <p class="ns-reviews-carousel__reviewer">{{ block.settings.reviewer }}</p>
+          </div>
+        </div>
+      {%- elsif block.type == 'text_review' -%}
+        <div class="ns-reviews-carousel__card--text" {{ block.shopify_attributes }}>
+          <p class="ns-reviews-carousel__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+          <p class="ns-reviews-carousel__quote">"{{ block.settings.quote }}"</p>
+          <div>
+            <p class="ns-reviews-carousel__name">{{ block.settings.name }}</p>
+            <p class="ns-reviews-carousel__verified">Verified</p>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews Carousel",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "video_review",
+      "name": "Video Review",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Video thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        },
+        {
+          "type": "text",
+          "id": "reviewer",
+          "label": "Reviewer info"
+        }
+      ]
+    },
+    {
+      "type": "text_review",
+      "name": "Text Review",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review quote"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Carousel",
+      "blocks": [
+        {
+          "type": "video_review",
+          "settings": {
+            "caption": "Slept through the night",
+            "reviewer": "Mike · Night 41"
+          }
+        },
+        {
+          "type": "text_review",
+          "settings": {
+            "quote": "Third night in, my wife asked what changed. That’s the whole review.",
+            "name": "James W."
+          }
+        },
+        {
+          "type": "video_review",
+          "settings": {
+            "caption": "Dry mouth, gone",
+            "reviewer": "Rob · Night 12"
+          }
+        },
+        {
+          "type": "text_review",
+          "settings": {
+            "quote": "I was nervous about taping my mouth shut. Took two nights to forget it was there.",
+            "name": "Priya N."
+          }
+        },
+        {
+          "type": "video_review",
+          "settings": {
+            "caption": "Partner approved",
+            "reviewer": "Elise · Night 30"
+          }
+        },
+        {
+          "type": "text_review",
+          "settings": {
+            "quote": "Subscribed after the first pack. It’s the cheapest thing in my sleep stack and the one that works.",
+            "name": "Alex D."
+          }
+        },
+        {
+          "type": "video_review",
+          "settings": {
+            "caption": "Total reset",
+            "reviewer": "Dan · Night 90"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

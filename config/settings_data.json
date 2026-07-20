@@ -1,0 +1,15 @@
+{
+  "current": {
+    "color_navy": "#10182B",
+    "color_offwhite": "#F7F8FA",
+    "color_light_gray": "#EAEDF2",
+    "color_amber": "#D9A04B",
+    "color_amber_hover": "#E5B267",
+    "color_dark_amber": "#B27E33",
+    "color_secondary_text": "#566072",
+    "color_muted_text": "#8A93A3",
+    "announcement_text": "Free U.S. shipping on orders $50+ · 30-night money-back guarantee",
+    "welcome_promo_code": "SEAL10",
+    "welcome_popup_delay": 3
+  }
+}

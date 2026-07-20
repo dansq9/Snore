@@ -1,0 +1,60 @@
+<style>
+  .ns-idea {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(56px, 9vw, 96px) 24px;
+    text-align: center;
+  }
+
+  .ns-idea__kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin: 0 0 16px;
+  }
+
+  .ns-idea__body {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(20px, 3.5vw, 31px);
+    line-height: 1.4;
+    color: #10182B;
+    margin: 0;
+  }
+</style>
+
+<section class="ns-idea">
+  <p class="ns-idea__kicker">
+    {{ section.settings.kicker | default: 'THE IDEA BEHIND NIGHTSEALS' }}
+  </p>
+  <p class="ns-idea__body">
+    {{ section.settings.body | default: "Your nose filters, warms and paces every breath. Mouth tape exists for one reason: to keep you breathing that way while you sleep." }}
+  </p>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Idea",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "THE IDEA BEHIND NIGHTSEALS"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Your nose filters, warms and paces every breath. Mouth tape exists for one reason: to keep you breathing that way while you sleep."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Idea"
+    }
+  ]
+}
+{% endschema %}

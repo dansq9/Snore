@@ -1,0 +1,818 @@
+<style>
+  .ns-pdp {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 48px) 24px;
+  }
+
+  .ns-pdp__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    gap: clamp(32px, 5vw, 56px);
+  }
+
+  /* ── Left column: Gallery ── */
+
+  .ns-pdp__gallery {
+    position: relative;
+  }
+
+  @media (min-width: 801px) {
+    .ns-pdp__gallery {
+      position: sticky;
+      top: 96px;
+      align-self: start;
+    }
+  }
+
+  .ns-pdp__main-img {
+    height: min(460px, 100vw);
+    border-radius: 22px;
+    overflow: hidden;
+    background: #EAEDF2;
+  }
+
+  .ns-pdp__main-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ns-pdp__img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A93A3;
+    font-size: 14px;
+  }
+
+  .ns-pdp__thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .ns-pdp__thumb {
+    height: min(120px, 28vw);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #EAEDF2;
+  }
+
+  .ns-pdp__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ns-pdp__thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A93A3;
+    font-size: 12px;
+  }
+
+  .ns-pdp__brand {
+    margin-top: 18px;
+  }
+
+  .ns-pdp__wordmark {
+    font-weight: 800;
+    font-size: clamp(20px, 2.6vw, 26px);
+    letter-spacing: .18em;
+    color: #10182B;
+    margin: 0;
+  }
+
+  .ns-pdp__stars-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .ns-pdp__stars-icons {
+    color: #D9A04B;
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+
+  .ns-pdp__stars-link {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #566072;
+    text-decoration: none;
+  }
+
+  .ns-pdp__stars-link:hover {
+    text-decoration: underline;
+  }
+
+  .ns-pdp__price-line {
+    font-size: 14px;
+    color: #8A93A3;
+    margin-top: 4px;
+  }
+
+  /* ── Right column: Buy box ── */
+
+  .ns-pdp__buybox {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ns-pdp__description {
+    font-size: clamp(20px, 2.2vw, 24px);
+    font-weight: 700;
+    line-height: 1.35;
+    color: #10182B;
+    margin: 0;
+  }
+
+  .ns-pdp__highlight {
+    background: #10182B;
+    color: #F7F8FA;
+    padding: 1px 8px 3px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  /* Benefit pills */
+
+  .ns-pdp__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 22px 0;
+  }
+
+  .ns-pdp__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1.5px solid rgba(16, 24, 43, .13);
+    font-size: 13px;
+    font-weight: 600;
+    color: #10182B;
+  }
+
+  .ns-pdp__pill-check {
+    color: #B27E33;
+    font-weight: 800;
+  }
+
+  /* Tier selector */
+
+  .ns-pdp__tier-label {
+    font-size: 12px;
+    letter-spacing: .16em;
+    font-weight: 700;
+    color: #8A93A3;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+
+  .ns-pdp__tiers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ns-pdp__tier {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    border: 2px solid rgba(16, 24, 43, .15);
+    background: transparent;
+    transition: border .2s, box-shadow .2s;
+  }
+
+  .ns-pdp__tier--active {
+    border-color: #B27E33;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(16, 24, 43, .10);
+  }
+
+  .ns-pdp__tier-badge {
+    position: absolute;
+    top: -11px;
+    left: 20px;
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .ns-pdp__tier-badge--popular {
+    background: #10182B;
+  }
+
+  .ns-pdp__tier-badge--value {
+    background: #B27E33;
+  }
+
+  .ns-pdp__tier-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .ns-pdp__radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(16, 24, 43, .25);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .2s;
+  }
+
+  .ns-pdp__tier--active .ns-pdp__radio {
+    border-color: #B27E33;
+  }
+
+  .ns-pdp__radio-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #B27E33;
+    opacity: 0;
+    transition: opacity .2s;
+  }
+
+  .ns-pdp__tier--active .ns-pdp__radio-dot {
+    opacity: 1;
+  }
+
+  .ns-pdp__tier-title {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #10182B;
+    margin: 0;
+  }
+
+  .ns-pdp__tier-per-night {
+    font-size: 13px;
+    color: #8A93A3;
+    margin: 2px 0 0;
+  }
+
+  .ns-pdp__tier-right {
+    text-align: right;
+  }
+
+  .ns-pdp__tier-save {
+    font-size: 10px;
+    letter-spacing: .08em;
+    font-weight: 700;
+    color: #B27E33;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .ns-pdp__tier-price {
+    font-size: 19px;
+    font-weight: 800;
+    color: #10182B;
+  }
+
+  .ns-pdp__tier-compare {
+    font-size: 13.5px;
+    color: #8A93A3;
+    text-decoration: line-through;
+  }
+
+  /* Subscribe & Save */
+
+  .ns-pdp__purchase-label {
+    font-size: 12px;
+    letter-spacing: .16em;
+    font-weight: 700;
+    color: #8A93A3;
+    text-transform: uppercase;
+    margin: 22px 0 14px;
+  }
+
+  .ns-pdp__purchase-toggle {
+    border: 2px solid rgba(16, 24, 43, .12);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 0;
+  }
+
+  .ns-pdp__purchase-option {
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ns-pdp__purchase-option:first-child {
+    border-bottom: 1.5px solid rgba(16, 24, 43, .10);
+  }
+
+  .ns-pdp__purchase-radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid rgba(16, 24, 43, .25);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .2s;
+  }
+
+  .ns-pdp__purchase-radio--active {
+    border-color: #B27E33;
+  }
+
+  .ns-pdp__purchase-radio-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #B27E33;
+    opacity: 0;
+    transition: opacity .2s;
+  }
+
+  .ns-pdp__purchase-radio--active .ns-pdp__purchase-radio-dot {
+    opacity: 1;
+  }
+
+  .ns-pdp__purchase-text {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #10182B;
+  }
+
+  .ns-pdp__sub-badge {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    background: #D9A04B;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 8px;
+    text-transform: uppercase;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .ns-pdp__sub-desc {
+    font-size: 12.5px;
+    color: #8A93A3;
+    padding: 0 18px 14px 48px;
+    display: none;
+  }
+
+  .ns-pdp__sub-desc--visible {
+    display: block;
+  }
+
+  /* Dual CTA buttons */
+
+  .ns-pdp__ctas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .ns-pdp__btn-buy {
+    background: #10182B;
+    color: #F7F8FA;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 15px 20px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: opacity .2s;
+  }
+
+  .ns-pdp__btn-buy:hover {
+    opacity: 0.88;
+  }
+
+  .ns-pdp__btn-cart {
+    background: transparent;
+    color: #10182B;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 15px 20px;
+    border-radius: 999px;
+    border: 2px solid rgba(16, 24, 43, .18);
+    cursor: pointer;
+    text-align: center;
+    transition: opacity .2s;
+  }
+
+  .ns-pdp__btn-cart:hover {
+    opacity: 0.88;
+  }
+
+  /* Trust line */
+
+  .ns-pdp__trust {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: 12.5px;
+    color: #8A93A3;
+    font-weight: 500;
+    flex-wrap: wrap;
+  }
+
+  /* Accordions */
+
+  .ns-pdp__accordions {
+    margin-top: 32px;
+    border-top: 1.5px solid rgba(16, 24, 43, .10);
+  }
+
+  .ns-pdp__accordion {
+    border-bottom: 1.5px solid rgba(16, 24, 43, .10);
+  }
+
+  .ns-pdp__accordion summary {
+    padding: 18px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #10182B;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+
+  .ns-pdp__accordion summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .ns-pdp__accordion summary::marker {
+    display: none;
+    content: '';
+  }
+
+  .ns-pdp__accordion summary::after {
+    content: '+';
+    font-size: 20px;
+    font-weight: 600;
+    color: #8A93A3;
+    transition: transform .2s;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+
+  .ns-pdp__accordion[open] summary::after {
+    content: '\2212';
+  }
+
+  .ns-pdp__accordion-body {
+    padding: 0 0 18px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #566072;
+  }
+
+  /* Hidden form */
+
+  .ns-pdp__form {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<section class="ns-pdp">
+  <div class="ns-pdp__grid">
+
+    <!-- ── Left column: Gallery ── -->
+    <div class="ns-pdp__gallery">
+      <div class="ns-pdp__main-img">
+        {%- if section.settings.main_image != blank -%}
+          {{ section.settings.main_image | image_url: width: 1200 | image_tag: loading: 'eager' }}
+        {%- else -%}
+          <div class="ns-pdp__img-placeholder">Product image</div>
+        {%- endif -%}
+      </div>
+
+      <div class="ns-pdp__thumbs">
+        <div class="ns-pdp__thumb">
+          {%- if section.settings.thumb_1 != blank -%}
+            {{ section.settings.thumb_1 | image_url: width: 600 | image_tag: loading: 'lazy' }}
+          {%- else -%}
+            <div class="ns-pdp__thumb-placeholder">Thumb 1</div>
+          {%- endif -%}
+        </div>
+        <div class="ns-pdp__thumb">
+          {%- if section.settings.thumb_2 != blank -%}
+            {{ section.settings.thumb_2 | image_url: width: 600 | image_tag: loading: 'lazy' }}
+          {%- else -%}
+            <div class="ns-pdp__thumb-placeholder">Thumb 2</div>
+          {%- endif -%}
+        </div>
+        <div class="ns-pdp__thumb">
+          {%- if section.settings.thumb_3 != blank -%}
+            {{ section.settings.thumb_3 | image_url: width: 600 | image_tag: loading: 'lazy' }}
+          {%- else -%}
+            <div class="ns-pdp__thumb-placeholder">Thumb 3</div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="ns-pdp__brand">
+        <p class="ns-pdp__wordmark">NIGHTSEALS</p>
+        <div class="ns-pdp__stars-row">
+          <span class="ns-pdp__stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <a href="#reviews" class="ns-pdp__stars-link">4.8 &middot; 2,341 reviews</a>
+        </div>
+        <p class="ns-pdp__price-line">From $24.95 &middot; as low as $0.56 a night</p>
+      </div>
+    </div>
+
+    <!-- ── Right column: Buy box ── -->
+    <div class="ns-pdp__buybox">
+
+      <!-- Hidden product form -->
+      <div class="ns-pdp__form">
+        {% form 'product', product, id: 'product-form' %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ns-variant-input">
+        {% endform %}
+      </div>
+
+      <!-- Description -->
+      <p class="ns-pdp__description">
+        Gentle, <span class="ns-pdp__highlight">beard-proof</span> strips that keep your lips sealed overnight, so your nose does the breathing.
+      </p>
+
+      <!-- Benefit pills -->
+      <div class="ns-pdp__pills">
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> May reduce snoring</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> No dry mouth</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> Beard-proof hold</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> AirWeave&trade; breathable</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> 3 seconds a night</span>
+      </div>
+
+      <!-- Tier selector -->
+      <p class="ns-pdp__tier-label">CHOOSE YOUR SUPPLY</p>
+      <div class="ns-pdp__tiers">
+        {% for variant in product.variants %}
+          <div
+            class="ns-pdp__tier{% if forloop.first %} ns-pdp__tier--active{% endif %}"
+            data-variant-id="{{ variant.id }}"
+            data-variant-price="{{ variant.price | money }}"
+          >
+            {%- if forloop.index == 2 -%}
+              <span class="ns-pdp__tier-badge ns-pdp__tier-badge--popular">MOST POPULAR</span>
+            {%- elsif forloop.index == 3 -%}
+              <span class="ns-pdp__tier-badge ns-pdp__tier-badge--value">BEST VALUE</span>
+            {%- endif -%}
+
+            <div class="ns-pdp__tier-left">
+              <div class="ns-pdp__radio">
+                <span class="ns-pdp__radio-dot"></span>
+              </div>
+              <div>
+                <p class="ns-pdp__tier-title">{{ variant.title }}</p>
+                <p class="ns-pdp__tier-per-night">
+                  {%- if variant.metafields.custom.per_night -%}
+                    ~{{ variant.metafields.custom.per_night }} / night
+                  {%- endif -%}
+                </p>
+              </div>
+            </div>
+
+            <div class="ns-pdp__tier-right">
+              {%- if variant.compare_at_price > variant.price -%}
+                {%- assign savings = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+                <div class="ns-pdp__tier-save">SAVE {{ savings }}%</div>
+              {%- endif -%}
+              <div class="ns-pdp__tier-price">{{ variant.price | money }}</div>
+              {%- if variant.compare_at_price > variant.price -%}
+                <div class="ns-pdp__tier-compare">{{ variant.compare_at_price | money }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Subscribe & Save toggle -->
+      <p class="ns-pdp__purchase-label">PURCHASE TYPE</p>
+      <div class="ns-pdp__purchase-toggle">
+        <div class="ns-pdp__purchase-option" data-purchase="onetime">
+          <div class="ns-pdp__purchase-radio ns-pdp__purchase-radio--active">
+            <span class="ns-pdp__purchase-radio-dot"></span>
+          </div>
+          <span class="ns-pdp__purchase-text">One-time purchase</span>
+        </div>
+        <div class="ns-pdp__purchase-option" data-purchase="subscribe">
+          <div class="ns-pdp__purchase-radio">
+            <span class="ns-pdp__purchase-radio-dot"></span>
+          </div>
+          <span class="ns-pdp__purchase-text">Subscribe &amp; Save<span class="ns-pdp__sub-badge">EXTRA 20% OFF</span></span>
+        </div>
+        <div class="ns-pdp__sub-desc" id="ns-sub-desc">
+          A fresh pouch delivered every 30 nights. Skip, pause or cancel anytime.
+        </div>
+      </div>
+
+      <!-- Dual CTA buttons -->
+      <div class="ns-pdp__ctas">
+        <button type="button" class="ns-pdp__btn-buy" id="ns-buy-now">
+          Buy now &middot; {{ product.selected_or_first_available_variant.price | money }}
+        </button>
+        <button type="button" class="ns-pdp__btn-cart" data-add-to-cart>
+          Add to cart
+        </button>
+      </div>
+
+      <!-- Trust line -->
+      <div class="ns-pdp__trust">
+        <span>100% money-back</span>
+        <span>&middot;</span>
+        <span>Free shipping $50+</span>
+        <span>&middot;</span>
+        <span>Ships in 3-5 days</span>
+      </div>
+
+      <!-- Product accordions -->
+      <div class="ns-pdp__accordions">
+        <details class="ns-pdp__accordion">
+          <summary>How to apply</summary>
+          <div class="ns-pdp__accordion-body">
+            Peel the backing strip apart to expose the adhesive. Place onto dry, lightly pursed lips and press to secure. Sleep comfortably &mdash; the flexible design stays put all night. In the morning, lift a corner and peel gently sideways.
+          </div>
+        </details>
+
+        <details class="ns-pdp__accordion">
+          <summary>Materials &amp; safety</summary>
+          <div class="ns-pdp__accordion-body">
+            Soft, breathable, latex-free fabric with a hypoallergenic, skin-safe acrylic adhesive. For adults who can breathe comfortably through their nose. Skip nights when you're congested or have had a heavy night out.
+          </div>
+        </details>
+
+        <details class="ns-pdp__accordion">
+          <summary>Shipping &amp; returns</summary>
+          <div class="ns-pdp__accordion-body">
+            Orders ship within 24-48 hours from U.S. warehouses, free over $50. Try it for 30 nights. If it's not for you, email us for a full refund. No return label needed.
+          </div>
+        </details>
+
+        <details class="ns-pdp__accordion">
+          <summary>Disclaimer</summary>
+          <div class="ns-pdp__accordion-body">
+            NightSeals is not a medical device and is not intended to diagnose, treat, cure, or prevent any disease or health condition. Statements on this site have not been evaluated by the FDA. Consult your physician before use if you have a respiratory condition.
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    /* ── Tier card selection ── */
+    var tiers = document.querySelectorAll('.ns-pdp__tier');
+    var variantInput = document.getElementById('ns-variant-input');
+    var buyBtn = document.getElementById('ns-buy-now');
+
+    tiers.forEach(function (tier) {
+      tier.addEventListener('click', function () {
+        tiers.forEach(function (t) { t.classList.remove('ns-pdp__tier--active'); });
+        tier.classList.add('ns-pdp__tier--active');
+
+        if (variantInput) {
+          variantInput.value = tier.getAttribute('data-variant-id');
+        }
+
+        if (buyBtn) {
+          buyBtn.textContent = 'Buy now · ' + tier.getAttribute('data-variant-price');
+        }
+      });
+    });
+
+    /* ── Subscribe & Save toggle ── */
+    var purchaseOptions = document.querySelectorAll('.ns-pdp__purchase-option');
+    var subDesc = document.getElementById('ns-sub-desc');
+
+    purchaseOptions.forEach(function (option) {
+      option.addEventListener('click', function () {
+        purchaseOptions.forEach(function (opt) {
+          opt.querySelector('.ns-pdp__purchase-radio').classList.remove('ns-pdp__purchase-radio--active');
+        });
+        option.querySelector('.ns-pdp__purchase-radio').classList.add('ns-pdp__purchase-radio--active');
+
+        if (option.getAttribute('data-purchase') === 'subscribe') {
+          subDesc.classList.add('ns-pdp__sub-desc--visible');
+        } else {
+          subDesc.classList.remove('ns-pdp__sub-desc--visible');
+        }
+      });
+    });
+
+    /* ── Add to cart ── */
+    var cartBtn = document.querySelector('[data-add-to-cart]');
+
+    if (cartBtn) {
+      cartBtn.addEventListener('click', function () {
+        var id = variantInput ? variantInput.value : null;
+        if (!id) return;
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: parseInt(id, 10), quantity: 1 }] })
+        })
+          .then(function (res) { return res.json(); })
+          .then(function () {
+            /* Try to open the cart drawer if theme supports it, otherwise redirect */
+            if (typeof document.querySelector('[data-cart-drawer]') !== 'undefined' && document.querySelector('[data-cart-drawer]')) {
+              document.querySelector('[data-cart-drawer]').classList.add('is-open');
+            } else {
+              window.location.href = '/cart';
+            }
+          })
+          .catch(function () {
+            window.location.href = '/cart';
+          });
+      });
+    }
+
+    /* ── Buy now (submit product form) ── */
+    if (buyBtn) {
+      buyBtn.addEventListener('click', function () {
+        var form = document.getElementById('product-form');
+        if (form) {
+          form.submit();
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main product image"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_1",
+      "label": "Thumbnail 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_2",
+      "label": "Thumbnail 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "thumb_3",
+      "label": "Thumbnail 3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Hero"
+    }
+  ]
+}
+{% endschema %}

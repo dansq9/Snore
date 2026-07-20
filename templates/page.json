@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "ns-policy-page",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

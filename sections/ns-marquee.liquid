@@ -1,0 +1,91 @@
+<style>
+  .ns-marquee {
+    background: #10182B;
+    overflow: hidden;
+    padding: clamp(26px, 5vw, 44px) 0;
+  }
+
+  .ns-marquee__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: ns-marquee 28s linear infinite;
+  }
+
+  .ns-marquee__set {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .ns-marquee__text {
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #F2F4F7;
+    white-space: nowrap;
+    padding: 0 24px;
+  }
+
+  .ns-marquee__dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #D9A04B;
+    flex-shrink: 0;
+  }
+
+  @keyframes ns-marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>
+
+<section class="ns-marquee">
+  <div class="ns-marquee__track">
+    {%- assign content_text = section.settings.content | default: '#SEALTHENIGHT' -%}
+    <div class="ns-marquee__set">
+      <span class="ns-marquee__text">{{ content_text }}</span>
+      <span class="ns-marquee__dot"></span>
+      <span class="ns-marquee__text">{{ content_text }}</span>
+      <span class="ns-marquee__dot"></span>
+      <span class="ns-marquee__text">{{ content_text }}</span>
+      <span class="ns-marquee__dot"></span>
+      <span class="ns-marquee__text">{{ content_text }}</span>
+      <span class="ns-marquee__dot"></span>
+    </div>
+    <div class="ns-marquee__set">
+      <span class="ns-marquee__text">{{ content_text }}</span>
+      <span class="ns-marquee__dot"></span>
+      <span class="ns-marquee__text">{{ content_text }}</span>
+      <span class="ns-marquee__dot"></span>
+      <span class="ns-marquee__text">{{ content_text }}</span>
+      <span class="ns-marquee__dot"></span>
+      <span class="ns-marquee__text">{{ content_text }}</span>
+      <span class="ns-marquee__dot"></span>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "content",
+      "label": "Marquee text",
+      "default": "#SEALTHENIGHT"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee"
+    }
+  ]
+}
+{% endschema %}

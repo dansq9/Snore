@@ -1,0 +1,240 @@
+{%- comment -%}
+  Welcome Popup — email capture with promo code reveal.
+  Interaction logic handled by assets/welcome-popup.js.
+{%- endcomment -%}
+
+<div id="ns-welcome-popup" class="ns-overlay" style="display:none" role="dialog" aria-label="Welcome offer" aria-modal="true">
+  <div class="ns-overlay-bg" data-welcome-close></div>
+
+  <div class="ns-welcome__modal">
+    {%- comment -%} Close button {%- endcomment -%}
+    <button class="ns-welcome__close" data-welcome-close aria-label="Close popup" type="button">&times;</button>
+
+    {%- comment -%} Top section — navy background {%- endcomment -%}
+    <div class="ns-welcome__top">
+      <p class="ns-welcome__kicker">WELCOME TO NIGHTSEALS</p>
+      <h2 class="ns-welcome__heading">
+        Unlock your <span class="ns-amber-highlight">welcome offer</span>
+      </h2>
+      <p class="ns-welcome__subtitle">Join 2,300+ sleepers who stopped snoring the easy way.</p>
+    </div>
+
+    {%- comment -%} Bottom section — white background {%- endcomment -%}
+    <div class="ns-welcome__bottom">
+      {%- comment -%} Email form {%- endcomment -%}
+      <form class="ns-welcome__form" id="ns-welcome-form">
+        <div class="ns-welcome__form-row">
+          <input
+            type="email"
+            class="ns-welcome__input"
+            placeholder="your@email.com"
+            required
+            autocomplete="email"
+            aria-label="Email address"
+          >
+          <button type="submit" class="ns-welcome__submit-btn">Claim</button>
+        </div>
+        <p class="ns-welcome__privacy">No spam. Unsubscribe anytime.</p>
+      </form>
+
+      {%- comment -%} Success state {%- endcomment -%}
+      <div id="ns-welcome-success" style="display:none" class="ns-welcome__success">
+        <p class="ns-welcome__success-label">You're in! Here's your code:</p>
+        <div class="ns-welcome__code-box" id="ns-welcome-code-box">
+          <span class="ns-welcome__code">{{ settings.welcome_promo_code | default: 'SEAL10' }}</span>
+        </div>
+        <button class="ns-welcome__copy-btn" id="ns-welcome-copy-btn" type="button">Click to copy</button>
+        <p class="ns-welcome__success-note">Apply at checkout for 10% off</p>
+        <a href="/products/nightseals-mouth-tape" class="ns-welcome__shop-btn">Start shopping</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ns-welcome__modal {
+    position: relative;
+    width: min(520px, calc(100% - 32px));
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(16,24,43,.4);
+    animation: ns-fadeup .35s ease;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .ns-welcome__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(242,244,247,.15);
+    color: #F2F4F7;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background .15s;
+  }
+  .ns-welcome__close:hover {
+    background: rgba(242,244,247,.25);
+  }
+
+  /* Top section */
+  .ns-welcome__top {
+    background: var(--navy);
+    color: #F2F4F7;
+    text-align: center;
+    padding: clamp(32px,6vw,48px) clamp(24px,5vw,40px);
+  }
+
+  .ns-welcome__kicker {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: .2em;
+    color: var(--amber);
+    margin: 0 0 12px;
+  }
+
+  .ns-welcome__heading {
+    font-size: clamp(24px,4vw,32px);
+    font-weight: 800;
+    letter-spacing: -.01em;
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+
+  .ns-welcome__subtitle {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    color: rgba(242,244,247,.6);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Bottom section */
+  .ns-welcome__bottom {
+    background: #FFFFFF;
+    padding: clamp(24px,5vw,36px) clamp(24px,5vw,40px);
+  }
+
+  .ns-welcome__form-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ns-welcome__input {
+    flex: 1;
+    border: 1px solid rgba(16,24,43,.15);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-size: 14px;
+    font-family: var(--font-primary);
+    color: var(--navy);
+    outline: none;
+    transition: border-color .15s;
+  }
+  .ns-welcome__input::placeholder {
+    color: var(--text-muted);
+  }
+  .ns-welcome__input:focus {
+    border-color: var(--navy);
+  }
+
+  .ns-welcome__submit-btn {
+    background: var(--amber);
+    color: var(--navy);
+    border: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s;
+  }
+  .ns-welcome__submit-btn:hover {
+    background: var(--amber-hover);
+  }
+
+  .ns-welcome__privacy {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 10px 0 0;
+    text-align: center;
+  }
+
+  /* Success state */
+  .ns-welcome__success {
+    text-align: center;
+  }
+
+  .ns-welcome__success-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 14px;
+  }
+
+  .ns-welcome__code-box {
+    border: 2px dashed rgba(16,24,43,.2);
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+
+  .ns-welcome__code {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    color: var(--navy);
+  }
+
+  .ns-welcome__copy-btn {
+    background: none;
+    border: none;
+    font-size: 13px;
+    color: var(--amber);
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    padding: 4px 0;
+    margin-bottom: 12px;
+  }
+  .ns-welcome__copy-btn:hover {
+    color: var(--dark-amber);
+  }
+
+  .ns-welcome__success-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 0 16px;
+  }
+
+  .ns-welcome__shop-btn {
+    display: inline-block;
+    background: var(--amber);
+    color: var(--navy);
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .15s;
+  }
+  .ns-welcome__shop-btn:hover {
+    background: var(--amber-hover);
+  }
+</style>

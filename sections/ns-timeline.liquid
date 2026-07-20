@@ -1,0 +1,250 @@
+<style>
+  .ns-timeline {
+    padding: clamp(52px, 9vw, 88px) 24px;
+  }
+
+  .ns-timeline__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .ns-timeline__header {
+    text-align: center;
+    margin-bottom: clamp(36px, 6vw, 56px);
+  }
+
+  .ns-timeline__kicker {
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #8A93A3;
+    margin: 0 0 14px;
+  }
+
+  .ns-timeline__title {
+    font-size: clamp(28px, 5.5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #10182B;
+    margin: 0 0 14px;
+  }
+
+  .ns-timeline__subtitle {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(16px, 2.2vw, 19px);
+    font-style: italic;
+    color: #566072;
+    margin: 0;
+  }
+
+  .ns-timeline__chart-wrap {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto clamp(28px, 5vw, 44px);
+    aspect-ratio: 3 / 1;
+  }
+
+  .ns-timeline__chart {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .ns-timeline__cards {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .ns-timeline__cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ns-timeline__card {
+    flex: 1;
+    min-width: min(300px, 80vw);
+    scroll-snap-align: start;
+    background: #F7F8FA;
+    border-radius: 18px;
+    padding: 28px 24px;
+  }
+
+  .ns-timeline__card--dark {
+    background: #10182B;
+  }
+
+  .ns-timeline__badge {
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #B27E33;
+    margin: 0 0 14px;
+  }
+
+  .ns-timeline__card--dark .ns-timeline__badge {
+    color: #D9A04B;
+  }
+
+  .ns-timeline__card-title {
+    font-size: clamp(18px, 2.5vw, 22px);
+    font-weight: 800;
+    color: #10182B;
+    margin: 0 0 10px;
+    line-height: 1.2;
+  }
+
+  .ns-timeline__card--dark .ns-timeline__card-title {
+    color: #FFFFFF;
+  }
+
+  .ns-timeline__card-desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #566072;
+    margin: 0;
+  }
+
+  .ns-timeline__card--dark .ns-timeline__card-desc {
+    color: rgba(242, 244, 247, 0.65);
+  }
+
+  .ns-timeline__cta {
+    text-align: center;
+    margin-top: clamp(28px, 4vw, 40px);
+  }
+
+  .ns-timeline__cta-text {
+    font-size: 15px;
+    color: #566072;
+  }
+
+  .ns-timeline__cta-link {
+    color: #D9A04B;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+</style>
+
+<section class="ns-timeline">
+  <div class="ns-timeline__inner">
+
+    <div class="ns-timeline__header">
+      <p class="ns-timeline__kicker">THE FIRST 90 NIGHTS</p>
+      <h2 class="ns-timeline__title">Your 90-night upgrade</h2>
+      <p class="ns-timeline__subtitle">
+        <span>Start tonight, feel the difference by <strong id="ns-date-30">---</strong>.</span>
+      </p>
+    </div>
+
+    <div class="ns-timeline__chart-wrap">
+      <svg class="ns-timeline__chart" viewBox="0 0 900 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid lines -->
+        <line x1="80" y1="40" x2="860" y2="40" stroke="rgba(16,24,43,.06)" stroke-dasharray="4"/>
+        <line x1="80" y1="100" x2="860" y2="100" stroke="rgba(16,24,43,.06)" stroke-dasharray="4"/>
+        <line x1="80" y1="160" x2="860" y2="160" stroke="rgba(16,24,43,.06)" stroke-dasharray="4"/>
+        <line x1="80" y1="220" x2="860" y2="220" stroke="rgba(16,24,43,.08)"/>
+
+        <!-- Y-axis label -->
+        <text x="14" y="130" text-anchor="middle" font-size="11" fill="#8A93A3" font-weight="600" transform="rotate(-90,14,130)">Sleep quality</text>
+
+        <!-- Y-axis marks -->
+        <text x="70" y="224" text-anchor="end" font-size="10" fill="#8A93A3">Low</text>
+        <text x="70" y="104" text-anchor="end" font-size="10" fill="#8A93A3">Med</text>
+        <text x="70" y="44" text-anchor="end" font-size="10" fill="#8A93A3">High</text>
+
+        <!-- Area fill -->
+        <defs>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D9A04B" stop-opacity=".15"/>
+            <stop offset="100%" stop-color="#D9A04B" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M100 200 C200 190, 350 120, 480 80 C610 40, 760 30, 840 25 L840 220 L100 220Z" fill="url(#areaGrad)"/>
+
+        <!-- Curve -->
+        <path d="M100 200 C200 190, 350 120, 480 80 C610 40, 760 30, 840 25" stroke="#D9A04B" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- Data points -->
+        <circle cx="100" cy="200" r="5" fill="#D9A04B"/>
+        <circle cx="360" cy="120" r="5" fill="#D9A04B"/>
+        <circle cx="600" cy="60" r="5" fill="#D9A04B"/>
+        <circle cx="840" cy="25" r="5" fill="#D9A04B"/>
+
+        <!-- X-axis labels -->
+        <text x="100" y="245" text-anchor="middle" font-size="11" fill="#8A93A3" font-weight="600">DAY 0</text>
+        <text x="360" y="245" text-anchor="middle" font-size="11" fill="#8A93A3" font-weight="600">DAY 30</text>
+        <text x="600" y="245" text-anchor="middle" font-size="11" fill="#8A93A3" font-weight="600">DAY 60</text>
+        <text x="840" y="245" text-anchor="middle" font-size="11" fill="#8A93A3" font-weight="600">DAY 90</text>
+
+        <!-- Start label -->
+        <text x="100" y="268" text-anchor="middle" font-size="10" fill="#D9A04B" font-weight="700" letter-spacing=".08em">YOU ARE HERE</text>
+
+        <!-- End label -->
+        <text x="840" y="12" text-anchor="middle" font-size="10" fill="#D9A04B" font-weight="700" letter-spacing=".08em">GOAL: NIGHT 90</text>
+      </svg>
+    </div>
+
+    <div class="ns-timeline__cards">
+      <div class="ns-timeline__card">
+        <p class="ns-timeline__badge">NIGHTS 1-7 &middot; STARTS TONIGHT</p>
+        <h3 class="ns-timeline__card-title">It feels weird. Then it doesn't.</h3>
+        <p class="ns-timeline__card-desc">The first night, you'll notice it. By night three or four, you won't. Your body adapts faster than you'd think.</p>
+      </div>
+
+      <div class="ns-timeline__card">
+        <p class="ns-timeline__badge">NIGHT 30</p>
+        <h3 class="ns-timeline__card-title">Someone else notices first.</h3>
+        <p class="ns-timeline__card-desc">Your partner, your fitness tracker, or the absence of a sore throat. The change tends to show up in someone else's observation before your own.</p>
+      </div>
+
+      <div class="ns-timeline__card ns-timeline__card--dark">
+        <p class="ns-timeline__badge">NIGHT 90 &middot; GOAL</p>
+        <h3 class="ns-timeline__card-title">You stop thinking about it.</h3>
+        <p class="ns-timeline__card-desc">It's just part of the routine now: brush, strip, sleep. The snoring discussion is over.</p>
+      </div>
+    </div>
+
+    <p class="ns-timeline__cta">
+      <span class="ns-timeline__cta-text">That's why most sleepers start with the 90-night pack. </span>
+      <a href="#tiers" class="ns-timeline__cta-link">Choose your supply</a>
+    </p>
+
+  </div>
+</section>
+
+<script>
+(function() {
+  var now = new Date();
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function addDays(d, n) {
+    var r = new Date(d);
+    r.setDate(r.getDate() + n);
+    return r;
+  }
+  var d30 = addDays(now, 30);
+  var el30 = document.getElementById('ns-date-30');
+  if (el30) el30.textContent = months[d30.getMonth()] + ' ' + d30.getDate();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Timeline",
+  "tag": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Timeline"
+    }
+  ]
+}
+{% endschema %}

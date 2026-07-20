@@ -1,0 +1,204 @@
+<style>
+  .ns-faq {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: clamp(56px, 9vw, 96px) 24px clamp(64px, 10vw, 112px);
+  }
+
+  .ns-faq__kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin: 0 0 12px;
+  }
+
+  .ns-faq__heading {
+    font-size: clamp(26px, 4.5vw, 42px);
+    line-height: 1.08;
+    font-weight: 800;
+    color: #10182B;
+    margin: 0 0 36px;
+    letter-spacing: -0.02em;
+  }
+
+  .ns-faq__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ns-faq__item {
+    border-bottom: 1px solid rgba(16, 24, 43, .12);
+  }
+
+  .ns-faq__item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 4px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .ns-faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .ns-faq__item summary::marker {
+    display: none;
+    content: '';
+  }
+
+  .ns-faq__question {
+    font-size: 16.5px;
+    font-weight: 600;
+    color: #10182B;
+    flex: 1;
+    padding-right: 16px;
+  }
+
+  .ns-faq__toggle {
+    font-size: 20px;
+    color: #B8860B;
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .ns-faq__item[open] .ns-faq__toggle-plus {
+    display: none;
+  }
+
+  .ns-faq__item:not([open]) .ns-faq__toggle-minus {
+    display: none;
+  }
+
+  .ns-faq__answer {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #566072;
+    padding: 0 40px 22px 4px;
+    margin: 0;
+  }
+</style>
+
+<section class="ns-faq">
+  <p class="ns-faq__kicker">FAQ</p>
+  <h2 class="ns-faq__heading">Frequently asked questions</h2>
+
+  <div class="ns-faq__list">
+    {%- for block in section.blocks -%}
+      <details class="ns-faq__item" {{ block.shopify_attributes }}>
+        <summary>
+          <span class="ns-faq__question">{{ block.settings.question }}</span>
+          <span class="ns-faq__toggle">
+            <span class="ns-faq__toggle-plus">+</span>
+            <span class="ns-faq__toggle-minus">&minus;</span>
+          </span>
+        </summary>
+        <p class="ns-faq__answer">{{ block.settings.answer }}</p>
+      </details>
+    {%- endfor -%}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var faqSection = document.querySelector('.ns-faq__list');
+    if (!faqSection) return;
+    faqSection.addEventListener('toggle', function (e) {
+      if (!e.target.open) return;
+      var items = faqSection.querySelectorAll('details.ns-faq__item');
+      items.forEach(function (item) {
+        if (item !== e.target && item.open) {
+          item.open = false;
+        }
+      });
+    }, true);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is mouth taping safe?",
+            "answer": "For healthy adults who can breathe comfortably through their nose, yes. NightSeals uses a gentle, hypoallergenic adhesive and peels off easily by hand. It's not for children, and it's not a treatment for sleep apnea. If you suspect you have it, talk to your doctor first."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What if my nose gets congested?",
+            "answer": "Skip that night. Tape is for nights you can breathe freely through your nose. Many sleepers pair NightSeals with a hot shower or nasal rinse before bed during allergy season."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will it rip off my beard?",
+            "answer": "No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Does it work with a CPAP?",
+            "answer": "Yes. Many CPAP users tape to stop mouth leaks with nasal masks and nasal pillows. If your pressure settings assume mouth breathing, check with your sleep specialist first."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I open my mouth if I need to?",
+            "answer": "Yes. It's a reminder, not a lock. A gentle yawn or deliberate effort parts your lips easily. It just stops the unconscious falling-open while you sleep."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does a pack last?",
+            "answer": "One strip per night: the 30-pack lasts a month, the 90-pack a quarter, and the 180-pack half a year. Subscribers get a fresh pouch right as the last one runs out."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's it made of?",
+            "answer": "A soft, breathable, latex-free fabric with a skin-safe acrylic adhesive. Hypoallergenic, residue-free, and tested on sensitive skin."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

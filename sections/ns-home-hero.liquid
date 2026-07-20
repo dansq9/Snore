@@ -1,0 +1,267 @@
+{{ 'ns-home-hero.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .ns-hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(40px,7vw,72px) 24px clamp(48px,9vw,88px);
+  }
+
+  .ns-hero__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: clamp(36px, 6vw, 64px);
+    align-items: center;
+  }
+
+  .ns-hero__stars {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .ns-hero__stars-icons {
+    color: #D9A04B;
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+
+  .ns-hero__stars-text {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #566072;
+  }
+
+  .ns-hero__heading {
+    font-size: clamp(30px, 7vw, 66px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    color: #10182B;
+    margin: 0 0 22px;
+  }
+
+  .ns-hero__heading-highlight {
+    background: #10182B;
+    color: #F7F8FA;
+    padding: 1px 10px 3px;
+    border-radius: 5px;
+    display: inline-block;
+    transform: rotate(-2deg);
+  }
+
+  .ns-hero__desc {
+    font-size: clamp(16px, 4vw, 18px);
+    line-height: 1.55;
+    color: #566072;
+    max-width: 520px;
+    margin: 0 0 28px;
+  }
+
+  .ns-hero__cta-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+
+  .ns-hero__cta-btn {
+    display: inline-block;
+    background: #10182B;
+    color: #F7F8FA;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: opacity .2s;
+  }
+
+  .ns-hero__cta-btn:hover {
+    opacity: 0.88;
+  }
+
+  .ns-hero__cta-link {
+    font-size: 15px;
+    font-weight: 600;
+    color: #10182B;
+    text-decoration: none;
+    border-bottom: 2px solid #D9A04B;
+    padding-bottom: 2px;
+  }
+
+  .ns-hero__trust {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: #566072;
+    font-weight: 500;
+  }
+
+  .ns-hero__trust-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #D9A04B;
+    flex-shrink: 0;
+  }
+
+  .ns-hero__image-col {
+    position: relative;
+  }
+
+  .ns-hero__image {
+    width: 100%;
+    height: min(440px, 90vw);
+    border-radius: 22px;
+    overflow: hidden;
+    background: #EAEDF2;
+  }
+
+  .ns-hero__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ns-hero__image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A93A3;
+    font-size: 14px;
+  }
+
+  .ns-hero__quote {
+    position: absolute;
+    bottom: 26px;
+    left: -30px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 16px 40px rgba(16, 24, 43, .16);
+    max-width: 260px;
+    z-index: 2;
+  }
+
+  .ns-hero__quote-text {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #10182B;
+    margin: 0 0 6px;
+    line-height: 1.4;
+  }
+
+  .ns-hero__quote-meta {
+    font-size: 12px;
+    color: #8A93A3;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  @media (max-width: 600px) {
+    .ns-hero__quote {
+      left: 14px;
+      bottom: 14px;
+      max-width: 210px;
+    }
+  }
+</style>
+
+<section class="ns-hero">
+  <div class="ns-hero__grid">
+    <div class="ns-hero__text-col">
+      <div class="ns-hero__stars">
+        <span class="ns-hero__stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class="ns-hero__stars-text">4.8 &middot; 2,300+ verified sleepers</span>
+      </div>
+
+      <h1 class="ns-hero__heading">
+        {{ section.settings.heading | default: 'Better sleep is right under your <span class="ns-hero__heading-highlight">nose</span>' }}
+      </h1>
+
+      <p class="ns-hero__desc">
+        {{ section.settings.description | default: "Quieter nights, no dry mouth, and mornings that actually feel like mornings. NightSeals is a single strip of beard-proof mouth tape that trains you to breathe through your nose while you sleep. Try it for 30 nights or get your money back." }}
+      </p>
+
+      <div class="ns-hero__cta-row">
+        <a href="{{ section.settings.cta_link | default: '/products/nightseals-mouth-tape' }}" class="ns-hero__cta-btn">
+          {{ section.settings.cta_text | default: 'Get NightSeals from $24.95' }}
+        </a>
+        <a href="#how-it-works" class="ns-hero__cta-link">How it works</a>
+      </div>
+
+      <div class="ns-hero__trust">
+        <span>100% money-back</span>
+        <span class="ns-hero__trust-dot"></span>
+        <span>Free shipping $50+</span>
+        <span class="ns-hero__trust-dot"></span>
+        <span>Ships in 3-5 days</span>
+      </div>
+    </div>
+
+    <div class="ns-hero__image-col">
+      <div class="ns-hero__image">
+        {%- if section.settings.hero_image != blank -%}
+          {{ section.settings.hero_image | image_url: width: 1200 | image_tag: loading: 'eager', class: '' }}
+        {%- else -%}
+          <div class="ns-hero__image-placeholder">Hero image</div>
+        {%- endif -%}
+      </div>
+      <div class="ns-hero__quote">
+        <p class="ns-hero__quote-text">"He didn't snore once. Not once."</p>
+        <p class="ns-hero__quote-meta">Verified partner review &middot; Results may vary</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Better sleep is right under your <span class=\"ns-hero__heading-highlight\">nose</span>"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Quieter nights, no dry mouth, and mornings that actually feel like mornings. NightSeals is a single strip of beard-proof mouth tape that trains you to breathe through your nose while you sleep. Try it for 30 nights or get your money back."
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link",
+      "default": "/products/nightseals-mouth-tape"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Get NightSeals from $24.95"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,180 @@
+<style>
+  .ns-pdp-compare {
+    padding: clamp(52px, 9vw, 88px) 24px;
+  }
+
+  .ns-pdp-compare__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .ns-pdp-compare__header {
+    text-align: center;
+    margin-bottom: clamp(28px, 5vw, 44px);
+  }
+
+  .ns-pdp-compare__kicker {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8A93A3;
+    margin: 0 0 14px;
+  }
+
+  .ns-pdp-compare__heading {
+    font-size: clamp(28px, 5.5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #10182B;
+    margin: 0 0 14px;
+  }
+
+  .ns-pdp-compare__table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ns-pdp-compare__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1.1fr 1.1fr;
+    min-width: 640px;
+    width: 100%;
+  }
+
+  .ns-pdp-compare__cell {
+    padding: 16px 18px;
+    font-size: 13.5px;
+    color: #8A93A3;
+    display: flex;
+    align-items: center;
+  }
+
+  .ns-pdp-compare__cell--hdr {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8A93A3;
+  }
+
+  .ns-pdp-compare__cell--hdr-ns {
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #10182B;
+    background: #fff;
+    border-left: 2px solid rgba(16, 24, 43, .10);
+    border-right: 2px solid rgba(16, 24, 43, .10);
+    border-radius: 16px 16px 0 0;
+  }
+
+  .ns-pdp-compare__cell--feature {
+    font-size: 14px;
+    font-weight: 600;
+    color: #10182B;
+  }
+
+  .ns-pdp-compare__cell--ns {
+    font-size: 14px;
+    font-weight: 600;
+    color: #10182B;
+    background: #fff;
+    border-left: 2px solid rgba(16, 24, 43, .10);
+    border-right: 2px solid rgba(16, 24, 43, .10);
+  }
+
+  .ns-pdp-compare__cell--ns-last {
+    border-radius: 0 0 16px 16px;
+  }
+
+  .ns-pdp-compare__cell--even {
+    background: rgba(16, 24, 43, .03);
+  }
+
+  .ns-pdp-compare__cell--ns.ns-pdp-compare__cell--even {
+    background: #fff;
+  }
+
+  .ns-pdp-compare__check {
+    color: #B27E33;
+    font-weight: 700;
+    margin-right: 6px;
+  }
+</style>
+
+<section class="ns-pdp-compare">
+  <div class="ns-pdp-compare__inner">
+    <div class="ns-pdp-compare__header">
+      <p class="ns-pdp-compare__kicker">COMPARE</p>
+      <h2 class="ns-pdp-compare__heading">How NightSeals stacks up</h2>
+    </div>
+
+    <div class="ns-pdp-compare__table-wrap">
+      <div class="ns-pdp-compare__grid">
+        {%- comment -%} Header row {%- endcomment -%}
+        <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr">Feature</div>
+        <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr-ns">NIGHTSEALS</div>
+        <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr">Cheap tape</div>
+        <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr">Doing nothing</div>
+
+        {%- comment -%} Data rows from blocks {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- assign is_even = forloop.index | modulo: 2 -%}
+
+          <div class="ns-pdp-compare__cell ns-pdp-compare__cell--feature{% if is_even == 0 %} ns-pdp-compare__cell--even{% endif %}" {{ block.shopify_attributes }}>
+            {{ block.settings.feature }}
+          </div>
+
+          <div class="ns-pdp-compare__cell ns-pdp-compare__cell--ns{% if forloop.last %} ns-pdp-compare__cell--ns-last{% endif %}{% if is_even == 0 %} ns-pdp-compare__cell--even{% endif %}">
+            <span class="ns-pdp-compare__check">&#10003;</span>{{ block.settings.nightseals }}
+          </div>
+
+          <div class="ns-pdp-compare__cell{% if is_even == 0 %} ns-pdp-compare__cell--even{% endif %}">
+            {{ block.settings.cheap }}
+          </div>
+
+          <div class="ns-pdp-compare__cell{% if is_even == 0 %} ns-pdp-compare__cell--even{% endif %}">
+            {{ block.settings.nothing }}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PDP Comparison",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison Row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature name" },
+        { "type": "text", "id": "nightseals", "label": "NightSeals value" },
+        { "type": "text", "id": "cheap", "label": "Cheap tape value" },
+        { "type": "text", "id": "nothing", "label": "Doing nothing value" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Comparison",
+      "blocks": [
+        { "type": "row", "settings": { "feature": "Stays on all night", "nightseals": "SteadyHold™, all-night hold", "cheap": "Peels off by 2 am", "nothing": "No change" } },
+        { "type": "row", "settings": { "feature": "Beard friendly", "nightseals": "SteadyHold™ grips through hair", "cheap": "Won’t stick to beards", "nothing": "N/A" } },
+        { "type": "row", "settings": { "feature": "Comfort", "nightseals": "AirWeave™ breathable mesh", "cheap": "Stiff, plasticky film", "nothing": "Unchanged" } },
+        { "type": "row", "settings": { "feature": "Zero residue", "nightseals": "Peels off clean", "cheap": "Leaves sticky residue", "nothing": "Status quo" } },
+        { "type": "row", "settings": { "feature": "Non-toxic", "nightseals": "Hypoallergenic, latex-free", "cheap": "Unknown materials", "nothing": "N/A" } },
+        { "type": "row", "settings": { "feature": "Cost per night", "nightseals": "From $0.56 a night", "cheap": "Cheap price, cheap results", "nothing": "No solution" } },
+        { "type": "row", "settings": { "feature": "Guarantee", "nightseals": "30-night money back", "cheap": "No returns", "nothing": "N/A" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

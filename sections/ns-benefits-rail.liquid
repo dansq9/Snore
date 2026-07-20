@@ -1,0 +1,133 @@
+<style>
+  .ns-benefits {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 44px 24px clamp(56px, 9vw, 96px);
+  }
+
+  .ns-benefits__kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin: 0 0 24px;
+  }
+
+  .ns-benefits__rail {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 8px;
+  }
+
+  .ns-benefits__rail::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .ns-benefits__rail::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .ns-benefits__rail::-webkit-scrollbar-thumb {
+    background: rgba(16, 24, 43, .18);
+    border-radius: 4px;
+  }
+
+  .ns-benefits__card {
+    flex: 1 0 min(220px, 60vw);
+    scroll-snap-align: start;
+    border-top: 2px solid rgba(16, 24, 43, .18);
+    padding: 16px 8px 0 0;
+  }
+
+  .ns-benefits__card-title {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #10182B;
+    margin: 0 0 6px;
+  }
+
+  .ns-benefits__card-desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #566072;
+    margin: 0;
+  }
+</style>
+
+<section class="ns-benefits">
+  <p class="ns-benefits__kicker">THE BENEFITS</p>
+
+  <div class="ns-benefits__rail">
+    {%- for block in section.blocks -%}
+      <div class="ns-benefits__card" {{ block.shopify_attributes }}>
+        <p class="ns-benefits__card-title">{{ block.settings.title }}</p>
+        <p class="ns-benefits__card-desc">{{ block.settings.description }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits Rail",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits Rail",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "May reduce snoring",
+            "description": "Sealed lips may help keep the airway clear. Many sleepers notice a difference in the first week."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Less dry mouth",
+            "description": "Wake up without the sandpaper tongue, the water chugging, the morning breath."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Deeper, steadier sleep",
+            "description": "Nasal breathing supports slower, steadier breaths, the kind deep sleep is made of."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "Quieter nights for two",
+            "description": "The cheapest marriage counseling you'll ever buy. Partners notice on night one."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

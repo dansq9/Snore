@@ -1,0 +1,26 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "NightSeals",
+    "theme_version": "1.0.0",
+    "theme_author": "NightSeals",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "NightSeals Brand",
+    "settings": [
+      { "type": "color", "id": "color_navy", "label": "Navy", "default": "#10182B" },
+      { "type": "color", "id": "color_offwhite", "label": "Off-white", "default": "#F7F8FA" },
+      { "type": "color", "id": "color_light_gray", "label": "Light gray", "default": "#EAEDF2" },
+      { "type": "color", "id": "color_amber", "label": "Amber", "default": "#D9A04B" },
+      { "type": "color", "id": "color_amber_hover", "label": "Amber hover", "default": "#E5B267" },
+      { "type": "color", "id": "color_dark_amber", "label": "Dark amber", "default": "#B27E33" },
+      { "type": "color", "id": "color_secondary_text", "label": "Secondary text", "default": "#566072" },
+      { "type": "color", "id": "color_muted_text", "label": "Muted text", "default": "#8A93A3" },
+      { "type": "text", "id": "announcement_text", "label": "Announcement bar text", "default": "Free U.S. shipping on orders $50+ · 30-night money-back guarantee" },
+      { "type": "text", "id": "welcome_promo_code", "label": "Welcome popup promo code", "default": "SEAL10" },
+      { "type": "range", "id": "welcome_popup_delay", "label": "Welcome popup delay (seconds)", "min": 0, "max": 15, "step": 1, "default": 3 }
+    ]
+  }
+]

@@ -1,0 +1,111 @@
+/**
+ * NightSeals — Floating Action Button (FAB)
+ *
+ * A sticky "Buy now" pill that appears once the user scrolls past the
+ * buy-box (#tiers or #buy) and hides near the footer.  Uses
+ * IntersectionObserver for zero-jank visibility toggling.
+ */
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------ */
+  /*  Build FAB element                                                  */
+  /* ------------------------------------------------------------------ */
+
+  function createFab() {
+    var fab = document.createElement('a');
+    fab.id  = 'ns-fab';
+    fab.setAttribute('role', 'button');
+    fab.setAttribute('aria-label', 'Buy now');
+    fab.style.cssText =
+      'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);' +
+      'z-index:60;display:flex;align-items:center;gap:8px;' +
+      'background:#10182B;color:#F7F8FA;' +
+      'padding:16px 28px;border-radius:999px;' +
+      'font-family:var(--font-primary,Archivo,system-ui,sans-serif);' +
+      'font-size:15.5px;font-weight:700;text-decoration:none;' +
+      'box-shadow:0 8px 32px rgba(16,24,43,.35);' +
+      'transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s;' +
+      'opacity:0;pointer-events:none;cursor:pointer;white-space:nowrap';
+
+    fab.innerHTML =
+      'Buy now <span style="opacity:.45;margin:0 2px">·</span> ' +
+      '<span id="ns-fab-price"></span>';
+
+    /* Determine target */
+    var tiers = document.getElementById('tiers');
+    var buy   = document.getElementById('buy');
+
+    if (tiers) {
+      fab.href = '#tiers';
+    } else if (buy) {
+      fab.href = '#buy';
+    } else {
+      fab.href = '/cart';
+    }
+
+    document.body.appendChild(fab);
+    return fab;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Visibility helpers                                                 */
+  /* ------------------------------------------------------------------ */
+
+  function showFab(fab) {
+    fab.style.transform = 'translateX(-50%) translateY(0)';
+    fab.style.opacity   = '1';
+    fab.style.pointerEvents = '';
+  }
+
+  function hideFab(fab) {
+    fab.style.transform = 'translateX(-50%) translateY(80px)';
+    fab.style.opacity   = '0';
+    fab.style.pointerEvents = 'none';
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Init                                                               */
+  /* ------------------------------------------------------------------ */
+
+  function init() {
+    var buyBox = document.getElementById('tiers') || document.getElementById('buy');
+    if (!buyBox) return; /* No buy-box on this page — skip FAB */
+
+    var footer = document.querySelector('footer, .ns-footer');
+    var fab    = createFab();
+
+    var buyBoxVisible  = true;
+    var footerVisible  = false;
+
+    function evaluate() {
+      if (!buyBoxVisible && !footerVisible) {
+        showFab(fab);
+      } else {
+        hideFab(fab);
+      }
+    }
+
+    /* Observe the buy-box — FAB appears when it exits viewport */
+    var buyObserver = new IntersectionObserver(function (entries) {
+      buyBoxVisible = entries[0].isIntersecting;
+      evaluate();
+    }, { threshold: 0 });
+    buyObserver.observe(buyBox);
+
+    /* Observe the footer — FAB hides when footer is visible */
+    if (footer) {
+      var footerObserver = new IntersectionObserver(function (entries) {
+        footerVisible = entries[0].isIntersecting;
+        evaluate();
+      }, { threshold: 0 });
+      footerObserver.observe(footer);
+    }
+  }
+
+  if (document.readyState !== 'loading') {
+    init();
+  } else {
+    document.addEventListener('DOMContentLoaded', init);
+  }
+})();

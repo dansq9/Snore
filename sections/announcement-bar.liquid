@@ -1,0 +1,49 @@
+{%- if section.settings.show_announcement -%}
+{%- assign announcement_text = section.settings.text | default: settings.announcement_text -%}
+{%- if announcement_text != blank -%}
+<div class="ns-announcement-bar" role="region" aria-label="Announcement">
+  <p class="ns-announcement-bar__text">
+    {{ announcement_text | split: '·' | first }}
+    {%- if announcement_text contains '·' -%}
+      <span class="ns-desktop-only" style="display:inline">&middot;{{ announcement_text | split: '·' | last }}</span>
+    {%- endif -%}
+  </p>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+<style>
+  .ns-announcement-bar {
+    background: #10182B;
+    color: #F2F4F7;
+    text-align: center;
+    padding: 9px 16px;
+  }
+
+  .ns-announcement-bar__text {
+    margin: 0;
+    font-size: 12.5px;
+    letter-spacing: .05em;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text"
+    }
+  ]
+}
+{% endschema %}

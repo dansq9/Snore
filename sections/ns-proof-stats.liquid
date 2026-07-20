@@ -1,0 +1,133 @@
+<style>
+  .ns-proof-stats {
+    background: #EAEDF2;
+    padding: clamp(52px, 9vw, 88px) 24px;
+  }
+
+  .ns-proof-stats__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .ns-proof-stats__kicker {
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #8A93A3;
+    margin: 0 0 14px;
+  }
+
+  .ns-proof-stats__heading {
+    font-size: clamp(28px, 5.5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #10182B;
+    margin: 0 0 14px;
+  }
+
+  .ns-proof-stats__subtitle {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(16px, 2.2vw, 19px);
+    font-style: italic;
+    color: #566072;
+    margin: 0 0 clamp(36px, 6vw, 56px);
+  }
+
+  .ns-proof-stats__grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(170px, 1fr);
+    gap: 1px;
+    background: rgba(16, 24, 43, 0.12);
+    border-radius: 18px;
+    overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .ns-proof-stats__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ns-proof-stats__tile {
+    background: #F7F8FA;
+    padding: clamp(28px, 4vw, 40px) 24px;
+    text-align: center;
+  }
+
+  .ns-proof-stats__number {
+    font-size: clamp(30px, 5vw, 42px);
+    font-weight: 800;
+    color: #10182B;
+    line-height: 1.1;
+    margin: 0 0 10px;
+  }
+
+  .ns-proof-stats__description {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #566072;
+    margin: 0;
+  }
+
+  .ns-proof-stats__footnote {
+    font-size: 11.5px;
+    color: #8A93A3;
+    margin: 20px 0 0;
+    text-align: center;
+  }
+</style>
+
+<div class="ns-proof-stats">
+  <div class="ns-proof-stats__inner">
+    <p class="ns-proof-stats__kicker">PROOF</p>
+    <h2 class="ns-proof-stats__heading">Proven by real sleepers</h2>
+    <p class="ns-proof-stats__subtitle">We surveyed 1,000 mouth tape users. Here's what they told us.</p>
+
+    <div class="ns-proof-stats__grid">
+      {% for block in section.blocks %}
+        <div class="ns-proof-stats__tile" {{ block.shopify_attributes }}>
+          <p class="ns-proof-stats__number">{{ block.settings.number }}</p>
+          <p class="ns-proof-stats__description">{{ block.settings.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <p class="ns-proof-stats__footnote">*Based on a self-reported survey of 1,000 mouth tape users. Individual results may vary.</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Proof Stats",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Stat number", "default": "9 in 10" },
+        { "type": "text", "id": "description", "label": "Description", "default": "would recommend NightSeals" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Proof Stats",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "9 in 10", "description": "would recommend NightSeals to a friend" } },
+        { "type": "stat", "settings": { "number": "9 in 10", "description": "felt results within their very first week" } },
+        { "type": "stat", "settings": { "number": "9 in 10", "description": "wake up feeling more rested" } },
+        { "type": "stat", "settings": { "number": "8 in 10", "description": "reported less snoring" } },
+        { "type": "stat", "settings": { "number": "3 in 4", "description": "report an improved relationship with their partner" } },
+        { "type": "stat", "settings": { "number": "9 in 10", "description": "say NightSeals is worth the investment" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

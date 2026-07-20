@@ -1,0 +1,117 @@
+{%- comment -%}
+  Policy Page — clean, readable layout for legal / info pages.
+  Assign the "Policy Page" template to any page in the Shopify admin.
+{%- endcomment -%}
+
+<section class="ns-policy">
+  <p class="ns-policy__kicker">POLICY</p>
+  <h1 class="ns-policy__title">{{ page.title }}</h1>
+
+  <div class="ns-policy__body rte">
+    {{ page.content }}
+  </div>
+
+  <p class="ns-policy__updated">
+    Last updated: July 2026. Questions?
+    <a href="mailto:help@nightseals.com">help@nightseals.com</a>
+  </p>
+</section>
+
+<style>
+  .ns-policy {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(56px,9vw,96px);
+  }
+
+  .ns-policy__kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: var(--amber, #D9A04B);
+    margin: 0 0 12px;
+  }
+
+  .ns-policy__title {
+    font-size: clamp(28px,5vw,40px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1.15;
+    color: var(--navy, #10182B);
+    margin: 0 0 32px;
+  }
+
+  /* Rich-text body typography */
+  .ns-policy__body {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-secondary, #566072);
+  }
+
+  .ns-policy__body h2,
+  .ns-policy__body h3,
+  .ns-policy__body h4,
+  .ns-policy__body strong {
+    color: var(--navy, #10182B);
+  }
+
+  .ns-policy__body h2 {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 36px 0 12px;
+  }
+
+  .ns-policy__body h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 28px 0 10px;
+  }
+
+  .ns-policy__body p {
+    margin: 0 0 16px;
+  }
+
+  .ns-policy__body ul,
+  .ns-policy__body ol {
+    padding-left: 22px;
+    margin: 0 0 16px;
+  }
+
+  .ns-policy__body li {
+    margin-bottom: 6px;
+  }
+
+  .ns-policy__body a {
+    color: var(--amber, #D9A04B);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .ns-policy__body a:hover {
+    color: var(--dark-amber, #B27E33);
+  }
+
+  .ns-policy__updated {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(16,24,43,.1);
+    font-size: 13px;
+    color: var(--text-muted, #8A93A3);
+    line-height: 1.6;
+  }
+
+  .ns-policy__updated a {
+    color: var(--amber, #D9A04B);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .ns-policy__updated a:hover {
+    color: var(--dark-amber, #B27E33);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Policy Page",
+  "settings": []
+}
+{% endschema %}

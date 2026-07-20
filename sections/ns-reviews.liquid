@@ -1,0 +1,151 @@
+<style>
+  .ns-reviews {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(56px, 9vw, 96px) 24px;
+  }
+
+  .ns-reviews__kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin: 0 0 10px;
+  }
+
+  .ns-reviews__stars {
+    font-size: 18px;
+    color: #D9A04B;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  .ns-reviews__heading {
+    font-size: clamp(26px, 4.5vw, 42px);
+    line-height: 1.08;
+    font-weight: 800;
+    color: #10182B;
+    margin: 0 0 36px;
+    letter-spacing: -0.02em;
+  }
+
+  .ns-reviews__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 24px;
+  }
+
+  .ns-reviews__card {
+    background: #fff;
+    border: 1px solid rgba(16, 24, 43, .1);
+    border-radius: 18px;
+    padding: 28px;
+  }
+
+  .ns-reviews__card-stars {
+    font-size: 13px;
+    color: #D9A04B;
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  .ns-reviews__card-title {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #10182B;
+    margin: 0 0 8px;
+  }
+
+  .ns-reviews__card-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #566072;
+    margin: 0 0 16px;
+  }
+
+  .ns-reviews__card-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #8A93A3;
+    margin: 0;
+  }
+</style>
+
+<section class="ns-reviews">
+  <p class="ns-reviews__kicker">REVIEWS</p>
+  <div class="ns-reviews__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+  <h2 class="ns-reviews__heading">2,300+ verified reviews and counting</h2>
+
+  <div class="ns-reviews__grid">
+    {%- for block in section.blocks -%}
+      <div class="ns-reviews__card" {{ block.shopify_attributes }}>
+        <div class="ns-reviews__card-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="ns-reviews__card-title">"{{ block.settings.quote_title }}"</p>
+        <p class="ns-reviews__card-body">"{{ block.settings.quote_body }}"</p>
+        <p class="ns-reviews__card-name">{{ block.settings.reviewer_name }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "quote_title",
+          "label": "Quote title"
+        },
+        {
+          "type": "textarea",
+          "id": "quote_body",
+          "label": "Quote body"
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "quote_title": "My wife noticed on night one.",
+            "quote_body": "The snoring didn't fully stop until night three, but the difference was immediate. We sleep in the same room again.",
+            "reviewer_name": "Marcus T. · Verified buyer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote_title": "Stays on through a full beard.",
+            "quote_body": "Every other tape peeled off by 2am. This one comes off when I decide it should, and cleanly.",
+            "reviewer_name": "Derek R. · Verified buyer"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote_title": "No more 3am dry mouth.",
+            "quote_body": "I used to wake up with my tongue like sandpaper. Gone. I fall asleep in minutes and stay asleep.",
+            "reviewer_name": "Sam K. · Verified buyer"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

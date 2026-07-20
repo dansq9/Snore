@@ -1,0 +1,80 @@
+<style>
+  .ns-guarantee {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px clamp(56px, 9vw, 96px);
+  }
+
+  .ns-guarantee__card {
+    background: #10182B;
+    border-radius: 28px;
+    padding: clamp(32px, 6vw, 72px) clamp(18px, 5vw, 48px);
+    text-align: center;
+  }
+
+  .ns-guarantee__heading {
+    font-size: clamp(26px, 4.5vw, 42px);
+    line-height: 1.08;
+    font-weight: 800;
+    color: #F2F4F7;
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .ns-guarantee__heading-highlight {
+    background: #D9A04B;
+    color: #10182B;
+    padding: 0 7px 3px;
+    border-radius: 6px;
+    display: inline-block;
+    transform: rotate(-2deg);
+  }
+
+  .ns-guarantee__desc {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: rgba(242, 244, 247, .65);
+    max-width: 520px;
+    margin: 0 auto 28px;
+  }
+
+  .ns-guarantee__cta {
+    display: inline-block;
+    background: #D9A04B;
+    color: #10182B;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: opacity .2s;
+  }
+
+  .ns-guarantee__cta:hover {
+    opacity: 0.88;
+  }
+</style>
+
+<section class="ns-guarantee">
+  <div class="ns-guarantee__card">
+    <h2 class="ns-guarantee__heading">
+      Sleep on it for <span class="ns-guarantee__heading-highlight">30 nights</span>
+    </h2>
+    <p class="ns-guarantee__desc">
+      If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions, no hard feelings.
+    </p>
+    <a href="/products/nightseals-mouth-tape" class="ns-guarantee__cta">Try NightSeals risk-free</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Guarantee CTA",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Guarantee CTA"
+    }
+  ]
+}
+{% endschema %}

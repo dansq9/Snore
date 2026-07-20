@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{ page_title }} – {{ shop.name }}</title>
+  {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'components.css' | asset_url | stylesheet_tag }}
+</head>
+<body>
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+
+  <main id="main-content" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  {% render 'cart-drawer' %}
+  {% render 'welcome-popup' %}
+  {% render 'sub-prompt' %}
+
+  <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+  <script src="{{ 'welcome-popup.js' | asset_url }}" defer></script>
+  <script src="{{ 'sub-prompt.js' | asset_url }}" defer></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer></script>
+  <script src="{{ 'faq-accordion.js' | asset_url }}" defer></script>
+  <script src="{{ 'confetti.js' | asset_url }}" defer></script>
+  <script src="{{ 'fab.js' | asset_url }}" defer></script>
+</body>
+</html>

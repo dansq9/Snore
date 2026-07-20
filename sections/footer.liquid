@@ -1,0 +1,280 @@
+<footer class="ns-footer" role="contentinfo">
+  {%- comment -%} Top tier {%- endcomment -%}
+  <div class="ns-footer__top">
+    <div class="ns-footer__grid">
+      {%- comment -%} Column 1 — Brand {%- endcomment -%}
+      <div class="ns-footer__brand">
+        <div class="ns-footer__wordmark">NIGHTSEALS</div>
+        <p class="ns-footer__tagline">Seal your lips. Free your nose. Wake up like you actually slept.</p>
+
+        <form class="ns-footer__email-form" action="/contact#contact_form" method="post" accept-charset="UTF-8">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="&#10003;">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="ns-footer__email-row">
+            <input
+              type="email"
+              name="contact[email]"
+              class="ns-footer__email-input"
+              placeholder="your@email.com"
+              autocomplete="email"
+              required
+              aria-label="Email address"
+            >
+            <button type="submit" class="ns-footer__email-btn">Join</button>
+          </div>
+        </form>
+        <p class="ns-footer__email-helper">Sleep tips + early offers. One email a week.</p>
+
+        <div class="ns-footer__social">
+          <a href="https://instagram.com/nightseals" class="ns-footer__social-icon" aria-label="Instagram" target="_blank" rel="noopener">IG</a>
+          <a href="https://tiktok.com/@nightseals" class="ns-footer__social-icon" aria-label="TikTok" target="_blank" rel="noopener">TT</a>
+          <a href="https://youtube.com/@nightseals" class="ns-footer__social-icon" aria-label="YouTube" target="_blank" rel="noopener">YT</a>
+        </div>
+      </div>
+
+      {%- comment -%} Column 2 — Links grid {%- endcomment -%}
+      <div class="ns-footer__links-grid">
+        <div class="ns-footer__links-col">
+          <h4 class="ns-footer__col-header">SHOP</h4>
+          <a href="/products/nightseals-mouth-tape" class="ns-footer__link">Mouth tape</a>
+          <a href="/products/nightseals-mouth-tape" class="ns-footer__link">Subscribe &amp; Save</a>
+        </div>
+
+        <div class="ns-footer__links-col">
+          <h4 class="ns-footer__col-header">LEARN</h4>
+          <a href="#how-it-works" class="ns-footer__link">How it works</a>
+          <a href="#reviews" class="ns-footer__link">Reviews</a>
+          <a href="#faq" class="ns-footer__link">FAQ</a>
+        </div>
+
+        <div class="ns-footer__links-col">
+          <h4 class="ns-footer__col-header">SUPPORT</h4>
+          <a href="mailto:help@nightseals.com" class="ns-footer__link">Contact us</a>
+          <a href="/pages/shipping-policy" class="ns-footer__link">Shipping</a>
+          <a href="/pages/refund-policy" class="ns-footer__link">Returns</a>
+          <a href="/pages/terms-of-service" class="ns-footer__link">Terms</a>
+          <a href="/pages/privacy-policy" class="ns-footer__link">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Bottom tier {%- endcomment -%}
+  <div class="ns-footer__bottom">
+    <div class="ns-footer__bottom-inner">
+      <div class="ns-footer__disclaimer">
+        <p><strong>Medical Disclaimer:</strong> The information provided on this page is not medical advice. NightSeals is not a medical device and is not intended to diagnose, treat, cure or prevent any disease, including sleep apnea. These statements have not been evaluated by the FDA. Consult your physician with any concerns. Do not use if you cannot breathe comfortably through your nose.</p>
+      </div>
+
+      <div class="ns-footer__copyright-row">
+        <span class="ns-footer__copyright">&copy; 2026 NightSeals</span>
+        <div class="ns-footer__payments">
+          <div class="ns-payment-icon">VISA</div>
+          <div class="ns-payment-icon">MC</div>
+          <div class="ns-payment-icon">AMEX</div>
+          <div class="ns-payment-icon">APAY</div>
+          <div class="ns-payment-icon">GPAY</div>
+          <span class="ns-footer__region">United States (USD $)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ns-footer {
+    background: #10182B;
+    color: #F2F4F7;
+    border-top: 1px solid rgba(242,244,247,.12);
+  }
+
+  .ns-footer__top {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(40px,7vw,64px) clamp(16px,4vw,32px) 0;
+  }
+
+  .ns-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(32px,5vw,56px);
+  }
+
+  /* Brand column */
+  .ns-footer__wordmark {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: .16em;
+    margin-bottom: 12px;
+  }
+
+  .ns-footer__tagline {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(242,244,247,.55);
+    margin: 0 0 24px;
+  }
+
+  .ns-footer__email-form {
+    margin-bottom: 6px;
+  }
+
+  .ns-footer__email-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ns-footer__email-input {
+    flex: 1;
+    background: rgba(242,244,247,.06);
+    border: 1px solid rgba(242,244,247,.18);
+    border-radius: 10px;
+    padding: 11px 16px;
+    color: #F2F4F7;
+    font-size: 14px;
+    font-family: var(--font-primary);
+    outline: none;
+    transition: border-color .15s;
+  }
+  .ns-footer__email-input:focus {
+    border-color: rgba(242,244,247,.4);
+  }
+
+  .ns-footer__email-btn {
+    background: #D9A04B;
+    color: #10182B;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s;
+  }
+  .ns-footer__email-btn:hover {
+    background: #E5B267;
+  }
+
+  .ns-footer__email-helper {
+    font-size: 11px;
+    color: rgba(242,244,247,.4);
+    margin: 8px 0 20px;
+  }
+
+  .ns-footer__social {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ns-footer__social-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(242,244,247,.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: rgba(242,244,247,.6);
+    text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .ns-footer__social-icon:hover {
+    background: rgba(242,244,247,.14);
+    color: #F2F4F7;
+  }
+
+  /* Links grid */
+  .ns-footer__links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+    gap: clamp(24px,4vw,40px);
+  }
+
+  .ns-footer__links-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ns-footer__col-header {
+    font-size: 10.5px;
+    letter-spacing: .2em;
+    font-weight: 800;
+    color: rgba(242,244,247,.4);
+    margin: 0 0 4px;
+  }
+
+  .ns-footer__link {
+    font-size: 13.5px;
+    color: rgba(242,244,247,.75);
+    text-decoration: none;
+    transition: color .15s;
+  }
+  .ns-footer__link:hover {
+    color: #D9A04B;
+  }
+
+  /* Bottom tier */
+  .ns-footer__bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(16px,4vw,32px);
+  }
+
+  .ns-footer__bottom-inner {
+    border-top: 1px solid rgba(242,244,247,.1);
+    margin-top: clamp(32px,5vw,48px);
+    padding: 20px 0;
+  }
+
+  .ns-footer__disclaimer p {
+    font-size: 11px;
+    line-height: 1.65;
+    color: rgba(242,244,247,.35);
+    margin: 0 0 16px;
+  }
+
+  .ns-footer__disclaimer strong {
+    color: rgba(242,244,247,.5);
+    font-weight: 700;
+  }
+
+  .ns-footer__copyright-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ns-footer__copyright {
+    font-size: 11px;
+    color: rgba(242,244,247,.4);
+  }
+
+  .ns-footer__payments {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ns-footer__region {
+    font-size: 11px;
+    color: rgba(242,244,247,.4);
+    margin-left: 8px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}

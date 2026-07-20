@@ -1,0 +1,197 @@
+<style>
+  .ns-compare {
+    background: #EAEDF2;
+    padding: clamp(56px, 9vw, 96px) 24px;
+  }
+
+  .ns-compare__inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .ns-compare__kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin: 0 0 12px;
+    text-align: center;
+  }
+
+  .ns-compare__heading {
+    font-size: clamp(26px, 4.5vw, 42px);
+    line-height: 1.08;
+    font-weight: 800;
+    color: #10182B;
+    margin: 0 0 12px;
+    text-align: center;
+    letter-spacing: -0.02em;
+  }
+
+  .ns-compare__subtitle {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(16px, 3vw, 19px);
+    color: #566072;
+    margin: 0 0 40px;
+    text-align: center;
+    line-height: 1.45;
+  }
+
+  .ns-compare__table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ns-compare__table {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1.1fr 1.1fr;
+    min-width: 480px;
+    width: 100%;
+  }
+
+  .ns-compare__cell {
+    padding: 16px 14px;
+    font-size: 14.5px;
+    color: #566072;
+    display: flex;
+    align-items: center;
+  }
+
+  .ns-compare__cell--header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8A93A3;
+    padding-bottom: 12px;
+  }
+
+  .ns-compare__cell--header-ns {
+    background: #10182B;
+    color: #F7F8FA;
+    border-radius: 16px 16px 0 0;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 14px 12px;
+  }
+
+  .ns-compare__cell--ns {
+    background: #fff;
+    justify-content: center;
+  }
+
+  .ns-compare__cell--ns-last {
+    background: #fff;
+    border-radius: 0 0 16px 16px;
+    justify-content: center;
+  }
+
+  .ns-compare__cell--feature {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #10182B;
+  }
+
+  .ns-compare__cell--center {
+    justify-content: center;
+  }
+
+  .ns-compare__check {
+    color: #B8860B;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .ns-compare__check--secondary {
+    color: #8A93A3;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .ns-compare__cross {
+    color: #C0C5CE;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .ns-compare__price {
+    font-weight: 800;
+    color: #10182B;
+    font-size: 14.5px;
+  }
+
+  .ns-compare__price--muted {
+    font-weight: 500;
+    color: #566072;
+    font-size: 14.5px;
+  }
+
+  .ns-compare__row-border {
+    border-bottom: 1px solid rgba(16, 24, 43, .08);
+  }
+</style>
+
+<section class="ns-compare">
+  <div class="ns-compare__inner">
+    <p class="ns-compare__kicker">HEAD TO HEAD</p>
+    <h2 class="ns-compare__heading">Every fix for mouth breathing, compared</h2>
+    <p class="ns-compare__subtitle">Spoiler: it's the one that actually seals your lips.</p>
+
+    <div class="ns-compare__table-wrap">
+      <div class="ns-compare__table">
+        <!-- Header row -->
+        <div class="ns-compare__cell ns-compare__cell--header"></div>
+        <div class="ns-compare__cell ns-compare__cell--header-ns">NIGHTSEALS</div>
+        <div class="ns-compare__cell ns-compare__cell--header ns-compare__cell--center">DRUGSTORE TAPE</div>
+        <div class="ns-compare__cell ns-compare__cell--header ns-compare__cell--center">NASAL STRIPS</div>
+
+        <!-- Row 1 -->
+        <div class="ns-compare__cell ns-compare__cell--feature ns-compare__row-border">Keeps lips sealed all night</div>
+        <div class="ns-compare__cell ns-compare__cell--ns ns-compare__row-border"><span class="ns-compare__check">&#10003;</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center ns-compare__row-border"><span class="ns-compare__cross">&#10005;</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center ns-compare__row-border"><span class="ns-compare__cross">&#10005;</span></div>
+
+        <!-- Row 2 -->
+        <div class="ns-compare__cell ns-compare__cell--feature ns-compare__row-border">Gentle on skin (beard-proof, no residue)</div>
+        <div class="ns-compare__cell ns-compare__cell--ns ns-compare__row-border"><span class="ns-compare__check">&#10003;</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center ns-compare__row-border"><span class="ns-compare__cross">&#10005;</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center ns-compare__row-border"><span class="ns-compare__check--secondary">&#10003;</span></div>
+
+        <!-- Row 3 -->
+        <div class="ns-compare__cell ns-compare__cell--feature ns-compare__row-border">Nothing bulky in your mouth</div>
+        <div class="ns-compare__cell ns-compare__cell--ns ns-compare__row-border"><span class="ns-compare__check">&#10003;</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center ns-compare__row-border"><span class="ns-compare__check--secondary">&#10003;</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center ns-compare__row-border"><span class="ns-compare__check--secondary">&#10003;</span></div>
+
+        <!-- Row 4 -->
+        <div class="ns-compare__cell ns-compare__cell--feature ns-compare__row-border">Comfortable enough to forget</div>
+        <div class="ns-compare__cell ns-compare__cell--ns ns-compare__row-border"><span class="ns-compare__check">&#10003;</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center ns-compare__row-border"><span class="ns-compare__cross">&#10005;</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center ns-compare__row-border"><span class="ns-compare__check--secondary">&#10003;</span></div>
+
+        <!-- Row 5 (cost) -->
+        <div class="ns-compare__cell ns-compare__cell--feature">Cost per night</div>
+        <div class="ns-compare__cell ns-compare__cell--ns-last"><span class="ns-compare__price">from $0.56</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center"><span class="ns-compare__price--muted">~$0.40</span></div>
+        <div class="ns-compare__cell ns-compare__cell--center"><span class="ns-compare__price--muted">~$0.70</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparison Table",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Comparison Table"
+    }
+  ]
+}
+{% endschema %}

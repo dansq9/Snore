@@ -1,0 +1,122 @@
+<style>
+  .ns-science {
+    background: #10182B;
+    color: #F7F8FA;
+    padding: clamp(52px, 9vw, 88px) 24px;
+  }
+
+  .ns-science__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .ns-science__header {
+    text-align: center;
+    margin-bottom: clamp(36px, 6vw, 56px);
+  }
+
+  .ns-science__kicker {
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #D9A04B;
+    margin: 0 0 14px;
+  }
+
+  .ns-science__heading {
+    font-size: clamp(28px, 5.5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #F7F8FA;
+    margin: 0 0 14px;
+    max-width: 700px;
+    margin-inline: auto;
+  }
+
+  .ns-science__subtitle {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(16px, 2.2vw, 19px);
+    font-style: italic;
+    color: rgba(242, 244, 247, 0.65);
+    margin: 0;
+  }
+
+  .ns-science__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: clamp(28px, 5vw, 44px);
+  }
+
+  .ns-science__number {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #D9A04B;
+    margin: 0 0 14px;
+  }
+
+  .ns-science__title {
+    font-size: clamp(20px, 2.5vw, 24px);
+    font-weight: 800;
+    color: #F7F8FA;
+    margin: 0 0 10px;
+  }
+
+  .ns-science__description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(242, 244, 247, 0.65);
+    margin: 0;
+  }
+</style>
+
+<div class="ns-science">
+  <div class="ns-science__inner">
+    <div class="ns-science__header">
+      <p class="ns-science__kicker">THE SCIENCE</p>
+      <h2 class="ns-science__heading">Built around one principle: your nose knows best.</h2>
+      <p class="ns-science__subtitle">Nasal breathing is how your body was designed to sleep. NightSeals just keeps you doing it.</p>
+    </div>
+
+    <div class="ns-science__grid">
+      {% for block in section.blocks %}
+        <div class="ns-science__card" {{ block.shopify_attributes }}>
+          <p class="ns-science__number">{{ block.settings.number }}</p>
+          <p class="ns-science__title">{{ block.settings.title }}</p>
+          <p class="ns-science__description">{{ block.settings.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Science",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "principle",
+      "name": "Principle",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Step number", "default": "01" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "description", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Science",
+      "blocks": [
+        { "type": "principle", "settings": { "number": "01", "title": "Filters & humidifies", "description": "Every breath through your nose is warmed, moistened and filtered before it reaches your lungs." } },
+        { "type": "principle", "settings": { "number": "02", "title": "Slower, steadier breaths", "description": "Nasal airflow naturally paces your breathing: the slow, steady rhythm deep sleep runs on." } },
+        { "type": "principle", "settings": { "number": "03", "title": "A quieter airway", "description": "Sealed lips may help keep the airway aligned, reducing the open-mouth vibration that contributes to snoring." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

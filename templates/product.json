@@ -1,0 +1,61 @@
+{
+  "sections": {
+    "product-hero": {
+      "type": "ns-product-hero",
+      "settings": {}
+    },
+    "proof": {
+      "type": "ns-proof-stats",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "ns-reviews-carousel",
+      "settings": {}
+    },
+    "features": {
+      "type": "ns-features",
+      "settings": {}
+    },
+    "comparison": {
+      "type": "ns-pdp-comparison",
+      "settings": {}
+    },
+    "science": {
+      "type": "ns-science",
+      "settings": {}
+    },
+    "timeline": {
+      "type": "ns-timeline",
+      "settings": {}
+    },
+    "guarantee": {
+      "type": "ns-guarantee-cta",
+      "settings": {}
+    },
+    "faq": {
+      "type": "ns-faq",
+      "settings": {}
+    },
+    "trust": {
+      "type": "ns-trust-icons",
+      "settings": {}
+    },
+    "marquee": {
+      "type": "ns-marquee",
+      "settings": {}
+    }
+  },
+  "order": [
+    "product-hero",
+    "proof",
+    "reviews",
+    "features",
+    "comparison",
+    "science",
+    "timeline",
+    "guarantee",
+    "faq",
+    "trust",
+    "marquee"
+  ]
+}

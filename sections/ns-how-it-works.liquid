@@ -1,0 +1,175 @@
+<style>
+  .ns-hiw {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(56px, 9vw, 96px) 24px 0;
+  }
+
+  .ns-hiw__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .ns-hiw__heading {
+    font-size: clamp(26px, 4.5vw, 42px);
+    line-height: 1.08;
+    font-weight: 800;
+    color: #10182B;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .ns-hiw__subtitle {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(17px, 3vw, 20px);
+    color: #566072;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .ns-hiw__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 28px;
+  }
+
+  .ns-hiw__step-image {
+    width: 100%;
+    height: min(200px, 55vw);
+    border-radius: 18px;
+    overflow: hidden;
+    background: #EAEDF2;
+  }
+
+  .ns-hiw__step-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ns-hiw__step-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A93A3;
+    font-size: 13px;
+  }
+
+  .ns-hiw__step-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  .ns-hiw__step-number {
+    font-family: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: #D9A04B;
+    font-weight: 600;
+  }
+
+  .ns-hiw__step-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #10182B;
+    margin: 0;
+  }
+
+  .ns-hiw__step-desc {
+    font-size: 15px;
+    color: #566072;
+    line-height: 1.55;
+    margin: 0;
+    margin-left: 30px;
+  }
+</style>
+
+<section class="ns-hiw" id="how-it-works">
+  <div class="ns-hiw__header">
+    <h2 class="ns-hiw__heading">Three seconds a night. That's the routine.</h2>
+    <p class="ns-hiw__subtitle">No devices, no molds, no boiling. Just a strip of very good tape.</p>
+  </div>
+
+  <div class="ns-hiw__grid">
+    {%- for block in section.blocks -%}
+      <div class="ns-hiw__step" {{ block.shopify_attributes }}>
+        <div class="ns-hiw__step-image">
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy' }}
+          {%- else -%}
+            <div class="ns-hiw__step-image-placeholder">Step {{ forloop.index }} image</div>
+          {%- endif -%}
+        </div>
+        <div class="ns-hiw__step-header">
+          <span class="ns-hiw__step-number">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+          <p class="ns-hiw__step-title">{{ block.settings.title }}</p>
+        </div>
+        <p class="ns-hiw__step-desc">{{ block.settings.description }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How It Works",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Step image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How It Works",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Apply",
+            "description": "Center one strip over closed lips before bed. The adhesive grips through beards. Zero prep."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Breathe",
+            "description": "Your nose takes over: filtered, humidified, quiet airflow all night long. You won't feel a thing."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Wake",
+            "description": "Peels off gently, no residue. No dry mouth, no 3am wake-ups. Just an actual morning person."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

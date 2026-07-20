@@ -1,0 +1,180 @@
+<style>
+  .ns-problem {
+    background: #10182B;
+    color: #F2F4F7;
+    padding: clamp(56px, 9vw, 96px) 24px;
+  }
+
+  .ns-problem__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ns-problem__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+    gap: clamp(40px, 7vw, 72px);
+  }
+
+  .ns-problem__kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #D9A04B;
+    margin: 0 0 16px;
+  }
+
+  .ns-problem__heading {
+    font-size: clamp(26px, 4.5vw, 42px);
+    line-height: 1.08;
+    font-weight: 800;
+    color: #F2F4F7;
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .ns-problem__desc {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: rgba(242, 244, 247, .65);
+    margin: 0 0 24px;
+  }
+
+  .ns-problem__cta-text {
+    font-size: 17px;
+    color: #D9A04B;
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .ns-problem__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ns-problem__item {
+    display: flex;
+    gap: 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid rgba(242, 244, 247, .14);
+  }
+
+  .ns-problem__item-number {
+    font-family: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: #D9A04B;
+    font-weight: 600;
+    padding-top: 3px;
+    flex-shrink: 0;
+  }
+
+  .ns-problem__item-content {
+    flex: 1;
+  }
+
+  .ns-problem__item-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #F2F4F7;
+    margin: 0 0 6px;
+  }
+
+  .ns-problem__item-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(242, 244, 247, .65);
+    margin: 0;
+  }
+</style>
+
+<section class="ns-problem">
+  <div class="ns-problem__inner">
+    <div class="ns-problem__grid">
+      <div class="ns-problem__left">
+        <p class="ns-problem__kicker">THE PROBLEM</p>
+        <h2 class="ns-problem__heading">Your mouth falls open. Your sleep falls apart.</h2>
+        <p class="ns-problem__desc">Most people breathe through their mouth for hours every night without knowing it. It's the root cause behind the three things ruining your mornings, and your partner's.</p>
+        <p class="ns-problem__cta-text">The fix is almost embarrassingly simple: keep your lips sealed and let your nose do the job it was built for.</p>
+      </div>
+
+      <div class="ns-problem__right">
+        <ul class="ns-problem__items">
+          {%- for block in section.blocks -%}
+            <li class="ns-problem__item" {{ block.shopify_attributes }}>
+              <span class="ns-problem__item-number">{{ block.settings.number | default: forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+              <div class="ns-problem__item-content">
+                <p class="ns-problem__item-title">{{ block.settings.title }}</p>
+                <p class="ns-problem__item-desc">{{ block.settings.description }}</p>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Problem Section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "problem_item",
+      "name": "Problem item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Problem Section",
+      "blocks": [
+        {
+          "type": "problem_item",
+          "settings": {
+            "number": "01",
+            "title": "Snoring",
+            "description": "An open mouth can narrow the airway and sets soft tissue vibrating. That's the noise that exiles you to the guest room."
+          }
+        },
+        {
+          "type": "problem_item",
+          "settings": {
+            "number": "02",
+            "title": "Dry mouth & morning breath",
+            "description": "Hours of mouth airflow dries out saliva: sandpaper tongue at 3am, rough breath at 7."
+          }
+        },
+        {
+          "type": "problem_item",
+          "settings": {
+            "number": "03",
+            "title": "Light, restless sleep",
+            "description": "Your nose filters, warms and humidifies every breath. Bypass it all night and you wake tired no matter how long you slept."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
