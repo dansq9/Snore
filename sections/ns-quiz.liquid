@@ -14,51 +14,61 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign promo_code = section.settings.promo_code | default: 'QUIZ20'
-  assign promo_copy = section.settings.promo_copy | default: '20% off your first order'
   assign review_name = section.settings.review_name | default: 'Mark T.'
   assign review_quote = section.settings.review_quote | default: 'I was skeptical, but after one night I slept straight through to 6am for the first time in years. My wife says the snoring is completely gone.'
-  assign cta_product = section.settings.cta_product
+  assign offer_product = section.settings.offer_product
+  if offer_product == blank
+    assign offer_product = settings.featured_product
+  endif
+  if offer_product == blank
+    assign offer_product = collections.all.products.first
+  endif
 
   assign nm_parts = review_name | strip | split: ' '
 -%}
 {%- capture review_initials -%}{%- for p in nm_parts limit: 2 -%}{{ p | slice: 0, 1 | upcase }}{%- endfor -%}{%- endcapture -%}
 {%- liquid
-  assign ns_per_night = '$0.56'
+  # End-of-quiz EXCLUSIVE OFFER (no discount code): read the offer product's
+  # price / compare-at / per-night and send "Claim your offer" straight to the
+  # cart. The owner points offer_product at the limited-time 60-night SKU.
+  assign ns_per_night = '$0.50'
   assign ns_rating = '4.8'
   assign ns_rating_count = '2,341'
   assign ns_product_title = 'NightSeals Mouth Tape'
+  assign ns_offer_price = ''
+  assign ns_offer_compare = ''
+  assign ns_offer_save = ''
   assign ns_cta_href = ''
 
-  if cta_product != blank
-    assign ns_product_title = cta_product.title
+  if offer_product != blank
+    assign ns_product_title = offer_product.title
 
-    assign r = cta_product.metafields.reviews.rating.value
+    assign r = offer_product.metafields.reviews.rating.value
     if r != blank
       assign ns_rating = r
     endif
-    if cta_product.metafields.reviews.rating_count != blank
-      assign ns_rating_count = cta_product.metafields.reviews.rating_count
+    if offer_product.metafields.reviews.rating_count != blank
+      assign ns_rating_count = offer_product.metafields.reviews.rating_count
     endif
 
-    assign ns_cheapest = cta_product.variants | sort: 'price' | first
-    if ns_cheapest.metafields.custom.per_night != blank
-      assign ns_per_night = ns_cheapest.metafields.custom.per_night
-    else
-      assign ns_nights = ns_cheapest.title | split: ' ' | first | plus: 0
-      if ns_nights > 0
-        assign ns_pnc = ns_cheapest.price | times: 1.0 | divided_by: ns_nights | round
-        assign ns_per_night = ns_pnc | money
-      endif
-    endif
-
-    assign ns_variant = cta_product.variants.first
-    assign ns_target = cta_product.url
+    assign ns_variant = offer_product.variants.first
     if ns_variant != blank
-      assign ns_target = cta_product.url | append: '?variant=' | append: ns_variant.id
+      assign ns_offer_price = ns_variant.price | money
+      if ns_variant.compare_at_price > ns_variant.price
+        assign ns_offer_compare = ns_variant.compare_at_price | money
+        assign ns_offer_save = ns_variant.compare_at_price | minus: ns_variant.price | times: 100 | divided_by: ns_variant.compare_at_price
+      endif
+      if ns_variant.metafields.custom.per_night != blank
+        assign ns_per_night = ns_variant.metafields.custom.per_night
+      else
+        assign ns_nights = ns_variant.title | split: ' ' | first | plus: 0
+        if ns_nights > 0
+          assign ns_pnc = ns_variant.price | times: 1.0 | divided_by: ns_nights | round
+          assign ns_per_night = ns_pnc | money
+        endif
+      endif
+      assign ns_cta_href = '/cart/' | append: ns_variant.id | append: ':1'
     endif
-    assign ns_target_enc = ns_target | url_encode
-    assign ns_cta_href = '/discount/' | append: promo_code | append: '?redirect=' | append: ns_target_enc
   endif
 
   if ns_cta_href == blank
@@ -248,30 +258,36 @@
 
         {%- render 'ns-90-night-chart' -%}
 
+        <div class="nsq-offer-head">
+          <div class="nsq-offer-eyebrow">BECAUSE YOU QUALIFY</div>
+          <h3 class="nsq-offer-title">{{ section.settings.offer_title | default: 'Your exclusive 60-night offer' }}</h3>
+          <p class="nsq-offer-sub">{{ section.settings.offer_sub | default: "We've set aside a full 60-night supply at our best price, with a 30-night money-back guarantee." }}</p>
+        </div>
+
         <div class="nsq-product">
           <div class="nsq-product-media">
-            {%- if cta_product != blank and cta_product.featured_image != blank -%}
-              {{ cta_product.featured_image | image_url: width: 700 | image_tag: alt: cta_product.title, class: 'nsq-pouch-img', loading: 'lazy' }}
+            {%- if offer_product != blank and offer_product.featured_image != blank -%}
+              {{ offer_product.featured_image | image_url: width: 700 | image_tag: alt: offer_product.title, class: 'nsq-pouch-img', loading: 'lazy' }}
             {%- else -%}
               <img src="{{ 'nightseals-pouch-nobg.png' | asset_url }}" alt="NightSeals pouch" class="nsq-pouch-img" loading="lazy" width="700" height="700">
             {%- endif -%}
           </div>
           <div class="nsq-product-body">
-            <div class="nsq-product-titlerow">
-              <div class="nsq-product-title">{{ ns_product_title }}</div>
-              <div class="nsq-product-price">from {{ ns_per_night }}<span class="nsq-product-price-unit">/night</span></div>
-            </div>
+            <div class="nsq-product-title">{{ ns_product_title }}</div>
             <div class="nsq-product-rating"><span class="nsq-stars-amber">★★★★★</span> {{ ns_rating }} · {{ ns_rating_count }} reviews</div>
-            <div class="nsq-fixlist" id="nsq-fixlist"></div>
-            <div class="nsq-promo">
-              <div>
-                <div class="nsq-promo-eyebrow">QUIZ-TAKERS ONLY</div>
-                <div class="nsq-promo-copy">{{ promo_copy }}</div>
+            {%- if ns_offer_price != blank -%}
+              <div class="nsq-offer-price">
+                <span class="nsq-offer-now">{{ ns_offer_price }}</span>
+                {%- if ns_offer_compare != blank -%}
+                  <span class="nsq-offer-was">{{ ns_offer_compare }}</span>
+                  <span class="nsq-offer-badge">SAVE {{ ns_offer_save }}%</span>
+                {%- endif -%}
               </div>
-              <div class="nsq-promo-code">{{ promo_code }}</div>
-            </div>
-            <a href="{{ ns_cta_href }}" class="nsq-product-cta" id="nsq-cta">Start my 90 nights →</a>
-            <div class="nsq-product-guarantee">30-night money-back guarantee · Free shipping $50+ · Ships in 3-5 days</div>
+              <div class="nsq-offer-pn">{{ ns_per_night }} / night</div>
+            {%- endif -%}
+            <div class="nsq-fixlist" id="nsq-fixlist"></div>
+            <a href="{{ ns_cta_href }}" class="nsq-product-cta" id="nsq-cta">{{ section.settings.offer_cta | default: 'Claim your offer →' }}</a>
+            <div class="nsq-product-guarantee">30-night money-back guarantee · Ships in 3-5 days · No code needed</div>
           </div>
         </div>
         <div style="text-align:center">
@@ -416,7 +432,17 @@
   .nsq-product-title { font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
   .nsq-product-price { font-size: 13px; font-weight: 800; color: #B27E33; flex: none; }
   .nsq-product-price-unit { color: #8A93A3; font-weight: 700; }
-  .nsq-product-rating { font-size: 12px; color: #8A93A3; font-weight: 600; margin-bottom: 16px; }
+  .nsq-product-rating { font-size: 12px; color: #8A93A3; font-weight: 600; margin-bottom: 12px; }
+
+  .nsq-offer-head { text-align: center; margin-bottom: 14px; }
+  .nsq-offer-eyebrow { font-size: 11px; letter-spacing: .18em; font-weight: 800; color: #B27E33; margin-bottom: 8px; }
+  .nsq-offer-title { font-size: clamp(20px,5.5vw,26px); font-weight: 800; letter-spacing: -.02em; margin: 0 0 6px; }
+  .nsq-offer-sub { font-size: 14px; line-height: 1.5; color: #566072; margin: 0; text-wrap: pretty; }
+  .nsq-offer-price { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin: 2px 0 2px; }
+  .nsq-offer-now { font-size: 30px; font-weight: 800; color: #10182B; letter-spacing: -.02em; }
+  .nsq-offer-was { font-size: 16px; color: #8A93A3; text-decoration: line-through; }
+  .nsq-offer-badge { font-size: 11px; font-weight: 800; letter-spacing: .06em; color: #2E7D4F; background: rgba(46,125,79,.12); padding: 3px 9px; border-radius: 999px; align-self: center; }
+  .nsq-offer-pn { font-size: 12.5px; color: #8A93A3; font-weight: 700; margin-bottom: 14px; }
   .nsq-fixlist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
   .nsq-fix { display: flex; gap: 11px; align-items: flex-start; }
   .nsq-fix-check { flex: none; width: 20px; height: 20px; border-radius: 50%; background: rgba(217,160,75,.14); border: 1px solid rgba(217,160,75,.4); color: #B27E33; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
@@ -439,9 +465,10 @@
   "name": "Sleep Quiz",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "promo_code", "label": "Promo code", "default": "QUIZ20" },
-    { "type": "text", "id": "promo_copy", "label": "Promo copy", "default": "20% off your first order" },
-    { "type": "product", "id": "cta_product", "label": "Plan CTA product", "info": "Powers the product card image, price, rating and the Start my 90 nights link. Leave blank to fall back to the bundled pouch render and the store's shop URL." },
+    { "type": "product", "id": "offer_product", "label": "Exclusive offer product", "info": "The limited-time offer shown at the end of the quiz (e.g. the 60-night $30 product). Its price, compare-at, image and rating drive the offer card, and 'Claim your offer' adds it to the cart. Falls back to the store's Main product." },
+    { "type": "text", "id": "offer_title", "label": "Offer title", "default": "Your exclusive 60-night offer" },
+    { "type": "textarea", "id": "offer_sub", "label": "Offer subtitle", "default": "We've set aside a full 60-night supply at our best price, with a 30-night money-back guarantee." },
+    { "type": "text", "id": "offer_cta", "label": "Offer button", "default": "Claim your offer →" },
     { "type": "text", "id": "review_name", "label": "Intro review name", "default": "Mark T." },
     { "type": "textarea", "id": "review_quote", "label": "Intro review quote", "default": "I was skeptical, but after one night I slept straight through to 6am for the first time in years. My wife says the snoring is completely gone." }
   ],

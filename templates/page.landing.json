@@ -52,6 +52,7 @@
   "order": [
     "hero",
     "proof",
+    "quiz_cta",
     "symptoms",
     "problem",
     "how",
@@ -61,7 +62,6 @@
     "materials",
     "expectations",
     "partners",
-    "quiz_cta",
     "faq",
     "buy"
   ]
