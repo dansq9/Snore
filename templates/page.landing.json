@@ -110,8 +110,10 @@
         "heading": "This is what nasal breathing does",
         "subheading": "One small strip. A completely different morning.",
         "before_label": "Mouth Breather",
+        "before_image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_55_21_PM.png",
         "before_placeholder": "Mouth open, snoring, restless partner",
         "after_label": "Nasal Breather",
+        "after_image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png",
         "after_placeholder": "Mouth sealed, quiet, both sleeping through"
       }
     },
@@ -142,7 +144,9 @@
     },
     "timeline": {
       "type": "ns-timeline",
-      "settings": { "nights": 60 }
+      "settings": {
+        "nights": 60
+      }
     },
     "shop": {
       "type": "ns-landing-shop",
@@ -326,8 +330,9 @@
     "buy": {
       "type": "ns-landing-buy",
       "settings": {
-        "offer_product": "",
-        "heading": "The NightSeals Guarantee"
+        "heading": "The NightSeals Guarantee",
+        "cta_label": "Claim your 60-night offer →",
+        "cta_url": ""
       }
     }
   },
