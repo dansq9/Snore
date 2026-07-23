@@ -868,14 +868,29 @@
         if (!item) return;
         buyBtn.disabled = true;
 
+        function fail(err) {
+          console.error('[NightSeals] Buy now could not start checkout:', err);
+          buyBtn.disabled = false;
+        }
+
         function addAndCheckout() {
           return fetch('/cart/add.js', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({ items: [item] })
           })
-            .then(function (res) { if (!res.ok) { throw new Error('add failed'); } return res.json(); })
-            .then(function () { window.location.href = '/checkout'; });
+            .then(function (res) {
+              return res.json().then(function (data) {
+                if (!res.ok) { throw new Error((data && (data.description || data.message)) || 'Add to cart failed'); }
+                return data;
+              });
+            })
+            .then(function () {
+              /* If you land on /cart after this log, /checkout is being
+                 redirected by the store (checkout not enabled), not the theme. */
+              console.info('[NightSeals] Item in cart — redirecting to /checkout');
+              window.location.href = '/checkout';
+            });
         }
 
         /* Only clear when there's actually something to clear */
@@ -886,11 +901,11 @@
               return fetch('/cart/clear.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
-              }).then(addAndCheckout);
+              }).then(function () { return addAndCheckout(); });
             }
             return addAndCheckout();
           })
-          .catch(function () { buyBtn.disabled = false; window.location.href = '/cart'; });
+          .catch(fail);
       });
     }
   })();
