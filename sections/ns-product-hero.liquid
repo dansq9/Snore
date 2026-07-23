@@ -62,6 +62,16 @@
     border-radius: 14px;
     overflow: hidden;
     background: #EAEDF2;
+    border: 2px solid transparent;
+    padding: 0;
+    width: 100%;
+    cursor: pointer;
+    display: block;
+    transition: border-color .15s;
+  }
+
+  .ns-pdp__thumb--active {
+    border-color: #10182B;
   }
 
   .ns-pdp__thumb img {
@@ -521,37 +531,45 @@
 
     <!-- ── Left column: Gallery ── -->
     <div class="ns-pdp__gallery">
-      <div class="ns-pdp__main-img">
-        {%- if section.settings.main_image != blank -%}
-          {{ section.settings.main_image | image_url: width: 1200 | image_tag: loading: 'eager' }}
-        {%- else -%}
-          <div class="ns-pdp__img-placeholder">Product image</div>
+      {%- if product != blank and product.images.size > 0 -%}
+        {%- comment -%} Real product gallery — main image + clickable thumbnails {%- endcomment -%}
+        <div class="ns-pdp__main-img">
+          <img id="ns-pdp-main-img"
+               src="{{ product.featured_image | image_url: width: 1200 }}"
+               alt="{{ product.featured_image.alt | escape | default: product.title }}"
+               width="1200" height="1200" loading="eager">
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="ns-pdp__thumbs">
+            {%- for image in product.images limit: 4 -%}
+              <button type="button" class="ns-pdp__thumb{% if image == product.featured_image %} ns-pdp__thumb--active{% endif %}" data-pdp-thumb data-full="{{ image | image_url: width: 1200 }}" aria-label="Show image {{ forloop.index }}">
+                {{ image | image_url: width: 400 | image_tag: loading: 'lazy', alt: image.alt }}
+              </button>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
-      </div>
-
-      <div class="ns-pdp__thumbs">
-        <div class="ns-pdp__thumb">
-          {%- if section.settings.thumb_1 != blank -%}
-            {{ section.settings.thumb_1 | image_url: width: 600 | image_tag: loading: 'lazy' }}
-          {%- else -%}
-            <div class="ns-pdp__thumb-placeholder">Thumb 1</div>
-          {%- endif -%}
+      {%- else -%}
+        {%- comment -%} No product images yet — bundled pouch renders (+ any theme-editor images) {%- endcomment -%}
+        {%- assign fb_main = section.settings.main_image -%}
+        {%- if fb_main != blank -%}{%- assign fb_main_url = fb_main | image_url: width: 1200 -%}{%- else -%}{%- assign fb_main_url = 'nightseals-pouch.png' | asset_url -%}{%- endif -%}
+        {%- if section.settings.thumb_1 != blank -%}{%- assign fb_thumb2_url = section.settings.thumb_1 | image_url: width: 1200 -%}{%- else -%}{%- assign fb_thumb2_url = 'nightseals-pouch-nobg.png' | asset_url -%}{%- endif -%}
+        <div class="ns-pdp__main-img">
+          <img id="ns-pdp-main-img" src="{{ fb_main_url }}" alt="{{ product.title | default: 'NightSeals' }}" width="1200" height="1200" loading="eager">
         </div>
-        <div class="ns-pdp__thumb">
+        <div class="ns-pdp__thumbs">
+          <button type="button" class="ns-pdp__thumb ns-pdp__thumb--active" data-pdp-thumb data-full="{{ fb_main_url }}" aria-label="Show image 1">
+            <img src="{{ fb_main_url }}" alt="" width="400" height="400" loading="lazy">
+          </button>
+          <button type="button" class="ns-pdp__thumb" data-pdp-thumb data-full="{{ fb_thumb2_url }}" aria-label="Show image 2">
+            <img src="{{ fb_thumb2_url }}" alt="" width="400" height="400" loading="lazy">
+          </button>
           {%- if section.settings.thumb_2 != blank -%}
-            {{ section.settings.thumb_2 | image_url: width: 600 | image_tag: loading: 'lazy' }}
-          {%- else -%}
-            <div class="ns-pdp__thumb-placeholder">Thumb 2</div>
+            <button type="button" class="ns-pdp__thumb" data-pdp-thumb data-full="{{ section.settings.thumb_2 | image_url: width: 1200 }}" aria-label="Show image 3">
+              {{ section.settings.thumb_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+            </button>
           {%- endif -%}
         </div>
-        <div class="ns-pdp__thumb">
-          {%- if section.settings.thumb_3 != blank -%}
-            {{ section.settings.thumb_3 | image_url: width: 600 | image_tag: loading: 'lazy' }}
-          {%- else -%}
-            <div class="ns-pdp__thumb-placeholder">Thumb 3</div>
-          {%- endif -%}
-        </div>
-      </div>
+      {%- endif -%}
 
       <div class="ns-pdp__brand">
         <p class="ns-pdp__wordmark">NIGHTSEALS</p>
@@ -605,10 +623,12 @@
       {%- else -%}
       <div class="ns-pdp__tiers">
         {% for variant in product.variants %}
+          {%- assign sp_alloc = variant.selling_plan_allocations.first -%}
           <div
             class="ns-pdp__tier{% if variant.id == ns_default_variant.id %} ns-pdp__tier--active{% endif %}"
             data-variant-id="{{ variant.id }}"
             data-variant-price="{{ variant.price | money }}"
+            {%- if sp_alloc %} data-sub-plan="{{ sp_alloc.selling_plan_id }}" data-sub-price="{{ sp_alloc.price | money }}"{% endif -%}
           >
             {%- if forloop.index == 2 -%}
               <span class="ns-pdp__tier-badge ns-pdp__tier-badge--popular">MOST POPULAR</span>
@@ -645,7 +665,8 @@
       </div>
       {%- endif -%}
 
-      <!-- Subscribe & Save toggle -->
+      <!-- Subscribe & Save toggle — only when the product has selling plans (Recharge/Loop) -->
+      {%- if product.selling_plan_groups.size > 0 -%}
       <p class="ns-pdp__purchase-label">PURCHASE TYPE</p>
       <div class="ns-pdp__purchase-toggle">
         <div class="ns-pdp__purchase-option" data-purchase="onetime">
@@ -658,12 +679,13 @@
           <div class="ns-pdp__purchase-radio">
             <span class="ns-pdp__purchase-radio-dot"></span>
           </div>
-          <span class="ns-pdp__purchase-text">Subscribe &amp; Save<span class="ns-pdp__sub-badge">EXTRA 20% OFF</span></span>
+          <span class="ns-pdp__purchase-text">Subscribe &amp; Save<span class="ns-pdp__sub-badge">SAVE MORE</span></span>
         </div>
         <div class="ns-pdp__sub-desc" id="ns-sub-desc">
-          A fresh pouch delivered every 30 nights. Skip, pause or cancel anytime.
+          A fresh pouch delivered on your schedule. Skip, pause or cancel anytime.
         </div>
       </div>
+      {%- endif -%}
 
       <!-- Dual CTA buttons -->
       <div class="ns-pdp__ctas">
@@ -721,60 +743,92 @@
 
 <script>
   (function () {
-    /* ── Tier card selection ── */
     var tiers = document.querySelectorAll('.ns-pdp__tier');
     var variantInput = document.getElementById('ns-variant-input');
     var buyBtn = document.getElementById('ns-buy-now');
+    var purchaseOptions = document.querySelectorAll('.ns-pdp__purchase-option');
+    var subDesc = document.getElementById('ns-sub-desc');
+    var isSubscribe = false;
 
+    function activeTier() { return document.querySelector('.ns-pdp__tier--active'); }
+
+    /* Price for a tier respecting the current purchase type */
+    function tierPrice(tier) {
+      if (!tier) return '';
+      var sub = tier.getAttribute('data-sub-price');
+      return (isSubscribe && sub) ? sub : tier.getAttribute('data-variant-price');
+    }
+
+    /* Reflect one-time / subscribe pricing across the tier cards + CTA */
+    function refresh() {
+      tiers.forEach(function (tier) {
+        var el = tier.querySelector('.ns-pdp__tier-price');
+        if (el) el.textContent = tierPrice(tier);
+      });
+      if (buyBtn) {
+        buyBtn.textContent = (isSubscribe ? 'Subscribe · ' : 'Buy now · ') + tierPrice(activeTier());
+      }
+    }
+
+    /* ── Tier card selection ── */
     tiers.forEach(function (tier) {
       tier.addEventListener('click', function () {
         tiers.forEach(function (t) { t.classList.remove('ns-pdp__tier--active'); });
         tier.classList.add('ns-pdp__tier--active');
-
-        if (variantInput) {
-          variantInput.value = tier.getAttribute('data-variant-id');
-        }
-
-        if (buyBtn) {
-          buyBtn.textContent = 'Buy now · ' + tier.getAttribute('data-variant-price');
-        }
+        if (variantInput) variantInput.value = tier.getAttribute('data-variant-id');
+        refresh();
       });
     });
 
-    /* ── Subscribe & Save toggle ── */
-    var purchaseOptions = document.querySelectorAll('.ns-pdp__purchase-option');
-    var subDesc = document.getElementById('ns-sub-desc');
-
+    /* ── One-time / Subscribe toggle ── */
     purchaseOptions.forEach(function (option) {
       option.addEventListener('click', function () {
         purchaseOptions.forEach(function (opt) {
           opt.querySelector('.ns-pdp__purchase-radio').classList.remove('ns-pdp__purchase-radio--active');
         });
         option.querySelector('.ns-pdp__purchase-radio').classList.add('ns-pdp__purchase-radio--active');
-
-        if (option.getAttribute('data-purchase') === 'subscribe') {
-          subDesc.classList.add('ns-pdp__sub-desc--visible');
-        } else {
-          subDesc.classList.remove('ns-pdp__sub-desc--visible');
-        }
+        isSubscribe = option.getAttribute('data-purchase') === 'subscribe';
+        if (subDesc) subDesc.classList.toggle('ns-pdp__sub-desc--visible', isSubscribe);
+        refresh();
       });
     });
 
-    /* ── Add to cart — opens the slide-out drawer (and fires confetti) via NsCart ── */
-    var cartBtn = document.querySelector('[data-add-to-cart]');
+    /* ── Gallery thumbnails ── */
+    var thumbs = document.querySelectorAll('[data-pdp-thumb]');
+    var mainImg = document.getElementById('ns-pdp-main-img');
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var full = thumb.getAttribute('data-full');
+        if (full && mainImg) mainImg.src = full;
+        thumbs.forEach(function (t) { t.classList.remove('ns-pdp__thumb--active'); });
+        thumb.classList.add('ns-pdp__thumb--active');
+      });
+    });
 
+    /* Build the add payload — includes the selling plan when subscribing */
+    function currentItem() {
+      var id = variantInput ? variantInput.value : null;
+      if (!id) return null;
+      var item = { id: parseInt(id, 10), quantity: 1 };
+      var tier = activeTier();
+      var plan = tier && tier.getAttribute('data-sub-plan');
+      if (isSubscribe && plan) item.selling_plan = parseInt(plan, 10);
+      return item;
+    }
+
+    /* ── Add to cart — opens the drawer (and fires confetti) via NsCart ── */
+    var cartBtn = document.querySelector('[data-add-to-cart]');
     if (cartBtn) {
       cartBtn.addEventListener('click', function () {
-        var id = variantInput ? variantInput.value : null;
-        if (!id) return;
-
+        var item = currentItem();
+        if (!item) return;
         if (window.NsCart && typeof window.NsCart.add === 'function') {
-          window.NsCart.add(id, 1).catch(function () {});
+          window.NsCart.add(item.id, 1, item.selling_plan).catch(function () {});
         } else {
           fetch('/cart/add.js', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: [{ id: parseInt(id, 10), quantity: 1 }] })
+            body: JSON.stringify({ items: [item] })
           })
             .then(function () { window.location.href = '/cart'; })
             .catch(function () { window.location.href = '/cart'; });
@@ -782,16 +836,16 @@
       });
     }
 
-    /* ── Buy now — add the selected variant, then go straight to checkout ── */
+    /* ── Buy now — add the selection, then go straight to checkout ── */
     if (buyBtn) {
       buyBtn.addEventListener('click', function () {
-        var id = variantInput ? variantInput.value : null;
-        if (!id) return;
+        var item = currentItem();
+        if (!item) return;
         buyBtn.disabled = true;
         fetch('/cart/add.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: parseInt(id, 10), quantity: 1 }] })
+          body: JSON.stringify({ items: [item] })
         })
           .then(function (res) { if (!res.ok) { throw new Error('add failed'); } return res.json(); })
           .then(function () { window.location.href = '/checkout'; })
@@ -807,9 +861,13 @@
   "tag": "section",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "The gallery uses the product's own images (Products → your product → Media) — they show as clickable thumbnails automatically. The pickers below are only a fallback for when the product has no images."
+    },
+    {
       "type": "image_picker",
       "id": "main_image",
-      "label": "Main product image"
+      "label": "Fallback main image"
     },
     {
       "type": "image_picker",
