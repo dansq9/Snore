@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "hero": { "type": "ns-landing-hero", "settings": {} },
+    "gallery": { "type": "ns-landing-gallery", "settings": {} },
+    "symptoms": { "type": "ns-landing-symptoms", "settings": {} },
+    "journey": { "type": "ns-landing-journey", "settings": {} },
+    "problem": { "type": "ns-landing-problem", "settings": {} },
+    "how": { "type": "ns-landing-how", "settings": {} },
+    "materials": { "type": "ns-landing-materials", "settings": {} },
+    "comparison": { "type": "ns-landing-comparison", "settings": {} },
+    "expectations": { "type": "ns-landing-expectations", "settings": {} },
+    "reviews": { "type": "ns-landing-reviews", "settings": {} },
+    "faq": { "type": "ns-landing-faq", "settings": {} },
+    "buy": { "type": "ns-landing-buy", "settings": {} }
+  },
+  "order": [
+    "hero",
+    "gallery",
+    "symptoms",
+    "journey",
+    "problem",
+    "how",
+    "materials",
+    "comparison",
+    "expectations",
+    "reviews",
+    "faq",
+    "buy"
+  ]
+}

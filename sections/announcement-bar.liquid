@@ -5,7 +5,7 @@
   <p class="ns-announcement-bar__text">
     {{ announcement_text | split: '·' | first }}
     {%- if announcement_text contains '·' -%}
-      <span class="ns-desktop-only" style="display:inline">&middot;{{ announcement_text | split: '·' | last }}</span>
+      <span class="ns-announcement-bar__more">&middot;{{ announcement_text | split: '·' | last }}</span>
     {%- endif -%}
   </p>
 </div>
@@ -26,6 +26,16 @@
     letter-spacing: .05em;
     font-weight: 500;
     line-height: 1.4;
+  }
+
+  .ns-announcement-bar__more {
+    display: inline;
+  }
+
+  @media (max-width: 860px) {
+    .ns-announcement-bar__more {
+      display: none;
+    }
   }
 </style>
 

@@ -61,7 +61,7 @@
           "type": "video_review",
           "settings": {
             "caption": "Slept through the night",
-            "reviewer": "Mike — Night 41"
+            "reviewer": "Mike · Night 41"
           }
         },
         "rv_2": {
@@ -75,7 +75,7 @@
           "type": "video_review",
           "settings": {
             "caption": "Dry mouth, gone",
-            "reviewer": "Rob — Night 12"
+            "reviewer": "Rob · Night 12"
           }
         },
         "rv_4": {
@@ -89,7 +89,7 @@
           "type": "video_review",
           "settings": {
             "caption": "Partner approved",
-            "reviewer": "Elise — Night 30"
+            "reviewer": "Elise · Night 30"
           }
         },
         "rv_6": {
@@ -103,7 +103,7 @@
           "type": "video_review",
           "settings": {
             "caption": "Total reset",
-            "reviewer": "Dan — Night 90"
+            "reviewer": "Dan · Night 90"
           }
         }
       },
@@ -188,7 +188,7 @@
           "settings": {
             "feature": "Stays on all night",
             "nightseals": "SteadyHold™, all-night hold",
-            "cheap": "Peels off by 2 am",
+            "cheap": "Peels off by 2am",
             "nothing": "No change"
           }
         },
@@ -279,7 +279,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Will it rip off my beard?",
-            "answer": "No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments."
+            "answer": "No. The SteadyHold adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments."
           }
         },
         "faq_4": {
@@ -314,7 +314,7 @@
           "type": "faq_item",
           "settings": {
             "question": "What's it made of?",
-            "answer": "A soft, breathable, latex-free fabric with a skin-safe acrylic adhesive. Hypoallergenic, residue-free, and tested on sensitive skin."
+            "answer": "A soft, breathable, latex-free AirWeave fabric with a skin-safe acrylic adhesive. Hypoallergenic, residue-free, and tested on sensitive skin."
           }
         }
       },
@@ -329,5 +329,5 @@
       "settings": {}
     }
   },
-  "order": ["product-hero", "proof", "reviews", "science", "features", "comparison", "timeline", "guarantee", "faq", "trust", "marquee"]
+  "order": ["product-hero", "proof", "reviews", "features", "comparison", "science", "timeline", "guarantee", "faq", "trust", "marquee"]
 }

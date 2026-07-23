@@ -1,0 +1,363 @@
+{%- comment -%}
+  Help Center / FAQ page — dedicated /pages/faq template.
+  Items are grouped into categories: a category kicker is rendered
+  whenever a block's "category" differs from the previous block, so the
+  grouping stays fully editable from the theme editor (reorder blocks to
+  regroup). One accordion row is open at a time across all categories
+  (handled by assets/faq-accordion.js on the shared parent).
+{%- endcomment -%}
+
+<header class="ns-faqpage__header">
+  <p class="ns-faqpage__kicker">{{ section.settings.kicker | default: 'HELP CENTER' }}</p>
+  <h1 class="ns-faqpage__title">{{ section.settings.heading | default: 'Frequently asked questions' }}</h1>
+  {%- if section.settings.subtitle != blank -%}
+    <p class="ns-faqpage__subtitle">{{ section.settings.subtitle }}</p>
+  {%- endif -%}
+</header>
+
+<main class="ns-faqpage">
+  <div class="ns-faqpage__list">
+    {%- assign current_category = '' -%}
+    {%- for block in section.blocks -%}
+      {%- assign block_category = block.settings.category | strip -%}
+      {%- if block_category != blank and block_category != current_category -%}
+        {%- assign current_category = block_category -%}
+        <p class="ns-faqpage__cat">{{ current_category }}</p>
+      {%- endif -%}
+      <details class="ns-faqpage__item" {{ block.shopify_attributes }}>
+        <summary>
+          <span class="ns-faqpage__question">{{ block.settings.question }}</span>
+          <span class="ns-faqpage__toggle" aria-hidden="true">
+            <span class="ns-faqpage__toggle-plus">+</span>
+            <span class="ns-faqpage__toggle-minus">&minus;</span>
+          </span>
+        </summary>
+        <p class="ns-faqpage__answer">{{ block.settings.answer }}</p>
+      </details>
+    {%- endfor -%}
+  </div>
+</main>
+
+<style>
+  .ns-faqpage__header {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(40px,7vw,80px) clamp(16px,4vw,32px) clamp(28px,5vw,48px);
+    text-align: center;
+  }
+
+  .ns-faqpage__kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: var(--dark-amber, #B27E33);
+    margin: 0 0 14px;
+  }
+
+  .ns-faqpage__title {
+    font-size: clamp(28px,5vw,48px);
+    letter-spacing: -.03em;
+    font-weight: 800;
+    color: var(--navy, #10182B);
+    margin: 0 0 12px;
+    line-height: 1.08;
+  }
+
+  .ns-faqpage__subtitle {
+    font-family: var(--font-serif, 'Newsreader', Georgia, serif);
+    font-style: italic;
+    font-size: clamp(15px,3vw,19px);
+    line-height: 1.5;
+    color: var(--text-secondary, #566072);
+    margin: 0;
+  }
+
+  .ns-faqpage {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 clamp(16px,4vw,32px) clamp(48px,8vw,80px);
+  }
+
+  .ns-faqpage__cat {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    color: var(--dark-amber, #B27E33);
+    margin: clamp(36px,6vw,56px) 0 16px;
+  }
+
+  .ns-faqpage__cat:first-child {
+    margin-top: 0;
+  }
+
+  .ns-faqpage__item {
+    border-bottom: 1px solid rgba(16,24,43,.1);
+  }
+
+  .ns-faqpage__item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: clamp(14px,3vw,20px) 4px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .ns-faqpage__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .ns-faqpage__item summary::marker {
+    content: '';
+  }
+
+  .ns-faqpage__question {
+    font-size: clamp(14.5px,3vw,17px);
+    font-weight: 600;
+    color: var(--navy, #10182B);
+  }
+
+  .ns-faqpage__toggle {
+    font-size: 18px;
+    color: var(--dark-amber, #B27E33);
+    font-weight: 500;
+    flex: none;
+    width: 20px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .ns-faqpage__item[open] .ns-faqpage__toggle-plus {
+    display: none;
+  }
+
+  .ns-faqpage__item:not([open]) .ns-faqpage__toggle-minus {
+    display: none;
+  }
+
+  .ns-faqpage__answer {
+    font-size: clamp(14px,2.8vw,15px);
+    line-height: 1.7;
+    color: var(--text-secondary, #566072);
+    margin: -4px 0 0;
+    padding: 0 32px 20px 4px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Help Center FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "HELP CENTER"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Everything you need to know about NightSeals, mouth taping, and nasal breathing."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category",
+          "label": "Category label",
+          "info": "Shown as a kicker above the first item in each group. Repeat the same label on consecutive items to group them."
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Help Center FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ABOUT NIGHTSEALS",
+            "question": "What is NightSeals?",
+            "answer": "NightSeals is a gentle, hypoallergenic mouth tape designed to keep your lips sealed while you sleep. By encouraging nasal breathing overnight, it may help reduce snoring, prevent dry mouth, and support deeper, more restful sleep."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ABOUT NIGHTSEALS",
+            "question": "How does it work?",
+            "answer": "You apply one strip over your closed lips before bed. The adhesive holds your lips together overnight, encouraging your body to breathe through your nose. In the morning, it peels off cleanly with no residue."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ABOUT NIGHTSEALS",
+            "question": "What is it made of?",
+            "answer": "A soft, breathable, latex-free woven fabric with a medical-grade acrylic adhesive. Hypoallergenic, residue-free, and designed to be worn comfortably for 8+ hours."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ABOUT NIGHTSEALS",
+            "question": "What sizes are available?",
+            "answer": "NightSeals comes in one size that fits most faces. It's available in 30-night (1 pouch), 90-night (3 pouches), and 180-night (6 pouches) supply options."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "Is mouth taping safe?",
+            "answer": "For healthy adults who can breathe comfortably through their nose, yes. NightSeals is not a sealed barrier. Your lips can part naturally with light effort. It is not suitable for children, anyone with nasal congestion, or anyone with a breathing disorder. If you suspect you have sleep apnea, consult your doctor before using any mouth tape. This is not medical advice."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "What if I can't breathe with it on?",
+            "answer": "NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your body's survival instincts will always override the adhesive. If your nose is congested on a given night, simply skip that night."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "Will it rip off my beard?",
+            "answer": "No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments. The strip sits on your lips, not on the beard itself."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "Can I open my mouth if I need to?",
+            "answer": "Yes. It prevents the unconscious falling-open that happens during sleep, but a deliberate yawn, sip of water, or spoken word parts the seal easily. It is a gentle cue, not a restraint."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "Who should NOT use NightSeals?",
+            "answer": "Do not use if you cannot breathe comfortably through your nose, have severe heart or respiratory conditions, have consumed alcohol or sedatives, or are under 18. Remove immediately if you feel discomfort. Always consult your physician if you have concerns about your sleep or breathing."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "NASAL BREATHING",
+            "question": "Why is nasal breathing better than mouth breathing?",
+            "answer": "Your nose filters, warms, and humidifies the air before it reaches your lungs. Research suggests it also produces nitric oxide, which may help open airways and support oxygen delivery. Mouth breathing bypasses all of this, which can dry out your airway, contribute to snoring, and fragment your sleep."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "NASAL BREATHING",
+            "question": "Will mouth tape stop my snoring?",
+            "answer": "It may help. Snoring often occurs when the mouth falls open during sleep, narrowing the airway. Keeping your lips sealed encourages nasal breathing, which may reduce the vibration that causes snoring. Individual results vary, and mouth tape is not a treatment for sleep apnea or any medical condition."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "NASAL BREATHING",
+            "question": "What if my nose gets congested?",
+            "answer": "Skip that night. Mouth tape is for nights you can breathe freely through your nose. Many sleepers pair NightSeals with a hot shower or nasal rinse before bed during allergy season."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "NASAL BREATHING",
+            "question": "How long until I notice a difference?",
+            "answer": "Many people notice less dry mouth within the first few nights. Some users report snoring reduction within the first week. By night 21-30, most consistent users report meaningfully better sleep quality. Individual results vary."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ORDERS & SHIPPING",
+            "question": "How long does shipping take?",
+            "answer": "Orders ship within 24-48 hours from U.S. warehouses, Monday through Friday. Standard delivery takes 3-5 business days. Free shipping on orders over $50."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ORDERS & SHIPPING",
+            "question": "Do you ship internationally?",
+            "answer": "Not currently. We ship to U.S. addresses only at this time."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ORDERS & SHIPPING",
+            "question": "What is your return policy?",
+            "answer": "We offer a 30-night money-back guarantee. If you're not satisfied, email help@nightseals.com with your order number and we'll process a full refund. No return label needed for opened pouches. No questions asked."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "ORDERS & SHIPPING",
+            "question": "How many strips are in each pouch?",
+            "answer": "Each pouch contains 30 strips, one per night. The 90-night supply includes 3 pouches, and the 180-night supply includes 6 pouches."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "SUBSCRIPTIONS",
+            "question": "How does Subscribe & Save work?",
+            "answer": "Select the Subscribe & Save option on the product page and choose your supply size. You'll receive a fresh pouch automatically at your chosen interval (every 30, 90, or 180 nights) at 20% off the one-time price."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "SUBSCRIPTIONS",
+            "question": "Can I skip, pause, or cancel?",
+            "answer": "Yes, anytime. You'll receive a pre-shipment reminder email before each renewal. To skip, pause, or cancel, email help@nightseals.com before your next scheduled shipment. No penalties, no hoops."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "category": "SUBSCRIPTIONS",
+            "question": "Will I be charged automatically?",
+            "answer": "Yes, your payment method is charged before each scheduled shipment. You'll always receive an email reminder before you're charged, giving you time to skip or cancel if needed."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

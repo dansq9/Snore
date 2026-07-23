@@ -16,9 +16,9 @@
   .ns-pdp-compare__kicker {
     font-size: 11.5px;
     font-weight: 800;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: #8A93A3;
+    color: #B27E33;
     margin: 0 0 14px;
   }
 
@@ -52,11 +52,10 @@
   }
 
   .ns-pdp-compare__cell--hdr {
-    font-size: 11.5px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #8A93A3;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #566072;
+    justify-content: center;
   }
 
   .ns-pdp-compare__cell--hdr-ns {
@@ -64,10 +63,9 @@
     font-weight: 800;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #10182B;
-    background: #fff;
-    border-left: 2px solid rgba(16, 24, 43, .10);
-    border-right: 2px solid rgba(16, 24, 43, .10);
+    color: #F7F8FA;
+    background: #10182B;
+    justify-content: center;
     border-radius: 16px 16px 0 0;
   }
 
@@ -108,14 +106,14 @@
 <section class="ns-pdp-compare">
   <div class="ns-pdp-compare__inner">
     <div class="ns-pdp-compare__header">
-      <p class="ns-pdp-compare__kicker">COMPARE</p>
-      <h2 class="ns-pdp-compare__heading">How NightSeals stacks up</h2>
+      <p class="ns-pdp-compare__kicker">HEAD TO HEAD</p>
+      <h2 class="ns-pdp-compare__heading">NightSeals vs. the alternatives</h2>
     </div>
 
     <div class="ns-pdp-compare__table-wrap">
       <div class="ns-pdp-compare__grid">
         {%- comment -%} Header row {%- endcomment -%}
-        <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr">Feature</div>
+        <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr"></div>
         <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr-ns">NIGHTSEALS</div>
         <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr">Cheap tape</div>
         <div class="ns-pdp-compare__cell ns-pdp-compare__cell--hdr">Doing nothing</div>
@@ -129,7 +127,7 @@
           </div>
 
           <div class="ns-pdp-compare__cell ns-pdp-compare__cell--ns{% if forloop.last %} ns-pdp-compare__cell--ns-last{% endif %}{% if is_even == 0 %} ns-pdp-compare__cell--even{% endif %}">
-            <span class="ns-pdp-compare__check">&#10003;</span>{{ block.settings.nightseals }}
+            {{ block.settings.nightseals }}
           </div>
 
           <div class="ns-pdp-compare__cell{% if is_even == 0 %} ns-pdp-compare__cell--even{% endif %}">

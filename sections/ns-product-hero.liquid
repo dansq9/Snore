@@ -226,7 +226,8 @@
   }
 
   .ns-pdp__tier-badge--value {
-    background: #B27E33;
+    background: #D9A04B;
+    color: #10182B;
   }
 
   .ns-pdp__tier-left {
@@ -485,7 +486,7 @@
     content: '+';
     font-size: 20px;
     font-weight: 600;
-    color: #8A93A3;
+    color: #B27E33;
     transition: transform .2s;
     flex-shrink: 0;
     margin-left: 12px;
@@ -566,9 +567,10 @@
 
       <!-- Hidden product form -->
       {%- if product != blank -%}
+      {%- assign ns_default_variant = product.variants[1] | default: product.selected_or_first_available_variant -%}
       <div class="ns-pdp__form">
         {% form 'product', product, id: 'product-form' %}
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ns-variant-input">
+          <input type="hidden" name="id" value="{{ ns_default_variant.id }}" id="ns-variant-input">
         {% endform %}
       </div>
       {%- endif -%}
@@ -588,7 +590,7 @@
       </div>
 
       <!-- Tier selector -->
-      <p class="ns-pdp__tier-label">CHOOSE YOUR SUPPLY</p>
+      <p class="ns-pdp__tier-label" id="tiers">CHOOSE YOUR SUPPLY</p>
       {%- if product == blank or product.variants.size == 0 -%}
         <div class="ns-pdp__tiers">
           <div class="ns-pdp__tier ns-pdp__tier--active">
@@ -604,7 +606,7 @@
       <div class="ns-pdp__tiers">
         {% for variant in product.variants %}
           <div
-            class="ns-pdp__tier{% if forloop.first %} ns-pdp__tier--active{% endif %}"
+            class="ns-pdp__tier{% if variant.id == ns_default_variant.id %} ns-pdp__tier--active{% endif %}"
             data-variant-id="{{ variant.id }}"
             data-variant-price="{{ variant.price | money }}"
           >
@@ -622,7 +624,7 @@
                 <p class="ns-pdp__tier-title">{{ variant.title }}</p>
                 <p class="ns-pdp__tier-per-night">
                   {%- if variant.metafields.custom.per_night -%}
-                    ~{{ variant.metafields.custom.per_night }} / night
+                    {{ variant.metafields.custom.per_night }} / night
                   {%- endif -%}
                 </p>
               </div>
@@ -666,7 +668,7 @@
       <!-- Dual CTA buttons -->
       <div class="ns-pdp__ctas">
         <button type="button" class="ns-pdp__btn-buy" id="ns-buy-now">
-          Buy now{% if product.selected_or_first_available_variant %} &middot; {{ product.selected_or_first_available_variant.price | money }}{% endif %}
+          Buy now{% if ns_default_variant %} &middot; {{ ns_default_variant.price | money }}{% endif %}
         </button>
         <button type="button" class="ns-pdp__btn-cart" data-add-to-cart>
           Add to cart
@@ -708,7 +710,7 @@
         <details class="ns-pdp__accordion">
           <summary>Disclaimer</summary>
           <div class="ns-pdp__accordion-body">
-            NightSeals is not a medical device and is not intended to diagnose, treat, cure, or prevent any disease or health condition. Statements on this site have not been evaluated by the FDA. Consult your physician before use if you have a respiratory condition.
+            NightSeals is not a medical device and is not intended to diagnose, treat, cure, or prevent any disease or health condition. Do not use if you have difficulty breathing through your nose, severe heart or breathing problems, or after consuming alcohol or sedatives. Remove immediately if you feel discomfort. Consult a healthcare professional before starting any new breathing practice.
           </div>
         </details>
       </div>
@@ -758,7 +760,7 @@
       });
     });
 
-    /* ── Add to cart ── */
+    /* ── Add to cart — opens the slide-out drawer (and fires confetti) via NsCart ── */
     var cartBtn = document.querySelector('[data-add-to-cart]');
 
     if (cartBtn) {
@@ -766,23 +768,17 @@
         var id = variantInput ? variantInput.value : null;
         if (!id) return;
 
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: parseInt(id, 10), quantity: 1 }] })
-        })
-          .then(function (res) { return res.json(); })
-          .then(function () {
-            /* Try to open the cart drawer if theme supports it, otherwise redirect */
-            if (typeof document.querySelector('[data-cart-drawer]') !== 'undefined' && document.querySelector('[data-cart-drawer]')) {
-              document.querySelector('[data-cart-drawer]').classList.add('is-open');
-            } else {
-              window.location.href = '/cart';
-            }
+        if (window.NsCart && typeof window.NsCart.add === 'function') {
+          window.NsCart.add(id, 1);
+        } else {
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [{ id: parseInt(id, 10), quantity: 1 }] })
           })
-          .catch(function () {
-            window.location.href = '/cart';
-          });
+            .then(function () { window.location.href = '/cart'; })
+            .catch(function () { window.location.href = '/cart'; });
+        }
       });
     }
 
