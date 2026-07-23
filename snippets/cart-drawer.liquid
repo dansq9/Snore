@@ -3,6 +3,24 @@
   Static HTML shell; dynamic content rendered by assets/cart-drawer.js.
 {%- endcomment -%}
 
+{%- comment -%} Supply tiers for the upsell (main product) — read by cart-drawer.js {%- endcomment -%}
+{%- liquid
+  assign up_product = settings.featured_product
+  if up_product == blank
+    assign up_product = collections.all.products.first
+  endif
+-%}
+{%- if up_product and up_product.variants.size > 1 -%}
+  <script type="application/json" id="ns-cart-tier-data">[
+    {%- for variant in up_product.variants -%}
+      {%- assign nights_count = variant.title | split: ' ' | first | plus: 0 -%}
+      {%- assign per_night_cents = 0 -%}
+      {%- if nights_count > 0 -%}{%- assign per_night_cents = variant.price | times: 1.0 | divided_by: nights_count | round -%}{%- endif -%}
+      {"id":{{ variant.id }},"title":{{ variant.title | json }},"price":{{ variant.price }},"nights":{{ nights_count }},"perNight":{{ per_night_cents }}}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]</script>
+{%- endif -%}
+
 <div id="ns-cart-drawer" class="ns-overlay" style="display:none" role="dialog" aria-label="Shopping cart" aria-modal="true">
   {%- comment -%} Backdrop {%- endcomment -%}
   <div class="ns-overlay-bg" data-cart-close></div>
@@ -32,6 +50,16 @@
 
     {%- comment -%} Footer {%- endcomment -%}
     <div class="ns-cart-drawer__footer" id="ns-cart-footer">
+      {%- comment -%} Promo code — sets Shopify's discount cookie for checkout {%- endcomment -%}
+      <form class="ns-promo" data-promo-form>
+        <button type="button" class="ns-promo__toggle" data-promo-toggle aria-expanded="false">Have a promo code?</button>
+        <div class="ns-promo__fields" data-promo-fields hidden>
+          <input type="text" class="ns-promo__input" name="discount" placeholder="Promo code" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Promo code">
+          <button type="submit" class="ns-promo__apply">Apply</button>
+        </div>
+        <p class="ns-promo__msg" data-promo-msg hidden></p>
+      </form>
+
       <div class="ns-cart-drawer__subtotal-row">
         <span class="ns-cart-drawer__subtotal-label">Subtotal</span>
         <span class="ns-cart-drawer__subtotal-value" id="ns-cart-subtotal"></span>
@@ -269,25 +297,46 @@
     color: var(--navy);
   }
 
-  /* Upsell card */
-  .ns-cart-drawer__upsell {
-    margin-top: 16px;
+  /* Upsell card (shared: drawer + cart page) */
+  .ns-cart-drawer__upsell:not(:empty) {
+    margin-top: 18px;
   }
 
   .ns-cart-upsell__card {
-    background: rgba(16,24,43,.04);
+    background: linear-gradient(135deg, rgba(217,160,75,.14), rgba(217,160,75,.05));
+    border: 1px solid rgba(217,160,75,.35);
     border-radius: var(--radius-md);
-    padding: 14px 16px;
+    padding: 13px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
   }
 
-  .ns-cart-upsell__text {
-    font-size: 13px;
-    font-weight: 600;
+  .ns-cart-upsell__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .ns-cart-upsell__eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--dark-amber);
+  }
+
+  .ns-cart-upsell__label {
+    font-size: 14px;
+    font-weight: 800;
     color: var(--navy);
+  }
+
+  .ns-cart-upsell__sub {
+    font-size: 12px;
+    color: var(--text-secondary);
   }
 
   .ns-cart-upsell__btn {
@@ -295,7 +344,7 @@
     color: var(--navy);
     border: none;
     border-radius: 999px;
-    padding: 8px 16px;
+    padding: 9px 18px;
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
@@ -305,6 +354,88 @@
   }
   .ns-cart-upsell__btn:hover {
     background: var(--amber-hover);
+  }
+  .ns-cart-upsell__btn:disabled {
+    opacity: .6;
+    cursor: default;
+  }
+
+  /* Promo code field (shared: drawer + cart page) */
+  .ns-promo {
+    margin: 0 0 14px;
+  }
+  .ns-promo__toggle {
+    background: none;
+    border: none;
+    padding: 2px 0;
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .ns-promo__toggle:hover { color: var(--navy); }
+  .ns-promo__fields {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .ns-promo__fields[hidden] { display: none; }
+  .ns-promo__input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid rgba(16,24,43,.15);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px;
+    font-family: var(--font-primary);
+    color: var(--navy);
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .ns-promo__input::placeholder { color: var(--text-muted); text-transform: none; }
+  .ns-promo__input:focus { border-color: var(--navy); }
+  .ns-promo__apply {
+    background: var(--navy);
+    color: #F7F8FA;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-size: 13.5px;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s;
+  }
+  .ns-promo__apply:hover { background: #26314D; }
+  .ns-promo__apply:disabled { opacity: .6; cursor: default; }
+  .ns-promo__msg {
+    font-size: 12.5px;
+    margin: 8px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.4;
+  }
+  .ns-promo__msg[hidden] { display: none; }
+  .ns-promo__msg.is-success { color: #1F9254; }
+  .ns-promo__msg.is-error { color: #B4232A; }
+  .ns-promo__check {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #1F9254;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
   }
 
   /* Footer */

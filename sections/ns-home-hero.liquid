@@ -93,19 +93,29 @@
   .ns-hero__trust {
     display: flex;
     align-items: center;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 6px 10px;
     font-size: 13px;
     color: #566072;
     font-weight: 500;
   }
 
-  .ns-hero__trust-dot {
+  /* Each phrase stays on one line; the amber dot rides with the phrase as a
+     trailing separator so a wrapped line never starts with an orphan dot. */
+  .ns-hero__trust-item {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .ns-hero__trust-item:not(:last-child)::after {
+    content: "";
     width: 5px;
     height: 5px;
     border-radius: 50%;
     background: #D9A04B;
-    flex-shrink: 0;
+    margin-left: 10px;
+    flex: none;
   }
 
   .ns-hero__image-col {
@@ -145,14 +155,18 @@
     border-radius: 16px;
     padding: 16px 20px;
     box-shadow: 0 16px 40px rgba(16, 24, 43, .16);
-    max-width: 260px;
+    /* 290px border-box = 250px text column, matching the design handoff
+       (its 250px content-box card). Without this the global border-box reset
+       shrinks the card ~30px and the caption wraps tighter than intended. */
+    max-width: 290px;
+    pointer-events: none;
     z-index: 2;
   }
 
   .ns-hero__quote-text {
     font-family: 'Newsreader', Georgia, serif;
     font-style: italic;
-    font-size: 15px;
+    font-size: 16px;
     color: #10182B;
     margin: 0 0 6px;
     line-height: 1.4;
@@ -165,11 +179,14 @@
     margin: 0;
   }
 
-  @media (max-width: 600px) {
+  /* Once the hero grid stacks to one column (~940px) the image goes
+     full-width; pull the card inside its left edge so it can't hang
+     off-screen. Matches the design's compact 250px card. */
+  @media (max-width: 940px) {
     .ns-hero__quote {
       left: 14px;
       bottom: 14px;
-      max-width: 210px;
+      max-width: 250px;
     }
   }
 </style>
@@ -198,11 +215,9 @@
       </div>
 
       <div class="ns-hero__trust">
-        <span>100% money-back</span>
-        <span class="ns-hero__trust-dot"></span>
-        <span>Free shipping $50+</span>
-        <span class="ns-hero__trust-dot"></span>
-        <span>Ships in 3-5 days</span>
+        <span class="ns-hero__trust-item">100% money-back</span>
+        <span class="ns-hero__trust-item">Free shipping $50+</span>
+        <span class="ns-hero__trust-item">Ships in 3-5 days</span>
       </div>
     </div>
 
@@ -215,7 +230,7 @@
         {%- endif -%}
       </div>
       <div class="ns-hero__quote">
-        <p class="ns-hero__quote-text">"He didn't snore once. Not once."</p>
+        <p class="ns-hero__quote-text">&ldquo;He didn&rsquo;t snore once. Not once.&rdquo;</p>
         <p class="ns-hero__quote-meta">Verified partner review &middot; Results may vary</p>
       </div>
     </div>

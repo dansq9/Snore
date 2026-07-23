@@ -3,14 +3,14 @@
   amber mailto button. Used at the bottom of the Help Center page.
 {%- endcomment -%}
 
-{%- assign contact_email = section.settings.email | default: 'help@nightseals.com' -%}
+{%- assign contact_email = section.settings.email | default: 'hello@nightseals.com' -%}
 
 <section class="ns-contact-cta">
   <div class="ns-contact-cta__card">
     <h2 class="ns-contact-cta__heading">{{ section.settings.heading | default: 'Still have questions?' }}</h2>
     <p class="ns-contact-cta__body">{{ section.settings.body | default: "We're real people and we respond fast." }}</p>
     <a href="mailto:{{ contact_email }}" class="ns-contact-cta__btn">
-      {{ section.settings.button_label | default: 'Email help@nightseals.com' }}
+      {{ section.settings.button_label | default: 'Email hello@nightseals.com' }}
     </a>
   </div>
 </section>
@@ -81,13 +81,13 @@
       "type": "text",
       "id": "email",
       "label": "Support email",
-      "default": "help@nightseals.com"
+      "default": "hello@nightseals.com"
     },
     {
       "type": "text",
       "id": "button_label",
       "label": "Button label",
-      "default": "Email help@nightseals.com"
+      "default": "Email hello@nightseals.com"
     }
   ],
   "presets": [

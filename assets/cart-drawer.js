@@ -27,6 +27,42 @@
     return url.replace(/(\.[a-z]+)(\?|$)/, '_' + width + 'x$1$2');
   }
 
+  /** Escape a string for safe insertion into innerHTML. */
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  /**
+   * Pre-load a discount code onto the checkout. Hitting /discount/CODE sets
+   * Shopify's discount cookie; the reduction then applies automatically at
+   * checkout (the AJAX cart can't show code discounts in its own totals, so
+   * this is the supported storefront path). Redirects to /cart.js to keep the
+   * response tiny.
+   * @param {string} code
+   * @returns {Promise}
+   */
+  function applyDiscount(code) {
+    code = (code || '').trim();
+    if (!code) return Promise.reject(new Error('empty discount code'));
+    return fetch('/discount/' + encodeURIComponent(code) + '?redirect=' +
+      encodeURIComponent('/cart.js'), { credentials: 'same-origin' });
+  }
+
+  /**
+   * Supply tiers for the main product, ascending by price. Rendered as a JSON
+   * island in snippets/cart-drawer.liquid so the upsell can find the next tier.
+   */
+  function getTiers() {
+    var el = document.getElementById('ns-cart-tier-data');
+    if (!el) return [];
+    try {
+      var arr = JSON.parse(el.textContent);
+      return arr.slice().sort(function (a, b) { return a.price - b.price; });
+    } catch (e) { return []; }
+  }
+
   /* ------------------------------------------------------------------ */
   /*  DOM references (cached once on first use)                          */
   /* ------------------------------------------------------------------ */
@@ -224,10 +260,8 @@
         itemsEl.innerHTML = html;
       }
 
-      /* ----- Upsell placeholder ----- */
-      if (upsellEl) {
-        upsellEl.innerHTML = '';
-      }
+      /* ----- Upsell (next tier up) ----- */
+      renderUpsell(cart);
 
       /* ----- Footer totals ----- */
       if (subtotalEl) {
@@ -236,6 +270,82 @@
       /* (The floating buy bar shows the current product selection, not the
          cart total — it's managed by fab.js, so we don't touch it here.) */
     });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Upsell — nudge to the next supply tier up                          */
+  /* ------------------------------------------------------------------ */
+
+  function renderUpsell(cart) {
+    var upsellEl = dom('ns-cart-upsell');
+    if (!upsellEl) return;
+    upsellEl.innerHTML = '';
+
+    var tiers = getTiers();
+    if (tiers.length < 2 || !cart.items || !cart.items.length) return;
+
+    /* Highest tier already in the cart (matched by variant id). */
+    var bestIdx = -1, bestItem = null;
+    for (var i = 0; i < cart.items.length; i++) {
+      var it = cart.items[i];
+      for (var t = 0; t < tiers.length; t++) {
+        if (tiers[t].id === it.variant_id && t > bestIdx) {
+          bestIdx = t; bestItem = it;
+        }
+      }
+    }
+    if (bestIdx === -1) return;               /* no recognised tier in cart */
+    if (bestIdx >= tiers.length - 1) return;  /* already on the top tier    */
+
+    var cur  = tiers[bestIdx];
+    var next = tiers[bestIdx + 1];
+
+    var sub = 'More nights, better value';
+    if (cur.perNight && next.perNight && next.perNight < cur.perNight) {
+      sub = 'Just ' + fmt(next.perNight) + '/night · save ' +
+            fmt(cur.perNight - next.perNight) + '/night';
+    }
+
+    var plan = (bestItem.selling_plan_allocation &&
+                bestItem.selling_plan_allocation.selling_plan)
+      ? bestItem.selling_plan_allocation.selling_plan.id : '';
+
+    upsellEl.innerHTML =
+      '<div class="ns-cart-upsell__card">' +
+        '<div class="ns-cart-upsell__body">' +
+          '<span class="ns-cart-upsell__eyebrow">↑ Upgrade &amp; save</span>' +
+          '<span class="ns-cart-upsell__label">' + escapeHtml(next.title) + '</span>' +
+          '<span class="ns-cart-upsell__sub">' + escapeHtml(sub) + '</span>' +
+        '</div>' +
+        '<button type="button" class="ns-cart-upsell__btn" data-cart-upgrade ' +
+          'data-from-key="' + escapeHtml(bestItem.key) + '" ' +
+          'data-to-id="' + next.id + '" ' +
+          'data-qty="' + bestItem.quantity + '"' +
+          (plan ? ' data-plan="' + plan + '"' : '') +
+        '>Upgrade</button>' +
+      '</div>';
+  }
+
+  /**
+   * Swap the current tier line for the next tier up. Adds the new variant
+   * first, then removes the old line, so the cart never momentarily empties.
+   */
+  function upgradeTier(fromKey, toVariantId, quantity, sellingPlan) {
+    var item = { id: parseInt(toVariantId, 10), quantity: parseInt(quantity, 10) || 1 };
+    if (sellingPlan) item.selling_plan = parseInt(sellingPlan, 10);
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ items: [item] })
+    }).then(function (res) { return res.json(); })
+      .then(function () {
+        return fetchJSON('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: fromKey, quantity: 0 })
+        });
+      })
+      .then(function () { return renderCartDrawer(); });
   }
 
   /* ------------------------------------------------------------------ */
@@ -286,6 +396,60 @@
       updateCartItem(removeBtn.getAttribute('data-cart-remove'), 0);
       return;
     }
+
+    /* Upgrade-to-next-tier button */
+    var upBtn = target.closest('[data-cart-upgrade]');
+    if (upBtn) {
+      upBtn.disabled = true;
+      upgradeTier(
+        upBtn.getAttribute('data-from-key'),
+        upBtn.getAttribute('data-to-id'),
+        upBtn.getAttribute('data-qty'),
+        upBtn.getAttribute('data-plan')
+      ).catch(function () { upBtn.disabled = false; });
+      return;
+    }
+
+    /* Promo code reveal (shared by drawer + cart page) */
+    var promoToggle = target.closest('[data-promo-toggle]');
+    if (promoToggle) {
+      var promoForm = promoToggle.closest('[data-promo-form]');
+      var fields = promoForm && promoForm.querySelector('[data-promo-fields]');
+      if (fields) {
+        fields.hidden = !fields.hidden;
+        if (!fields.hidden) { var inp = fields.querySelector('input'); if (inp) inp.focus(); }
+      }
+      return;
+    }
+  });
+
+  /* Promo code submit — Apply button or Enter key (shared by both carts) */
+  document.addEventListener('submit', function (e) {
+    var form = e.target.closest('[data-promo-form]');
+    if (!form) return;
+    e.preventDefault();
+
+    var input = form.querySelector('input[name="discount"]');
+    var msg   = form.querySelector('[data-promo-msg]');
+    var btn   = form.querySelector('[type="submit"]');
+    var code  = input ? input.value.trim() : '';
+    if (!code) return;
+
+    if (btn) btn.disabled = true;
+    applyDiscount(code).then(function () {
+      if (msg) {
+        msg.hidden = false;
+        msg.className = 'ns-promo__msg is-success';
+        msg.innerHTML = '<span class="ns-promo__check">✓</span> ' +
+          escapeHtml(code.toUpperCase()) + ' applied — discount shows at checkout.';
+      }
+    }).catch(function () {
+      if (msg) {
+        msg.hidden = false;
+        msg.className = 'ns-promo__msg is-error';
+        msg.textContent = 'Couldn’t apply that — you can re-enter it at checkout.';
+      }
+    }).then(function () { if (btn) btn.disabled = false; });
   });
 
   /* ------------------------------------------------------------------ */
@@ -293,11 +457,12 @@
   /* ------------------------------------------------------------------ */
 
   var api = {
-    add:    addToCart,
-    update: updateCartItem,
-    open:   openCartDrawer,
-    close:  closeCartDrawer,
-    render: renderCartDrawer
+    add:           addToCart,
+    update:        updateCartItem,
+    open:          openCartDrawer,
+    close:         closeCartDrawer,
+    render:        renderCartDrawer,
+    applyDiscount: applyDiscount
   };
 
   window.NsCart = api;

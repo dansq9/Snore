@@ -71,6 +71,19 @@
 
       /* Optionally post to Shopify customer form or Klaviyo here */
 
+      /* Pre-load the promo code onto the checkout so the shopper doesn't have
+         to re-type it. Hitting /discount/CODE sets Shopify's discount cookie;
+         the reduction is then applied automatically at checkout. Fire-and-
+         forget — a failure here never blocks the code reveal. */
+      var codeEl = successEl && successEl.querySelector('.ns-welcome__code');
+      var code   = codeEl ? codeEl.textContent.trim() : '';
+      if (code) {
+        try {
+          fetch('/discount/' + encodeURIComponent(code) + '?redirect=' +
+                encodeURIComponent('/cart.js'), { credentials: 'same-origin' });
+        } catch (err) { /* no-op */ }
+      }
+
       form.style.display = 'none';
       if (successEl) successEl.style.display = '';
 

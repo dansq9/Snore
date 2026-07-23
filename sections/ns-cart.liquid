@@ -21,6 +21,34 @@
   {%- endif -%}
 {%- endfor -%}
 
+{%- comment -%} ── Upsell: highest supply tier in cart → next tier up ── {%- endcomment -%}
+{%- assign up_product = settings.featured_product -%}
+{%- if up_product == blank -%}{%- assign up_product = collections.all.products.first -%}{%- endif -%}
+{%- assign up_best_price = 0 -%}
+{%- assign up_best_line = 0 -%}
+{%- assign up_best_qty = 1 -%}
+{%- assign up_best_variant = null -%}
+{%- if up_product -%}
+  {%- for item in cart.items -%}
+    {%- if item.product.id == up_product.id and item.variant.price > up_best_price -%}
+      {%- assign up_best_price = item.variant.price -%}
+      {%- assign up_best_line = forloop.index -%}
+      {%- assign up_best_qty = item.quantity -%}
+      {%- assign up_best_variant = item.variant -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{%- assign up_next = null -%}
+{%- if up_best_price > 0 -%}
+  {%- for variant in up_product.variants -%}
+    {%- if variant.price > up_best_price -%}
+      {%- if up_next == null or variant.price < up_next.price -%}
+        {%- assign up_next = variant -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
 <section class="ns-cartpage" data-section-id="{{ section.id }}">
   <div class="ns-cartpage__inner" id="ns-cartpage-inner">
     {%- if cart.item_count == 0 -%}
@@ -95,6 +123,30 @@
               </div>
             {%- endfor -%}
           </div>
+
+          {%- comment -%} Upsell — nudge to the next supply tier {%- endcomment -%}
+          {%- if up_next -%}
+            {%- assign up_cur_nights = up_best_variant.title | split: ' ' | first | plus: 0 -%}
+            {%- assign up_next_nights = up_next.title | split: ' ' | first | plus: 0 -%}
+            {%- assign up_cur_pn = 0 -%}
+            {%- assign up_next_pn = 0 -%}
+            {%- if up_cur_nights > 0 -%}{%- assign up_cur_pn = up_best_variant.price | times: 1.0 | divided_by: up_cur_nights | round -%}{%- endif -%}
+            {%- if up_next_nights > 0 -%}{%- assign up_next_pn = up_next.price | times: 1.0 | divided_by: up_next_nights | round -%}{%- endif -%}
+            <div class="ns-cart-drawer__upsell ns-cartpage__upsell">
+              <div class="ns-cart-upsell__card">
+                <div class="ns-cart-upsell__body">
+                  <span class="ns-cart-upsell__eyebrow">&uarr; Upgrade &amp; save</span>
+                  <span class="ns-cart-upsell__label">{{ up_next.title }}</span>
+                  {%- if up_cur_pn > 0 and up_next_pn > 0 and up_next_pn < up_cur_pn -%}
+                    <span class="ns-cart-upsell__sub">Just {{ up_next_pn | money }}/night &middot; save {{ up_cur_pn | minus: up_next_pn | money }}/night</span>
+                  {%- else -%}
+                    <span class="ns-cart-upsell__sub">More nights, better value</span>
+                  {%- endif -%}
+                </div>
+                <button type="button" class="ns-cart-upsell__btn" data-cartpage-upgrade data-from-line="{{ up_best_line }}" data-to-id="{{ up_next.id }}" data-qty="{{ up_best_qty }}">Upgrade</button>
+              </div>
+            </div>
+          {%- endif -%}
         </div>
 
         {%- comment -%} ── Right: summary ── {%- endcomment -%}
@@ -111,6 +163,17 @@
               <span class="ns-cart-drawer__subtotal-value">{{ cart.total_price | money }}</span>
             </div>
             <p class="ns-cartpage__tax-note">Shipping &amp; taxes calculated at checkout.</p>
+
+            {%- comment -%} Promo code — sets Shopify's discount cookie for checkout {%- endcomment -%}
+            <form class="ns-promo" data-promo-form>
+              <button type="button" class="ns-promo__toggle" data-promo-toggle aria-expanded="false">Have a promo code?</button>
+              <div class="ns-promo__fields" data-promo-fields hidden>
+                <input type="text" class="ns-promo__input" name="discount" placeholder="Promo code" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Promo code">
+                <button type="submit" class="ns-promo__apply">Apply</button>
+              </div>
+              <p class="ns-promo__msg" data-promo-msg hidden></p>
+            </form>
+
             <a href="/checkout" class="ns-cart-drawer__checkout-btn">Checkout</a>
             <p class="ns-cart-drawer__guarantee">30-day money-back guarantee</p>
           </div>
@@ -258,14 +321,43 @@
     function getRoot() { return document.querySelector('.ns-cartpage'); }
     var inFlight = false;
 
-    function change(line, quantity) {
+    function route(p) {
+      var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+      if (root.charAt(root.length - 1) !== '/') root += '/';
+      return root + p;
+    }
+
+    function begin() {
       var root = getRoot();
-      if (!root || inFlight) return;
-      var sectionId = root.getAttribute('data-section-id');
+      if (!root || inFlight) return null;
       inFlight = true;
       root.classList.add('is-loading');
+      return root.getAttribute('data-section-id');
+    }
 
-      fetch(window.Shopify && window.Shopify.routes ? window.Shopify.routes.root + 'cart/change.js' : '/cart/change.js', {
+    function finish() {
+      inFlight = false;
+      var r = getRoot();
+      if (r) r.classList.remove('is-loading');
+    }
+
+    /* Replace the cart's inner HTML from a Section Rendering API response. */
+    function swap(data, sectionId) {
+      var html = data && data.sections && data.sections[sectionId];
+      if (!html) { window.location.reload(); return; }
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var fresh = doc.getElementById('ns-cartpage-inner');
+      var current = document.getElementById('ns-cartpage-inner');
+      if (fresh && current) { current.innerHTML = fresh.innerHTML; }
+      else { window.location.reload(); return; }
+      /* Keep the header badge + slide-out drawer in sync */
+      if (window.NsCart && typeof window.NsCart.render === 'function') window.NsCart.render();
+    }
+
+    function change(line, quantity) {
+      var sectionId = begin();
+      if (sectionId == null) return;
+      fetch(route('cart/change.js'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
@@ -276,27 +368,37 @@
         })
       })
         .then(function (r) { return r.json(); })
-        .then(function (data) {
-          var html = data && data.sections && data.sections[sectionId];
-          if (html) {
-            var doc = new DOMParser().parseFromString(html, 'text/html');
-            var fresh = doc.getElementById('ns-cartpage-inner');
-            var current = document.getElementById('ns-cartpage-inner');
-            if (fresh && current) { current.innerHTML = fresh.innerHTML; }
-            else { window.location.reload(); return; }
-          } else {
-            window.location.reload();
-            return;
-          }
-          /* Keep the header badge + slide-out drawer in sync */
-          if (window.NsCart && typeof window.NsCart.render === 'function') window.NsCart.render();
-        })
+        .then(function (data) { swap(data, sectionId); })
         .catch(function () { window.location.reload(); })
-        .finally(function () {
-          inFlight = false;
-          var r = getRoot();
-          if (r) r.classList.remove('is-loading');
-        });
+        .finally(finish);
+    }
+
+    /* Upgrade to the next tier: add the new variant, then drop the old line. */
+    function upgrade(fromLine, toId, qty) {
+      var sectionId = begin();
+      if (sectionId == null) return;
+      fetch(route('cart/add.js'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ items: [{ id: parseInt(toId, 10), quantity: parseInt(qty, 10) || 1 }] })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function () {
+          return fetch(route('cart/change.js'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              line: parseInt(fromLine, 10),
+              quantity: 0,
+              sections: sectionId,
+              sections_url: window.location.pathname
+            })
+          });
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) { swap(data, sectionId); })
+        .catch(function () { window.location.reload(); })
+        .finally(finish);
     }
 
     document.addEventListener('click', function (e) {
@@ -304,6 +406,12 @@
       if (qtyBtn) { change(qtyBtn.getAttribute('data-line'), qtyBtn.getAttribute('data-qty')); return; }
       var rmBtn = e.target.closest('[data-cartpage-remove]');
       if (rmBtn) { change(rmBtn.getAttribute('data-line'), 0); return; }
+      var upBtn = e.target.closest('[data-cartpage-upgrade]');
+      if (upBtn) {
+        upBtn.disabled = true;
+        upgrade(upBtn.getAttribute('data-from-line'), upBtn.getAttribute('data-to-id'), upBtn.getAttribute('data-qty'));
+        return;
+      }
     });
   })();
 </script>
