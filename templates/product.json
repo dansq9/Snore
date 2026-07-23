@@ -184,7 +184,9 @@
         "feat_3",
         "feat_4"
       ],
-      "settings": {}
+      "settings": {
+        "feature_image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_59_38_AM.png"
+      }
     },
     "comparison": {
       "type": "ns-pdp-comparison",
