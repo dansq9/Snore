@@ -15,10 +15,9 @@
         "badge_text": "2,300+ five-star sleepers",
         "heading": "Your mouth falls open at night. That's the problem.",
         "subheading": "You can't feel it happen, but it's why you wake up tired and snoring. The fix takes 3 seconds.",
-        "check_1": "The gentlest way to start nasal breathing",
-        "check_2": "Less snoring, quieter nights",
-        "check_3": "No more 3am dry mouth",
-        "check_4": "Beard-proof hold · drug-free",
+        "check_1": "Less snoring, quieter nights",
+        "check_2": "No more 3am dry mouth",
+        "check_3": "Stays put all night · drug-free",
         "cta_text": "Try NightSeals risk-free →",
         "cta_url": "",
         "audience_line": "For those who snore, and the partners who put up with it.",
@@ -143,7 +142,7 @@
     },
     "timeline": {
       "type": "ns-timeline",
-      "settings": {}
+      "settings": { "nights": 60 }
     },
     "shop": {
       "type": "ns-landing-shop",
@@ -210,7 +209,7 @@
           "settings": {
             "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_10_44_AM.png",
             "caption": "Total reset",
-            "reviewer": "Dan · Night 90"
+            "reviewer": "Dan · Night 58"
           }
         }
       },
@@ -229,7 +228,7 @@
       "type": "ns-landing-comparison",
       "settings": {
         "kicker": "NIGHTSEALS VS. DOING NOTHING",
-        "heading": "Two ways to spend the next 90 nights",
+        "heading": "Two ways to spend the next 60 nights",
         "cta_label": "Try NightSeals risk-free"
       }
     },
@@ -312,9 +311,9 @@
         "product_line": "your 60-night supply",
         "body": "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time.",
         "check_1": "30-night money-back guarantee",
-        "check_2": "Ships in 3-5 days",
+        "check_2": "Latex-free, skin-safe",
         "check_3": "Beard-proof, drug-free",
-        "check_4": "One-time purchase, no subscription",
+        "check_4": "No subscription, ever",
         "cta_text": "Claim 40% off →",
         "note": "Join thousands sleeping quieter every night."
       }
