@@ -51,7 +51,7 @@
     display: none;
   }
 
-  .ns-reviews-carousel__card--video {
+  .ns-reviews-carousel__card--image {
     width: min(300px, 80vw);
     flex-shrink: 0;
     scroll-snap-align: start;
@@ -61,7 +61,7 @@
     box-shadow: 0 2px 12px rgba(16, 24, 43, .06);
   }
 
-  .ns-reviews-carousel__video-area {
+  .ns-reviews-carousel__image-area {
     height: 340px;
     background: #EAEDF2;
     position: relative;
@@ -70,7 +70,7 @@
     justify-content: center;
   }
 
-  .ns-reviews-carousel__video-area img {
+  .ns-reviews-carousel__image-area img {
     position: absolute;
     top: 0;
     left: 0;
@@ -79,16 +79,10 @@
     object-fit: cover;
   }
 
-  .ns-reviews-carousel__play-btn {
-    width: 56px;
-    height: 56px;
-    background: rgba(16, 24, 43, .85);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
+  .ns-reviews-carousel__image-ph {
+    font-size: 13px;
+    color: #8A93A3;
+    font-weight: 600;
   }
 
   .ns-reviews-carousel__caption-area {
@@ -159,21 +153,20 @@
 
   <div class="ns-reviews-carousel__track">
     {%- for block in section.blocks -%}
-      {%- if block.type == 'video_review' -%}
-        <div class="ns-reviews-carousel__card--video" {{ block.shopify_attributes }}>
-          <div class="ns-reviews-carousel__video-area">
-            {%- if block.settings.thumbnail -%}
+      {%- if block.type == 'image_review' -%}
+        <div class="ns-reviews-carousel__card--image" {{ block.shopify_attributes }}>
+          <div class="ns-reviews-carousel__image-area">
+            {%- if block.settings.image -%}
               <img
-                src="{{ block.settings.thumbnail | image_url: width: 600 }}"
+                src="{{ block.settings.image | image_url: width: 600 }}"
                 alt="{{ block.settings.caption | escape }}"
                 loading="lazy"
                 width="300"
                 height="340"
               >
+            {%- else -%}
+              <span class="ns-reviews-carousel__image-ph">Customer photo</span>
             {%- endif -%}
-            <div class="ns-reviews-carousel__play-btn">
-              <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 1l16 10L2 21V1z" fill="#fff"/></svg>
-            </div>
           </div>
           <div class="ns-reviews-carousel__caption-area">
             <p class="ns-reviews-carousel__caption">{{ block.settings.caption }}</p>
@@ -201,13 +194,13 @@
   "settings": [],
   "blocks": [
     {
-      "type": "video_review",
-      "name": "Video Review",
+      "type": "image_review",
+      "name": "Image Review",
       "settings": [
         {
           "type": "image_picker",
-          "id": "thumbnail",
-          "label": "Video thumbnail"
+          "id": "image",
+          "label": "Review image"
         },
         {
           "type": "text",
@@ -243,7 +236,7 @@
       "name": "Reviews Carousel",
       "blocks": [
         {
-          "type": "video_review",
+          "type": "image_review",
           "settings": {
             "caption": "Slept through the night",
             "reviewer": "Mike · Night 41"
@@ -257,7 +250,7 @@
           }
         },
         {
-          "type": "video_review",
+          "type": "image_review",
           "settings": {
             "caption": "Dry mouth, gone",
             "reviewer": "Rob · Night 12"
@@ -271,7 +264,7 @@
           }
         },
         {
-          "type": "video_review",
+          "type": "image_review",
           "settings": {
             "caption": "Partner approved",
             "reviewer": "Elise · Night 30"
@@ -285,7 +278,7 @@
           }
         },
         {
-          "type": "video_review",
+          "type": "image_review",
           "settings": {
             "caption": "Total reset",
             "reviewer": "Dan · Night 90"

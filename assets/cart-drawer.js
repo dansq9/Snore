@@ -61,12 +61,26 @@
    * @returns {Promise}
    */
   function addToCart(variantId, quantity) {
-    return fetchJSON('/cart/add.js', {
+    var id = parseInt(variantId, 10);
+    if (!id) {
+      console.error('[NsCart] add called with an invalid variant id:', variantId,
+        '— is a product with variants assigned? (Theme settings → Shop)');
+      return Promise.reject(new Error('Invalid variant id'));
+    }
+    return fetch('/cart/add.js', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        items: [{ id: parseInt(variantId, 10), quantity: quantity || 1 }]
-      })
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ items: [{ id: id, quantity: quantity || 1 }] })
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        if (!res.ok) {
+          /* Shopify returns { status, message, description } on failure */
+          var msg = (data && (data.description || data.message)) || 'Add to cart failed';
+          console.error('[NsCart] /cart/add.js failed:', msg);
+          throw new Error(msg);
+        }
+        return data;
+      });
     }).then(function (data) {
       renderCartDrawer();
       openCartDrawer();

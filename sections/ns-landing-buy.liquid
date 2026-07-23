@@ -182,7 +182,7 @@
         var id = addBtn.getAttribute('data-variant-id');
         if (!id) return;
         if (window.NsCart && typeof window.NsCart.add === 'function') {
-          window.NsCart.add(id, 1);
+          window.NsCart.add(id, 1).catch(function () {});
         } else {
           fetch('/cart/add.js', {
             method: 'POST',
