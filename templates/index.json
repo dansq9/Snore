@@ -11,15 +11,22 @@
   "sections": {
     "hero": {
       "type": "ns-home-hero",
-      "settings": {}
+      "settings": {
+        "hero_image": "shopify://shop_images/ChatGPTImageJul23_2026_12_59_00AM.png",
+        "heading": "Better sleep is right under your nose",
+        "description": "Quieter nights, no dry mouth, and mornings that actually feel like mornings. NightSeals is a single strip of beard-proof mouth tape that trains you to breathe through your nose while you sleep. Try it for 30 nights or get your money back.",
+        "cta_text": "Get NightSeals from $24.95"
+      }
     },
     "idea": {
       "type": "ns-idea-section",
-      "settings": {}
+      "settings": {
+        "kicker": "THE IDEA BEHIND NIGHTSEALS",
+        "body": "Your nose filters, warms and paces every breath. Mouth tape exists for one reason: to keep you breathing that way while you sleep."
+      }
     },
     "problem": {
       "type": "ns-problem-section",
-      "settings": {},
       "blocks": {
         "problem_1": {
           "type": "problem_item",
@@ -46,15 +53,20 @@
           }
         }
       },
-      "block_order": ["problem_1", "problem_2", "problem_3"]
+      "block_order": [
+        "problem_1",
+        "problem_2",
+        "problem_3"
+      ],
+      "settings": {}
     },
     "how-it-works": {
       "type": "ns-how-it-works",
-      "settings": {},
       "blocks": {
         "step_1": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_21_PM.png",
             "title": "Apply",
             "description": "Center one strip over closed lips before bed. The adhesive grips through beards. Zero prep."
           }
@@ -62,6 +74,7 @@
         "step_2": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_25_PM.png",
             "title": "Breathe",
             "description": "Your nose takes over: filtered, humidified, quiet airflow all night long. You won't feel a thing."
           }
@@ -69,16 +82,21 @@
         "step_3": {
           "type": "step",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_28_PM.png",
             "title": "Wake",
             "description": "Peels off gently, no residue. No dry mouth, no 3am wake-ups. Just an actual morning person."
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3"]
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {}
     },
     "benefits": {
       "type": "ns-benefits-rail",
-      "settings": {},
       "blocks": {
         "benefit_1": {
           "type": "benefit",
@@ -109,7 +127,13 @@
           }
         }
       },
-      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"]
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ],
+      "settings": {}
     },
     "comparison": {
       "type": "ns-comparison-table",
@@ -117,7 +141,6 @@
     },
     "reviews": {
       "type": "ns-reviews",
-      "settings": {},
       "blocks": {
         "review_1": {
           "type": "review",
@@ -144,7 +167,12 @@
           }
         }
       },
-      "block_order": ["review_1", "review_2", "review_3"]
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {}
     },
     "guarantee": {
       "type": "ns-guarantee-cta",
@@ -152,7 +180,6 @@
     },
     "faq": {
       "type": "ns-faq",
-      "settings": {},
       "blocks": {
         "faq_1": {
           "type": "faq_item",
@@ -204,12 +231,34 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5", "faq_6", "faq_7"]
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7"
+      ],
+      "settings": {}
     },
     "marquee": {
       "type": "ns-marquee",
-      "settings": {}
+      "settings": {
+        "content": "#SEALTHENIGHT"
+      }
     }
   },
-  "order": ["hero", "idea", "problem", "how-it-works", "benefits", "comparison", "reviews", "guarantee", "faq", "marquee"]
+  "order": [
+    "hero",
+    "idea",
+    "problem",
+    "how-it-works",
+    "benefits",
+    "comparison",
+    "reviews",
+    "guarantee",
+    "faq",
+    "marquee"
+  ]
 }
