@@ -152,38 +152,13 @@
             "question": "How many strips are in each pouch?",
             "answer": "Each pouch contains 30 strips, one per night. The 90-night supply includes 3 pouches, and the 180-night supply includes 6 pouches."
           }
-        },
-        "subs_1": {
-          "type": "faq_item",
-          "settings": {
-            "category": "SUBSCRIPTIONS",
-            "question": "How does Subscribe & Save work?",
-            "answer": "Select the Subscribe & Save option on the product page and choose your supply size. You'll receive a fresh pouch automatically at your chosen interval (every 30, 90, or 180 nights) at 20% off the one-time price."
-          }
-        },
-        "subs_2": {
-          "type": "faq_item",
-          "settings": {
-            "category": "SUBSCRIPTIONS",
-            "question": "Can I skip, pause, or cancel?",
-            "answer": "Yes, anytime. You'll receive a pre-shipment reminder email before each renewal. To skip, pause, or cancel, email hello@nightseals.com before your next scheduled shipment. No penalties, no hoops."
-          }
-        },
-        "subs_3": {
-          "type": "faq_item",
-          "settings": {
-            "category": "SUBSCRIPTIONS",
-            "question": "Will I be charged automatically?",
-            "answer": "Yes, your payment method is charged before each scheduled shipment. You'll always receive an email reminder before you're charged, giving you time to skip or cancel if needed."
-          }
         }
       },
       "block_order": [
         "about_1", "about_2", "about_3", "about_4",
         "safety_1", "safety_2", "safety_3", "safety_4", "safety_5",
         "breathing_1", "breathing_2", "breathing_3", "breathing_4",
-        "orders_1", "orders_2", "orders_3", "orders_4",
-        "subs_1", "subs_2", "subs_3"
+        "orders_1", "orders_2", "orders_3", "orders_4"
       ]
     },
     "contact-cta": {

@@ -202,13 +202,6 @@
             "answer": "No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments."
           }
         },
-        "faq_4": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Does it work with a CPAP?",
-            "answer": "Yes. Many CPAP users tape to stop mouth leaks with nasal masks and nasal pillows. If your pressure settings assume mouth breathing, check with your sleep specialist first."
-          }
-        },
         "faq_5": {
           "type": "faq_item",
           "settings": {
@@ -220,7 +213,7 @@
           "type": "faq_item",
           "settings": {
             "question": "How long does a pack last?",
-            "answer": "One strip per night: the 30-pack lasts a month, the 90-pack a quarter, and the 180-pack half a year. Subscribers get a fresh pouch right as the last one runs out."
+            "answer": "One strip per night: the 30-pack lasts a month, the 90-pack a quarter, and the 180-pack half a year."
           }
         },
         "faq_7": {
@@ -235,7 +228,6 @@
         "faq_1",
         "faq_2",
         "faq_3",
-        "faq_4",
         "faq_5",
         "faq_6",
         "faq_7"

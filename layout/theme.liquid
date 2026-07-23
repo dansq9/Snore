@@ -48,7 +48,6 @@
   {% render 'cart-drawer' %}
   {%- unless is_landing -%}
     {% render 'welcome-popup' %}
-    {% render 'sub-prompt' %}
   {%- endunless -%}
 
   <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
@@ -56,7 +55,6 @@
   <script src="{{ 'confetti.js' | asset_url }}" defer></script>
   {%- unless is_landing -%}
     <script src="{{ 'welcome-popup.js' | asset_url }}" defer></script>
-    <script src="{{ 'sub-prompt.js' | asset_url }}" defer></script>
     <script src="{{ 'fab.js' | asset_url }}" defer></script>
   {%- endunless -%}
 </body>

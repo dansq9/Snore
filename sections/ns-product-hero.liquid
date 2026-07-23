@@ -408,21 +408,26 @@
 
   .ns-pdp__ctas {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* Primary gets a little more room so "Buy now · $XX.XX" stays on one line. */
+    grid-template-columns: 1.4fr 1fr;
     gap: 10px;
     margin-top: 22px;
   }
 
   .ns-pdp__btn-buy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     background: #10182B;
     color: #F7F8FA;
-    font-size: 15px;
+    font-size: clamp(12.5px, 3.2vw, 15px);
     font-weight: 700;
-    padding: 15px 20px;
+    padding: 15px 14px;
     border-radius: 999px;
     border: none;
     cursor: pointer;
-    text-align: center;
+    white-space: nowrap;
     transition: opacity .2s;
   }
 
@@ -430,16 +435,28 @@
     opacity: 0.88;
   }
 
+  .ns-pdp__btn-buy-sep {
+    opacity: 0.45;
+  }
+
+  .ns-pdp__btn-buy-price {
+    color: #E8B25E;
+    font-weight: 800;
+  }
+
   .ns-pdp__btn-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: transparent;
     color: #10182B;
-    font-size: 15px;
+    font-size: clamp(12.5px, 3.2vw, 15px);
     font-weight: 700;
-    padding: 15px 20px;
+    padding: 15px 14px;
     border-radius: 999px;
     border: 2px solid rgba(16, 24, 43, .18);
     cursor: pointer;
-    text-align: center;
+    white-space: nowrap;
     transition: opacity .2s;
   }
 
@@ -453,12 +470,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 6px;
+    flex-wrap: wrap;
+    gap: 6px 10px;
     margin-top: 16px;
     font-size: 12.5px;
     color: #8A93A3;
     font-weight: 500;
-    flex-wrap: wrap;
+  }
+
+  /* Each phrase stays intact; the dot rides with it as a trailing separator so
+     a wrapped line never begins (or ends) with an orphaned dot. */
+  .ns-pdp__trust-item {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .ns-pdp__trust-item:not(:last-child)::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #D9A04B;
+    margin-left: 10px;
+    flex: none;
   }
 
   /* Accordions */
@@ -702,7 +737,11 @@
       <!-- Dual CTA buttons -->
       <div class="ns-pdp__ctas">
         <button type="button" class="ns-pdp__btn-buy" id="ns-buy-now">
-          Buy now{% if ns_default_variant %} &middot; {{ ns_default_variant.price | money }}{% endif %}
+          <span class="ns-pdp__btn-buy-label">Buy now</span>
+          {%- if ns_default_variant -%}
+            <span class="ns-pdp__btn-buy-sep" aria-hidden="true">&middot;</span>
+            <span class="ns-pdp__btn-buy-price">{{ ns_default_variant.price | money }}</span>
+          {%- endif -%}
         </button>
         <button type="button" class="ns-pdp__btn-cart" data-add-to-cart>
           Add to cart
@@ -711,11 +750,9 @@
 
       <!-- Trust line -->
       <div class="ns-pdp__trust">
-        <span>100% money-back</span>
-        <span>&middot;</span>
-        <span>Free shipping $50+</span>
-        <span>&middot;</span>
-        <span>Ships in 3-5 days</span>
+        <span class="ns-pdp__trust-item">100% money-back</span>
+        <span class="ns-pdp__trust-item">Free shipping $50+</span>
+        <span class="ns-pdp__trust-item">Ships in 3-5 days</span>
       </div>
 
       <!-- Product accordions -->
@@ -787,7 +824,10 @@
         if (pn) pn.textContent = tierPerNight(tier);
       });
       if (buyBtn) {
-        buyBtn.textContent = (isSubscribe ? 'Subscribe · ' : 'Buy now · ') + tierPrice(activeTier());
+        var buyLabel = buyBtn.querySelector('.ns-pdp__btn-buy-label');
+        var buyPrice = buyBtn.querySelector('.ns-pdp__btn-buy-price');
+        if (buyLabel) buyLabel.textContent = isSubscribe ? 'Subscribe' : 'Buy now';
+        if (buyPrice) buyPrice.textContent = tierPrice(activeTier());
       }
       /* Let the floating buy bar mirror the current selection */
       document.dispatchEvent(new CustomEvent('ns:selection'));
