@@ -111,7 +111,15 @@
   @media (max-width: 560px) {
     .ns-lhow__steps {
       flex-direction: column;
+      /* Column layout: center each step so the markers line up (the base
+         'align-items: flex-start' would otherwise pin content-width steps to
+         the left, and step 2's shorter copy lands off-center). */
+      align-items: center;
       gap: clamp(20px, 6vw, 28px);
+    }
+
+    .ns-lhow__step {
+      width: 100%;
     }
 
     .ns-lhow__connector {
