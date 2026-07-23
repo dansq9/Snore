@@ -26,6 +26,7 @@
     "symptoms": { "type": "ns-landing-symptoms", "settings": {} },
     "problem": { "type": "ns-landing-problem", "settings": {} },
     "how": { "type": "ns-landing-how", "settings": {} },
+    "timeline": { "type": "ns-timeline", "settings": {} },
     "shop": { "type": "ns-landing-shop", "settings": {} },
     "reviews_carousel": {
       "type": "ns-reviews-carousel",
@@ -56,6 +57,7 @@
     "symptoms",
     "problem",
     "how",
+    "timeline",
     "shop",
     "reviews_carousel",
     "comparison",
