@@ -15,6 +15,12 @@
         "id": "featured_product",
         "label": "Main product",
         "info": "The product all 'Shop' / 'Buy' buttons link to. Leave empty to fall back to the first product in your store, then to /collections/all."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Square image (512×512 recommended). Falls back to the bundled NS monogram."
       }
     ]
   },

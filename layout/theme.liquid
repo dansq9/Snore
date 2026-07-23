@@ -7,6 +7,14 @@
   <title>{{ page_title }} – {{ shop.name }}</title>
   {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
 
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+  {%- else -%}
+    <link rel="icon" type="image/png" href="{{ 'nightseals-favicon.png' | asset_url }}">
+    <link rel="apple-touch-icon" href="{{ 'nightseals-favicon.png' | asset_url }}">
+  {%- endif -%}
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
