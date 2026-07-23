@@ -106,7 +106,7 @@
   .ns-lmat__mat-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: clamp(14px, 3vw, 20px);
+    gap: clamp(14px, 3vw, 22px);
   }
   @media (max-width: 560px) {
     .ns-lmat__mat-grid { grid-template-columns: 1fr; }
@@ -116,30 +116,49 @@
     background: #FFFFFF;
     border: 1px solid rgba(16, 24, 43, .08);
     border-radius: 18px;
-    padding: clamp(22px, 3.5vw, 28px);
-    text-align: left;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 22px 44px -32px rgba(16, 24, 43, .4);
   }
 
-  .ns-lmat__card-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
+  .ns-lmat__card-media {
+    aspect-ratio: 4 / 3;
     background: #EAEDF2;
+  }
+  .ns-lmat__card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ns-lmat__card-ph {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0 16px;
+    text-align: center;
+    padding: 20px;
+    color: #8A93A3;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .ns-lmat__card-text {
+    padding: clamp(18px, 3vw, 24px);
   }
 
   .ns-lmat__card-title {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 800;
     letter-spacing: -.01em;
+    color: #10182B;
     margin-bottom: 6px;
   }
 
   .ns-lmat__card-body {
-    font-size: 13.5px;
+    font-size: 14px;
     color: #566072;
     line-height: 1.55;
     text-wrap: pretty;
@@ -154,7 +173,7 @@
       <p class="ns-lmat__q-body">{{ section.settings.q_body | default: "Fair question. Short answer: you're not sealed shut. NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your survival instincts will always win. If your nose is congested, just skip that night." }}</p>
     </div>
     <div class="ns-lmat__checks">
-      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_1 | default: "You're never sealed shut &mdash; a light effort parts your lips" }}</span></div>
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_1 | default: "You're never sealed shut: a light effort parts your lips" }}</span></div>
       <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_2 | default: "Your survival reflexes always override it" }}</span></div>
       <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_3 | default: "Nose blocked tonight? Just skip that night" }}</span></div>
       <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_4 | default: "Ease in with a lighter seal until it feels natural" }}</span></div>
@@ -165,27 +184,59 @@
 <section class="ns-lmat__mat-section">
   <div class="ns-lmat__mat-kicker">{{ section.settings.mat_kicker | default: "WHY IT WORKS" }}</div>
   <h2 class="ns-lmat__mat-heading">{{ section.settings.mat_heading | default: "How one small strip changes the whole night" }}</h2>
-  <p class="ns-lmat__mat-intro">{{ section.settings.mat_intro | default: "It's not the tape doing the work &mdash; it's what your body does once your mouth stays closed and you breathe through your nose." }}</p>
+  <p class="ns-lmat__mat-intro">{{ section.settings.mat_intro | default: "It isn't the tape doing the work. It's what happens the moment your mouth stays closed and every breath goes through your nose." }}</p>
   <div class="ns-lmat__mat-grid">
     <div class="ns-lmat__card">
-      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg></div>
-      <div class="ns-lmat__card-title">{{ section.settings.item_1_title | default: "Quieter nights" }}</div>
-      <div class="ns-lmat__card-body">{{ section.settings.item_1_body | default: "Most snoring is air rushing past a slack, open mouth. Keep it gently closed and that vibration tends to settle &mdash; so you, and whoever sleeps next to you, get quieter nights." }}</div>
+      <div class="ns-lmat__card-media">
+        {%- if section.settings.item_1_image != blank -%}
+          {{ section.settings.item_1_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.item_1_title }}
+        {%- else -%}
+          <div class="ns-lmat__card-ph">{{ section.settings.item_1_ph | default: 'Partner sleeping soundly, undisturbed' }}</div>
+        {%- endif -%}
+      </div>
+      <div class="ns-lmat__card-text">
+        <div class="ns-lmat__card-title">{{ section.settings.item_1_title | default: "Quieter nights" }}</div>
+        <div class="ns-lmat__card-body">{{ section.settings.item_1_body | default: "Snoring is the sound of air fighting past an open mouth. Close it, breathe through your nose, and the racket settles, so the person beside you finally sleeps through." }}</div>
+      </div>
     </div>
     <div class="ns-lmat__card">
-      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="9" x2="12" y2="2"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg></div>
-      <div class="ns-lmat__card-title">{{ section.settings.item_2_title | default: "Mornings without the fog" }}</div>
-      <div class="ns-lmat__card-body">{{ section.settings.item_2_body | default: "Nose breathing is slower and deeper than mouth breathing, which helps your body settle into steadier rest. Most people notice they wake up less groggy." }}</div>
+      <div class="ns-lmat__card-media">
+        {%- if section.settings.item_2_image != blank -%}
+          {{ section.settings.item_2_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.item_2_title }}
+        {%- else -%}
+          <div class="ns-lmat__card-ph">{{ section.settings.item_2_ph | default: 'Waking up rested and clear at sunrise' }}</div>
+        {%- endif -%}
+      </div>
+      <div class="ns-lmat__card-text">
+        <div class="ns-lmat__card-title">{{ section.settings.item_2_title | default: "Clear-headed mornings" }}</div>
+        <div class="ns-lmat__card-body">{{ section.settings.item_2_body | default: "Nose breathing is slower, deeper and calmer than gasping through your mouth. Give your body a full night of it and you wake up sharp instead of foggy." }}</div>
+      </div>
     </div>
     <div class="ns-lmat__card">
-      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7l5.5 5.5a7.8 7.8 0 1 1-11 0z"></path></svg></div>
-      <div class="ns-lmat__card-title">{{ section.settings.item_3_title | default: "No more 3am dry mouth" }}</div>
-      <div class="ns-lmat__card-body">{{ section.settings.item_3_body | default: "With your mouth closed, the air stops drying you out. Fewer middle-of-the-night water runs, and far less of that sandpaper throat at sunrise." }}</div>
+      <div class="ns-lmat__card-media">
+        {%- if section.settings.item_3_image != blank -%}
+          {{ section.settings.item_3_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.item_3_title }}
+        {%- else -%}
+          <div class="ns-lmat__card-ph">{{ section.settings.item_3_ph | default: 'Untouched glass of water on the nightstand' }}</div>
+        {%- endif -%}
+      </div>
+      <div class="ns-lmat__card-text">
+        <div class="ns-lmat__card-title">{{ section.settings.item_3_title | default: "No more 3am dry mouth" }}</div>
+        <div class="ns-lmat__card-body">{{ section.settings.item_3_body | default: "An open mouth dries out all night. Sealed and breathing through your nose, you skip the 2am water grab and the sandpaper throat, and wake up fresh." }}</div>
+      </div>
     </div>
     <div class="ns-lmat__card">
-      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg></div>
-      <div class="ns-lmat__card-title">{{ section.settings.item_4_title | default: "Gentle enough to forget" }}</div>
-      <div class="ns-lmat__card-body">{{ section.settings.item_4_body | default: "Soft woven fabric and a hypoallergenic, latex-free adhesive. It holds over a beard, peels off clean with no residue, and most people forget it's on by night two." }}</div>
+      <div class="ns-lmat__card-media">
+        {%- if section.settings.item_4_image != blank -%}
+          {{ section.settings.item_4_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.item_4_title }}
+        {%- else -%}
+          <div class="ns-lmat__card-ph">{{ section.settings.item_4_ph | default: 'Close-up of the NightSeals strip on soft fabric' }}</div>
+        {%- endif -%}
+      </div>
+      <div class="ns-lmat__card-text">
+        <div class="ns-lmat__card-title">{{ section.settings.item_4_title | default: "Barely there" }}</div>
+        <div class="ns-lmat__card-body">{{ section.settings.item_4_body | default: "Soft, breathable fabric and a skin-safe, latex-free adhesive. It holds over a beard, peels off clean, and by night two you'll forget it's on." }}</div>
+      </div>
     </div>
   </div>
 </section>
@@ -216,7 +267,7 @@
       "type": "text",
       "id": "check_1",
       "label": "Checkmark 1",
-      "default": "You're never sealed shut — a light effort parts your lips"
+      "default": "You're never sealed shut: a light effort parts your lips"
     },
     {
       "type": "text",
@@ -252,7 +303,22 @@
       "type": "textarea",
       "id": "mat_intro",
       "label": "Grid intro",
-      "default": "It's not the tape doing the work — it's what your body does once your mouth stays closed and you breathe through your nose."
+      "default": "It isn't the tape doing the work. It's what happens the moment your mouth stays closed and every breath goes through your nose."
+    },
+    {
+      "type": "header",
+      "content": "Card 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_1_image",
+      "label": "Card 1 image"
+    },
+    {
+      "type": "text",
+      "id": "item_1_ph",
+      "label": "Card 1 image placeholder",
+      "default": "Partner sleeping soundly, undisturbed"
     },
     {
       "type": "text",
@@ -264,19 +330,49 @@
       "type": "textarea",
       "id": "item_1_body",
       "label": "Card 1 body",
-      "default": "Most snoring is air rushing past a slack, open mouth. Keep it gently closed and that vibration tends to settle — so you, and whoever sleeps next to you, get quieter nights."
+      "default": "Snoring is the sound of air fighting past an open mouth. Close it, breathe through your nose, and the racket settles, so the person beside you finally sleeps through."
+    },
+    {
+      "type": "header",
+      "content": "Card 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_2_image",
+      "label": "Card 2 image"
+    },
+    {
+      "type": "text",
+      "id": "item_2_ph",
+      "label": "Card 2 image placeholder",
+      "default": "Waking up rested and clear at sunrise"
     },
     {
       "type": "text",
       "id": "item_2_title",
       "label": "Card 2 title",
-      "default": "Mornings without the fog"
+      "default": "Clear-headed mornings"
     },
     {
       "type": "textarea",
       "id": "item_2_body",
       "label": "Card 2 body",
-      "default": "Nose breathing is slower and deeper than mouth breathing, which helps your body settle into steadier rest. Most people notice they wake up less groggy."
+      "default": "Nose breathing is slower, deeper and calmer than gasping through your mouth. Give your body a full night of it and you wake up sharp instead of foggy."
+    },
+    {
+      "type": "header",
+      "content": "Card 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_3_image",
+      "label": "Card 3 image"
+    },
+    {
+      "type": "text",
+      "id": "item_3_ph",
+      "label": "Card 3 image placeholder",
+      "default": "Untouched glass of water on the nightstand"
     },
     {
       "type": "text",
@@ -288,19 +384,34 @@
       "type": "textarea",
       "id": "item_3_body",
       "label": "Card 3 body",
-      "default": "With your mouth closed, the air stops drying you out. Fewer middle-of-the-night water runs, and far less of that sandpaper throat at sunrise."
+      "default": "An open mouth dries out all night. Sealed and breathing through your nose, you skip the 2am water grab and the sandpaper throat, and wake up fresh."
+    },
+    {
+      "type": "header",
+      "content": "Card 4 (material)"
+    },
+    {
+      "type": "image_picker",
+      "id": "item_4_image",
+      "label": "Card 4 image"
+    },
+    {
+      "type": "text",
+      "id": "item_4_ph",
+      "label": "Card 4 image placeholder",
+      "default": "Close-up of the NightSeals strip on soft fabric"
     },
     {
       "type": "text",
       "id": "item_4_title",
       "label": "Card 4 title (material)",
-      "default": "Gentle enough to forget"
+      "default": "Barely there"
     },
     {
       "type": "textarea",
       "id": "item_4_body",
       "label": "Card 4 body (material)",
-      "default": "Soft woven fabric and a hypoallergenic, latex-free adhesive. It holds over a beard, peels off clean with no residue, and most people forget it's on by night two."
+      "default": "Soft, breathable fabric and a skin-safe, latex-free adhesive. It holds over a beard, peels off clean, and by night two you'll forget it's on."
     }
   ],
   "presets": [
