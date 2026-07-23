@@ -109,43 +109,34 @@
     var anchor = document.getElementById('tiers') || document.getElementById('buy');
     if (!anchor) return; /* No buy-box on this page — skip FAB */
 
-    /* Trigger on the buy buttons when present, so the FAB appears exactly
-       when they scroll out of view (falls back to the buy-box anchor). */
-    var trigger = document.querySelector('.ns-pdp__ctas') || anchor;
-
     var footer = document.querySelector('footer, .ns-footer');
     var fab    = createFab();
 
     updateFab(fab);
     document.addEventListener('ns:selection', function () { updateFab(fab); });
 
-    var scrolledPast  = false; /* buy actions have scrolled ABOVE the viewport */
-    var footerVisible = false;
+    var scrolledEnough = false; /* user has scrolled a bit past the top */
+    var footerVisible  = false;
 
     function evaluate() {
-      if (scrolledPast && !footerVisible) {
-        showFab(fab);
-      } else {
-        hideFab(fab);
-      }
+      if (scrolledEnough && !footerVisible) { showFab(fab); }
+      else { hideFab(fab); }
     }
 
-    /* Show the FAB only once the buy actions have scrolled ABOVE the top of
-       the viewport — not while they're still below the fold on page load. */
-    var buyObserver = new IntersectionObserver(function (entries) {
-      var entry = entries[0];
-      scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+    /* Appear once the user scrolls a bit (past ~60% of the first screen) —
+       not at the very top — and hide again near the footer. */
+    function onScroll() {
+      scrolledEnough = window.pageYOffset > (window.innerHeight * 0.6);
       evaluate();
-    }, { threshold: 0 });
-    buyObserver.observe(trigger);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-    /* Hide again once the footer comes into view */
     if (footer) {
-      var footerObserver = new IntersectionObserver(function (entries) {
+      new IntersectionObserver(function (entries) {
         footerVisible = entries[0].isIntersecting;
         evaluate();
-      }, { threshold: 0 });
-      footerObserver.observe(footer);
+      }, { threshold: 0 }).observe(footer);
     }
   }
 

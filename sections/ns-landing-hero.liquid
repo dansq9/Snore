@@ -156,6 +156,11 @@
     border-radius: 22px;
     display: block;
   }
+
+  /* On mobile (single column) show the image FIRST, above the copy. */
+  @media (max-width: 760px) {
+    .ns-lhero__media { order: -1; }
+  }
 </style>
 
 {% schema %}
