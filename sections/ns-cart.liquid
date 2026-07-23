@@ -1,53 +1,330 @@
+{%- comment -%}
+  Dedicated /cart page — mirrors the slide-out cart drawer design as a
+  full page. Reuses the drawer's component styles (.ns-cart-item,
+  .ns-cart-shipping, .ns-cart-drawer__* — loaded globally via the drawer
+  snippet) so the two carts look identical. Quantity/remove update live
+  through the Shopify AJAX + Section Rendering API, with a full-reload
+  fallback. Server-rendered in Liquid so it also works on first paint.
+{%- endcomment -%}
+
+{%- assign free_ship_threshold = 5000 -%}
+{%- assign remaining = free_ship_threshold | minus: cart.total_price -%}
+{%- assign ship_pct = cart.total_price | times: 100 | divided_by: free_ship_threshold -%}
+{%- if ship_pct > 100 -%}{%- assign ship_pct = 100 -%}{%- endif -%}
+
+{%- assign total_savings = 0 -%}
+{%- for item in cart.items -%}
+  {%- if item.variant.compare_at_price and item.variant.compare_at_price > item.variant.price -%}
+    {%- assign line_compare = item.variant.compare_at_price | times: item.quantity -%}
+    {%- assign line_sav = line_compare | minus: item.final_line_price -%}
+    {%- assign total_savings = total_savings | plus: line_sav -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<section class="ns-cartpage" data-section-id="{{ section.id }}">
+  <div class="ns-cartpage__inner" id="ns-cartpage-inner">
+    {%- if cart.item_count == 0 -%}
+      <div class="ns-cartpage__empty">
+        <div class="ns-cart-drawer__empty-icon">
+          <svg width="40" height="44" viewBox="0 0 22 24" fill="none" aria-hidden="true">
+            <path d="M4 7V6a7 7 0 1114 0v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <rect x="1" y="7" width="20" height="15" rx="3" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+        </div>
+        <h1 class="ns-cart-drawer__empty-title">Your cart is empty</h1>
+        <p class="ns-cart-drawer__empty-subtitle">Better sleep is three seconds a night away.</p>
+        <a href="{% render 'shop-url' %}" class="ns-btn-primary">Shop mouth tape</a>
+      </div>
+    {%- else -%}
+      <div class="ns-cartpage__head">
+        <h1 class="ns-cartpage__title">Your cart</h1>
+        <span class="ns-cart-drawer__count">{{ cart.item_count }}</span>
+      </div>
+
+      <div class="ns-cartpage__grid">
+        {%- comment -%} ── Left: items ── {%- endcomment -%}
+        <div class="ns-cartpage__main">
+          <div class="ns-cartpage__shipping">
+            <p class="ns-cart-shipping__text">
+              {%- if remaining > 0 -%}
+                You&rsquo;re {{ remaining | money }} away from free U.S. shipping
+              {%- else -%}
+                <span class="ns-cart-shipping__check">&#10003;</span> You&rsquo;ve unlocked free U.S. shipping
+              {%- endif -%}
+            </p>
+            <div class="ns-cart-shipping__bar">
+              <div class="ns-cart-shipping__fill" style="width:{{ ship_pct }}%"></div>
+            </div>
+          </div>
+
+          <div class="ns-cartpage__items">
+            {%- for item in cart.items -%}
+              <div class="ns-cart-item ns-cartpage__item">
+                <a href="{{ item.url }}" class="ns-cartpage__item-imglink">
+                  {%- if item.image -%}
+                    {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'ns-cart-item__img', alt: item.product.title }}
+                  {%- else -%}
+                    <span class="ns-cart-item__img" aria-hidden="true"></span>
+                  {%- endif -%}
+                </a>
+                <div class="ns-cart-item__info">
+                  <a href="{{ item.url }}" class="ns-cart-item__title">{{ item.product.title }}</a>
+                  {%- unless item.variant.title contains 'Default' -%}
+                    <div class="ns-cart-item__variant">{{ item.variant.title }}</div>
+                  {%- endunless -%}
+
+                  <div class="ns-cart-item__price-row">
+                    <span>{{ item.final_line_price | money }}</span>
+                    {%- if item.variant.compare_at_price and item.variant.compare_at_price > item.variant.price -%}
+                      {%- assign lc = item.variant.compare_at_price | times: item.quantity -%}
+                      <span class="ns-cart-item__compare-price">{{ lc | money }}</span>
+                      <span class="ns-cart-item__savings">Save {{ lc | minus: item.final_line_price | money }}</span>
+                    {%- endif -%}
+                  </div>
+
+                  <div class="ns-cartpage__controls">
+                    <div class="ns-cart-item__qty">
+                      <button class="ns-cart-item__qty-btn" type="button" data-cartpage-qty data-line="{{ forloop.index }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="Decrease quantity">&minus;</button>
+                      <div class="ns-cart-item__qty-val">{{ item.quantity }}</div>
+                      <button class="ns-cart-item__qty-btn" type="button" data-cartpage-qty data-line="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="ns-cart-item__remove" type="button" data-cartpage-remove data-line="{{ forloop.index }}">Remove</button>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <a href="{% render 'shop-url' %}" class="ns-cartpage__continue">&larr; Continue shopping</a>
+        </div>
+
+        {%- comment -%} ── Right: summary ── {%- endcomment -%}
+        <aside class="ns-cartpage__summary">
+          <div class="ns-cartpage__summary-card">
+            {%- if total_savings > 0 -%}
+              <div class="ns-cartpage__save-row">
+                <span>You save</span>
+                <span class="ns-cartpage__save-value">{{ total_savings | money }}</span>
+              </div>
+            {%- endif -%}
+            <div class="ns-cart-drawer__subtotal-row">
+              <span class="ns-cart-drawer__subtotal-label">Subtotal</span>
+              <span class="ns-cart-drawer__subtotal-value">{{ cart.total_price | money }}</span>
+            </div>
+            <p class="ns-cartpage__tax-note">Shipping &amp; taxes calculated at checkout.</p>
+            <a href="/checkout" class="ns-cart-drawer__checkout-btn">Checkout</a>
+            <p class="ns-cart-drawer__guarantee">30-day money-back guarantee</p>
+            <div class="ns-cart-drawer__payment-icons">
+              <div class="ns-payment-icon">VISA</div>
+              <div class="ns-payment-icon">MC</div>
+              <div class="ns-payment-icon">AMEX</div>
+              <div class="ns-payment-icon">APAY</div>
+              <div class="ns-payment-icon">GPAY</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
 <style>
-.ns-cart-page{max-width:800px;margin:0 auto;padding:clamp(40px,7vw,72px) clamp(16px,4vw,32px) clamp(64px,10vw,112px)}
-.ns-cart-page__h1{font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-.02em;margin:0 0 32px;color:#10182B}
-.ns-cart-page__empty{font-size:16px;color:#566072;margin:0 0 24px}
-.ns-cart-page__btn{display:inline-block;background:#10182B;color:#F7F8FA;padding:14px 28px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:none}
-.ns-cart-page__btn:hover{background:#26314D}
-.ns-cart-page__item{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid rgba(16,24,43,.08)}
-.ns-cart-page__img{width:100px;height:100px;border-radius:14px;background:#EAEDF2;overflow:hidden;flex:none}
-.ns-cart-page__img img{width:100%;height:100%;object-fit:cover}
-.ns-cart-page__details{flex:1}
-.ns-cart-page__title{font-size:16px;font-weight:700;margin:0 0 4px}
-.ns-cart-page__variant{font-size:14px;color:#566072}
-.ns-cart-page__price{font-size:16px;font-weight:700;margin-top:8px}
-.ns-cart-page__totals{padding:24px 0;text-align:right}
-.ns-cart-page__total-line{font-size:18px;font-weight:800;margin:8px 0}
-.ns-cart-page__checkout{display:inline-block;background:#10182B;color:#F7F8FA;padding:16px 36px;border-radius:999px;font-size:16px;font-weight:700;text-decoration:none;margin-top:16px}
-.ns-cart-page__checkout:hover{background:#26314D}
+  .ns-cartpage {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(32px,6vw,64px) clamp(16px,4vw,32px) clamp(56px,9vw,96px);
+  }
+
+  .ns-cartpage__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 clamp(24px,4vw,36px);
+  }
+
+  .ns-cartpage__title {
+    font-size: clamp(28px,5vw,40px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: #10182B;
+    margin: 0;
+  }
+
+  .ns-cartpage__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(28px,4vw,44px);
+    align-items: start;
+  }
+  @media (min-width: 861px) {
+    .ns-cartpage__grid {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  /* Shipping bar spacing (bar styles reused from the drawer) */
+  .ns-cartpage__shipping {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(16,24,43,.08);
+  }
+
+  .ns-cartpage__items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Larger thumbnail + roomier row than the compact drawer */
+  .ns-cartpage__item {
+    gap: 18px;
+    padding-bottom: 20px;
+  }
+  .ns-cartpage__item .ns-cart-item__img {
+    width: clamp(88px,14vw,104px);
+    height: clamp(88px,14vw,104px);
+    display: block;
+  }
+  .ns-cartpage__item-imglink { flex: none; }
+  .ns-cartpage__item .ns-cart-item__title {
+    font-size: 15.5px;
+    color: #10182B;
+    text-decoration: none;
+  }
+  .ns-cartpage__item .ns-cart-item__title:hover { color: #B27E33; }
+  .ns-cartpage__item .ns-cart-item__price-row { margin-top: 2px; }
+
+  .ns-cartpage__controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+  }
+  .ns-cartpage__controls .ns-cart-item__qty { margin-top: 0; }
+  .ns-cartpage__controls .ns-cart-item__remove { margin-top: 0; }
+
+  .ns-cartpage__continue {
+    display: inline-block;
+    margin-top: 28px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #566072;
+    text-decoration: none;
+  }
+  .ns-cartpage__continue:hover { color: #B27E33; }
+
+  /* Summary card */
+  .ns-cartpage__summary-card {
+    background: #fff;
+    border: 1px solid rgba(16,24,43,.08);
+    border-radius: 18px;
+    padding: clamp(22px,3vw,28px);
+  }
+  @media (min-width: 861px) {
+    .ns-cartpage__summary { position: sticky; top: 88px; }
+  }
+
+  .ns-cartpage__save-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #B27E33;
+    margin-bottom: 12px;
+  }
+  .ns-cartpage__save-value { font-weight: 800; }
+
+  .ns-cartpage__tax-note {
+    font-size: 12.5px;
+    color: #8A93A3;
+    margin: 0 0 16px;
+  }
+
+  .ns-cartpage__summary-card .ns-cart-drawer__checkout-btn { padding: 16px; font-size: 16px; }
+  .ns-cartpage__summary-card .ns-cart-drawer__guarantee { margin: 12px 0 10px; }
+
+  /* Payment marks are styled for a dark bg in components.css — restyle for light */
+  .ns-cartpage .ns-payment-icon {
+    color: #8A93A3;
+    border-color: rgba(16,24,43,.18);
+  }
+
+  /* Empty state */
+  .ns-cartpage__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: clamp(32px,6vw,72px) 20px;
+  }
+  .ns-cartpage__empty .ns-cart-drawer__empty-title { font-size: clamp(22px,4vw,28px); }
+
+  /* Dim controls while a change is in flight */
+  .ns-cartpage.is-loading { opacity: .55; pointer-events: none; }
 </style>
 
-<section class="ns-cart-page">
-  <h1 class="ns-cart-page__h1">Your cart</h1>
+<script>
+  (function () {
+    if (window.__nsCartPageBound) return;
+    window.__nsCartPageBound = true;
 
-  {% if cart.item_count == 0 %}
-    <p class="ns-cart-page__empty">Your cart is empty.</p>
-    <a href="/collections/all" class="ns-cart-page__btn">Continue shopping</a>
-  {% else %}
-    {% for item in cart.items %}
-      <div class="ns-cart-page__item">
-        <div class="ns-cart-page__img">
-          {% if item.image %}
-            {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy' }}
-          {% endif %}
-        </div>
-        <div class="ns-cart-page__details">
-          <div class="ns-cart-page__title">{{ item.product.title }}</div>
-          <div class="ns-cart-page__variant">{{ item.variant.title }} &times; {{ item.quantity }}</div>
-          <div class="ns-cart-page__price">{{ item.final_line_price | money }}</div>
-        </div>
-      </div>
-    {% endfor %}
+    function getRoot() { return document.querySelector('.ns-cartpage'); }
+    var inFlight = false;
 
-    <div class="ns-cart-page__totals">
-      <div class="ns-cart-page__total-line">Total: {{ cart.total_price | money }}</div>
-      <a href="/checkout" class="ns-cart-page__checkout">Checkout</a>
-    </div>
-  {% endif %}
-</section>
+    function change(line, quantity) {
+      var root = getRoot();
+      if (!root || inFlight) return;
+      var sectionId = root.getAttribute('data-section-id');
+      inFlight = true;
+      root.classList.add('is-loading');
+
+      fetch(window.Shopify && window.Shopify.routes ? window.Shopify.routes.root + 'cart/change.js' : '/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          line: parseInt(line, 10),
+          quantity: parseInt(quantity, 10),
+          sections: sectionId,
+          sections_url: window.location.pathname
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var html = data && data.sections && data.sections[sectionId];
+          if (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var fresh = doc.getElementById('ns-cartpage-inner');
+            var current = document.getElementById('ns-cartpage-inner');
+            if (fresh && current) { current.innerHTML = fresh.innerHTML; }
+            else { window.location.reload(); return; }
+          } else {
+            window.location.reload();
+            return;
+          }
+          /* Keep the header badge + slide-out drawer in sync */
+          if (window.NsCart && typeof window.NsCart.render === 'function') window.NsCart.render();
+        })
+        .catch(function () { window.location.reload(); })
+        .finally(function () {
+          inFlight = false;
+          var r = getRoot();
+          if (r) r.classList.remove('is-loading');
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+      var qtyBtn = e.target.closest('[data-cartpage-qty]');
+      if (qtyBtn) { change(qtyBtn.getAttribute('data-line'), qtyBtn.getAttribute('data-qty')); return; }
+      var rmBtn = e.target.closest('[data-cartpage-remove]');
+      if (rmBtn) { change(rmBtn.getAttribute('data-line'), 0); return; }
+    });
+  })();
+</script>
 
 {% schema %}
 {
-  "name": "Cart Page"
+  "name": "Cart Page",
+  "settings": []
 }
 {% endschema %}

@@ -769,7 +769,7 @@
         if (!id) return;
 
         if (window.NsCart && typeof window.NsCart.add === 'function') {
-          window.NsCart.add(id, 1);
+          window.NsCart.add(id, 1).catch(function () {});
         } else {
           fetch('/cart/add.js', {
             method: 'POST',
@@ -782,13 +782,20 @@
       });
     }
 
-    /* ── Buy now (submit product form) ── */
+    /* ── Buy now — add the selected variant, then go straight to checkout ── */
     if (buyBtn) {
       buyBtn.addEventListener('click', function () {
-        var form = document.getElementById('product-form');
-        if (form) {
-          form.submit();
-        }
+        var id = variantInput ? variantInput.value : null;
+        if (!id) return;
+        buyBtn.disabled = true;
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: parseInt(id, 10), quantity: 1 }] })
+        })
+          .then(function (res) { if (!res.ok) { throw new Error('add failed'); } return res.json(); })
+          .then(function () { window.location.href = '/checkout'; })
+          .catch(function () { buyBtn.disabled = false; window.location.href = '/cart'; });
       });
     }
   })();

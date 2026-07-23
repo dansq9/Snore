@@ -58,7 +58,7 @@
       "settings": {},
       "blocks": {
         "rv_1": {
-          "type": "video_review",
+          "type": "image_review",
           "settings": {
             "caption": "Slept through the night",
             "reviewer": "Mike · Night 41"
@@ -72,7 +72,7 @@
           }
         },
         "rv_3": {
-          "type": "video_review",
+          "type": "image_review",
           "settings": {
             "caption": "Dry mouth, gone",
             "reviewer": "Rob · Night 12"
@@ -86,7 +86,7 @@
           }
         },
         "rv_5": {
-          "type": "video_review",
+          "type": "image_review",
           "settings": {
             "caption": "Partner approved",
             "reviewer": "Elise · Night 30"
@@ -100,7 +100,7 @@
           }
         },
         "rv_7": {
-          "type": "video_review",
+          "type": "image_review",
           "settings": {
             "caption": "Total reset",
             "reviewer": "Dan · Night 90"
