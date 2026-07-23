@@ -45,6 +45,7 @@
     "materials": { "type": "ns-landing-materials", "settings": {} },
     "expectations": { "type": "ns-landing-expectations", "settings": {} },
     "partners": { "type": "ns-landing-reviews", "settings": {} },
+    "launch_offer": { "type": "ns-landing-launch-offer", "settings": {} },
     "quiz_cta": { "type": "ns-quiz-cta", "settings": {} },
     "faq": { "type": "ns-landing-faq", "settings": {} },
     "buy": { "type": "ns-landing-buy", "settings": {} }
@@ -65,6 +66,7 @@
     "materials",
     "expectations",
     "partners",
+    "launch_offer",
     "faq",
     "buy"
   ]
