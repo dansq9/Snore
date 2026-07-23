@@ -111,7 +111,15 @@
   @media (max-width: 560px) {
     .ns-lhow__steps {
       flex-direction: column;
+      /* Column layout: center each step so the markers line up (the base
+         'align-items: flex-start' would otherwise pin content-width steps to
+         the left, and step 2's shorter copy lands off-center). */
+      align-items: center;
       gap: clamp(20px, 6vw, 28px);
+    }
+
+    .ns-lhow__step {
+      width: 100%;
     }
 
     .ns-lhow__connector {
@@ -144,15 +152,13 @@
   </div>
 </section>
 
+{%- if section.settings.image != blank -%}
 <section class="ns-lhow__media-section">
   <div class="ns-lhow__media">
-    {%- if section.settings.image != blank -%}
-      {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
-    {%- else -%}
-      <div class="ns-lhow__media-placeholder">Close-up: strip being applied to pursed lips</div>
-    {%- endif -%}
+    {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {

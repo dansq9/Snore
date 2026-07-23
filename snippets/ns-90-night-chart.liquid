@@ -1,0 +1,70 @@
+{%- comment -%}
+  ns-90-night-chart — "Your 90-night upgrade" card for the Sleep Quiz results.
+  Built standalone from the quiz design handoff (Quiz.dc.html). Curve SVG +
+  YOU ARE HERE / GOAL: NIGHT 90 badges + TODAY/30/60/90 axis with real dates
+  (today, today+30, +60, +90 computed server-side) + three milestone blocks.
+
+  Self-contained: all styles inline so it can drop into the quiz section without
+  touching the PDP or theme CSS. Dates render even without JavaScript.
+{%- endcomment -%}
+{%- liquid
+  assign now_s = 'now' | date: '%s' | plus: 0
+  assign date30 = now_s | plus: 2592000 | date: '%b %-d'
+  assign date60 = now_s | plus: 5184000 | date: '%b %-d'
+  assign date90 = now_s | plus: 7776000 | date: '%b %-d'
+-%}
+<div style="background:#FFFFFF;border:1px solid rgba(16,24,43,.1);border-radius:24px;padding:clamp(18px,5vw,28px);margin-bottom:18px;box-shadow:0 20px 40px -24px rgba(16,24,43,.3)">
+  <div style="font-size:11px;letter-spacing:.24em;font-weight:800;color:#B27E33;margin-bottom:10px">THE FIRST 90 NIGHTS</div>
+  <h3 style="font-size:clamp(19px,5.5vw,25px);letter-spacing:-.02em;font-weight:800;margin:0 0 6px">Your 90-night upgrade</h3>
+  <p style="font-family:'Newsreader',serif;font-style:italic;font-size:15px;line-height:1.5;color:#566072;margin:0 0 26px;text-wrap:pretty">Start tonight. By <span style="color:#B27E33;font-weight:600">{{ date90 }}</span>, you're a different sleeper.</p>
+  <div style="display:flex;gap:10px">
+    <div style="flex:none;width:44px;position:relative">
+      <div style="position:absolute;top:-6px;right:0;text-align:right;font-size:9px;letter-spacing:.06em;font-weight:700;color:#8A93A3;line-height:1.3">PEAK<br>SLEEP</div>
+      <div style="position:absolute;bottom:-6px;right:0;text-align:right;font-size:9px;letter-spacing:.06em;font-weight:700;color:#C2C8D2;line-height:1.3">POOR<br>SLEEP</div>
+    </div>
+    <div style="flex:1;position:relative;height:clamp(170px,42vw,230px)">
+      <div style="position:absolute;left:0;right:0;top:0;border-top:1.5px dashed rgba(16,24,43,.15)"></div>
+      <div style="position:absolute;left:0;right:0;top:50%;border-top:1.5px dashed rgba(16,24,43,.12)"></div>
+      <div style="position:absolute;left:33%;top:62%;bottom:0;border-left:1.5px dashed rgba(178,126,51,.45)"></div>
+      <div style="position:absolute;left:66%;top:25%;bottom:0;border-left:1.5px dashed rgba(178,126,51,.45)"></div>
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible">
+        <defs><linearGradient id="nsQFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#D9A04B" stop-opacity=".28"></stop><stop offset="100%" stop-color="#D9A04B" stop-opacity="0"></stop></linearGradient></defs>
+        <path d="M0,96 C12,94 22,78 33,62 C44,46 55,33 66,25 C80,15 90,9 100,7 L100,100 L0,100 Z" fill="url(#nsQFade)"></path>
+        <path d="M0,96 C12,94 22,78 33,62 C44,46 55,33 66,25 C80,15 90,9 100,7" fill="none" stroke="#D9A04B" stroke-width="2.5" vector-effect="non-scaling-stroke"></path>
+      </svg>
+      <div style="position:absolute;left:0;right:0;bottom:0;border-top:2px solid #10182B"></div>
+      <div style="position:absolute;left:0;top:96%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#10182B"></div>
+      <div style="position:absolute;left:33%;top:62%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#FFFFFF;border:3px solid #B27E33;box-sizing:border-box"></div>
+      <div style="position:absolute;left:66%;top:25%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#FFFFFF;border:3px solid #B27E33;box-sizing:border-box"></div>
+      <div style="position:absolute;left:100%;top:7%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:#FFFFFF;border:3.5px solid #10182B;box-sizing:border-box"></div>
+      <div style="position:absolute;left:3%;top:96%;transform:translateY(-150%);background:#10182B;color:#F2F4F7;font-size:10px;letter-spacing:.08em;font-weight:700;padding:5px 10px;border-radius:8px;white-space:nowrap">YOU ARE HERE</div>
+      <div style="position:absolute;right:0;top:7%;transform:translateY(-140%);background:#D9A04B;color:#10182B;font-size:10px;letter-spacing:.08em;font-weight:700;padding:5px 10px;border-radius:8px;white-space:nowrap">GOAL: NIGHT 90</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:10px">
+    <div style="flex:none;width:44px"></div>
+    <div style="flex:1;position:relative;height:38px;font-size:10px;letter-spacing:.04em;font-weight:700;line-height:1.5">
+      <div style="position:absolute;left:0;top:0">TODAY</div>
+      <div style="position:absolute;left:33%;top:0;transform:translateX(-50%);text-align:center">NIGHT 30<br><span style="color:#B27E33;font-weight:600">{{ date30 }}</span></div>
+      <div style="position:absolute;left:66%;top:0;transform:translateX(-50%);text-align:center">NIGHT 60<br><span style="color:#B27E33;font-weight:600">{{ date60 }}</span></div>
+      <div style="position:absolute;right:0;top:0;text-align:right">NIGHT 90<br><span style="color:#B27E33;font-weight:600">{{ date90 }}</span></div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:20px">
+    <div style="border-top:2px solid rgba(16,24,43,.18);padding:14px 4px 0">
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#B27E33;font-weight:700;letter-spacing:.08em">NIGHTS 1-7 · STARTS TONIGHT</div>
+      <div style="font-size:15.5px;font-weight:700;margin:8px 0 4px">It feels weird. Then it doesn't.</div>
+      <p style="font-size:13.5px;line-height:1.6;color:#566072;margin:0">The first two nights, you notice the tape. By night four, you don't. You stop waking up at 3am with a dry mouth.</p>
+    </div>
+    <div style="border-top:2px solid rgba(16,24,43,.18);padding:14px 4px 0">
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#B27E33;font-weight:700;letter-spacing:.08em">NIGHT 30 · {{ date30 }}</div>
+      <div style="font-size:15.5px;font-weight:700;margin:8px 0 4px">Someone else notices first.</div>
+      <p style="font-size:13.5px;line-height:1.6;color:#566072;margin:0">Usually your partner. Less noise, fewer elbows. You're up before the alarm more days than not.</p>
+    </div>
+    <div style="background:#10182B;border-radius:16px;padding:18px;color:#F2F4F7">
+      <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#D9A04B;font-weight:700;letter-spacing:.08em">NIGHT 90 · {{ date90 }} · GOAL</div>
+      <div style="font-size:15.5px;font-weight:700;margin:8px 0 4px">You stop thinking about it.</div>
+      <p style="font-size:13.5px;line-height:1.6;color:rgba(242,244,247,.7);margin:0">Taping is part of brushing your teeth now. Nasal breathing is how you sleep, and skipping it makes for a worse morning.</p>
+    </div>
+  </div>
+</div>

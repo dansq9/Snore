@@ -168,6 +168,56 @@
     background: #E5B267;
     color: #10182B;
   }
+
+  /* Single consolidated mid-page offer band (replaces the old two-card grid). */
+  .ns-lexp__band {
+    background: #F2EDE3;
+    border-radius: 24px;
+    padding: clamp(28px, 5vw, 44px);
+    display: flex;
+    align-items: center;
+    gap: clamp(22px, 5vw, 48px);
+  }
+
+  .ns-lexp__band-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ns-lexp__band-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #566072;
+    margin: 0 0 18px;
+    max-width: 54ch;
+    text-wrap: pretty;
+  }
+
+  .ns-lexp__band-action {
+    flex: none;
+    text-align: center;
+  }
+
+  .ns-lexp__band-note {
+    font-size: 12px;
+    color: #8A93A3;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 640px) {
+    .ns-lexp__band {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .ns-lexp__band-action {
+      width: 100%;
+    }
+
+    .ns-lexp__band-action .ns-lexp__cta {
+      display: block;
+    }
+  }
 </style>
 
 <section class="ns-lexp__nights">
@@ -193,30 +243,19 @@
 </section>
 
 <section class="ns-lexp__offers">
-  <div class="ns-lexp__offers-grid">
-    <div class="ns-lexp__offer">
-      <div class="ns-lexp__offer-inner">
-        <div class="ns-lexp__offer-title"><span class="ns-lexp__offer-title-thin">{{ section.settings.offer_lead | default: 'Tired of' }}</span> {{ section.settings.offer_head | default: 'waking up exhausted?' }}</div>
-        <p class="ns-lexp__offer-body">{{ section.settings.offer_body | default: 'Mouth breathing dries your airway, triggers snoring, and fragments your sleep. NightSeals keeps your lips sealed so your nose can do its job. One strip. Three seconds. Every night.' }}</p>
-        <div class="ns-lexp__pills">
-          <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_1 | default: 'Beard-proof' }}</span>
-          <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_2 | default: 'Hypoallergenic' }}</span>
-          <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_3 | default: 'No residue' }}</span>
-        </div>
-      </div>
-      <div class="ns-lexp__offer-cta-wrap">
-        <a href="#buy" class="ns-lexp__cta">{{ section.settings.offer_cta | default: 'SHOP NOW →' }}</a>
+  <div class="ns-lexp__band">
+    <div class="ns-lexp__band-main">
+      <div class="ns-lexp__offer-title"><span class="ns-lexp__offer-title-thin">{{ section.settings.offer_lead | default: 'Tired of' }}</span> {{ section.settings.offer_head | default: 'waking up exhausted?' }}</div>
+      <p class="ns-lexp__band-body">{{ section.settings.offer_body | default: 'Mouth breathing dries your airway, triggers snoring, and fragments your sleep. NightSeals keeps your lips sealed so your nose can do its job. One strip. Three seconds. Every night.' }}</p>
+      <div class="ns-lexp__pills">
+        <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_1 | default: 'Beard-proof' }}</span>
+        <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_2 | default: 'Hypoallergenic' }}</span>
+        <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_3 | default: 'No residue' }}</span>
       </div>
     </div>
-    <div class="ns-lexp__offer ns-lexp__offer--navy">
-      <div class="ns-lexp__offer-inner">
-        <div class="ns-lexp__offer-title">{{ section.settings.partner_head | default: 'Buying this for your partner?' }}</div>
-        <p class="ns-lexp__offer-body">{{ section.settings.partner_body | default: "Most of our orders come from the person who's had enough of the snoring. You buy it. They try it. You both sleep through the night for the first time in years." }}</p>
-        <p class="ns-lexp__offer-quote">"{{ section.settings.partner_quote | default: "Third night in, my wife asked what changed. That's the whole review." }}"</p>
-      </div>
-      <div class="ns-lexp__offer-cta-wrap">
-        <a href="#buy" class="ns-lexp__cta ns-lexp__cta--gold">{{ section.settings.partner_cta | default: 'GET ONE FOR THEM →' }}</a>
-      </div>
+    <div class="ns-lexp__band-action">
+      <a href="#buy" class="ns-lexp__cta ns-lexp__cta--gold">{{ section.settings.offer_cta | default: 'Try NightSeals — from $0.56/night →' }}</a>
+      <div class="ns-lexp__band-note">{{ section.settings.offer_note | default: '30-night money-back guarantee' }}</div>
     </div>
   </div>
 </section>
@@ -242,11 +281,8 @@
     { "type": "text", "id": "offer_pill_1", "label": "Offer pill 1", "default": "Beard-proof" },
     { "type": "text", "id": "offer_pill_2", "label": "Offer pill 2", "default": "Hypoallergenic" },
     { "type": "text", "id": "offer_pill_3", "label": "Offer pill 3", "default": "No residue" },
-    { "type": "text", "id": "offer_cta", "label": "Offer CTA label", "default": "SHOP NOW →" },
-    { "type": "text", "id": "partner_head", "label": "Partner card heading", "default": "Buying this for your partner?" },
-    { "type": "textarea", "id": "partner_body", "label": "Partner card body", "default": "Most of our orders come from the person who's had enough of the snoring. You buy it. They try it. You both sleep through the night for the first time in years." },
-    { "type": "text", "id": "partner_quote", "label": "Partner card quote", "default": "Third night in, my wife asked what changed. That's the whole review." },
-    { "type": "text", "id": "partner_cta", "label": "Partner CTA label", "default": "GET ONE FOR THEM →" }
+    { "type": "text", "id": "offer_cta", "label": "Offer CTA label", "default": "Try NightSeals — from $0.56/night →" },
+    { "type": "text", "id": "offer_note", "label": "Offer note", "default": "30-night money-back guarantee" }
   ],
   "presets": [
     { "name": "Landing Expectations" }

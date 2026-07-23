@@ -26,11 +26,12 @@
 </head>
 <body>
   {%- comment -%}
-    The ad landing page (templates/page.landing.json) ships its own minimal
-    nav + footer and suppresses the store chrome and marketing overlays.
+    The ad landing page (templates/page.landing.json) and the sleep quiz
+    (templates/page.quiz.json) each ship their own minimal nav + footer and
+    suppress the store chrome and marketing overlays.
   {%- endcomment -%}
   {%- assign is_landing = false -%}
-  {%- if template.suffix == 'landing' -%}{%- assign is_landing = true -%}{%- endif -%}
+  {%- if template.suffix == 'landing' or template.suffix == 'quiz' -%}{%- assign is_landing = true -%}{%- endif -%}
 
   {%- unless is_landing -%}
     {% section 'announcement-bar' %}
