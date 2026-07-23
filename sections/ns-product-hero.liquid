@@ -859,19 +859,37 @@
       });
     }
 
-    /* ── Buy now — add the selection, then go straight to checkout ── */
+    /* ── Buy now — checkout with ONLY this item. Clears an existing cart
+          first (so nothing already in the cart rides along), then adds this
+          selection and goes straight to checkout. ── */
     if (buyBtn) {
       buyBtn.addEventListener('click', function () {
         var item = currentItem();
         if (!item) return;
         buyBtn.disabled = true;
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [item] })
-        })
-          .then(function (res) { if (!res.ok) { throw new Error('add failed'); } return res.json(); })
-          .then(function () { window.location.href = '/checkout'; })
+
+        function addAndCheckout() {
+          return fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [item] })
+          })
+            .then(function (res) { if (!res.ok) { throw new Error('add failed'); } return res.json(); })
+            .then(function () { window.location.href = '/checkout'; });
+        }
+
+        /* Only clear when there's actually something to clear */
+        fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.json(); })
+          .then(function (cart) {
+            if (cart && cart.item_count > 0) {
+              return fetch('/cart/clear.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+              }).then(addAndCheckout);
+            }
+            return addAndCheckout();
+          })
           .catch(function () { buyBtn.disabled = false; window.location.href = '/cart'; });
       });
     }
