@@ -29,8 +29,9 @@
       'opacity:0;pointer-events:none;cursor:pointer;white-space:nowrap';
 
     fab.innerHTML =
-      'Buy now <span style="opacity:.45;margin:0 2px">·</span> ' +
-      '<span id="ns-fab-price"></span>';
+      '<span id="ns-fab-label">Buy now</span>' +
+      '<span id="ns-fab-sep" style="width:1px;height:16px;background:rgba(242,244,247,.3);margin:0 6px"></span>' +
+      '<span id="ns-fab-price" style="color:#D9A04B"></span>';
 
     /* Determine target */
     var tiers = document.getElementById('tiers');
@@ -46,6 +47,38 @@
 
     document.body.appendChild(fab);
     return fab;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Label — mirror the PDP selection (price + nights, one-time/sub)    */
+  /* ------------------------------------------------------------------ */
+
+  function isSubscribeActive() {
+    var sub = document.querySelector('.ns-pdp__purchase-option[data-purchase="subscribe"]');
+    return !!(sub && sub.querySelector('.ns-pdp__purchase-radio--active'));
+  }
+
+  function updateFab(fab) {
+    var labelEl = fab.querySelector('#ns-fab-label');
+    var priceEl = fab.querySelector('#ns-fab-price');
+    var sepEl   = fab.querySelector('#ns-fab-sep');
+    var tier    = document.querySelector('.ns-pdp__tier--active');
+    var sub     = isSubscribeActive();
+
+    if (labelEl) labelEl.textContent = sub ? 'Subscribe' : 'Buy now';
+
+    var detail = '';
+    if (tier) {
+      var price = (sub && tier.getAttribute('data-sub-price'))
+        ? tier.getAttribute('data-sub-price')
+        : tier.getAttribute('data-variant-price');
+      var nights = tier.getAttribute('data-nights');
+      if (price) detail = price;
+      if (nights) detail += (detail ? ' · ' : '') + nights + ' nights';
+    }
+    if (priceEl) priceEl.textContent = detail;
+    if (sepEl) sepEl.style.display = detail ? '' : 'none';
+    fab.setAttribute('aria-label', (sub ? 'Subscribe' : 'Buy now') + (detail ? ' ' + detail : ''));
   }
 
   /* ------------------------------------------------------------------ */
@@ -74,6 +107,9 @@
 
     var footer = document.querySelector('footer, .ns-footer');
     var fab    = createFab();
+
+    updateFab(fab);
+    document.addEventListener('ns:selection', function () { updateFab(fab); });
 
     var buyBoxVisible  = true;
     var footerVisible  = false;

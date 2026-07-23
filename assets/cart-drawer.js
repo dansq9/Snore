@@ -233,10 +233,8 @@
       if (subtotalEl) {
         subtotalEl.textContent = fmt(cart.total_price);
       }
-
-      /* Update the FAB price if present */
-      var fabPrice = document.getElementById('ns-fab-price');
-      if (fabPrice) fabPrice.textContent = fmt(cart.total_price);
+      /* (The floating buy bar shows the current product selection, not the
+         cart total — it's managed by fab.js, so we don't touch it here.) */
     });
   }
 

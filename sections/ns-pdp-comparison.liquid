@@ -34,13 +34,24 @@
   .ns-pdp-compare__table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    padding-bottom: 8px;
+    /* Right-edge fade hints there's more to swipe to on mobile */
+    -webkit-mask-image: linear-gradient(to right, #000 93%, transparent);
+    mask-image: linear-gradient(to right, #000 93%, transparent);
   }
 
   .ns-pdp-compare__grid {
     display: grid;
-    grid-template-columns: 1fr 1.3fr 1.1fr 1.1fr;
-    min-width: 640px;
+    grid-template-columns: 0.95fr 1.15fr 1fr 1fr;
+    min-width: 560px;
     width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    .ns-pdp-compare__cell { padding: 12px 12px; font-size: 12.5px; }
+    .ns-pdp-compare__cell--feature { font-size: 13px; }
+    .ns-pdp-compare__grid { min-width: 520px; }
   }
 
   .ns-pdp-compare__cell {
