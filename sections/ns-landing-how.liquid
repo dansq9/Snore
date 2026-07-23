@@ -115,15 +115,26 @@
          'align-items: flex-start' would otherwise pin content-width steps to
          the left, and step 2's shorter copy lands off-center). */
       align-items: center;
-      gap: clamp(20px, 6vw, 28px);
+      gap: 0;
     }
 
     .ns-lhow__step {
       width: 100%;
     }
 
+    /* Vertical connector between stacked steps so the 1 - 2 - 3 timeline stays
+       legible on mobile (the horizontal line was hidden before). */
     .ns-lhow__connector {
-      display: none;
+      width: auto;
+      height: 30px;
+      padding: 6px 0;
+    }
+
+    .ns-lhow__connector-line {
+      width: 0;
+      height: 100%;
+      border-top: none;
+      border-left: 2px dashed rgba(16, 24, 43, .15);
     }
   }
 </style>

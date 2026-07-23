@@ -1,10 +1,11 @@
 {%- comment -%}
-  Landing page — minimal top nav + navy hero + META10 promo pill.
-  Used on templates/page.landing.json (paid-traffic funnel). The standard
-  header/announcement/footer are suppressed for this template in theme.liquid.
+  Landing LEAD — editorial, story-first hero for cold paid traffic.
+  Problem-framed headline + mechanism hook + benefit checklist + a SOFT CTA
+  that scrolls to the offer module (#tiers) further down. No buy box here:
+  the shoppable module (ns-landing-shop) is revealed after the education.
+  This section owns the page's only top nav (store chrome is suppressed for
+  the landing template in theme.liquid).
 {%- endcomment -%}
-
-{%- assign promo_code = section.settings.promo_code | default: 'META10' -%}
 
 <nav class="ns-lhero__nav">
   <a href="{{ routes.root_url }}" class="ns-lhero__wordmark">NIGHTSEALS</a>
@@ -15,13 +16,21 @@
     <div class="ns-lhero__col">
       <div class="ns-lhero__badge">
         <span class="ns-lhero__badge-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <span class="ns-lhero__badge-text">{{ section.settings.badge_text | default: '2,300+ verified sleepers' }}</span>
+        <span class="ns-lhero__badge-text">{{ section.settings.badge_text | default: '2,300+ five-star sleepers' }}</span>
       </div>
       <h1 class="ns-lhero__heading">{{ section.settings.heading | default: "Your mouth falls open at night. That's the problem." }}</h1>
-      <p class="ns-lhero__sub">{{ section.settings.subheading | default: 'One strip seals your lips. Your nose takes over. You wake up different.' }}</p>
-      <a href="#buy" class="ns-lhero__cta">{{ section.settings.cta_text | default: 'Try NightSeals - from $0.56/night' }}</a>
+      <p class="ns-lhero__sub">{{ section.settings.subheading | default: "You can't feel it happen — but for six hours your jaw drops, your lips part, and you breathe the one way you were never built to. Here's the 3-second fix." }}</p>
+
+      <ul class="ns-lhero__checklist">
+        <li class="ns-lhero__check"><span class="ns-lhero__check-icon">&#10003;</span>{{ section.settings.check_1 | default: 'The gentlest way to start nasal breathing' }}</li>
+        <li class="ns-lhero__check"><span class="ns-lhero__check-icon">&#10003;</span>{{ section.settings.check_2 | default: 'Less snoring, quieter nights' }}</li>
+        <li class="ns-lhero__check"><span class="ns-lhero__check-icon">&#10003;</span>{{ section.settings.check_3 | default: 'No more 3am dry mouth' }}</li>
+        <li class="ns-lhero__check"><span class="ns-lhero__check-icon">&#10003;</span>{{ section.settings.check_4 | default: 'Beard-proof hold &middot; drug-free' }}</li>
+      </ul>
+
+      <a href="{{ section.settings.cta_url | default: '#tiers' }}" class="ns-lhero__cta">{{ section.settings.cta_text | default: 'Try NightSeals risk-free →' }}</a>
       <div class="ns-lhero__audience">{{ section.settings.audience_line | default: 'For men who snore, and the partners who put up with it.' }}</div>
-      <div class="ns-lhero__trust">{{ section.settings.trust_line | default: '30-night guarantee · Free shipping $50+ · Ships in 3-5 days' }}</div>
+      <div class="ns-lhero__trust">{{ section.settings.trust_line | default: '30-night money-back guarantee · Ships in 3-5 days · Drug-free' }}</div>
     </div>
     <div class="ns-lhero__media">
       {%- if section.settings.hero_image != blank -%}
@@ -32,12 +41,6 @@
     </div>
   </div>
 </header>
-
-<div class="ns-lhero__promo-wrap">
-  <div class="ns-lhero__promo">
-    <span class="ns-lhero__promo-text">This page only: <span class="ns-lhero__promo-pct">10% off</span> with code <span class="ns-lhero__promo-code">{{ promo_code }}</span></span>
-  </div>
-</div>
 
 <style>
   @keyframes ns-lhero-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
@@ -61,7 +64,7 @@
   .ns-lhero {
     background: #10182B;
     color: #F2F4F7;
-    padding: 0 clamp(14px,4vw,32px) clamp(48px,8vw,72px);
+    padding: clamp(32px,6vw,56px) clamp(14px,4vw,32px) clamp(48px,8vw,72px);
   }
   .ns-lhero__grid {
     max-width: 1000px;
@@ -96,9 +99,28 @@
     font-size: clamp(15px,3.2vw,17px);
     line-height: 1.55;
     color: rgba(242,244,247,.65);
-    margin: 0 0 24px;
-    max-width: 440px;
+    margin: 0 0 22px;
+    max-width: 460px;
   }
+
+  .ns-lhero__checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 26px;
+    display: grid;
+    gap: 10px;
+    max-width: 460px;
+  }
+  .ns-lhero__check {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: clamp(14px,2.6vw,15.5px);
+    font-weight: 600;
+    color: rgba(242,244,247,.9);
+  }
+  .ns-lhero__check-icon { color: #D9A04B; font-weight: 800; flex: none; margin-top: 1px; }
+
   .ns-lhero__cta {
     display: inline-block;
     background: #D9A04B;
@@ -134,39 +156,24 @@
     border-radius: 22px;
     display: block;
   }
-
-  .ns-lhero__promo-wrap {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: clamp(16px,3vw,24px) clamp(14px,4vw,32px) 0;
-    text-align: center;
-  }
-  .ns-lhero__promo {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(217,160,75,.12);
-    border: 1px solid rgba(217,160,75,.3);
-    border-radius: 999px;
-    padding: 8px 18px;
-  }
-  .ns-lhero__promo-text { font-size: 13px; font-weight: 700; color: #10182B; }
-  .ns-lhero__promo-pct { color: #B27E33; font-weight: 800; }
-  .ns-lhero__promo-code { letter-spacing: .08em; font-weight: 800; color: #10182B; }
 </style>
 
 {% schema %}
 {
   "name": "Landing Hero",
   "settings": [
-    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "2,300+ verified sleepers" },
+    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "2,300+ five-star sleepers" },
     { "type": "textarea", "id": "heading", "label": "Heading", "default": "Your mouth falls open at night. That's the problem." },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "One strip seals your lips. Your nose takes over. You wake up different." },
-    { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Try NightSeals - from $0.56/night" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "You can't feel it happen — but for six hours your jaw drops, your lips part, and you breathe the one way you were never built to. Here's the 3-second fix." },
+    { "type": "text", "id": "check_1", "label": "Checklist 1", "default": "The gentlest way to start nasal breathing" },
+    { "type": "text", "id": "check_2", "label": "Checklist 2", "default": "Less snoring, quieter nights" },
+    { "type": "text", "id": "check_3", "label": "Checklist 3", "default": "No more 3am dry mouth" },
+    { "type": "text", "id": "check_4", "label": "Checklist 4", "default": "Beard-proof hold · drug-free" },
+    { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Try NightSeals risk-free →" },
+    { "type": "url", "id": "cta_url", "label": "CTA target", "info": "Defaults to the offer module (#tiers) further down the page." },
     { "type": "text", "id": "audience_line", "label": "Audience line", "default": "For men who snore, and the partners who put up with it." },
-    { "type": "text", "id": "trust_line", "label": "Trust line", "default": "30-night guarantee · Free shipping $50+ · Ships in 3-5 days" },
-    { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Falls back to the bundled lifestyle photo." },
-    { "type": "text", "id": "promo_code", "label": "Promo code", "default": "META10" }
+    { "type": "text", "id": "trust_line", "label": "Trust line", "default": "30-night money-back guarantee · Ships in 3-5 days · Drug-free" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Falls back to the bundled lifestyle photo." }
   ],
   "presets": [
     { "name": "Landing Hero" }

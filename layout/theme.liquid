@@ -54,9 +54,10 @@
   <script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
   <script src="{{ 'faq-accordion.js' | asset_url }}" defer></script>
   <script src="{{ 'confetti.js' | asset_url }}" defer></script>
+  {%- comment -%} fab.js loads everywhere; it self-gates on a #tiers / #buy anchor, so it activates on the landing (shoppable hero) and PDP but no-ops elsewhere. {%- endcomment -%}
+  <script src="{{ 'fab.js' | asset_url }}" defer></script>
   {%- unless is_landing -%}
     <script src="{{ 'welcome-popup.js' | asset_url }}" defer></script>
-    <script src="{{ 'fab.js' | asset_url }}" defer></script>
   {%- endunless -%}
 </body>
 </html>

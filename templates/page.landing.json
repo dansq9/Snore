@@ -10,29 +10,58 @@
 {
   "sections": {
     "hero": { "type": "ns-landing-hero", "settings": {} },
+    "proof": {
+      "type": "ns-proof-stats",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": "9 in 10", "description": "would recommend NightSeals to a friend" } },
+        "s2": { "type": "stat", "settings": { "number": "9 in 10", "description": "felt results within their very first week" } },
+        "s3": { "type": "stat", "settings": { "number": "9 in 10", "description": "wake up feeling more rested" } },
+        "s4": { "type": "stat", "settings": { "number": "8 in 10", "description": "reported less snoring" } },
+        "s5": { "type": "stat", "settings": { "number": "3 in 4", "description": "report an improved relationship with their partner" } },
+        "s6": { "type": "stat", "settings": { "number": "9 in 10", "description": "say NightSeals is worth the investment" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"],
+      "settings": {}
+    },
     "symptoms": { "type": "ns-landing-symptoms", "settings": {} },
     "problem": { "type": "ns-landing-problem", "settings": {} },
     "how": { "type": "ns-landing-how", "settings": {} },
-    "quiz_cta": { "type": "ns-quiz-cta", "settings": {} },
-    "reviews": { "type": "ns-landing-reviews", "settings": {} },
+    "shop": { "type": "ns-landing-shop", "settings": {} },
+    "reviews_carousel": {
+      "type": "ns-reviews-carousel",
+      "blocks": {
+        "r1": { "type": "image_review", "settings": { "caption": "Slept through the night", "reviewer": "Mike · Night 41" } },
+        "r2": { "type": "text_review", "settings": { "quote": "Third night in, my wife asked what changed. That's the whole review.", "name": "James W." } },
+        "r3": { "type": "image_review", "settings": { "caption": "Dry mouth, gone", "reviewer": "Rob · Night 12" } },
+        "r4": { "type": "text_review", "settings": { "quote": "I was nervous about taping my mouth shut. Took two nights to forget it was there.", "name": "Priya N." } },
+        "r5": { "type": "image_review", "settings": { "caption": "Partner approved", "reviewer": "Elise · Night 30" } },
+        "r6": { "type": "text_review", "settings": { "quote": "It's the cheapest thing in my sleep stack and the one that works.", "name": "Alex D." } },
+        "r7": { "type": "image_review", "settings": { "caption": "Total reset", "reviewer": "Dan · Night 90" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6", "r7"],
+      "settings": {}
+    },
     "comparison": { "type": "ns-landing-comparison", "settings": {} },
     "materials": { "type": "ns-landing-materials", "settings": {} },
-    "journey": { "type": "ns-landing-journey", "settings": {} },
     "expectations": { "type": "ns-landing-expectations", "settings": {} },
+    "partners": { "type": "ns-landing-reviews", "settings": {} },
+    "quiz_cta": { "type": "ns-quiz-cta", "settings": {} },
     "faq": { "type": "ns-landing-faq", "settings": {} },
     "buy": { "type": "ns-landing-buy", "settings": {} }
   },
   "order": [
     "hero",
+    "proof",
     "symptoms",
     "problem",
     "how",
-    "quiz_cta",
-    "reviews",
+    "shop",
+    "reviews_carousel",
     "comparison",
     "materials",
-    "journey",
     "expectations",
+    "partners",
+    "quiz_cta",
     "faq",
     "buy"
   ]

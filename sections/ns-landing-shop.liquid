@@ -1,0 +1,511 @@
+{%- comment -%}
+  ns-landing-shop — shoppable hero for the paid-traffic landing page.
+
+  Adapted from sections/ns-product-hero.liquid (the PDP hero) so the landing
+  leads with the product the way ZzzTape / Hostage Tape do: gallery + rating +
+  benefit pills + live supply selector + dual CTA, above the fold. Trimmed of
+  the PDP accordions and Subscribe & Save toggle (the landing has dedicated
+  how / materials / faq / disclaimer sections, and is positioned one-time).
+
+  It reuses the .ns-pdp__* classes/JS from the PDP hero verbatim so the tested
+  commerce behaviour carries over; the two never appear on the same page.
+
+  On a *page* template the ambient `product` is nil, so we resolve it from the
+  same theme setting the bottom buy block uses — one source of truth for price.
+{%- endcomment -%}
+
+{%- comment -%} Offer product: a section pick (the limited-time landing offer, e.g. 60 nights / $30) wins; else the store's Main product; else the first product. {%- endcomment -%}
+{%- assign product = section.settings.offer_product -%}
+{%- if product == blank -%}{%- assign product = settings.featured_product -%}{%- endif -%}
+{%- if product == blank -%}{%- assign product = collections.all.products.first -%}{%- endif -%}
+{%- assign ns_default_variant = product.variants[1] | default: product.selected_or_first_available_variant -%}
+
+<div class="ns-lshop__promo">
+  <span class="ns-lshop__promo-text">{{ section.settings.offer_banner | default: 'Limited-time offer — while supplies last' }}</span>
+</div>
+
+<style>
+  .ns-lshop__nav {
+    background: #10182B;
+    padding: 14px clamp(14px, 4vw, 32px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ns-lshop__wordmark {
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: .14em;
+    color: #F2F4F7;
+    text-decoration: none;
+  }
+  .ns-lshop__wordmark:hover { color: #F2F4F7; }
+
+  .ns-lshop__promo {
+    background: #D9A04B;
+    padding: 11px clamp(14px, 4vw, 32px);
+    text-align: center;
+  }
+  .ns-lshop__promo-text { font-size: 13px; font-weight: 700; color: #10182B; }
+  .ns-lshop__promo-code { letter-spacing: .08em; font-weight: 800; }
+
+  .ns-pdp {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(24px, 5vw, 44px) 24px;
+  }
+
+  .ns-pdp__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    column-gap: clamp(32px, 5vw, 56px);
+    row-gap: clamp(16px, 4vw, 28px);
+  }
+
+  /* ── Left column: Gallery ── */
+  .ns-pdp__gallery { position: relative; }
+  @media (min-width: 801px) {
+    .ns-pdp__gallery { position: sticky; top: 24px; align-self: start; }
+  }
+  .ns-pdp__main-img {
+    height: min(460px, 100vw);
+    border-radius: 22px;
+    overflow: hidden;
+    background: #EAEDF2;
+  }
+  .ns-pdp__main-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ns-pdp__thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .ns-pdp__thumb {
+    height: min(120px, 28vw);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #EAEDF2;
+    border: 2px solid transparent;
+    padding: 0;
+    width: 100%;
+    cursor: pointer;
+    display: block;
+    transition: border-color .15s;
+  }
+  .ns-pdp__thumb--active { border-color: #10182B; }
+  .ns-pdp__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .ns-pdp__brand { margin-top: 18px; }
+  .ns-pdp__wordmark {
+    font-weight: 800;
+    font-size: clamp(20px, 2.6vw, 26px);
+    letter-spacing: .18em;
+    color: #10182B;
+    margin: 0;
+  }
+  .ns-pdp__stars-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .ns-pdp__stars-icons { color: #D9A04B; font-size: 16px; letter-spacing: 2px; }
+  .ns-pdp__stars-link { font-size: 13.5px; font-weight: 600; color: #566072; text-decoration: none; }
+  .ns-pdp__stars-link:hover { text-decoration: underline; }
+  .ns-pdp__price-line { font-size: 14px; color: #8A93A3; margin-top: 4px; }
+
+  /* ── Right column: Buy box ── */
+  .ns-pdp__buybox { display: flex; flex-direction: column; }
+
+  .ns-lshop__headline {
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -.02em;
+    color: #10182B;
+    margin: 0 0 12px;
+    text-wrap: pretty;
+  }
+  .ns-lshop__subline {
+    font-size: clamp(15px, 2.2vw, 17px);
+    line-height: 1.5;
+    color: #566072;
+    margin: 0 0 6px;
+    text-wrap: pretty;
+  }
+  .ns-lshop__audience { font-size: 13px; color: #8A93A3; font-weight: 500; margin: 0; }
+
+  .ns-pdp__pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0; }
+  .ns-pdp__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1.5px solid rgba(16, 24, 43, .13);
+    font-size: 13px;
+    font-weight: 600;
+    color: #10182B;
+  }
+  .ns-pdp__pill-check { color: #B27E33; font-weight: 800; }
+
+  .ns-pdp__tier-label {
+    font-size: 12px;
+    letter-spacing: .16em;
+    font-weight: 700;
+    color: #8A93A3;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+  .ns-pdp__tiers { display: flex; flex-direction: column; gap: 10px; }
+  .ns-pdp__tier {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    border: 2px solid rgba(16, 24, 43, .15);
+    background: transparent;
+    transition: border .2s, box-shadow .2s;
+  }
+  .ns-pdp__tier--active { border-color: #B27E33; background: #fff; box-shadow: 0 10px 30px rgba(16, 24, 43, .10); }
+  .ns-pdp__tier-badge {
+    position: absolute;
+    top: -11px;
+    left: 20px;
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .ns-pdp__tier-badge--popular { background: #10182B; }
+  .ns-pdp__tier-badge--value { background: #D9A04B; color: #10182B; }
+  .ns-pdp__tier-left { display: flex; align-items: center; gap: 14px; }
+  .ns-pdp__radio {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid rgba(16, 24, 43, .25);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    transition: border-color .2s;
+  }
+  .ns-pdp__tier--active .ns-pdp__radio { border-color: #B27E33; }
+  .ns-pdp__radio-dot { width: 10px; height: 10px; border-radius: 50%; background: #B27E33; opacity: 0; transition: opacity .2s; }
+  .ns-pdp__tier--active .ns-pdp__radio-dot { opacity: 1; }
+  .ns-pdp__tier-title { font-size: 16.5px; font-weight: 700; color: #10182B; margin: 0; }
+  .ns-pdp__tier-per-night { font-size: 13px; color: #8A93A3; margin: 2px 0 0; }
+  .ns-pdp__tier-right { text-align: right; }
+  .ns-pdp__tier-save { font-size: 10px; letter-spacing: .08em; font-weight: 700; color: #B27E33; text-transform: uppercase; margin-bottom: 2px; }
+  .ns-pdp__tier-price { font-size: 19px; font-weight: 800; color: #10182B; }
+  .ns-pdp__tier-compare { font-size: 13.5px; color: #8A93A3; text-decoration: line-through; }
+
+  .ns-pdp__ctas {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .ns-pdp__btn-buy {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: #10182B; color: #F7F8FA;
+    font-size: clamp(12.5px, 3.2vw, 15px); font-weight: 700;
+    padding: 16px 14px; border-radius: 999px; border: none; cursor: pointer;
+    white-space: nowrap; transition: opacity .2s;
+  }
+  .ns-pdp__btn-buy:hover { opacity: .88; }
+  .ns-pdp__btn-buy-sep { opacity: .45; }
+  .ns-pdp__btn-buy-price { color: #E5B267; font-weight: 800; }
+  .ns-pdp__btn-cart {
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; color: #10182B;
+    font-size: clamp(12.5px, 3.2vw, 15px); font-weight: 700;
+    padding: 16px 14px; border-radius: 999px; border: 2px solid rgba(16, 24, 43, .18);
+    cursor: pointer; white-space: nowrap; transition: opacity .2s;
+  }
+  .ns-pdp__btn-cart:hover { opacity: .88; }
+
+  .ns-pdp__trust {
+    display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
+    gap: 6px 10px; margin-top: 16px;
+    font-size: 12.5px; color: #8A93A3; font-weight: 500;
+  }
+  .ns-pdp__trust-item { display: inline-flex; align-items: center; white-space: nowrap; }
+  .ns-pdp__trust-item:not(:last-child)::after {
+    content: ""; width: 4px; height: 4px; border-radius: 50%;
+    background: #D9A04B; margin-left: 10px; flex: none;
+  }
+
+  .ns-pdp__form { position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none; }
+</style>
+
+<section class="ns-pdp">
+  <div class="ns-pdp__grid">
+
+    <!-- ── Left column: Gallery ── -->
+    <div class="ns-pdp__gallery">
+      {%- if product != blank and product.images.size > 0 -%}
+        <div class="ns-pdp__main-img">
+          <img id="ns-lshop-main-img"
+               src="{{ product.featured_image | image_url: width: 1200 }}"
+               alt="{{ product.featured_image.alt | escape | default: product.title }}"
+               width="1200" height="1200" loading="eager">
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="ns-pdp__thumbs">
+            {%- for image in product.images limit: 3 -%}
+              <button type="button" class="ns-pdp__thumb{% if image == product.featured_image %} ns-pdp__thumb--active{% endif %}" data-lshop-thumb data-full="{{ image | image_url: width: 1200 }}" aria-label="Show image {{ forloop.index }}">
+                {{ image | image_url: width: 400 | image_tag: loading: 'lazy', alt: image.alt }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        {%- if section.settings.main_image != blank -%}{%- assign fb_main_url = section.settings.main_image | image_url: width: 1200 -%}{%- else -%}{%- assign fb_main_url = 'nightseals-pouch.png' | asset_url -%}{%- endif -%}
+        {%- if section.settings.thumb_1 != blank -%}{%- assign fb_thumb2_url = section.settings.thumb_1 | image_url: width: 1200 -%}{%- else -%}{%- assign fb_thumb2_url = 'nightseals-pouch-nobg.png' | asset_url -%}{%- endif -%}
+        <div class="ns-pdp__main-img">
+          <img id="ns-lshop-main-img" src="{{ fb_main_url }}" alt="{{ product.title | default: 'NightSeals' }}" width="1200" height="1200" loading="eager">
+        </div>
+        <div class="ns-pdp__thumbs">
+          <button type="button" class="ns-pdp__thumb ns-pdp__thumb--active" data-lshop-thumb data-full="{{ fb_main_url }}" aria-label="Show image 1">
+            <img src="{{ fb_main_url }}" alt="" width="400" height="400" loading="lazy">
+          </button>
+          <button type="button" class="ns-pdp__thumb" data-lshop-thumb data-full="{{ fb_thumb2_url }}" aria-label="Show image 2">
+            <img src="{{ fb_thumb2_url }}" alt="" width="400" height="400" loading="lazy">
+          </button>
+          {%- if section.settings.thumb_2 != blank -%}
+            <button type="button" class="ns-pdp__thumb" data-lshop-thumb data-full="{{ section.settings.thumb_2 | image_url: width: 1200 }}" aria-label="Show image 3">
+              {{ section.settings.thumb_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+            </button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="ns-pdp__brand">
+        <p class="ns-pdp__wordmark">NIGHTSEALS</p>
+        <div class="ns-pdp__stars-row">
+          <span class="ns-pdp__stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <a href="#reviews" class="ns-pdp__stars-link">4.8 &middot; 2,300+ reviews</a>
+        </div>
+        {%- if product != blank and product.price_min > 0 -%}
+          <p class="ns-pdp__price-line">From {{ product.price_min | money }} &middot; your quieter nights start here</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- ── Right column: Buy box ── -->
+    <div class="ns-pdp__buybox">
+
+      {%- if product != blank -%}
+      <div class="ns-pdp__form">
+        {% form 'product', product, id: 'ns-lshop-form' %}
+          <input type="hidden" name="id" value="{{ ns_default_variant.id }}" id="ns-lshop-variant-input">
+        {% endform %}
+      </div>
+      {%- endif -%}
+
+      <h2 class="ns-lshop__headline">{{ section.settings.headline | default: "Start tonight. Wake up different." }}</h2>
+      <p class="ns-lshop__subline">{{ section.settings.subline | default: "Your NightSeals supply at a limited-time price. One strip a night — that's the whole routine." }}</p>
+
+      <div class="ns-pdp__pills">
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> May reduce snoring</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> No dry mouth</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> Beard-proof hold</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> 3 seconds a night</span>
+      </div>
+
+      <p class="ns-pdp__tier-label" id="tiers">{% if product.variants.size == 1 %}{{ section.settings.offer_label | default: 'YOUR LIMITED-TIME OFFER' }}{% else %}CHOOSE YOUR SUPPLY{% endif %}</p>
+      {%- if product == blank or product.variants.size == 0 -%}
+        <div class="ns-pdp__tiers">
+          <div class="ns-pdp__tier ns-pdp__tier--active">
+            <div class="ns-pdp__tier-left">
+              <div>
+                <p class="ns-pdp__tier-title">Add a product to see supply options</p>
+                <p class="ns-pdp__tier-per-night">Set your Main product (with 30/90/180-night variants) under Theme settings &rarr; Shop.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- else -%}
+      <div class="ns-pdp__tiers">
+        {% for variant in product.variants %}
+          {%- assign nights_count = variant.title | split: ' ' | first | plus: 0 -%}
+          {%- assign per_night_label = '' -%}
+          {%- if variant.metafields.custom.per_night != blank -%}
+            {%- assign per_night_label = variant.metafields.custom.per_night | append: ' / night' -%}
+          {%- elsif nights_count > 0 -%}
+            {%- assign per_night_cents = variant.price | times: 1.0 | divided_by: nights_count | round -%}
+            {%- assign per_night_label = per_night_cents | money | append: ' / night' -%}
+          {%- endif -%}
+          <div
+            class="ns-pdp__tier{% if variant.id == ns_default_variant.id %} ns-pdp__tier--active{% endif %}"
+            data-variant-id="{{ variant.id }}"
+            data-variant-price="{{ variant.price | money }}"
+            data-per-night="{{ per_night_label }}"
+            {%- if nights_count > 0 %} data-nights="{{ nights_count }}"{% endif -%}
+          >
+            {%- if forloop.index == 2 -%}
+              <span class="ns-pdp__tier-badge ns-pdp__tier-badge--popular">MOST POPULAR</span>
+            {%- elsif forloop.index == 3 -%}
+              <span class="ns-pdp__tier-badge ns-pdp__tier-badge--value">BEST VALUE</span>
+            {%- endif -%}
+
+            <div class="ns-pdp__tier-left">
+              <div class="ns-pdp__radio"><span class="ns-pdp__radio-dot"></span></div>
+              <div>
+                <p class="ns-pdp__tier-title">{{ variant.title }}</p>
+                <p class="ns-pdp__tier-per-night">{{ per_night_label }}</p>
+              </div>
+            </div>
+
+            <div class="ns-pdp__tier-right">
+              {%- if variant.compare_at_price > variant.price -%}
+                {%- assign savings = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+                <div class="ns-pdp__tier-save">SAVE {{ savings }}%</div>
+              {%- endif -%}
+              <div class="ns-pdp__tier-price">{{ variant.price | money }}</div>
+              {%- if variant.compare_at_price > variant.price -%}
+                <div class="ns-pdp__tier-compare">{{ variant.compare_at_price | money }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {%- endif -%}
+
+      <div class="ns-pdp__ctas">
+        <button type="button" class="ns-pdp__btn-buy" id="ns-lshop-buy-now">
+          <span class="ns-pdp__btn-buy-label">Buy now</span>
+          {%- if ns_default_variant -%}
+            <span class="ns-pdp__btn-buy-sep" aria-hidden="true">&middot;</span>
+            <span class="ns-pdp__btn-buy-price">{{ ns_default_variant.price | money }}</span>
+          {%- endif -%}
+        </button>
+        <button type="button" class="ns-pdp__btn-cart" data-lshop-add-to-cart>Add to cart</button>
+      </div>
+
+      <div class="ns-pdp__trust">
+        <span class="ns-pdp__trust-item">100% money-back</span>
+        <span class="ns-pdp__trust-item">One-time purchase</span>
+        <span class="ns-pdp__trust-item">Ships in 3-5 days</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.querySelector('.ns-pdp');
+    if (!root) return;
+    var tiers = root.querySelectorAll('.ns-pdp__tier');
+    var variantInput = document.getElementById('ns-lshop-variant-input');
+    var buyBtn = document.getElementById('ns-lshop-buy-now');
+
+    function activeTier() { return root.querySelector('.ns-pdp__tier--active'); }
+
+    function refresh() {
+      if (buyBtn) {
+        var buyPrice = buyBtn.querySelector('.ns-pdp__btn-buy-price');
+        var tier = activeTier();
+        if (buyPrice && tier) buyPrice.textContent = tier.getAttribute('data-variant-price') || '';
+      }
+      document.dispatchEvent(new CustomEvent('ns:selection'));
+    }
+
+    tiers.forEach(function (tier) {
+      tier.addEventListener('click', function () {
+        tiers.forEach(function (t) { t.classList.remove('ns-pdp__tier--active'); });
+        tier.classList.add('ns-pdp__tier--active');
+        if (variantInput) variantInput.value = tier.getAttribute('data-variant-id');
+        refresh();
+      });
+    });
+
+    /* Gallery thumbnails */
+    var thumbs = root.querySelectorAll('[data-lshop-thumb]');
+    var mainImg = document.getElementById('ns-lshop-main-img');
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var full = thumb.getAttribute('data-full');
+        if (full && mainImg) mainImg.src = full;
+        thumbs.forEach(function (t) { t.classList.remove('ns-pdp__thumb--active'); });
+        thumb.classList.add('ns-pdp__thumb--active');
+      });
+    });
+
+    function currentItem() {
+      var id = variantInput ? variantInput.value : null;
+      if (!id) return null;
+      return { id: parseInt(id, 10), quantity: 1 };
+    }
+
+    /* Add to cart — opens the drawer (and fires confetti) via NsCart */
+    var cartBtn = root.querySelector('[data-lshop-add-to-cart]');
+    if (cartBtn) {
+      cartBtn.addEventListener('click', function () {
+        var item = currentItem();
+        if (!item) return;
+        if (window.NsCart && typeof window.NsCart.add === 'function') {
+          window.NsCart.add(item.id, 1).catch(function () {});
+        } else {
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [item] })
+          }).then(function () { window.location.href = '/cart'; });
+        }
+      });
+    }
+
+    /* Buy now — checkout with ONLY this item (clear cart, add, go to checkout) */
+    if (buyBtn) {
+      buyBtn.addEventListener('click', function () {
+        var item = currentItem();
+        if (!item) return;
+        buyBtn.disabled = true;
+        function fail(err) { console.error('[NightSeals] Buy now could not start checkout:', err); buyBtn.disabled = false; }
+        function addAndCheckout() {
+          return fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ items: [item] })
+          }).then(function (res) {
+            return res.json().then(function (data) {
+              if (!res.ok) { throw new Error((data && (data.description || data.message)) || 'Add to cart failed'); }
+              return data;
+            });
+          }).then(function () { window.location.href = '/checkout'; });
+        }
+        fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.json(); })
+          .then(function (cart) {
+            if (cart && cart.item_count > 0) {
+              return fetch('/cart/clear.js', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(function () { return addAndCheckout(); });
+            }
+            return addAndCheckout();
+          })
+          .catch(fail);
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Landing Shop Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The limited-time landing offer (e.g. the 60-night $30 product). Falls back to the store's Main product." },
+    { "type": "text", "id": "offer_banner", "label": "Offer banner", "default": "Limited-time offer — while supplies last" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Start tonight. Wake up different." },
+    { "type": "textarea", "id": "subline", "label": "Subline", "default": "Your NightSeals supply at a limited-time price. One strip a night — that's the whole routine." },
+    { "type": "text", "id": "offer_label", "label": "Single-offer label", "default": "YOUR LIMITED-TIME OFFER" },
+    { "type": "paragraph", "content": "Gallery uses the offer product's own images. The pickers below are only a fallback when the product has no images." },
+    { "type": "image_picker", "id": "main_image", "label": "Fallback main image" },
+    { "type": "image_picker", "id": "thumb_1", "label": "Fallback thumbnail 1" },
+    { "type": "image_picker", "id": "thumb_2", "label": "Fallback thumbnail 2" }
+  ],
+  "presets": [
+    { "name": "Landing Shop Hero" }
+  ]
+}
+{% endschema %}

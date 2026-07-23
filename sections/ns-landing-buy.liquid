@@ -78,7 +78,7 @@
   </div>
 </section>
 
-<div class="ns-lbuy__footer">
+<footer class="ns-lbuy__footer">
   <p class="ns-lbuy__disclaimer"><span class="ns-lbuy__disclaimer-strong">Medical Disclaimer:</span> NightSeals is not a medical device and is not intended to diagnose, treat, cure or prevent any disease, including sleep apnea. These statements have not been evaluated by the FDA. Consult your physician with any concerns. Do not use if you cannot breathe comfortably through your nose, have an active illness or infection, low blood pressure, or a heart or respiratory condition, or after consuming alcohol or sedatives. Discontinue use if you experience irritation, dryness, or any lip or skin abrasion. NightSeals is drug-free.</p>
   <div class="ns-lbuy__footer-links">
     <span>&copy; 2026 NightSeals</span>
@@ -87,11 +87,7 @@
     {%- if shop.shipping_policy.url != blank -%}<a href="{{ shop.shipping_policy.url }}">Shipping</a>{%- else -%}<a href="/policies/shipping-policy">Shipping</a>{%- endif -%}
     {%- if shop.refund_policy.url != blank -%}<a href="{{ shop.refund_policy.url }}">Refunds</a>{%- else -%}<a href="/policies/refund-policy">Refunds</a>{%- endif -%}
   </div>
-</div>
-
-<div class="ns-lbuy__sticky" id="ns-lbuy-sticky" hidden>
-  <a href="#buy" class="ns-lbuy__sticky-btn">{{ section.settings.sticky_text | default: 'Try NightSeals - from $0.56/night' }}</a>
-</div>
+</footer>
 
 <style>
   .ns-lbuy__promobar { background: #D9A04B; padding: 12px clamp(14px,4vw,32px); text-align: center; }
@@ -212,24 +208,9 @@
       });
     }
 
-    /* Sticky CTA: show after scrolling past the hero, hide once #buy is in view. */
-    var sticky = document.getElementById('ns-lbuy-sticky');
-    var buy = document.getElementById('buy');
-    if (sticky && buy) {
-      var buyVisible = false;
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          buyVisible = entries[0].isIntersecting;
-          update();
-        }, { threshold: 0.15 }).observe(buy);
-      }
-      function update() {
-        var scrolled = window.pageYOffset > 500;
-        sticky.hidden = !(scrolled && !buyVisible);
-      }
-      window.addEventListener('scroll', update, { passive: true });
-      update();
-    }
+    /* The floating buy bar is now the shared fab.js (enabled site-wide),
+       which mirrors the hero's live selection and returns users to #tiers.
+       The old inline #ns-lbuy-sticky was removed to avoid two stickies. */
   })();
 </script>
 

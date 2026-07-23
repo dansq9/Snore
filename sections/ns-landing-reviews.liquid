@@ -175,40 +175,12 @@
   }
 </style>
 
-<section class="ns-lrev__reviews">
-  <div class="ns-lrev__ratingline">
-    <span class="ns-lrev__ratingline-stars">★★★★★</span>
-    <span class="ns-lrev__ratingline-text">{{ section.settings.rating_text | default: '4.8 from 2,300+ verified sleepers' }}</span>
-  </div>
-  <h2 class="ns-lrev__heading">{{ section.settings.heading | default: 'What sleepers are saying' }}</h2>
-  <div class="ns-lrev__grid">
-    <div class="ns-lrev__card">
-      <div class="ns-lrev__card-stars">★★★★★</div>
-      <p class="ns-lrev__card-body">"{{ section.settings.review_1_quote | default: "Third night in, my wife asked what changed. That's the whole review." }}"</p>
-      <div class="ns-lrev__card-footer">
-        <span class="ns-lrev__card-name">{{ section.settings.review_1_name | default: 'James W.' }}</span>
-        <span class="ns-lrev__verified"><span class="ns-lrev__verified-badge">✓</span>{{ section.settings.verified_label | default: 'Verified' }}</span>
-      </div>
-    </div>
-    <div class="ns-lrev__card">
-      <div class="ns-lrev__card-stars">★★★★★</div>
-      <p class="ns-lrev__card-body">"{{ section.settings.review_2_quote | default: "Stays on through a full beard. Every other tape peeled off by 2am. This one stays put." }}"</p>
-      <div class="ns-lrev__card-footer">
-        <span class="ns-lrev__card-name">{{ section.settings.review_2_name | default: 'Derek R.' }}</span>
-        <span class="ns-lrev__verified"><span class="ns-lrev__verified-badge">✓</span>{{ section.settings.verified_label | default: 'Verified' }}</span>
-      </div>
-    </div>
-    <div class="ns-lrev__card">
-      <div class="ns-lrev__card-stars">★★★★★</div>
-      <p class="ns-lrev__card-body">"{{ section.settings.review_3_quote | default: "I sat on this for two weeks thinking it was gimmicky. Wish I'd stopped overthinking it sooner." }}"</p>
-      <div class="ns-lrev__card-footer">
-        <span class="ns-lrev__card-name">{{ section.settings.review_3_name | default: 'Tom H.' }}</span>
-        <span class="ns-lrev__verified"><span class="ns-lrev__verified-badge">✓</span>{{ section.settings.verified_label | default: 'Verified' }}</span>
-      </div>
-    </div>
-  </div>
-</section>
-
+{%- comment -%}
+  The 3 text review cards were removed: they duplicated the new landing
+  review carousel (ns-reviews-carousel) — the "wife asked what changed"
+  quote was verbatim in both. This section now renders only the distinct
+  "For Partners" card, kept as a late-funnel emotional nudge.
+{%- endcomment -%}
 <section class="ns-lrev__partners">
   <div class="ns-lrev__partners-card">
     {%- if section.settings.partners_image != blank -%}

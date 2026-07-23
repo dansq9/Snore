@@ -38,7 +38,7 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(16, 24, 43, .06);
-    min-width: 480px;
+    min-width: 300px;
   }
 
   .ns-lcmp__th-empty {
@@ -115,6 +115,19 @@
   .ns-lcmp__cta:hover {
     background: #26314D;
     color: #F2F4F7;
+  }
+
+  /* Mobile: tighten cell padding so all three columns (incl. the "Generic
+     tape" column) fit the viewport instead of overflowing the scroller. */
+  @media (max-width: 480px) {
+    .ns-lcmp__th-empty,
+    .ns-lcmp__th-ns,
+    .ns-lcmp__th-generic { padding: 14px 8px; }
+
+    .ns-lcmp__feature,
+    .ns-lcmp__yes,
+    .ns-lcmp__muted,
+    .ns-lcmp__ns-cost { padding: 12px 8px; }
   }
 </style>
 

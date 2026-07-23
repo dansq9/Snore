@@ -156,8 +156,19 @@
       grid-template-columns: 1fr;
     }
 
+    /* Stack vertically with a short vertical connector so the journey still
+       reads as a top-to-bottom flow on mobile (the line was hidden before,
+       which left two disconnected nodes). */
     .ns-ljourney__connector {
-      display: none;
+      padding: 6px 0;
+      height: 34px;
+    }
+
+    .ns-ljourney__connector-line {
+      width: 0;
+      height: 100%;
+      border-top: none;
+      border-left: 2px dashed rgba(16, 24, 43, .2);
     }
   }
 </style>
