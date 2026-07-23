@@ -60,17 +60,19 @@
    * @param {number}        [quantity=1]
    * @returns {Promise}
    */
-  function addToCart(variantId, quantity) {
+  function addToCart(variantId, quantity, sellingPlan) {
     var id = parseInt(variantId, 10);
     if (!id) {
       console.error('[NsCart] add called with an invalid variant id:', variantId,
         '— is a product with variants assigned? (Theme settings → Shop)');
       return Promise.reject(new Error('Invalid variant id'));
     }
+    var item = { id: id, quantity: quantity || 1 };
+    if (sellingPlan) { item.selling_plan = parseInt(sellingPlan, 10); }
     return fetch('/cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ items: [{ id: id, quantity: quantity || 1 }] })
+      body: JSON.stringify({ items: [item] })
     }).then(function (res) {
       return res.json().then(function (data) {
         if (!res.ok) {
