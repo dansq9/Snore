@@ -1,0 +1,186 @@
+{
+  "sections": {
+    "faq-page": {
+      "type": "ns-faq-page",
+      "settings": {
+        "kicker": "HELP CENTER",
+        "heading": "Frequently asked questions",
+        "subtitle": "Everything you need to know about NightSeals, mouth taping, and nasal breathing."
+      },
+      "blocks": {
+        "about_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ABOUT NIGHTSEALS",
+            "question": "What is NightSeals?",
+            "answer": "NightSeals is a gentle, hypoallergenic mouth tape designed to keep your lips sealed while you sleep. By encouraging nasal breathing overnight, it may help reduce snoring, prevent dry mouth, and support deeper, more restful sleep."
+          }
+        },
+        "about_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ABOUT NIGHTSEALS",
+            "question": "How does it work?",
+            "answer": "You apply one strip over your closed lips before bed. The adhesive holds your lips together overnight, encouraging your body to breathe through your nose. In the morning, it peels off cleanly with no residue."
+          }
+        },
+        "about_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ABOUT NIGHTSEALS",
+            "question": "What is it made of?",
+            "answer": "A soft, breathable, latex-free woven fabric with a medical-grade acrylic adhesive. Hypoallergenic, residue-free, and designed to be worn comfortably for 8+ hours."
+          }
+        },
+        "about_4": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ABOUT NIGHTSEALS",
+            "question": "What sizes are available?",
+            "answer": "NightSeals comes in one size that fits most faces. It's available in 30-night (1 pouch), 90-night (3 pouches), and 180-night (6 pouches) supply options."
+          }
+        },
+        "safety_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "Is mouth taping safe?",
+            "answer": "For healthy adults who can breathe comfortably through their nose, yes. NightSeals is not a sealed barrier. Your lips can part naturally with light effort. It is not suitable for children, anyone with nasal congestion, or anyone with a breathing disorder. If you suspect you have sleep apnea, consult your doctor before using any mouth tape. This is not medical advice."
+          }
+        },
+        "safety_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "What if I can't breathe with it on?",
+            "answer": "NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your body's survival instincts will always override the adhesive. If your nose is congested on a given night, simply skip that night."
+          }
+        },
+        "safety_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "Will it rip off my beard?",
+            "answer": "No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments. The strip sits on your lips, not on the beard itself."
+          }
+        },
+        "safety_4": {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "Can I open my mouth if I need to?",
+            "answer": "Yes. It prevents the unconscious falling-open that happens during sleep, but a deliberate yawn, sip of water, or spoken word parts the seal easily. It is a gentle cue, not a restraint."
+          }
+        },
+        "safety_5": {
+          "type": "faq_item",
+          "settings": {
+            "category": "SAFETY & COMFORT",
+            "question": "Who should NOT use NightSeals?",
+            "answer": "Do not use if you cannot breathe comfortably through your nose, have severe heart or respiratory conditions, have consumed alcohol or sedatives, or are under 18. Remove immediately if you feel discomfort. Always consult your physician if you have concerns about your sleep or breathing."
+          }
+        },
+        "breathing_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "NASAL BREATHING",
+            "question": "Why is nasal breathing better than mouth breathing?",
+            "answer": "Your nose filters, warms, and humidifies the air before it reaches your lungs. Research suggests it also produces nitric oxide, which may help open airways and support oxygen delivery. Mouth breathing bypasses all of this, which can dry out your airway, contribute to snoring, and fragment your sleep."
+          }
+        },
+        "breathing_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "NASAL BREATHING",
+            "question": "Will mouth tape stop my snoring?",
+            "answer": "It may help. Snoring often occurs when the mouth falls open during sleep, narrowing the airway. Keeping your lips sealed encourages nasal breathing, which may reduce the vibration that causes snoring. Individual results vary, and mouth tape is not a treatment for sleep apnea or any medical condition."
+          }
+        },
+        "breathing_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "NASAL BREATHING",
+            "question": "What if my nose gets congested?",
+            "answer": "Skip that night. Mouth tape is for nights you can breathe freely through your nose. Many sleepers pair NightSeals with a hot shower or nasal rinse before bed during allergy season."
+          }
+        },
+        "breathing_4": {
+          "type": "faq_item",
+          "settings": {
+            "category": "NASAL BREATHING",
+            "question": "How long until I notice a difference?",
+            "answer": "Many people notice less dry mouth within the first few nights. Some users report snoring reduction within the first week. By night 21-30, most consistent users report meaningfully better sleep quality. Individual results vary."
+          }
+        },
+        "orders_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ORDERS & SHIPPING",
+            "question": "How long does shipping take?",
+            "answer": "Orders ship within 24-48 hours from U.S. warehouses, Monday through Friday. Standard delivery takes 3-5 business days. Free shipping on orders over $50."
+          }
+        },
+        "orders_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ORDERS & SHIPPING",
+            "question": "Do you ship internationally?",
+            "answer": "Not currently. We ship to U.S. addresses only at this time."
+          }
+        },
+        "orders_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ORDERS & SHIPPING",
+            "question": "What is your return policy?",
+            "answer": "We offer a 30-night money-back guarantee. If you're not satisfied, email help@nightseals.com with your order number and we'll process a full refund. No return label needed for opened pouches. No questions asked."
+          }
+        },
+        "orders_4": {
+          "type": "faq_item",
+          "settings": {
+            "category": "ORDERS & SHIPPING",
+            "question": "How many strips are in each pouch?",
+            "answer": "Each pouch contains 30 strips, one per night. The 90-night supply includes 3 pouches, and the 180-night supply includes 6 pouches."
+          }
+        },
+        "subs_1": {
+          "type": "faq_item",
+          "settings": {
+            "category": "SUBSCRIPTIONS",
+            "question": "How does Subscribe & Save work?",
+            "answer": "Select the Subscribe & Save option on the product page and choose your supply size. You'll receive a fresh pouch automatically at your chosen interval (every 30, 90, or 180 nights) at 20% off the one-time price."
+          }
+        },
+        "subs_2": {
+          "type": "faq_item",
+          "settings": {
+            "category": "SUBSCRIPTIONS",
+            "question": "Can I skip, pause, or cancel?",
+            "answer": "Yes, anytime. You'll receive a pre-shipment reminder email before each renewal. To skip, pause, or cancel, email help@nightseals.com before your next scheduled shipment. No penalties, no hoops."
+          }
+        },
+        "subs_3": {
+          "type": "faq_item",
+          "settings": {
+            "category": "SUBSCRIPTIONS",
+            "question": "Will I be charged automatically?",
+            "answer": "Yes, your payment method is charged before each scheduled shipment. You'll always receive an email reminder before you're charged, giving you time to skip or cancel if needed."
+          }
+        }
+      },
+      "block_order": [
+        "about_1", "about_2", "about_3", "about_4",
+        "safety_1", "safety_2", "safety_3", "safety_4", "safety_5",
+        "breathing_1", "breathing_2", "breathing_3", "breathing_4",
+        "orders_1", "orders_2", "orders_3", "orders_4",
+        "subs_1", "subs_2", "subs_3"
+      ]
+    },
+    "contact-cta": {
+      "type": "ns-contact-cta",
+      "settings": {}
+    }
+  },
+  "order": ["faq-page", "contact-cta"]
+}

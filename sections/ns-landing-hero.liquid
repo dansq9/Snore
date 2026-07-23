@@ -1,0 +1,175 @@
+{%- comment -%}
+  Landing page — minimal top nav + navy hero + META10 promo pill.
+  Used on templates/page.landing.json (paid-traffic funnel). The standard
+  header/announcement/footer are suppressed for this template in theme.liquid.
+{%- endcomment -%}
+
+{%- assign promo_code = section.settings.promo_code | default: 'META10' -%}
+
+<nav class="ns-lhero__nav">
+  <a href="{{ routes.root_url }}" class="ns-lhero__wordmark">NIGHTSEALS</a>
+</nav>
+
+<header class="ns-lhero">
+  <div class="ns-lhero__grid">
+    <div class="ns-lhero__col">
+      <div class="ns-lhero__badge">
+        <span class="ns-lhero__badge-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class="ns-lhero__badge-text">{{ section.settings.badge_text | default: '2,300+ verified sleepers' }}</span>
+      </div>
+      <h1 class="ns-lhero__heading">{{ section.settings.heading | default: "Your mouth falls open at night. That's the problem." }}</h1>
+      <p class="ns-lhero__sub">{{ section.settings.subheading | default: 'One strip seals your lips. Your nose takes over. You wake up different.' }}</p>
+      <a href="#buy" class="ns-lhero__cta">{{ section.settings.cta_text | default: 'Try NightSeals - from $0.56/night' }}</a>
+      <div class="ns-lhero__audience">{{ section.settings.audience_line | default: 'For men who snore, and the partners who put up with it.' }}</div>
+      <div class="ns-lhero__trust">{{ section.settings.trust_line | default: '30-night guarantee · Free shipping $50+ · Ships in 3-5 days' }}</div>
+    </div>
+    <div class="ns-lhero__media">
+      {%- if section.settings.hero_image != blank -%}
+        {{ section.settings.hero_image | image_url: width: 1000 | image_tag: loading: 'eager', class: 'ns-lhero__img' }}
+      {%- else -%}
+        <img src="{{ 'nightseals-lifestyle.png' | asset_url }}" alt="" class="ns-lhero__img" width="1000" height="750" loading="eager">
+      {%- endif -%}
+    </div>
+  </div>
+</header>
+
+<div class="ns-lhero__promo-wrap">
+  <div class="ns-lhero__promo">
+    <span class="ns-lhero__promo-text">This page only: <span class="ns-lhero__promo-pct">10% off</span> with code <span class="ns-lhero__promo-code">{{ promo_code }}</span></span>
+  </div>
+</div>
+
+<style>
+  @keyframes ns-lhero-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+  .ns-lhero__nav {
+    background: #10182B;
+    padding: 14px clamp(14px,4vw,32px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ns-lhero__wordmark {
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: .14em;
+    color: #F2F4F7;
+    text-decoration: none;
+  }
+  .ns-lhero__wordmark:hover { color: #F2F4F7; }
+
+  .ns-lhero {
+    background: #10182B;
+    color: #F2F4F7;
+    padding: 0 clamp(14px,4vw,32px) clamp(48px,8vw,72px);
+  }
+  .ns-lhero__grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%,380px),1fr));
+    gap: clamp(28px,5vw,48px);
+    align-items: center;
+  }
+  .ns-lhero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(217,160,75,.15);
+    border: 1px solid rgba(217,160,75,.35);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: clamp(14px,3vw,22px);
+  }
+  .ns-lhero__badge-stars { color: #D9A04B; font-size: 12px; letter-spacing: 1px; }
+  .ns-lhero__badge-text { font-size: 12px; font-weight: 600; color: rgba(242,244,247,.7); }
+
+  .ns-lhero__heading {
+    font-size: clamp(28px,5.5vw,48px);
+    line-height: 1.08;
+    letter-spacing: -.03em;
+    font-weight: 800;
+    margin: 0 0 14px;
+    text-wrap: pretty;
+  }
+  .ns-lhero__sub {
+    font-size: clamp(15px,3.2vw,17px);
+    line-height: 1.55;
+    color: rgba(242,244,247,.65);
+    margin: 0 0 24px;
+    max-width: 440px;
+  }
+  .ns-lhero__cta {
+    display: inline-block;
+    background: #D9A04B;
+    color: #10182B;
+    padding: 16px 32px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    animation: ns-lhero-pulse 3s ease-in-out infinite;
+  }
+  .ns-lhero__cta:hover { background: #E5B267; color: #10182B; }
+  @media (prefers-reduced-motion: reduce) { .ns-lhero__cta { animation: none; } }
+
+  .ns-lhero__audience {
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: rgba(242,244,247,.5);
+    font-weight: 500;
+  }
+  .ns-lhero__trust {
+    margin-top: 8px;
+    font-size: 11.5px;
+    color: rgba(242,244,247,.4);
+    font-weight: 500;
+  }
+
+  .ns-lhero__media { height: min(420px,90vw); }
+  .ns-lhero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 22px;
+    display: block;
+  }
+
+  .ns-lhero__promo-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: clamp(16px,3vw,24px) clamp(14px,4vw,32px) 0;
+    text-align: center;
+  }
+  .ns-lhero__promo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(217,160,75,.12);
+    border: 1px solid rgba(217,160,75,.3);
+    border-radius: 999px;
+    padding: 8px 18px;
+  }
+  .ns-lhero__promo-text { font-size: 13px; font-weight: 700; color: #10182B; }
+  .ns-lhero__promo-pct { color: #B27E33; font-weight: 800; }
+  .ns-lhero__promo-code { letter-spacing: .08em; font-weight: 800; color: #10182B; }
+</style>
+
+{% schema %}
+{
+  "name": "Landing Hero",
+  "settings": [
+    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "2,300+ verified sleepers" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Your mouth falls open at night. That's the problem." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "One strip seals your lips. Your nose takes over. You wake up different." },
+    { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Try NightSeals - from $0.56/night" },
+    { "type": "text", "id": "audience_line", "label": "Audience line", "default": "For men who snore, and the partners who put up with it." },
+    { "type": "text", "id": "trust_line", "label": "Trust line", "default": "30-night guarantee · Free shipping $50+ · Ships in 3-5 days" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Falls back to the bundled lifestyle photo." },
+    { "type": "text", "id": "promo_code", "label": "Promo code", "default": "META10" }
+  ],
+  "presets": [
+    { "name": "Landing Hero" }
+  ]
+}
+{% endschema %}

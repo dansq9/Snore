@@ -16,7 +16,7 @@
               type="email"
               name="contact[email]"
               class="ns-footer__email-input"
-              placeholder="your@email.com"
+              placeholder="Your email"
               autocomplete="email"
               required
               aria-label="Email address"
@@ -50,6 +50,7 @@
 
         <div class="ns-footer__links-col">
           <h4 class="ns-footer__col-header">SUPPORT</h4>
+          <a href="/pages/faq" class="ns-footer__link">Help center</a>
           <a href="mailto:help@nightseals.com" class="ns-footer__link">Contact us</a>
           {%- if shop.shipping_policy.url != blank -%}<a href="{{ shop.shipping_policy.url }}" class="ns-footer__link">Shipping</a>{%- endif -%}
           {%- if shop.refund_policy.url != blank -%}<a href="{{ shop.refund_policy.url }}" class="ns-footer__link">Returns</a>{%- endif -%}

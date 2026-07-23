@@ -1,0 +1,280 @@
+<style>
+  .ns-lmat__q-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(24px, 4vw, 48px) clamp(14px, 4vw, 32px) clamp(40px, 7vw, 88px);
+  }
+
+  .ns-lmat__q-card {
+    background: #FFFFFF;
+    border: 2px solid rgba(16, 24, 43, .1);
+    border-radius: 22px;
+    padding: clamp(24px, 5vw, 36px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(20px, 4vw, 36px);
+    align-items: center;
+  }
+
+  .ns-lmat__q-kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: #B27E33;
+    margin-bottom: 10px;
+  }
+
+  .ns-lmat__q-heading {
+    font-size: clamp(22px, 4vw, 30px);
+    letter-spacing: -.02em;
+    font-weight: 800;
+    margin: 0 0 12px;
+  }
+
+  .ns-lmat__q-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #566072;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .ns-lmat__checks {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ns-lmat__check {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .ns-lmat__check-icon {
+    color: #B27E33;
+    font-weight: 800;
+    font-size: 14px;
+    flex: none;
+    margin-top: 2px;
+  }
+
+  .ns-lmat__check-text {
+    font-size: 14px;
+    color: #566072;
+    line-height: 1.5;
+  }
+
+  .ns-lmat__mat-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(36px, 6vw, 64px) clamp(14px, 4vw, 32px) clamp(36px, 6vw, 64px);
+  }
+
+  .ns-lmat__mat-kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: #B27E33;
+    margin-bottom: 14px;
+  }
+
+  .ns-lmat__mat-heading {
+    font-size: clamp(24px, 4.5vw, 36px);
+    letter-spacing: -.02em;
+    font-weight: 800;
+    margin: 0 0 8px;
+    text-wrap: pretty;
+  }
+
+  .ns-lmat__mat-intro {
+    font-size: 15px;
+    color: #566072;
+    margin: 0 0 28px;
+  }
+
+  .ns-lmat__mat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: clamp(14px, 3vw, 20px);
+  }
+
+  .ns-lmat__card {
+    background: #FFFFFF;
+    border: 1px solid rgba(16, 24, 43, .08);
+    border-radius: 18px;
+    padding: clamp(20px, 3.5vw, 26px);
+    text-align: center;
+  }
+
+  .ns-lmat__card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #EAEDF2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+  }
+
+  .ns-lmat__card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .ns-lmat__card-body {
+    font-size: 13px;
+    color: #566072;
+    line-height: 1.5;
+  }
+</style>
+
+<section class="ns-lmat__q-section">
+  <div class="ns-lmat__q-card">
+    <div>
+      <div class="ns-lmat__q-kicker">{{ section.settings.q_kicker | default: "THE #1 QUESTION" }}</div>
+      <h3 class="ns-lmat__q-heading">{{ section.settings.q_heading | default: "&quot;What if I can't breathe?&quot;" }}</h3>
+      <p class="ns-lmat__q-body">{{ section.settings.q_body | default: "Fair question. Short answer: you're not sealed shut. NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your survival instincts will always win. If your nose is congested, just skip that night." }}</p>
+    </div>
+    <div class="ns-lmat__checks">
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_1 | default: "Hypoallergenic, latex-free adhesive" }}</span></div>
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_2 | default: "Peels off cleanly with zero residue" }}</span></div>
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_3 | default: "Soft, breathable woven fabric" }}</span></div>
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_4 | default: "Beard-proof hold, skin-safe removal" }}</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ns-lmat__mat-section">
+  <div class="ns-lmat__mat-kicker">{{ section.settings.mat_kicker | default: "WHAT'S ON YOUR LIPS" }}</div>
+  <h2 class="ns-lmat__mat-heading">{{ section.settings.mat_heading | default: "You wear it 8 hours a night. Know what it's made of." }}</h2>
+  <p class="ns-lmat__mat-intro">{{ section.settings.mat_intro | default: "Every strip is made from just two things:" }}</p>
+  <div class="ns-lmat__mat-grid">
+    <div class="ns-lmat__card">
+      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 3.8c-3.2-1-11.4 1.6-13.8 9.2l-2.1 7 7-2.1c7.6-2.4 10.2-10.6 9.2-13.8"></path><path d="M6.3 13l4.7 4.7"></path><line x1="2" y1="22" x2="7.5" y2="16.5"></line></svg></div>
+      <div class="ns-lmat__card-title">{{ section.settings.item_1_title | default: "Soft woven fabric" }}</div>
+      <div class="ns-lmat__card-body">{{ section.settings.item_1_body | default: "Breathable, flexible, latex-free. Moves with your face all night." }}</div>
+    </div>
+    <div class="ns-lmat__card">
+      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 11.5l2 2 4-4"></path></svg></div>
+      <div class="ns-lmat__card-title">{{ section.settings.item_2_title | default: "Medical-grade adhesive" }}</div>
+      <div class="ns-lmat__card-body">{{ section.settings.item_2_body | default: "Hypoallergenic acrylic. Holds all night, peels clean. No residue." }}</div>
+    </div>
+    <div class="ns-lmat__card">
+      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12l3 3 5-5"></path></svg></div>
+      <div class="ns-lmat__card-title">{{ section.settings.item_3_title | default: "Simple, nothing else" }}</div>
+      <div class="ns-lmat__card-body">{{ section.settings.item_3_body | default: "No fragrances, no dyes, no BPA. Just tape that does its job." }}</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NS Landing Materials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "q_kicker",
+      "label": "Question kicker",
+      "default": "THE #1 QUESTION"
+    },
+    {
+      "type": "text",
+      "id": "q_heading",
+      "label": "Question heading",
+      "default": "\"What if I can't breathe?\""
+    },
+    {
+      "type": "textarea",
+      "id": "q_body",
+      "label": "Question body",
+      "default": "Fair question. Short answer: you're not sealed shut. NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your survival instincts will always win. If your nose is congested, just skip that night."
+    },
+    {
+      "type": "text",
+      "id": "check_1",
+      "label": "Checkmark 1",
+      "default": "Hypoallergenic, latex-free adhesive"
+    },
+    {
+      "type": "text",
+      "id": "check_2",
+      "label": "Checkmark 2",
+      "default": "Peels off cleanly with zero residue"
+    },
+    {
+      "type": "text",
+      "id": "check_3",
+      "label": "Checkmark 3",
+      "default": "Soft, breathable woven fabric"
+    },
+    {
+      "type": "text",
+      "id": "check_4",
+      "label": "Checkmark 4",
+      "default": "Beard-proof hold, skin-safe removal"
+    },
+    {
+      "type": "text",
+      "id": "mat_kicker",
+      "label": "Materials kicker",
+      "default": "WHAT'S ON YOUR LIPS"
+    },
+    {
+      "type": "text",
+      "id": "mat_heading",
+      "label": "Materials heading",
+      "default": "You wear it 8 hours a night. Know what it's made of."
+    },
+    {
+      "type": "text",
+      "id": "mat_intro",
+      "label": "Materials intro",
+      "default": "Every strip is made from just two things:"
+    },
+    {
+      "type": "text",
+      "id": "item_1_title",
+      "label": "Material 1 title",
+      "default": "Soft woven fabric"
+    },
+    {
+      "type": "textarea",
+      "id": "item_1_body",
+      "label": "Material 1 body",
+      "default": "Breathable, flexible, latex-free. Moves with your face all night."
+    },
+    {
+      "type": "text",
+      "id": "item_2_title",
+      "label": "Material 2 title",
+      "default": "Medical-grade adhesive"
+    },
+    {
+      "type": "textarea",
+      "id": "item_2_body",
+      "label": "Material 2 body",
+      "default": "Hypoallergenic acrylic. Holds all night, peels clean. No residue."
+    },
+    {
+      "type": "text",
+      "id": "item_3_title",
+      "label": "Material 3 title",
+      "default": "Simple, nothing else"
+    },
+    {
+      "type": "textarea",
+      "id": "item_3_body",
+      "label": "Material 3 body",
+      "default": "No fragrances, no dyes, no BPA. Just tape that does its job."
+    }
+  ],
+  "presets": [
+    {
+      "name": "NS Landing Materials"
+    }
+  ]
+}
+{% endschema %}

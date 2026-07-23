@@ -1,0 +1,254 @@
+<style>
+  .ns-lrev__reviews {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(40px, 7vw, 88px) clamp(14px, 4vw, 32px);
+  }
+
+  .ns-lrev__ratingline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .ns-lrev__ratingline-stars {
+    color: #D9A04B;
+    font-size: 15px;
+    letter-spacing: 2px;
+  }
+
+  .ns-lrev__ratingline-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: #566072;
+  }
+
+  .ns-lrev__heading {
+    font-size: clamp(24px, 4.5vw, 36px);
+    letter-spacing: -.02em;
+    font-weight: 800;
+    margin: 0 0 28px;
+  }
+
+  .ns-lrev__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 16px;
+  }
+
+  .ns-lrev__card {
+    background: #FFFFFF;
+    border: 1px solid rgba(16, 24, 43, .08);
+    border-radius: 18px;
+    padding: clamp(20px, 3.5vw, 28px);
+  }
+
+  .ns-lrev__card-stars {
+    color: #D9A04B;
+    letter-spacing: 2px;
+    font-size: 13px;
+  }
+
+  .ns-lrev__card-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 12px 0 16px;
+    color: #566072;
+  }
+
+  .ns-lrev__card-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ns-lrev__card-name {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .ns-lrev__verified {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #8A93A3;
+    font-weight: 600;
+  }
+
+  .ns-lrev__verified-badge {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #4E8A5F;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+  }
+
+  .ns-lrev__partners {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(8px, 2vw, 24px) clamp(14px, 4vw, 32px) clamp(40px, 7vw, 88px);
+  }
+
+  .ns-lrev__partners-card {
+    background: #10182B;
+    border-radius: 22px;
+    padding: clamp(28px, 5vw, 40px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(20px, 4vw, 36px);
+    align-items: center;
+  }
+
+  .ns-lrev__partners-media {
+    height: min(260px, 65vw);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .ns-lrev__partners-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+  }
+
+  .ns-lrev__partners-ph {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: #EAEDF2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 16px;
+    color: #8A93A3;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .ns-lrev__partners-kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: #D9A04B;
+    margin-bottom: 10px;
+  }
+
+  .ns-lrev__partners-heading {
+    font-size: clamp(22px, 4vw, 30px);
+    letter-spacing: -.02em;
+    font-weight: 800;
+    margin: 0 0 12px;
+    color: #F2F4F7;
+  }
+
+  .ns-lrev__partners-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: rgba(242, 244, 247, .6);
+    margin: 0 0 18px;
+    text-wrap: pretty;
+  }
+
+  .ns-lrev__partners-cta {
+    display: inline-block;
+    background: #D9A04B;
+    color: #10182B;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-size: 14.5px;
+    font-weight: 700;
+  }
+
+  .ns-lrev__partners-cta:hover {
+    background: #E5B267;
+    color: #10182B;
+  }
+</style>
+
+<section class="ns-lrev__reviews">
+  <div class="ns-lrev__ratingline">
+    <span class="ns-lrev__ratingline-stars">★★★★★</span>
+    <span class="ns-lrev__ratingline-text">{{ section.settings.rating_text | default: '4.8 from 2,300+ verified sleepers' }}</span>
+  </div>
+  <h2 class="ns-lrev__heading">{{ section.settings.heading | default: 'What sleepers are saying' }}</h2>
+  <div class="ns-lrev__grid">
+    <div class="ns-lrev__card">
+      <div class="ns-lrev__card-stars">★★★★★</div>
+      <p class="ns-lrev__card-body">"{{ section.settings.review_1_quote | default: "Third night in, my wife asked what changed. That's the whole review." }}"</p>
+      <div class="ns-lrev__card-footer">
+        <span class="ns-lrev__card-name">{{ section.settings.review_1_name | default: 'James W.' }}</span>
+        <span class="ns-lrev__verified"><span class="ns-lrev__verified-badge">✓</span>{{ section.settings.verified_label | default: 'Verified' }}</span>
+      </div>
+    </div>
+    <div class="ns-lrev__card">
+      <div class="ns-lrev__card-stars">★★★★★</div>
+      <p class="ns-lrev__card-body">"{{ section.settings.review_2_quote | default: "Stays on through a full beard. Every other tape peeled off by 2am. This one stays put." }}"</p>
+      <div class="ns-lrev__card-footer">
+        <span class="ns-lrev__card-name">{{ section.settings.review_2_name | default: 'Derek R.' }}</span>
+        <span class="ns-lrev__verified"><span class="ns-lrev__verified-badge">✓</span>{{ section.settings.verified_label | default: 'Verified' }}</span>
+      </div>
+    </div>
+    <div class="ns-lrev__card">
+      <div class="ns-lrev__card-stars">★★★★★</div>
+      <p class="ns-lrev__card-body">"{{ section.settings.review_3_quote | default: "I sat on this for two weeks thinking it was gimmicky. Wish I'd stopped overthinking it sooner." }}"</p>
+      <div class="ns-lrev__card-footer">
+        <span class="ns-lrev__card-name">{{ section.settings.review_3_name | default: 'Tom H.' }}</span>
+        <span class="ns-lrev__verified"><span class="ns-lrev__verified-badge">✓</span>{{ section.settings.verified_label | default: 'Verified' }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ns-lrev__partners">
+  <div class="ns-lrev__partners-card">
+    <div class="ns-lrev__partners-media">
+      {%- if section.settings.partners_image != blank -%}
+        {{ section.settings.partners_image | image_url: width: 1200 | image_tag: class: 'ns-lrev__partners-img', alt: section.settings.partners_heading }}
+      {%- else -%}
+        <div class="ns-lrev__partners-ph">{{ section.settings.partners_placeholder | default: 'Couple: both sleeping peacefully, same bed' }}</div>
+      {%- endif -%}
+    </div>
+    <div>
+      <div class="ns-lrev__partners-kicker">{{ section.settings.partners_kicker | default: 'FOR PARTNERS' }}</div>
+      <h3 class="ns-lrev__partners-heading">{{ section.settings.partners_heading | default: "The cheapest marriage counseling you'll ever buy." }}</h3>
+      <p class="ns-lrev__partners-body">{{ section.settings.partners_body | default: "Most of our orders come from the partner who's had enough. They buy it. He tries it. She sleeps through the night for the first time in years. Same bedroom. Same bed. Different mornings." }}</p>
+      <a href="#buy" class="ns-lrev__partners-cta">{{ section.settings.partners_cta | default: 'Get one for your partner' }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing Reviews",
+  "settings": [
+    { "type": "text", "id": "rating_text", "label": "Rating line text", "default": "4.8 from 2,300+ verified sleepers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What sleepers are saying" },
+    { "type": "textarea", "id": "review_1_quote", "label": "Review 1 quote", "default": "Third night in, my wife asked what changed. That's the whole review." },
+    { "type": "text", "id": "review_1_name", "label": "Review 1 name", "default": "James W." },
+    { "type": "textarea", "id": "review_2_quote", "label": "Review 2 quote", "default": "Stays on through a full beard. Every other tape peeled off by 2am. This one stays put." },
+    { "type": "text", "id": "review_2_name", "label": "Review 2 name", "default": "Derek R." },
+    { "type": "textarea", "id": "review_3_quote", "label": "Review 3 quote", "default": "I sat on this for two weeks thinking it was gimmicky. Wish I'd stopped overthinking it sooner." },
+    { "type": "text", "id": "review_3_name", "label": "Review 3 name", "default": "Tom H." },
+    { "type": "text", "id": "verified_label", "label": "Verified badge label", "default": "Verified" },
+    { "type": "image_picker", "id": "partners_image", "label": "Partners card image" },
+    { "type": "text", "id": "partners_placeholder", "label": "Partners image placeholder text", "default": "Couple: both sleeping peacefully, same bed" },
+    { "type": "text", "id": "partners_kicker", "label": "Partners kicker", "default": "FOR PARTNERS" },
+    { "type": "text", "id": "partners_heading", "label": "Partners heading", "default": "The cheapest marriage counseling you'll ever buy." },
+    { "type": "textarea", "id": "partners_body", "label": "Partners body", "default": "Most of our orders come from the partner who's had enough. They buy it. He tries it. She sleeps through the night for the first time in years. Same bedroom. Same bed. Different mornings." },
+    { "type": "text", "id": "partners_cta", "label": "Partners CTA label", "default": "Get one for your partner" }
+  ],
+  "presets": [
+    { "name": "Landing Reviews" }
+  ]
+}
+{% endschema %}

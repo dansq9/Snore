@@ -1,0 +1,170 @@
+<style>
+  .ns-lsym {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(32px, 5vw, 64px) clamp(14px, 4vw, 32px) clamp(28px, 4vw, 48px);
+  }
+
+  .ns-lsym__kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: #B27E33;
+    margin-bottom: 14px;
+  }
+
+  .ns-lsym__heading {
+    font-size: clamp(24px, 4.5vw, 36px);
+    letter-spacing: -.02em;
+    font-weight: 800;
+    margin: 0 0 28px;
+    text-wrap: pretty;
+  }
+
+  .ns-lsym__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 14px;
+  }
+
+  .ns-lsym__card {
+    display: flex;
+    gap: 12px;
+    padding: 18px 20px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    border: 1px solid rgba(16, 24, 43, .08);
+  }
+
+  .ns-lsym__marker {
+    font-size: 14px;
+    flex: none;
+    margin-top: 3px;
+    color: #B27E33;
+    font-weight: 800;
+  }
+
+  .ns-lsym__card-text {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: #566072;
+  }
+
+  .ns-lsym__card-title {
+    font-weight: 700;
+    color: #10182B;
+  }
+
+  .ns-lsym__note {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: clamp(15px, 3vw, 17px);
+    line-height: 1.5;
+    color: #566072;
+    margin: 28px 0 0;
+    text-wrap: pretty;
+  }
+</style>
+
+<section class="ns-lsym">
+  <div class="ns-lsym__kicker">{{ section.settings.kicker | default: "SOUND FAMILIAR?" }}</div>
+  <h2 class="ns-lsym__heading">{{ section.settings.heading | default: "If any of these describe your mornings, your mouth is probably open all night." }}</h2>
+  <div class="ns-lsym__grid">
+    <div class="ns-lsym__card">
+      <span class="ns-lsym__marker"> - </span>
+      <div class="ns-lsym__card-text"><span class="ns-lsym__card-title">{{ section.settings.item_1_title | default: "7-8 hours in bed, still exhausted." }}</span> {{ section.settings.item_1_body | default: "The hours are there. The quality isn't." }}</div>
+    </div>
+    <div class="ns-lsym__card">
+      <span class="ns-lsym__marker"> - </span>
+      <div class="ns-lsym__card-text"><span class="ns-lsym__card-title">{{ section.settings.item_2_title | default: "Snoring loud enough to move rooms." }}</span> {{ section.settings.item_2_body | default: "Your partner has mentioned it. More than once." }}</div>
+    </div>
+    <div class="ns-lsym__card">
+      <span class="ns-lsym__marker"> - </span>
+      <div class="ns-lsym__card-text"><span class="ns-lsym__card-title">{{ section.settings.item_3_title | default: "Dry mouth at 3am." }}</span> {{ section.settings.item_3_body | default: "Sandpaper tongue. Reaching for water half-asleep." }}</div>
+    </div>
+    <div class="ns-lsym__card">
+      <span class="ns-lsym__marker"> - </span>
+      <div class="ns-lsym__card-text"><span class="ns-lsym__card-title">{{ section.settings.item_4_title | default: "Coffee-dependent mornings." }}</span> {{ section.settings.item_4_body | default: "You need caffeine to function, not enjoy." }}</div>
+    </div>
+  </div>
+  <p class="ns-lsym__note">{{ section.settings.note | default: "All of these trace back to one thing: your mouth falls open while you sleep and your body can't recover properly. The fix is simpler than you think." }}</p>
+</section>
+
+{% schema %}
+{
+  "name": "Landing Symptoms",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "SOUND FAMILIAR?"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "If any of these describe your mornings, your mouth is probably open all night."
+    },
+    {
+      "type": "text",
+      "id": "item_1_title",
+      "label": "Symptom 1 title",
+      "default": "7-8 hours in bed, still exhausted."
+    },
+    {
+      "type": "text",
+      "id": "item_1_body",
+      "label": "Symptom 1 body",
+      "default": "The hours are there. The quality isn't."
+    },
+    {
+      "type": "text",
+      "id": "item_2_title",
+      "label": "Symptom 2 title",
+      "default": "Snoring loud enough to move rooms."
+    },
+    {
+      "type": "text",
+      "id": "item_2_body",
+      "label": "Symptom 2 body",
+      "default": "Your partner has mentioned it. More than once."
+    },
+    {
+      "type": "text",
+      "id": "item_3_title",
+      "label": "Symptom 3 title",
+      "default": "Dry mouth at 3am."
+    },
+    {
+      "type": "text",
+      "id": "item_3_body",
+      "label": "Symptom 3 body",
+      "default": "Sandpaper tongue. Reaching for water half-asleep."
+    },
+    {
+      "type": "text",
+      "id": "item_4_title",
+      "label": "Symptom 4 title",
+      "default": "Coffee-dependent mornings."
+    },
+    {
+      "type": "text",
+      "id": "item_4_body",
+      "label": "Symptom 4 body",
+      "default": "You need caffeine to function, not enjoy."
+    },
+    {
+      "type": "textarea",
+      "id": "note",
+      "label": "Closing note",
+      "default": "All of these trace back to one thing: your mouth falls open while you sleep and your body can't recover properly. The fix is simpler than you think."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing Symptoms"
+    }
+  ]
+}
+{% endschema %}

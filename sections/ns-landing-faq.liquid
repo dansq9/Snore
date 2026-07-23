@@ -1,0 +1,168 @@
+<style>
+  .ns-lfaq {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(8px, 2vw, 24px) clamp(14px, 4vw, 32px) clamp(40px, 7vw, 72px);
+  }
+
+  .ns-lfaq__kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: #B27E33;
+    margin-bottom: 14px;
+  }
+
+  .ns-lfaq__item {
+    border-bottom: 1px solid rgba(16, 24, 43, .12);
+  }
+
+  .ns-lfaq__item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: clamp(16px, 3vw, 22px) 4px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .ns-lfaq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .ns-lfaq__item summary::marker {
+    content: '';
+  }
+
+  .ns-lfaq__item summary::after {
+    content: '+';
+    font-size: 20px;
+    color: #B27E33;
+    font-weight: 500;
+    flex: none;
+    line-height: 1;
+  }
+
+  .ns-lfaq__item[open] summary::after {
+    content: '\2212';
+  }
+
+  .ns-lfaq__q {
+    font-size: clamp(15px, 3vw, 16.5px);
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .ns-lfaq__a {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: #566072;
+    margin: -6px 0 0;
+    padding: 0 40px 22px 4px;
+    text-wrap: pretty;
+  }
+
+  .ns-lfaq__trust {
+    background: #10182B;
+    padding: clamp(32px, 5vw, 56px) clamp(14px, 4vw, 32px);
+  }
+
+  .ns-lfaq__trust-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: clamp(24px, 4vw, 40px);
+  }
+
+  .ns-lfaq__trust-item {
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .ns-lfaq__trust-icon {
+    margin-bottom: 10px;
+  }
+
+  .ns-lfaq__trust-label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #F2F4F7;
+  }
+</style>
+
+<section class="ns-lfaq">
+  <div class="ns-lfaq__kicker">{{ section.settings.kicker | default: 'COMMON QUESTIONS' }}</div>
+  <div class="ns-lfaq__list">
+    <details class="ns-lfaq__item">
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_1_q | default: 'Is mouth taping safe?' }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_1_a | default: "For healthy adults who can breathe comfortably through their nose, yes. NightSeals uses a gentle, hypoallergenic adhesive and peels off easily. It's not for children, and it's not a treatment for sleep apnea. If you suspect you have it, talk to your doctor first." }}</p>
+    </details>
+    <details class="ns-lfaq__item">
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_2_q | default: 'What if my nose gets congested?' }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_2_a | default: 'Skip that night. Tape is for nights you can breathe freely through your nose. Many sleepers pair NightSeals with a hot shower or nasal rinse before bed during allergy season.' }}</p>
+    </details>
+    <details class="ns-lfaq__item">
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_3_q | default: 'Will it rip off my beard?' }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_3_a | default: 'No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments.' }}</p>
+    </details>
+    <details class="ns-lfaq__item">
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_4_q | default: 'Can I open my mouth if I need to?' }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_4_a | default: "Yes. It's a reminder, not a lock. A gentle yawn or deliberate effort parts your lips easily. It just prevents the unconscious falling-open while you sleep." }}</p>
+    </details>
+    <details class="ns-lfaq__item">
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_5_q | default: "What's the return policy?" }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_5_a | default: "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions. This is not medical advice." }}</p>
+    </details>
+  </div>
+</section>
+
+<section class="ns-lfaq__trust">
+  <div class="ns-lfaq__trust-inner">
+    <div class="ns-lfaq__trust-item">
+      <svg class="ns-lfaq__trust-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 11.5l2 2 4-4"></path></svg>
+      <div class="ns-lfaq__trust-label">{{ section.settings.trust_1_label | default: '30-Day Guarantee' }}</div>
+    </div>
+    <div class="ns-lfaq__trust-item">
+      <svg class="ns-lfaq__trust-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><path d="M16 8h4l3 3v5h-7V8z"></path><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+      <div class="ns-lfaq__trust-label">{{ section.settings.trust_2_label | default: 'Ships in 3-5 Days' }}</div>
+    </div>
+    <div class="ns-lfaq__trust-item">
+      <svg class="ns-lfaq__trust-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 3.8c-3.2-1-11.4 1.6-13.8 9.2l-2.1 7 7-2.1c7.6-2.4 10.2-10.6 9.2-13.8"></path><path d="M6.3 13l4.7 4.7"></path><line x1="2" y1="22" x2="7.5" y2="16.5"></line></svg>
+      <div class="ns-lfaq__trust-label">{{ section.settings.trust_3_label | default: 'Hypoallergenic' }}</div>
+    </div>
+    <div class="ns-lfaq__trust-item">
+      <svg class="ns-lfaq__trust-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      <div class="ns-lfaq__trust-label">{{ section.settings.trust_4_label | default: 'Better Sleep' }}</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing FAQ",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "COMMON QUESTIONS" },
+    { "type": "text", "id": "faq_1_q", "label": "FAQ 1 question", "default": "Is mouth taping safe?" },
+    { "type": "textarea", "id": "faq_1_a", "label": "FAQ 1 answer", "default": "For healthy adults who can breathe comfortably through their nose, yes. NightSeals uses a gentle, hypoallergenic adhesive and peels off easily. It's not for children, and it's not a treatment for sleep apnea. If you suspect you have it, talk to your doctor first." },
+    { "type": "text", "id": "faq_2_q", "label": "FAQ 2 question", "default": "What if my nose gets congested?" },
+    { "type": "textarea", "id": "faq_2_a", "label": "FAQ 2 answer", "default": "Skip that night. Tape is for nights you can breathe freely through your nose. Many sleepers pair NightSeals with a hot shower or nasal rinse before bed during allergy season." },
+    { "type": "text", "id": "faq_3_q", "label": "FAQ 3 question", "default": "Will it rip off my beard?" },
+    { "type": "textarea", "id": "faq_3_a", "label": "FAQ 3 answer", "default": "No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments." },
+    { "type": "text", "id": "faq_4_q", "label": "FAQ 4 question", "default": "Can I open my mouth if I need to?" },
+    { "type": "textarea", "id": "faq_4_a", "label": "FAQ 4 answer", "default": "Yes. It's a reminder, not a lock. A gentle yawn or deliberate effort parts your lips easily. It just prevents the unconscious falling-open while you sleep." },
+    { "type": "text", "id": "faq_5_q", "label": "FAQ 5 question", "default": "What's the return policy?" },
+    { "type": "textarea", "id": "faq_5_a", "label": "FAQ 5 answer", "default": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions. This is not medical advice." },
+    { "type": "text", "id": "trust_1_label", "label": "Trust item 1 label", "default": "30-Day Guarantee" },
+    { "type": "text", "id": "trust_2_label", "label": "Trust item 2 label", "default": "Ships in 3-5 Days" },
+    { "type": "text", "id": "trust_3_label", "label": "Trust item 3 label", "default": "Hypoallergenic" },
+    { "type": "text", "id": "trust_4_label", "label": "Trust item 4 label", "default": "Better Sleep" }
+  ],
+  "presets": [
+    { "name": "Landing FAQ" }
+  ]
+}
+{% endschema %}

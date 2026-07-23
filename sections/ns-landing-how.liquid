@@ -1,0 +1,221 @@
+<style>
+  .ns-lhow {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(40px, 7vw, 88px) clamp(14px, 4vw, 32px) clamp(32px, 5vw, 56px);
+  }
+
+  .ns-lhow__kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: #B27E33;
+    margin-bottom: 14px;
+  }
+
+  .ns-lhow__heading {
+    font-size: clamp(24px, 4.5vw, 36px);
+    letter-spacing: -.02em;
+    font-weight: 800;
+    margin: 0 0 clamp(24px, 4vw, 36px);
+  }
+
+  .ns-lhow__steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    position: relative;
+  }
+
+  .ns-lhow__step {
+    flex: 1;
+    text-align: center;
+  }
+
+  .ns-lhow__marker {
+    width: clamp(44px, 8vw, 56px);
+    height: clamp(44px, 8vw, 56px);
+    border-radius: 50%;
+    background: #10182B;
+    color: #D9A04B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 800;
+    margin: 0 auto clamp(10px, 2vw, 14px);
+  }
+
+  .ns-lhow__step-title {
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .ns-lhow__step-desc {
+    font-size: clamp(12.5px, 2.4vw, 14px);
+    line-height: 1.5;
+    color: #566072;
+    margin: 0;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ns-lhow__connector {
+    flex: none;
+    width: clamp(24px, 5vw, 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: clamp(20px, 3.5vw, 26px);
+  }
+
+  .ns-lhow__connector-line {
+    width: 100%;
+    border-top: 2px dashed rgba(16, 24, 43, .15);
+  }
+
+  .ns-lhow__media-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(8px, 2vw, 24px) clamp(14px, 4vw, 32px) clamp(12px, 2vw, 32px);
+  }
+
+  .ns-lhow__media {
+    height: min(320px, 72vw);
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  .ns-lhow__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ns-lhow__media-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #EAEDF2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8A93A3;
+    font-size: 13px;
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  @media (max-width: 560px) {
+    .ns-lhow__steps {
+      flex-direction: column;
+      gap: clamp(20px, 6vw, 28px);
+    }
+
+    .ns-lhow__connector {
+      display: none;
+    }
+  }
+</style>
+
+<section class="ns-lhow" id="how-it-works">
+  <div class="ns-lhow__kicker">{{ section.settings.kicker | default: "HOW IT WORKS" }}</div>
+  <h2 class="ns-lhow__heading">{{ section.settings.heading | default: "Three seconds. That's the whole routine." }}</h2>
+  <div class="ns-lhow__steps">
+    <div class="ns-lhow__step">
+      <div class="ns-lhow__marker">1</div>
+      <div class="ns-lhow__step-title">{{ section.settings.item_1_title | default: "Peel" }}</div>
+      <p class="ns-lhow__step-desc">{{ section.settings.item_1_body | default: "Separate the backing to expose adhesive" }}</p>
+    </div>
+    <div class="ns-lhow__connector"><div class="ns-lhow__connector-line"></div></div>
+    <div class="ns-lhow__step">
+      <div class="ns-lhow__marker">2</div>
+      <div class="ns-lhow__step-title">{{ section.settings.item_2_title | default: "Apply" }}</div>
+      <p class="ns-lhow__step-desc">{{ section.settings.item_2_body | default: "Press onto dry, pursed lips" }}</p>
+    </div>
+    <div class="ns-lhow__connector"><div class="ns-lhow__connector-line"></div></div>
+    <div class="ns-lhow__step">
+      <div class="ns-lhow__marker">3</div>
+      <div class="ns-lhow__step-title">{{ section.settings.item_3_title | default: "Sleep" }}</div>
+      <p class="ns-lhow__step-desc">{{ section.settings.item_3_body | default: "Wake up without the dry mouth or 3am water runs" }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="ns-lhow__media-section">
+  <div class="ns-lhow__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
+    {%- else -%}
+      <div class="ns-lhow__media-placeholder">Close-up: strip being applied to pursed lips</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NS Landing How",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "HOW IT WORKS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Three seconds. That's the whole routine."
+    },
+    {
+      "type": "text",
+      "id": "item_1_title",
+      "label": "Step 1 title",
+      "default": "Peel"
+    },
+    {
+      "type": "textarea",
+      "id": "item_1_body",
+      "label": "Step 1 body",
+      "default": "Separate the backing to expose adhesive"
+    },
+    {
+      "type": "text",
+      "id": "item_2_title",
+      "label": "Step 2 title",
+      "default": "Apply"
+    },
+    {
+      "type": "textarea",
+      "id": "item_2_body",
+      "label": "Step 2 body",
+      "default": "Press onto dry, pursed lips"
+    },
+    {
+      "type": "text",
+      "id": "item_3_title",
+      "label": "Step 3 title",
+      "default": "Sleep"
+    },
+    {
+      "type": "textarea",
+      "id": "item_3_body",
+      "label": "Step 3 body",
+      "default": "Wake up without the dry mouth or 3am water runs"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Mid lifestyle image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "NS Landing How"
+    }
+  ]
+}
+{% endschema %}
