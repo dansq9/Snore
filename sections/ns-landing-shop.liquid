@@ -14,17 +14,14 @@
   same theme setting the bottom buy block uses — one source of truth for price.
 {%- endcomment -%}
 
-{%- assign product = settings.featured_product -%}
+{%- comment -%} Offer product: a section pick (the limited-time landing offer, e.g. 60 nights / $30) wins; else the store's Main product; else the first product. {%- endcomment -%}
+{%- assign product = section.settings.offer_product -%}
+{%- if product == blank -%}{%- assign product = settings.featured_product -%}{%- endif -%}
 {%- if product == blank -%}{%- assign product = collections.all.products.first -%}{%- endif -%}
-{%- assign promo_code = section.settings.promo_code | default: 'META10' -%}
 {%- assign ns_default_variant = product.variants[1] | default: product.selected_or_first_available_variant -%}
 
-<nav class="ns-lshop__nav">
-  <a href="{{ routes.root_url }}" class="ns-lshop__wordmark">NIGHTSEALS</a>
-</nav>
-
 <div class="ns-lshop__promo">
-  <span class="ns-lshop__promo-text">This page only: {{ section.settings.promo_copy | default: '10% off' }} with code <span class="ns-lshop__promo-code">{{ promo_code }}</span></span>
+  <span class="ns-lshop__promo-text">{{ section.settings.offer_banner | default: 'Limited-time offer — while supplies last' }}</span>
 </div>
 
 <style>
@@ -305,9 +302,8 @@
       </div>
       {%- endif -%}
 
-      <h1 class="ns-lshop__headline">{{ section.settings.headline | default: "Your mouth falls open at night. That's the problem." }}</h1>
-      <p class="ns-lshop__subline">{{ section.settings.subline | default: "One strip seals your lips — your nose takes over, and you wake up different." }}</p>
-      <p class="ns-lshop__audience">{{ section.settings.audience | default: "For men who snore, and the partners who put up with it." }}</p>
+      <h2 class="ns-lshop__headline">{{ section.settings.headline | default: "Start tonight. Wake up different." }}</h2>
+      <p class="ns-lshop__subline">{{ section.settings.subline | default: "Your NightSeals supply at a limited-time price. One strip a night — that's the whole routine." }}</p>
 
       <div class="ns-pdp__pills">
         <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> May reduce snoring</span>
@@ -316,7 +312,7 @@
         <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> 3 seconds a night</span>
       </div>
 
-      <p class="ns-pdp__tier-label" id="tiers">CHOOSE YOUR SUPPLY</p>
+      <p class="ns-pdp__tier-label" id="tiers">{% if product.variants.size == 1 %}{{ section.settings.offer_label | default: 'YOUR LIMITED-TIME OFFER' }}{% else %}CHOOSE YOUR SUPPLY{% endif %}</p>
       {%- if product == blank or product.variants.size == 0 -%}
         <div class="ns-pdp__tiers">
           <div class="ns-pdp__tier ns-pdp__tier--active">
@@ -498,12 +494,12 @@
   "name": "Landing Shop Hero",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "headline", "label": "Headline", "default": "Your mouth falls open at night. That's the problem." },
-    { "type": "textarea", "id": "subline", "label": "Subline", "default": "One strip seals your lips — your nose takes over, and you wake up different." },
-    { "type": "text", "id": "audience", "label": "Audience line", "default": "For men who snore, and the partners who put up with it." },
-    { "type": "text", "id": "promo_code", "label": "Promo code", "default": "META10" },
-    { "type": "text", "id": "promo_copy", "label": "Promo copy", "default": "10% off" },
-    { "type": "paragraph", "content": "Gallery uses the Main product's own images. The pickers below are only a fallback when the product has no images." },
+    { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The limited-time landing offer (e.g. the 60-night $30 product). Falls back to the store's Main product." },
+    { "type": "text", "id": "offer_banner", "label": "Offer banner", "default": "Limited-time offer — while supplies last" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "Start tonight. Wake up different." },
+    { "type": "textarea", "id": "subline", "label": "Subline", "default": "Your NightSeals supply at a limited-time price. One strip a night — that's the whole routine." },
+    { "type": "text", "id": "offer_label", "label": "Single-offer label", "default": "YOUR LIMITED-TIME OFFER" },
+    { "type": "paragraph", "content": "Gallery uses the offer product's own images. The pickers below are only a fallback when the product has no images." },
     { "type": "image_picker", "id": "main_image", "label": "Fallback main image" },
     { "type": "image_picker", "id": "thumb_1", "label": "Fallback thumbnail 1" },
     { "type": "image_picker", "id": "thumb_2", "label": "Fallback thumbnail 2" }
