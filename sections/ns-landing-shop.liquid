@@ -21,7 +21,7 @@
 {%- assign ns_default_variant = product.variants[1] | default: product.selected_or_first_available_variant -%}
 
 <div class="ns-lshop__promo">
-  <span class="ns-lshop__promo-text">{{ section.settings.offer_banner | default: 'Limited-time offer — while supplies last' }}</span>
+  <span class="ns-lshop__promo-text">{{ section.settings.offer_banner | default: 'Limited-time offer · while supplies last' }}</span>
 </div>
 
 <style>
@@ -303,7 +303,7 @@
       {%- endif -%}
 
       <h2 class="ns-lshop__headline">{{ section.settings.headline | default: "Start tonight. Wake up different." }}</h2>
-      <p class="ns-lshop__subline">{{ section.settings.subline | default: "Your NightSeals supply at a limited-time price. One strip a night — that's the whole routine." }}</p>
+      <p class="ns-lshop__subline">{{ section.settings.subline | default: "Your NightSeals supply at a limited-time price. One strip a night. That's the whole routine." }}</p>
 
       <div class="ns-pdp__pills">
         <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> May reduce snoring</span>
@@ -495,9 +495,9 @@
   "tag": "section",
   "settings": [
     { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The limited-time landing offer (e.g. the 60-night $30 product). Falls back to the store's Main product." },
-    { "type": "text", "id": "offer_banner", "label": "Offer banner", "default": "Limited-time offer — while supplies last" },
+    { "type": "text", "id": "offer_banner", "label": "Offer banner", "default": "Limited-time offer · while supplies last" },
     { "type": "text", "id": "headline", "label": "Headline", "default": "Start tonight. Wake up different." },
-    { "type": "textarea", "id": "subline", "label": "Subline", "default": "Your NightSeals supply at a limited-time price. One strip a night — that's the whole routine." },
+    { "type": "textarea", "id": "subline", "label": "Subline", "default": "Your NightSeals supply at a limited-time price. One strip a night. That's the whole routine." },
     { "type": "text", "id": "offer_label", "label": "Single-offer label", "default": "YOUR LIMITED-TIME OFFER" },
     { "type": "paragraph", "content": "Gallery uses the offer product's own images. The pickers below are only a fallback when the product has no images." },
     { "type": "image_picker", "id": "main_image", "label": "Fallback main image" },
