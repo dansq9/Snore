@@ -9,46 +9,346 @@
  */
 {
   "sections": {
-    "hero": { "type": "ns-landing-hero", "settings": {} },
+    "hero": {
+      "type": "ns-landing-hero",
+      "settings": {
+        "badge_text": "2,300+ five-star sleepers",
+        "heading": "Your mouth falls open at night. That's the problem.",
+        "subheading": "You can't feel it happen, but it's why you wake up tired and snoring. The fix takes 3 seconds.",
+        "check_1": "Less snoring, quieter nights",
+        "check_2": "No more 3am dry mouth",
+        "check_3": "Stays put all night · drug-free",
+        "cta_text": "Try NightSeals risk-free →",
+        "cta_url": "",
+        "audience_line": "For those who snore, and the partners who put up with it.",
+        "trust_line": "30-night money-back guarantee · Drug-free",
+        "hero_image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_23_50_PM.png"
+      }
+    },
     "proof": {
       "type": "ns-proof-stats",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": "8 in 10", "description": "reported less snoring" } },
-        "s2": { "type": "stat", "settings": { "number": "3 in 4", "description": "said their partner slept better too" } },
-        "s3": { "type": "stat", "settings": { "number": "4 in 5", "description": "were still taping after 30 nights" } }
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "8 in 10",
+            "description": "reported less snoring"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "3 in 4",
+            "description": "said their partner slept better too"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "4 in 5",
+            "description": "were still taping after 30 nights"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3"],
-      "settings": {}
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "kicker": "PROOF",
+        "heading": "The results speak for themselves",
+        "subtitle": "In a recent survey of mouth tape users, here's what they told us.",
+        "footnote": "*Based on a recent self-reported survey of mouth tape users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure, or prevent any disease."
+      }
     },
-    "symptoms": { "type": "ns-landing-symptoms", "settings": {} },
-    "problem": { "type": "ns-landing-problem", "settings": {} },
-    "nasal_compare": { "type": "ns-landing-nasal-compare", "settings": {} },
-    "nasal_fix": { "type": "ns-landing-nasal-fix", "settings": {} },
-    "how": { "type": "ns-landing-how", "settings": {} },
-    "timeline": { "type": "ns-timeline", "settings": { "nights": 60 } },
-    "shop": { "type": "ns-landing-shop", "settings": {} },
+    "quiz_cta": {
+      "type": "ns-quiz-cta",
+      "settings": {
+        "kicker": "Not sure where to start?",
+        "heading": "Take the 2-minute sleep assessment",
+        "body": "Answer a few quick questions and get a personalized plan for quieter, more restful nights.",
+        "meta": "Free · No email needed · Results in 2 minutes",
+        "cta_text": "Start the sleep quiz →",
+        "quiz_url": ""
+      }
+    },
+    "symptoms": {
+      "type": "ns-landing-symptoms",
+      "settings": {
+        "kicker": "SOUND FAMILIAR?",
+        "heading": "If any of these describe your mornings, your mouth is probably open all night.",
+        "item_1_title": "7-8 hours in bed, still exhausted.",
+        "item_1_body": "The hours are there. The quality isn't.",
+        "item_2_title": "Snoring loud enough to move rooms.",
+        "item_2_body": "Your partner has mentioned it. More than once.",
+        "item_3_title": "Dry mouth at 3am.",
+        "item_3_body": "Sandpaper tongue. Reaching for water half-asleep.",
+        "item_4_title": "Coffee-dependent mornings.",
+        "item_4_body": "You need caffeine to function, not enjoy.",
+        "note": "All of these trace back to one thing: your mouth falls open while you sleep and your body can't recover properly. The fix is simpler than you think."
+      }
+    },
+    "problem": {
+      "type": "ns-landing-problem",
+      "settings": {
+        "kicker": "THE PROBLEM",
+        "heading": "What mouth breathing does to you every single night",
+        "item_1_title": "Dries your airway",
+        "item_1_body": "Hours of open-mouth airflow strips moisture from your throat, tongue and gums. You wake up parched, breath rough, tongue like cardboard.",
+        "item_2_title": "Triggers snoring",
+        "item_2_body": "An open mouth can narrow the airway and set soft tissue vibrating. That's the noise that exiles you to the guest room.",
+        "item_3_title": "Fragments your sleep",
+        "item_3_body": "Your nose filters, warms and humidifies every breath. Bypass it all night and you wake tired no matter how long you slept.",
+        "fix_label": "The fix:",
+        "fix_body": "Keep your lips sealed and let your nose do the job it was built for. One strip, three seconds, every night."
+      }
+    },
+    "nasal_compare": {
+      "type": "ns-landing-nasal-compare",
+      "settings": {
+        "heading": "This is what nasal breathing does",
+        "subheading": "One small strip. A completely different morning.",
+        "before_label": "Mouth Breather",
+        "before_placeholder": "Mouth open, snoring, restless partner",
+        "after_label": "Nasal Breather",
+        "after_placeholder": "Mouth sealed, quiet, both sleeping through"
+      }
+    },
+    "nasal_fix": {
+      "type": "ns-landing-nasal-fix",
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_25_PM.png",
+        "image_placeholder": "Calm nasal breather, taped, sleeping soundly",
+        "heading": "Nasal breathing fixes all of it",
+        "body": "Your nose filters, warms and humidifies every breath before it reaches your lungs, and it slows your breathing into a calmer, deeper rhythm. It's how your body is built to sleep. The moment your mouth falls open, all of that stops, and the snoring, dry mouth and restless nights follow.",
+        "fix": "The fix is simple: keep your mouth gently closed at night and breathe through your nose. NightSeals is the easiest way to make sure you do, while you sleep.",
+        "cta_text": "Become a nasal breather →",
+        "cta_url": ""
+      }
+    },
+    "how": {
+      "type": "ns-landing-how",
+      "settings": {
+        "kicker": "HOW IT WORKS",
+        "heading": "Three seconds. That's the whole routine.",
+        "item_1_title": "Peel",
+        "item_1_body": "Separate the backing to expose adhesive",
+        "item_2_title": "Apply",
+        "item_2_body": "Press onto dry, pursed lips",
+        "item_3_title": "Sleep",
+        "item_3_body": "Wake up without the dry mouth or 3am water runs"
+      }
+    },
+    "timeline": {
+      "type": "ns-timeline",
+      "settings": { "nights": 60 }
+    },
+    "shop": {
+      "type": "ns-landing-shop",
+      "settings": {
+        "offer_product": "nightseals-60-nights",
+        "offer_banner": "Limited-time offer · while supplies last",
+        "headline": "Start tonight. Wake up different.",
+        "subline": "Your NightSeals supply at a limited-time price. One strip a night. That's the whole routine.",
+        "offer_label": "YOUR LIMITED-TIME OFFER",
+        "secondary_cta": "Learn more",
+        "fab_label": "Save 40%"
+      }
+    },
     "reviews_carousel": {
       "type": "ns-reviews-carousel",
       "blocks": {
-        "r1": { "type": "image_review", "settings": { "caption": "Slept through the night", "reviewer": "Mike · Night 41" } },
-        "r2": { "type": "text_review", "settings": { "quote": "Third night in, my wife asked what changed. That's the whole review.", "name": "James W." } },
-        "r3": { "type": "image_review", "settings": { "caption": "Dry mouth, gone", "reviewer": "Rob · Night 12" } },
-        "r4": { "type": "text_review", "settings": { "quote": "I was nervous about taping my mouth shut. Took two nights to forget it was there.", "name": "Priya N." } },
-        "r5": { "type": "image_review", "settings": { "caption": "Partner approved", "reviewer": "Elise · Night 30" } },
-        "r6": { "type": "text_review", "settings": { "quote": "It's the cheapest thing in my sleep stack and the one that works.", "name": "Alex D." } },
-        "r7": { "type": "image_review", "settings": { "caption": "Total reset", "reviewer": "Dan · Night 58" } }
+        "r1": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_04_36_AM.png",
+            "caption": "Slept through the night",
+            "reviewer": "Mike · Night 41"
+          }
+        },
+        "r2": {
+          "type": "text_review",
+          "settings": {
+            "quote": "Third night in, my wife asked what changed. That's the whole review.",
+            "name": "James W."
+          }
+        },
+        "r3": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_18_41_AM.png",
+            "caption": "Dry mouth, gone",
+            "reviewer": "Rob · Night 12"
+          }
+        },
+        "r4": {
+          "type": "text_review",
+          "settings": {
+            "quote": "I was nervous about taping my mouth shut. Took two nights to forget it was there.",
+            "name": "Priya N."
+          }
+        },
+        "r5": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_12_26_AM.png",
+            "caption": "Partner approved",
+            "reviewer": "Elise · Night 30"
+          }
+        },
+        "r6": {
+          "type": "text_review",
+          "settings": {
+            "quote": "It's the cheapest thing in my sleep stack and the one that works.",
+            "name": "Alex D."
+          }
+        },
+        "r7": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_10_44_AM.png",
+            "caption": "Total reset",
+            "reviewer": "Dan · Night 58"
+          }
+        }
       },
-      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6", "r7"],
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "r7"
+      ],
       "settings": {}
     },
-    "comparison": { "type": "ns-landing-comparison", "settings": {} },
-    "materials": { "type": "ns-landing-materials", "settings": {} },
-    "expectations": { "type": "ns-landing-expectations", "settings": {} },
-    "partners": { "type": "ns-landing-reviews", "settings": {} },
-    "launch_offer": { "type": "ns-landing-launch-offer", "settings": {} },
-    "quiz_cta": { "type": "ns-quiz-cta", "settings": {} },
-    "faq": { "type": "ns-landing-faq", "settings": {} },
-    "buy": { "type": "ns-landing-buy", "settings": {} }
+    "comparison": {
+      "type": "ns-landing-comparison",
+      "settings": {
+        "kicker": "NIGHTSEALS VS. DOING NOTHING",
+        "heading": "Two ways to spend the next 60 nights",
+        "cta_label": "Try NightSeals risk-free"
+      }
+    },
+    "materials": {
+      "type": "ns-landing-materials",
+      "settings": {
+        "q_kicker": "THE #1 QUESTION",
+        "q_heading": "\"What if I can't breathe?\"",
+        "q_body": "Fair question. Short answer: you're not sealed shut. NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your survival instincts will always win. If your nose is congested, just skip that night.",
+        "check_1": "You're never sealed shut: a light effort parts your lips",
+        "check_2": "Your survival reflexes always override it",
+        "check_3": "Nose blocked tonight? Just skip that night",
+        "check_4": "Ease in with a lighter seal until it feels natural",
+        "mat_kicker": "WHY IT WORKS",
+        "mat_heading": "How one small strip changes the whole night",
+        "mat_intro": "It isn't the tape doing the work. It's what happens the moment your mouth stays closed and every breath goes through your nose.",
+        "item_1_ph": "Partner sleeping soundly, undisturbed",
+        "item_1_title": "Quieter nights",
+        "item_1_body": "Snoring is the sound of air fighting past an open mouth. Close it, breathe through your nose, and the racket settles, so the person beside you finally sleeps through.",
+        "item_2_ph": "Waking up rested and clear at sunrise",
+        "item_2_title": "Clear-headed mornings",
+        "item_2_body": "Nose breathing is slower, deeper and calmer than gasping through your mouth. Give your body a full night of it and you wake up sharp instead of foggy.",
+        "item_3_ph": "Untouched glass of water on the nightstand",
+        "item_3_title": "No more 3am dry mouth",
+        "item_3_body": "An open mouth dries out all night. Sealed and breathing through your nose, you skip the 2am water grab and the sandpaper throat, and wake up fresh.",
+        "item_4_ph": "Close-up of the NightSeals strip on soft fabric",
+        "item_4_title": "Barely there",
+        "item_4_body": "Soft, breathable fabric and a skin-safe, latex-free adhesive. It holds over a beard, peels off clean, and by night two you'll forget it's on."
+      }
+    },
+    "expectations": {
+      "type": "ns-landing-expectations",
+      "settings": {
+        "kicker": "YOUR FIRST 30 NIGHTS",
+        "heading": "What to expect when you start",
+        "card_1_night": "NIGHT 1-3",
+        "card_1_title": "You'll notice it's there",
+        "card_1_body": "That's normal. Most people are surprised how gentle it feels. Some wake up with less dry mouth as early as night one.",
+        "card_2_night": "NIGHT 7",
+        "card_2_title": "A habit is forming",
+        "card_2_body": "Nasal breathing starts to feel natural. Snoring noticeably reducing. Your partner may comment before you notice yourself.",
+        "card_3_night": "NIGHT 21-30",
+        "card_3_title": "A different baseline",
+        "card_3_body": "Deeper sleep. Less brain fog. More energy in the morning. This is your sleep now, not a temporary fix.",
+        "offer_lead": "Tired of",
+        "offer_head": "waking up exhausted?",
+        "offer_body": "Mouth breathing dries your airway, triggers snoring, and fragments your sleep. NightSeals keeps your lips sealed so your nose can do its job. One strip. Three seconds. Every night.",
+        "offer_pill_1": "Beard-proof",
+        "offer_pill_2": "Hypoallergenic",
+        "offer_pill_3": "No residue",
+        "offer_cta": "Try NightSeals from $0.56/night →",
+        "offer_note": "30-night money-back guarantee"
+      }
+    },
+    "partners": {
+      "type": "ns-landing-reviews",
+      "settings": {
+        "rating_text": "4.8 from 2,300+ verified sleepers",
+        "heading": "What sleepers are saying",
+        "review_1_quote": "Third night in, my wife asked what changed. That's the whole review.",
+        "review_1_name": "James W.",
+        "review_2_quote": "Stays on through a full beard. Every other tape peeled off by 2am. This one stays put.",
+        "review_2_name": "Derek R.",
+        "review_3_quote": "I sat on this for two weeks thinking it was gimmicky. Wish I'd stopped overthinking it sooner.",
+        "review_3_name": "Tom H.",
+        "verified_label": "Verified",
+        "partners_placeholder": "Couple: both sleeping peacefully, same bed",
+        "partners_kicker": "FOR PARTNERS",
+        "partners_heading": "The cheapest marriage counseling you'll ever buy.",
+        "partners_body": "Most of our orders come from the partner who's had enough. They buy it. He tries it. She sleeps through the night for the first time in years. Same bedroom. Same bed. Different mornings.",
+        "partners_cta": "Get one for your partner"
+      }
+    },
+    "launch_offer": {
+      "type": "ns-landing-launch-offer",
+      "settings": {
+        "offer_product": "",
+        "pill": "Launch pricing · limited time",
+        "discount_line": "40% OFF",
+        "product_line": "your 60-night supply",
+        "body": "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time.",
+        "check_1": "30-night money-back guarantee",
+        "check_2": "Latex-free, skin-safe",
+        "check_3": "Beard-proof, drug-free",
+        "check_4": "No subscription, ever",
+        "cta_text": "Claim 40% off →",
+        "note": "Join thousands sleeping quieter every night."
+      }
+    },
+    "faq": {
+      "type": "ns-landing-faq",
+      "settings": {
+        "kicker": "GOT QUESTIONS?",
+        "heading": "Frequently asked questions",
+        "subheading": "Everything you need to know before your first night.",
+        "faq_1_q": "What is NightSeals and how does it work?",
+        "faq_1_a": "NightSeals is a gentle strip you place over your lips before bed so they stay lightly sealed and you breathe through your nose all night. One strip, three seconds. Your nose filters, warms and humidifies the air the way it's meant to, so you snore less and wake up less parched.",
+        "faq_2_q": "Is it safe to sleep with mouth tape?",
+        "faq_2_a": "For healthy adults who can breathe comfortably through their nose, yes. NightSeals uses a gentle, hypoallergenic adhesive and peels off easily. It's not for children, and it's not a treatment for sleep apnea. If you suspect you have a breathing disorder, talk to your doctor first.",
+        "faq_3_q": "Will it fall off during the night?",
+        "faq_3_a": "It's built to stay put for a full 7-8 hours. The strip flexes with your face as you move, so it stays sealed whether you sleep on your back or your side, then peels off cleanly in the morning.",
+        "faq_4_q": "What if I need to breathe through my mouth or sip water?",
+        "faq_4_a": "It's a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily, and you can peel it off in a second if you need to. It only stops the unconscious mouth-falling-open while you sleep.",
+        "faq_5_q": "Does it work with a beard or facial hair?",
+        "faq_5_a": "Yes. The adhesive is engineered to grip and release cleanly even through a full beard or stubble. No painful pull in the morning, no residue left behind.",
+        "faq_6_q": "What are the benefits of nasal breathing during sleep?",
+        "faq_6_a": "Your nose filters, warms and humidifies every breath and helps you take slower, deeper ones. Sleepers who switch from mouth to nasal breathing commonly report less snoring, less 3am dry mouth, and waking up more rested. (General wellness information, not medical advice.)",
+        "faq_7_q": "How long until I notice a difference?",
+        "faq_7_a": "Most people feel less dry mouth the very first morning. Snoring and sleep quality usually improve over the first week or two as nasal breathing becomes your default. Give it 30 nights to become a habit.",
+        "faq_8_q": "What's the return policy?",
+        "faq_8_a": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions."
+      }
+    },
+    "buy": {
+      "type": "ns-landing-buy",
+      "settings": {
+        "offer_product": "",
+        "heading": "The NightSeals Guarantee"
+      }
+    }
   },
   "order": [
     "hero",
