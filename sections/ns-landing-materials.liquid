@@ -1,3 +1,10 @@
+{%- comment -%}
+  ns-landing-materials — objection handler + benefit-led "why it works" grid.
+  Block 1: the #1 breathing objection, with breathing/safety reassurance.
+  Block 2: reframed from a materials-only spec grid to a problem->benefit
+  grid (quieter nights / rested mornings / no dry mouth), with a single
+  material-based card. Efficacy hedged for compliance.
+{%- endcomment -%}
 <style>
   .ns-lmat__q-section {
     max-width: 860px;
@@ -89,22 +96,28 @@
 
   .ns-lmat__mat-intro {
     font-size: 15px;
+    line-height: 1.6;
     color: #566072;
     margin: 0 0 28px;
+    max-width: 60ch;
+    text-wrap: pretty;
   }
 
   .ns-lmat__mat-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: clamp(14px, 3vw, 20px);
+  }
+  @media (max-width: 560px) {
+    .ns-lmat__mat-grid { grid-template-columns: 1fr; }
   }
 
   .ns-lmat__card {
     background: #FFFFFF;
     border: 1px solid rgba(16, 24, 43, .08);
     border-radius: 18px;
-    padding: clamp(20px, 3.5vw, 26px);
-    text-align: center;
+    padding: clamp(22px, 3.5vw, 28px);
+    text-align: left;
   }
 
   .ns-lmat__card-icon {
@@ -115,19 +128,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 14px;
+    margin: 0 0 16px;
   }
 
   .ns-lmat__card-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.01em;
+    margin-bottom: 6px;
   }
 
   .ns-lmat__card-body {
-    font-size: 13px;
+    font-size: 13.5px;
     color: #566072;
-    line-height: 1.5;
+    line-height: 1.55;
+    text-wrap: pretty;
   }
 </style>
 
@@ -139,33 +154,38 @@
       <p class="ns-lmat__q-body">{{ section.settings.q_body | default: "Fair question. Short answer: you're not sealed shut. NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your survival instincts will always win. If your nose is congested, just skip that night." }}</p>
     </div>
     <div class="ns-lmat__checks">
-      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_1 | default: "Hypoallergenic, latex-free adhesive" }}</span></div>
-      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_2 | default: "Peels off cleanly with zero residue" }}</span></div>
-      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_3 | default: "Soft, breathable woven fabric" }}</span></div>
-      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_4 | default: "Beard-proof hold, skin-safe removal" }}</span></div>
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_1 | default: "You're never sealed shut &mdash; a light effort parts your lips" }}</span></div>
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_2 | default: "Your survival reflexes always override it" }}</span></div>
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_3 | default: "Nose blocked tonight? Just skip that night" }}</span></div>
+      <div class="ns-lmat__check"><span class="ns-lmat__check-icon">&#10003;</span><span class="ns-lmat__check-text">{{ section.settings.check_4 | default: "Ease in with a lighter seal until it feels natural" }}</span></div>
     </div>
   </div>
 </section>
 
 <section class="ns-lmat__mat-section">
-  <div class="ns-lmat__mat-kicker">{{ section.settings.mat_kicker | default: "WHAT'S ON YOUR LIPS" }}</div>
-  <h2 class="ns-lmat__mat-heading">{{ section.settings.mat_heading | default: "You wear it 8 hours a night. Know what it's made of." }}</h2>
-  <p class="ns-lmat__mat-intro">{{ section.settings.mat_intro | default: "Every strip is made from just two things:" }}</p>
+  <div class="ns-lmat__mat-kicker">{{ section.settings.mat_kicker | default: "WHY IT WORKS" }}</div>
+  <h2 class="ns-lmat__mat-heading">{{ section.settings.mat_heading | default: "How one small strip changes the whole night" }}</h2>
+  <p class="ns-lmat__mat-intro">{{ section.settings.mat_intro | default: "It's not the tape doing the work &mdash; it's what your body does once your mouth stays closed and you breathe through your nose." }}</p>
   <div class="ns-lmat__mat-grid">
     <div class="ns-lmat__card">
-      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 3.8c-3.2-1-11.4 1.6-13.8 9.2l-2.1 7 7-2.1c7.6-2.4 10.2-10.6 9.2-13.8"></path><path d="M6.3 13l4.7 4.7"></path><line x1="2" y1="22" x2="7.5" y2="16.5"></line></svg></div>
-      <div class="ns-lmat__card-title">{{ section.settings.item_1_title | default: "Soft woven fabric" }}</div>
-      <div class="ns-lmat__card-body">{{ section.settings.item_1_body | default: "Breathable, flexible, latex-free. Moves with your face all night." }}</div>
+      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg></div>
+      <div class="ns-lmat__card-title">{{ section.settings.item_1_title | default: "Quieter nights" }}</div>
+      <div class="ns-lmat__card-body">{{ section.settings.item_1_body | default: "Most snoring is air rushing past a slack, open mouth. Keep it gently closed and that vibration tends to settle &mdash; so you, and whoever sleeps next to you, get quieter nights." }}</div>
     </div>
     <div class="ns-lmat__card">
-      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 11.5l2 2 4-4"></path></svg></div>
-      <div class="ns-lmat__card-title">{{ section.settings.item_2_title | default: "Skin-safe adhesive" }}</div>
-      <div class="ns-lmat__card-body">{{ section.settings.item_2_body | default: "Hypoallergenic acrylic. Holds all night, peels clean. No residue." }}</div>
+      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="9" x2="12" y2="2"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="8 6 12 2 16 6"></polyline></svg></div>
+      <div class="ns-lmat__card-title">{{ section.settings.item_2_title | default: "Mornings without the fog" }}</div>
+      <div class="ns-lmat__card-body">{{ section.settings.item_2_body | default: "Nose breathing is slower and deeper than mouth breathing, which helps your body settle into steadier rest. Most people notice they wake up less groggy." }}</div>
     </div>
     <div class="ns-lmat__card">
-      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 12l3 3 5-5"></path></svg></div>
-      <div class="ns-lmat__card-title">{{ section.settings.item_3_title | default: "Simple, nothing else" }}</div>
-      <div class="ns-lmat__card-body">{{ section.settings.item_3_body | default: "No fragrances, no dyes, no BPA. Just tape that does its job." }}</div>
+      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7l5.5 5.5a7.8 7.8 0 1 1-11 0z"></path></svg></div>
+      <div class="ns-lmat__card-title">{{ section.settings.item_3_title | default: "No more 3am dry mouth" }}</div>
+      <div class="ns-lmat__card-body">{{ section.settings.item_3_body | default: "With your mouth closed, the air stops drying you out. Fewer middle-of-the-night water runs, and far less of that sandpaper throat at sunrise." }}</div>
+    </div>
+    <div class="ns-lmat__card">
+      <div class="ns-lmat__card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg></div>
+      <div class="ns-lmat__card-title">{{ section.settings.item_4_title | default: "Gentle enough to forget" }}</div>
+      <div class="ns-lmat__card-body">{{ section.settings.item_4_body | default: "Soft woven fabric and a hypoallergenic, latex-free adhesive. It holds over a beard, peels off clean with no residue, and most people forget it's on by night two." }}</div>
     </div>
   </div>
 </section>
@@ -196,79 +216,91 @@
       "type": "text",
       "id": "check_1",
       "label": "Checkmark 1",
-      "default": "Hypoallergenic, latex-free adhesive"
+      "default": "You're never sealed shut — a light effort parts your lips"
     },
     {
       "type": "text",
       "id": "check_2",
       "label": "Checkmark 2",
-      "default": "Peels off cleanly with zero residue"
+      "default": "Your survival reflexes always override it"
     },
     {
       "type": "text",
       "id": "check_3",
       "label": "Checkmark 3",
-      "default": "Soft, breathable woven fabric"
+      "default": "Nose blocked tonight? Just skip that night"
     },
     {
       "type": "text",
       "id": "check_4",
       "label": "Checkmark 4",
-      "default": "Beard-proof hold, skin-safe removal"
+      "default": "Ease in with a lighter seal until it feels natural"
     },
     {
       "type": "text",
       "id": "mat_kicker",
-      "label": "Materials kicker",
-      "default": "WHAT'S ON YOUR LIPS"
+      "label": "Grid kicker",
+      "default": "WHY IT WORKS"
     },
     {
       "type": "text",
       "id": "mat_heading",
-      "label": "Materials heading",
-      "default": "You wear it 8 hours a night. Know what it's made of."
+      "label": "Grid heading",
+      "default": "How one small strip changes the whole night"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "mat_intro",
-      "label": "Materials intro",
-      "default": "Every strip is made from just two things:"
+      "label": "Grid intro",
+      "default": "It's not the tape doing the work — it's what your body does once your mouth stays closed and you breathe through your nose."
     },
     {
       "type": "text",
       "id": "item_1_title",
-      "label": "Material 1 title",
-      "default": "Soft woven fabric"
+      "label": "Card 1 title",
+      "default": "Quieter nights"
     },
     {
       "type": "textarea",
       "id": "item_1_body",
-      "label": "Material 1 body",
-      "default": "Breathable, flexible, latex-free. Moves with your face all night."
+      "label": "Card 1 body",
+      "default": "Most snoring is air rushing past a slack, open mouth. Keep it gently closed and that vibration tends to settle — so you, and whoever sleeps next to you, get quieter nights."
     },
     {
       "type": "text",
       "id": "item_2_title",
-      "label": "Material 2 title",
-      "default": "Skin-safe adhesive"
+      "label": "Card 2 title",
+      "default": "Mornings without the fog"
     },
     {
       "type": "textarea",
       "id": "item_2_body",
-      "label": "Material 2 body",
-      "default": "Hypoallergenic acrylic. Holds all night, peels clean. No residue."
+      "label": "Card 2 body",
+      "default": "Nose breathing is slower and deeper than mouth breathing, which helps your body settle into steadier rest. Most people notice they wake up less groggy."
     },
     {
       "type": "text",
       "id": "item_3_title",
-      "label": "Material 3 title",
-      "default": "Simple, nothing else"
+      "label": "Card 3 title",
+      "default": "No more 3am dry mouth"
     },
     {
       "type": "textarea",
       "id": "item_3_body",
-      "label": "Material 3 body",
-      "default": "No fragrances, no dyes, no BPA. Just tape that does its job."
+      "label": "Card 3 body",
+      "default": "With your mouth closed, the air stops drying you out. Fewer middle-of-the-night water runs, and far less of that sandpaper throat at sunrise."
+    },
+    {
+      "type": "text",
+      "id": "item_4_title",
+      "label": "Card 4 title (material)",
+      "default": "Gentle enough to forget"
+    },
+    {
+      "type": "textarea",
+      "id": "item_4_body",
+      "label": "Card 4 body (material)",
+      "default": "Soft woven fabric and a hypoallergenic, latex-free adhesive. It holds over a beard, peels off clean with no residue, and most people forget it's on by night two."
     }
   ],
   "presets": [
