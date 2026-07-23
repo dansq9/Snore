@@ -624,11 +624,27 @@
       <div class="ns-pdp__tiers">
         {% for variant in product.variants %}
           {%- assign sp_alloc = variant.selling_plan_allocations.first -%}
+          {%- comment -%} Per-night = variant price ÷ nights (parsed from the title, e.g. "90 Nights"); metafield wins if set {%- endcomment -%}
+          {%- assign nights_count = variant.title | split: ' ' | first | plus: 0 -%}
+          {%- assign per_night_label = '' -%}
+          {%- if variant.metafields.custom.per_night != blank -%}
+            {%- assign per_night_label = variant.metafields.custom.per_night | append: ' / night' -%}
+          {%- elsif nights_count > 0 -%}
+            {%- assign per_night_cents = variant.price | times: 1.0 | divided_by: nights_count | round -%}
+            {%- assign per_night_label = per_night_cents | money | append: ' / night' -%}
+          {%- endif -%}
+          {%- assign sub_per_night_label = '' -%}
+          {%- if sp_alloc and nights_count > 0 -%}
+            {%- assign sub_per_night_cents = sp_alloc.price | times: 1.0 | divided_by: nights_count | round -%}
+            {%- assign sub_per_night_label = sub_per_night_cents | money | append: ' / night' -%}
+          {%- endif -%}
           <div
             class="ns-pdp__tier{% if variant.id == ns_default_variant.id %} ns-pdp__tier--active{% endif %}"
             data-variant-id="{{ variant.id }}"
             data-variant-price="{{ variant.price | money }}"
-            {%- if sp_alloc %} data-sub-plan="{{ sp_alloc.selling_plan_id }}" data-sub-price="{{ sp_alloc.price | money }}"{% endif -%}
+            data-per-night="{{ per_night_label }}"
+            {%- if nights_count > 0 %} data-nights="{{ nights_count }}"{% endif -%}
+            {%- if sp_alloc %} data-sub-plan="{{ sp_alloc.selling_plan_id }}" data-sub-price="{{ sp_alloc.price | money }}" data-sub-per-night="{{ sub_per_night_label }}"{% endif -%}
           >
             {%- if forloop.index == 2 -%}
               <span class="ns-pdp__tier-badge ns-pdp__tier-badge--popular">MOST POPULAR</span>
@@ -642,11 +658,7 @@
               </div>
               <div>
                 <p class="ns-pdp__tier-title">{{ variant.title }}</p>
-                <p class="ns-pdp__tier-per-night">
-                  {%- if variant.metafields.custom.per_night -%}
-                    {{ variant.metafields.custom.per_night }} / night
-                  {%- endif -%}
-                </p>
+                <p class="ns-pdp__tier-per-night">{{ per_night_label }}</p>
               </div>
             </div>
 
@@ -759,15 +771,26 @@
       return (isSubscribe && sub) ? sub : tier.getAttribute('data-variant-price');
     }
 
+    function tierPerNight(tier) {
+      if (!tier) return '';
+      var sub = tier.getAttribute('data-sub-per-night');
+      var one = tier.getAttribute('data-per-night');
+      return (isSubscribe && sub) ? sub : (one || '');
+    }
+
     /* Reflect one-time / subscribe pricing across the tier cards + CTA */
     function refresh() {
       tiers.forEach(function (tier) {
         var el = tier.querySelector('.ns-pdp__tier-price');
         if (el) el.textContent = tierPrice(tier);
+        var pn = tier.querySelector('.ns-pdp__tier-per-night');
+        if (pn) pn.textContent = tierPerNight(tier);
       });
       if (buyBtn) {
         buyBtn.textContent = (isSubscribe ? 'Subscribe · ' : 'Buy now · ') + tierPrice(activeTier());
       }
+      /* Let the floating buy bar mirror the current selection */
+      document.dispatchEvent(new CustomEvent('ns:selection'));
     }
 
     /* ── Tier card selection ── */
