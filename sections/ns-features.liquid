@@ -102,12 +102,17 @@
     </div>
 
     <div class="ns-features__media">
-      {%- if section.settings.feature_image != blank -%}
+      {%- comment -%} Uses the section image if set, else falls back to a product-catalog image {%- endcomment -%}
+      {%- assign feat_img = section.settings.feature_image -%}
+      {%- if feat_img == blank and product != blank -%}
+        {%- assign feat_img = product.images[2] | default: product.featured_image -%}
+      {%- endif -%}
+      {%- if feat_img != blank -%}
         <img
-          src="{{ section.settings.feature_image | image_url: width: 1100 }}"
-          alt="{{ section.settings.feature_image.alt | escape }}"
+          src="{{ feat_img | image_url: width: 1100 }}"
+          alt="{{ feat_img.alt | escape }}"
           width="1100"
-          height="{{ 1100 | divided_by: section.settings.feature_image.aspect_ratio | round }}"
+          height="{{ 1100 | divided_by: feat_img.aspect_ratio | round }}"
           loading="lazy"
         >
       {%- endif -%}

@@ -156,9 +156,15 @@
       {%- if block.type == 'image_review' -%}
         <div class="ns-reviews-carousel__card--image" {{ block.shopify_attributes }}>
           <div class="ns-reviews-carousel__image-area">
-            {%- if block.settings.image -%}
+            {%- comment -%} Uses the block image if set, else cycles through product-catalog images {%- endcomment -%}
+            {%- assign tile_img = block.settings.image -%}
+            {%- if tile_img == blank and product != blank and product.images.size > 0 -%}
+              {%- assign tile_idx = forloop.index0 | modulo: product.images.size -%}
+              {%- assign tile_img = product.images[tile_idx] -%}
+            {%- endif -%}
+            {%- if tile_img != blank -%}
               <img
-                src="{{ block.settings.image | image_url: width: 600 }}"
+                src="{{ tile_img | image_url: width: 600 }}"
                 alt="{{ block.settings.caption | escape }}"
                 loading="lazy"
                 width="300"
