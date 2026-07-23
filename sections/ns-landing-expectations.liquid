@@ -242,23 +242,12 @@
   </div>
 </section>
 
-<section class="ns-lexp__offers">
-  <div class="ns-lexp__band">
-    <div class="ns-lexp__band-main">
-      <div class="ns-lexp__offer-title"><span class="ns-lexp__offer-title-thin">{{ section.settings.offer_lead | default: 'Tired of' }}</span> {{ section.settings.offer_head | default: 'waking up exhausted?' }}</div>
-      <p class="ns-lexp__band-body">{{ section.settings.offer_body | default: 'Mouth breathing dries your airway, triggers snoring, and fragments your sleep. NightSeals keeps your lips sealed so your nose can do its job. One strip. Three seconds. Every night.' }}</p>
-      <div class="ns-lexp__pills">
-        <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_1 | default: 'Beard-proof' }}</span>
-        <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_2 | default: 'Hypoallergenic' }}</span>
-        <span class="ns-lexp__pill"><span class="ns-lexp__pill-check">✓</span>{{ section.settings.offer_pill_3 | default: 'No residue' }}</span>
-      </div>
-    </div>
-    <div class="ns-lexp__band-action">
-      <a href="#buy" class="ns-lexp__cta ns-lexp__cta--gold">{{ section.settings.offer_cta | default: 'Try NightSeals — from $0.56/night →' }}</a>
-      <div class="ns-lexp__band-note">{{ section.settings.offer_note | default: '30-night money-back guarantee' }}</div>
-    </div>
-  </div>
-</section>
+{%- comment -%}
+  Offer band removed: its body restated the "problem" section verbatim
+  (dries airway / triggers snoring / fragments sleep) and repeated the
+  benefit pills + a duplicate #buy CTA. This section now shows only the
+  "your first 30 nights" timeline cards.
+{%- endcomment -%}
 
 {% schema %}
 {

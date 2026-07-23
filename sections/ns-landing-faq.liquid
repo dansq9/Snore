@@ -110,36 +110,17 @@
       <p class="ns-lfaq__a">{{ section.settings.faq_3_a | default: 'No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments.' }}</p>
     </details>
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_4_q | default: 'Can I open my mouth if I need to?' }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_4_a | default: "Yes. It's a reminder, not a lock. A gentle yawn or deliberate effort parts your lips easily. It just prevents the unconscious falling-open while you sleep." }}</p>
-    </details>
-    <details class="ns-lfaq__item">
       <summary><span class="ns-lfaq__q">{{ section.settings.faq_5_q | default: "What's the return policy?" }}</span></summary>
       <p class="ns-lfaq__a">{{ section.settings.faq_5_a | default: "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions. This is not medical advice." }}</p>
     </details>
   </div>
 </section>
 
-<section class="ns-lfaq__trust">
-  <div class="ns-lfaq__trust-inner">
-    <div class="ns-lfaq__trust-item">
-      <svg class="ns-lfaq__trust-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 11.5l2 2 4-4"></path></svg>
-      <div class="ns-lfaq__trust-label">{{ section.settings.trust_1_label | default: '30-Night Guarantee' }}</div>
-    </div>
-    <div class="ns-lfaq__trust-item">
-      <svg class="ns-lfaq__trust-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><path d="M16 8h4l3 3v5h-7V8z"></path><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-      <div class="ns-lfaq__trust-label">{{ section.settings.trust_2_label | default: 'Ships in 3-5 Days' }}</div>
-    </div>
-    <div class="ns-lfaq__trust-item">
-      <svg class="ns-lfaq__trust-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.2 3.8c-3.2-1-11.4 1.6-13.8 9.2l-2.1 7 7-2.1c7.6-2.4 10.2-10.6 9.2-13.8"></path><path d="M6.3 13l4.7 4.7"></path><line x1="2" y1="22" x2="7.5" y2="16.5"></line></svg>
-      <div class="ns-lfaq__trust-label">{{ section.settings.trust_3_label | default: 'Hypoallergenic' }}</div>
-    </div>
-    <div class="ns-lfaq__trust-item">
-      <svg class="ns-lfaq__trust-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      <div class="ns-lfaq__trust-label">{{ section.settings.trust_4_label | default: 'Better Sleep' }}</div>
-    </div>
-  </div>
-</section>
+{%- comment -%}
+  Trust bar removed: 30-night guarantee / ships 3-5 / hypoallergenic / better
+  sleep duplicated the product-hero trust line and the buy-section trust line,
+  and added another navy block right before the navy buy closer.
+{%- endcomment -%}
 
 {% schema %}
 {

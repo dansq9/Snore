@@ -9,30 +9,43 @@
  */
 {
   "sections": {
-    "hero": { "type": "ns-landing-hero", "settings": {} },
+    "producthero": { "type": "ns-landing-shop", "settings": {} },
     "symptoms": { "type": "ns-landing-symptoms", "settings": {} },
     "problem": { "type": "ns-landing-problem", "settings": {} },
     "how": { "type": "ns-landing-how", "settings": {} },
+    "reviews_carousel": {
+      "type": "ns-reviews-carousel",
+      "blocks": {
+        "r1": { "type": "image_review", "settings": { "caption": "Slept through the night", "reviewer": "Mike · Night 41" } },
+        "r2": { "type": "text_review", "settings": { "quote": "Third night in, my wife asked what changed. That's the whole review.", "name": "James W." } },
+        "r3": { "type": "image_review", "settings": { "caption": "Dry mouth, gone", "reviewer": "Rob · Night 12" } },
+        "r4": { "type": "text_review", "settings": { "quote": "I was nervous about taping my mouth shut. Took two nights to forget it was there.", "name": "Priya N." } },
+        "r5": { "type": "image_review", "settings": { "caption": "Partner approved", "reviewer": "Elise · Night 30" } },
+        "r6": { "type": "text_review", "settings": { "quote": "It's the cheapest thing in my sleep stack and the one that works.", "name": "Alex D." } },
+        "r7": { "type": "image_review", "settings": { "caption": "Total reset", "reviewer": "Dan · Night 90" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6", "r7"],
+      "settings": {}
+    },
     "quiz_cta": { "type": "ns-quiz-cta", "settings": {} },
-    "reviews": { "type": "ns-landing-reviews", "settings": {} },
     "comparison": { "type": "ns-landing-comparison", "settings": {} },
     "materials": { "type": "ns-landing-materials", "settings": {} },
-    "journey": { "type": "ns-landing-journey", "settings": {} },
     "expectations": { "type": "ns-landing-expectations", "settings": {} },
+    "partners": { "type": "ns-landing-reviews", "settings": {} },
     "faq": { "type": "ns-landing-faq", "settings": {} },
     "buy": { "type": "ns-landing-buy", "settings": {} }
   },
   "order": [
-    "hero",
+    "producthero",
     "symptoms",
     "problem",
     "how",
+    "reviews_carousel",
     "quiz_cta",
-    "reviews",
     "comparison",
     "materials",
-    "journey",
     "expectations",
+    "partners",
     "faq",
     "buy"
   ]

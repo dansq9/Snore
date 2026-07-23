@@ -1,3 +1,5 @@
+{%- comment -%} On a page template the ambient product is nil; resolve it so the image tiles can fall back to catalog images (mirrors ns-landing-buy). {%- endcomment -%}
+{%- if product == blank -%}{%- assign product = settings.featured_product | default: collections.all.products.first -%}{%- endif -%}
 <style>
   .ns-reviews-carousel {
     padding: clamp(52px, 9vw, 88px) 0;
@@ -144,7 +146,7 @@
   }
 </style>
 
-<section class="ns-reviews-carousel">
+<section class="ns-reviews-carousel" id="reviews">
   <div class="ns-reviews-carousel__header">
     <p class="ns-reviews-carousel__kicker">REVIEWS</p>
     <h2 class="ns-reviews-carousel__heading">2,300+ verified reviews and counting</h2>
