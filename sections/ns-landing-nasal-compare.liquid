@@ -95,7 +95,7 @@
         {%- if section.settings.before_image != blank -%}
           {{ section.settings.before_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.before_label }}
         {%- else -%}
-          <div class="ns-nasalcmp__ph">{{ section.settings.before_placeholder | default: 'Mouth open, snoring — restless partner' }}</div>
+          <div class="ns-nasalcmp__ph">{{ section.settings.before_placeholder | default: 'Mouth open, snoring, restless partner' }}</div>
         {%- endif -%}
       </div>
     </div>
@@ -106,7 +106,7 @@
         {%- if section.settings.after_image != blank -%}
           {{ section.settings.after_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.after_label }}
         {%- else -%}
-          <div class="ns-nasalcmp__ph">{{ section.settings.after_placeholder | default: 'Mouth sealed, quiet — both sleeping through' }}</div>
+          <div class="ns-nasalcmp__ph">{{ section.settings.after_placeholder | default: 'Mouth sealed, quiet, both sleeping through' }}</div>
         {%- endif -%}
       </div>
     </div>
@@ -122,10 +122,10 @@
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "One small strip. A completely different morning." },
     { "type": "text", "id": "before_label", "label": "Before label", "default": "Mouth Breather" },
     { "type": "image_picker", "id": "before_image", "label": "Before image (mouth breather)" },
-    { "type": "text", "id": "before_placeholder", "label": "Before placeholder text", "default": "Mouth open, snoring — restless partner" },
+    { "type": "text", "id": "before_placeholder", "label": "Before placeholder text", "default": "Mouth open, snoring, restless partner" },
     { "type": "text", "id": "after_label", "label": "After label", "default": "Nasal Breather" },
     { "type": "image_picker", "id": "after_image", "label": "After image (nasal breather)" },
-    { "type": "text", "id": "after_placeholder", "label": "After placeholder text", "default": "Mouth sealed, quiet — both sleeping through" }
+    { "type": "text", "id": "after_placeholder", "label": "After placeholder text", "default": "Mouth sealed, quiet, both sleeping through" }
   ],
   "presets": [
     { "name": "Nasal Breathing Compare" }

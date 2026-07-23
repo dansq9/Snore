@@ -114,7 +114,7 @@
       {%- endif -%}
     </div>
 
-    <span class="ns-launch__pill">{{ section.settings.pill | default: 'Launch pricing — limited time' }}</span>
+    <span class="ns-launch__pill">{{ section.settings.pill | default: 'Launch pricing · limited time' }}</span>
 
     <p class="ns-launch__discount">{{ section.settings.discount_line | default: '40% OFF' }}<span class="ns-launch__discount-sub">{{ section.settings.product_line | default: 'your 60-night supply' }}</span></p>
 
@@ -139,7 +139,7 @@
   "settings": [
     { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The limited-time SKU. Powers the CTA link and the fallback image. Falls back to the Main product / bundled pouch." },
     { "type": "image_picker", "id": "image", "label": "Product image (transparent background)" },
-    { "type": "text", "id": "pill", "label": "Pill text", "default": "Launch pricing — limited time" },
+    { "type": "text", "id": "pill", "label": "Pill text", "default": "Launch pricing · limited time" },
     { "type": "text", "id": "discount_line", "label": "Discount line", "default": "40% OFF" },
     { "type": "text", "id": "product_line", "label": "Product line", "default": "your 60-night supply" },
     { "type": "textarea", "id": "body", "label": "Body", "default": "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time." },
