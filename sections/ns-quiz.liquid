@@ -1,0 +1,452 @@
+{%- comment -%}
+  ns-quiz — NightSeals Sleep Quiz funnel (paid-traffic, standalone).
+  One section owns the whole page: minimal navy bar + wordmark, amber progress
+  bar, the 12-screen flow, and the wellness disclaimer footer. Navigation,
+  scoring, personalization and tracking live in assets/ns-quiz.js (no deps).
+
+  NOTE FOR OWNER: this template (page.quiz) still inherits the store header /
+  footer from layout/theme.liquid, which only suppresses chrome for the
+  'landing' suffix. Extend that check to also match 'quiz' so this page renders
+  standalone (see the reported owner tasks).
+
+  Compliance: education is mechanism-only about mouth taping in general. No
+  clinical-study claims, no percentages, no "X% of users" stats. No em-dashes.
+{%- endcomment -%}
+
+{%- liquid
+  assign promo_code = section.settings.promo_code | default: 'QUIZ20'
+  assign promo_copy = section.settings.promo_copy | default: '20% off your first order'
+  assign review_name = section.settings.review_name | default: 'Mark T.'
+  assign review_quote = section.settings.review_quote | default: 'I was skeptical, but after one night I slept straight through to 6am for the first time in years. My wife says the snoring is completely gone.'
+  assign cta_product = section.settings.cta_product
+
+  assign nm_parts = review_name | strip | split: ' '
+-%}
+{%- capture review_initials -%}{%- for p in nm_parts limit: 2 -%}{{ p | slice: 0, 1 | upcase }}{%- endfor -%}{%- endcapture -%}
+{%- liquid
+  assign ns_per_night = '$0.56'
+  assign ns_rating = '4.8'
+  assign ns_rating_count = '2,341'
+  assign ns_product_title = 'NightSeals Mouth Tape'
+  assign ns_cta_href = ''
+
+  if cta_product != blank
+    assign ns_product_title = cta_product.title
+
+    assign r = cta_product.metafields.reviews.rating.value
+    if r != blank
+      assign ns_rating = r
+    endif
+    if cta_product.metafields.reviews.rating_count != blank
+      assign ns_rating_count = cta_product.metafields.reviews.rating_count
+    endif
+
+    assign ns_cheapest = cta_product.variants | sort: 'price' | first
+    if ns_cheapest.metafields.custom.per_night != blank
+      assign ns_per_night = ns_cheapest.metafields.custom.per_night
+    else
+      assign ns_nights = ns_cheapest.title | split: ' ' | first | plus: 0
+      if ns_nights > 0
+        assign ns_pnc = ns_cheapest.price | times: 1.0 | divided_by: ns_nights | round
+        assign ns_per_night = ns_pnc | money
+      endif
+    endif
+
+    assign ns_variant = cta_product.variants.first
+    assign ns_target = cta_product.url
+    if ns_variant != blank
+      assign ns_target = cta_product.url | append: '?variant=' | append: ns_variant.id
+    endif
+    assign ns_target_enc = ns_target | url_encode
+    assign ns_cta_href = '/discount/' | append: promo_code | append: '?redirect=' | append: ns_target_enc
+  endif
+
+  if ns_cta_href == blank
+    capture ns_shop_url
+      render 'shop-url'
+    endcapture
+    assign ns_cta_href = ns_shop_url | strip
+  endif
+-%}
+
+<div class="nsq-root">
+  <nav class="nsq-nav"><span class="nsq-wordmark">NIGHTSEALS</span></nav>
+  <div class="nsq-progress"><div class="nsq-progress-fill" id="nsq-progress-fill" style="width:0%"></div></div>
+
+  <main class="nsq-main">
+
+    {%- comment -%} 1 — INTRO {%- endcomment -%}
+    <section class="nsq-screen" id="nsq-intro" data-screen="intro">
+      <div class="nsq-fade">
+        <div class="nsq-hero">
+          <div class="nsq-hero-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </div>
+          <div class="nsq-kicker nsq-kicker--amber">THE 2-MINUTE SLEEP QUIZ</div>
+          <h1 class="nsq-hero-h1">Let's find out what's wrecking your sleep.</h1>
+          <p class="nsq-hero-sub">Seven questions to find the root cause, and the fix that matches it.</p>
+          <button type="button" class="nsq-btn-amber nsq-btn-amber--pulse" id="nsq-start">Start my sleep assessment</button>
+          <div class="nsq-hero-note">No email needed · Results in 2 minutes</div>
+        </div>
+        <div class="nsq-review">
+          <div class="nsq-review-head">
+            <div class="nsq-review-avatar">{{ review_initials | default: 'MT' }}</div>
+            <div>
+              <div class="nsq-review-name">{{ review_name }}</div>
+              <div class="nsq-review-meta">Verified buyer · <span class="nsq-stars-amber">★★★★★</span></div>
+            </div>
+          </div>
+          <p class="nsq-review-quote">"{{ review_quote }}"</p>
+        </div>
+        <div class="nsq-trust">
+          <span>★ 4.8 rated</span><span>·</span><span>2,300+ verified sleepers</span><span>·</span><span>30-night guarantee</span>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} 2-10 — QUESTION (single data-driven screen) {%- endcomment -%}
+    <section class="nsq-screen" id="nsq-question" data-screen="question" hidden>
+      <div class="nsq-fade" style="padding-top:6px">
+        <div class="nsq-q-topbar">
+          <button type="button" class="nsq-back" id="nsq-back" hidden><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>Back</button>
+          <span class="nsq-q-count">QUESTION <span id="nsq-qnum">1</span> / 7</span>
+        </div>
+        <h2 class="nsq-q-title" id="nsq-qtitle"></h2>
+        <div class="nsq-q-options" id="nsq-qoptions"></div>
+        <div class="nsq-q-note" id="nsq-qnote" hidden>
+          <svg style="flex:none;margin-top:2px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B27E33" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+          <div class="nsq-q-note-text"><span class="nsq-q-note-lead">Why we ask: </span><span id="nsq-qnote-text"></span></div>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} 6 — INTERSTITIAL: snoring mechanism {%- endcomment -%}
+    <section class="nsq-screen" id="nsq-stat" data-screen="stat" hidden>
+      <div class="nsq-fade" style="padding-top:12px">
+        <div class="nsq-navycard" style="margin-bottom:20px">
+          <div class="nsq-kicker nsq-kicker--amber">QUICK CONTEXT</div>
+          <h2 class="nsq-navycard-h2">Snoring is a mouth-breathing sound.</h2>
+          <div class="nsq-mechlist">
+            <div class="nsq-mechrow"><span class="nsq-mechnum">01</span><span class="nsq-mechtext"><strong>Your jaw drops open</strong> as your muscles relax at night.</span></div>
+            <div class="nsq-mechrow"><span class="nsq-mechnum">02</span><span class="nsq-mechtext"><strong>The airway narrows</strong> and air rushes past soft tissue.</span></div>
+            <div class="nsq-mechrow nsq-mechrow--last"><span class="nsq-mechnum">03</span><span class="nsq-mechtext"><strong>That tissue vibrates.</strong> The vibration is the snore itself.</span></div>
+          </div>
+          <p class="nsq-navycard-serif">Keep the mouth sealed and air takes the nasal route instead. That is the whole idea behind mouth taping.</p>
+        </div>
+        <div style="text-align:center">
+          <button type="button" class="nsq-btn-amber nsq-cont" data-next-qi="4">Got it, continue →</button>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} 8 — INTERSTITIAL: hidden cause {%- endcomment -%}
+    <section class="nsq-screen" id="nsq-info" data-screen="info" hidden>
+      <div class="nsq-fade" style="padding-top:8px">
+        <div class="nsq-navycard" style="margin-bottom:14px">
+          <div class="nsq-kicker nsq-kicker--amber">WHAT'S GOING ON</div>
+          <h2 class="nsq-navycard-h2" style="margin-bottom:12px">The hidden cause of bad sleep</h2>
+          <p class="nsq-info-body">Your answers so far point at one pattern: <strong>nighttime mouth breathing</strong>. When the mouth falls open, airway resistance goes up, and your body has a harder time settling into deep, restorative sleep.</p>
+          <div class="nsq-info-box">
+            <div class="nsq-info-box-label">MOUTH BREATHING AT NIGHT TENDS TO COME WITH</div>
+            <div class="nsq-info-bullets">
+              <div class="nsq-bullet"><span class="nsq-bullet-dot"></span><span>Snoring, from soft-tissue vibration</span></div>
+              <div class="nsq-bullet"><span class="nsq-bullet-dot"></span><span>Dry mouth and rough mornings</span></div>
+              <div class="nsq-bullet"><span class="nsq-bullet-dot"></span><span>Lighter, more fragmented sleep</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <button type="button" class="nsq-btn-amber nsq-cont" data-next-qi="5">Continue →</button>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} 11 — ANALYZING {%- endcomment -%}
+    <section class="nsq-screen" id="nsq-analyzing" data-screen="analyzing" hidden>
+      <div class="nsq-fade" style="padding-top:44px;text-align:center">
+        <div class="nsq-spinner">
+          <div class="nsq-spinner-ring"></div>
+          <div class="nsq-spinner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10182B" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></div>
+        </div>
+        <h2 class="nsq-analyzing-h2">Analyzing your sleep profile…</h2>
+        <div class="nsq-analyze-list" id="nsq-analyze-list">
+          <div class="nsq-arow" data-index="0"><span class="nsq-acircle">✓</span><span class="nsq-alabel">Reviewing your sleep patterns</span></div>
+          <div class="nsq-arow" data-index="1"><span class="nsq-acircle">✓</span><span class="nsq-alabel">Analyzing your breathing habits</span></div>
+          <div class="nsq-arow" data-index="2"><span class="nsq-acircle">✓</span><span class="nsq-alabel">Scoring your sleep disruption</span></div>
+          <div class="nsq-arow nsq-arow--last" data-index="3"><span class="nsq-acircle">✓</span><span class="nsq-alabel">Building your profile</span></div>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} 12a — RESULTS 1 of 2: profile summary {%- endcomment -%}
+    <section class="nsq-screen" id="nsq-results" data-screen="results" hidden>
+      <div class="nsq-fade">
+        <div class="nsq-results-head">
+          <div class="nsq-kicker nsq-kicker--amber">YOUR RESULTS · 1 OF 2</div>
+          <h2 class="nsq-results-h2">Summary of your sleep profile</h2>
+        </div>
+        <div class="nsq-card">
+          <div class="nsq-level-row">
+            <div>
+              <div class="nsq-level-title">Level of sleep disruption</div>
+              <div class="nsq-level-sub">Based on your 7 answers</div>
+            </div>
+            <span class="nsq-level-pill" id="nsq-level-pill">LOW</span>
+          </div>
+          <div class="nsq-meter">
+            <div class="nsq-meter-tick" style="left:25%"></div>
+            <div class="nsq-meter-tick" style="left:50%"></div>
+            <div class="nsq-meter-tick" style="left:75%"></div>
+            <div class="nsq-meter-marker" id="nsq-meter-marker" style="left:12%"></div>
+          </div>
+          <div class="nsq-meter-labels"><span>LOW</span><span>NORMAL</span><span>MEDIUM</span><span>HIGH</span></div>
+          <div class="nsq-verdict">
+            <div class="nsq-verdict-head">
+              <span class="nsq-verdict-dot" id="nsq-verdict-dot"></span>
+              <div class="nsq-verdict-title">Sleep profile: <span id="nsq-verdict-title"></span></div>
+            </div>
+            <p class="nsq-verdict-body" id="nsq-verdict-body"></p>
+            <div class="nsq-subcards">
+              <div class="nsq-subcard">
+                <div class="nsq-subcard-head"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B27E33" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"></path></svg><span class="nsq-subcard-label">PRIMARY SYMPTOM</span></div>
+                <div class="nsq-subcard-value" id="nsq-primary-symptom"></div>
+              </div>
+              <div class="nsq-subcard">
+                <div class="nsq-subcard-head"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B27E33" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"></path><path d="M17 6h6v6"></path></svg><span class="nsq-subcard-label">ROOM FOR IMPROVEMENT</span></div>
+                <div class="nsq-subcard-value" id="nsq-room-improve"></div>
+              </div>
+              <div class="nsq-subcard">
+                <div class="nsq-subcard-head"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B27E33" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg><span class="nsq-subcard-label">ENERGY IMPACT</span></div>
+                <div class="nsq-subcard-value" id="nsq-energy-impact"></div>
+              </div>
+              <div class="nsq-subcard">
+                <div class="nsq-subcard-head"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B27E33" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span class="nsq-subcard-label">QUALITY OF LIFE IMPACT</span></div>
+                <div class="nsq-subcard-value" id="nsq-qol-impact"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <button type="button" class="nsq-btn-amber nsq-btn-amber--pulse" id="nsq-to-solution">See my personalized plan →</button>
+          <div class="nsq-results-foot">The good news: this is fixable, starting tonight.</div>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%} 12b — RESULTS 2 of 2: the plan {%- endcomment -%}
+    <section class="nsq-screen" id="nsq-solution" data-screen="solution" hidden>
+      <div class="nsq-fade">
+        <div class="nsq-sol-topbar">
+          <button type="button" class="nsq-back" id="nsq-back-results"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>My profile</button>
+          <span class="nsq-q-count">YOUR RESULTS · 2 OF 2</span>
+        </div>
+        <div class="nsq-sol-head">
+          <h2 class="nsq-results-h2" style="margin-bottom:8px">Your plan: one strip a night.</h2>
+          <p class="nsq-sol-sub">Matched to the profile you just described.</p>
+        </div>
+        <div class="nsq-chips" id="nsq-chips"></div>
+
+        {%- render 'ns-90-night-chart' -%}
+
+        <div class="nsq-product">
+          <div class="nsq-product-media">
+            {%- if cta_product != blank and cta_product.featured_image != blank -%}
+              {{ cta_product.featured_image | image_url: width: 700 | image_tag: alt: cta_product.title, class: 'nsq-pouch-img', loading: 'lazy' }}
+            {%- else -%}
+              <img src="{{ 'nightseals-pouch-nobg.png' | asset_url }}" alt="NightSeals pouch" class="nsq-pouch-img" loading="lazy" width="700" height="700">
+            {%- endif -%}
+          </div>
+          <div class="nsq-product-body">
+            <div class="nsq-product-titlerow">
+              <div class="nsq-product-title">{{ ns_product_title }}</div>
+              <div class="nsq-product-price">from {{ ns_per_night }}<span class="nsq-product-price-unit">/night</span></div>
+            </div>
+            <div class="nsq-product-rating"><span class="nsq-stars-amber">★★★★★</span> {{ ns_rating }} · {{ ns_rating_count }} reviews</div>
+            <div class="nsq-fixlist" id="nsq-fixlist"></div>
+            <div class="nsq-promo">
+              <div>
+                <div class="nsq-promo-eyebrow">QUIZ-TAKERS ONLY</div>
+                <div class="nsq-promo-copy">{{ promo_copy }}</div>
+              </div>
+              <div class="nsq-promo-code">{{ promo_code }}</div>
+            </div>
+            <a href="{{ ns_cta_href }}" class="nsq-product-cta" id="nsq-cta">Start my 90 nights →</a>
+            <div class="nsq-product-guarantee">30-night money-back guarantee · Free shipping $50+ · Ships in 3-5 days</div>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div><button type="button" class="nsq-retake" id="nsq-restart">Retake the quiz</button></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="nsq-disclaimer">NightSeals is a general wellness product, not a medical device. This quiz is not medical advice.</footer>
+</div>
+
+<style>
+  .nsq-root { min-height: 100vh; display: flex; flex-direction: column; width: 100%; background: #F7F8FA; color: #10182B; font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .nsq-root *, .nsq-root *::before, .nsq-root *::after { box-sizing: border-box; }
+  .nsq-root [hidden] { display: none !important; }
+
+  @keyframes nsq-fadein { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes nsq-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+  @keyframes nsq-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes nsq-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  .nsq-nav { background: #10182B; padding: 15px 20px; display: flex; align-items: center; justify-content: center; }
+  .nsq-wordmark { font-weight: 800; font-size: 15px; letter-spacing: .16em; color: #F2F4F7; }
+  .nsq-progress { height: 4px; background: rgba(16,24,43,.08); }
+  .nsq-progress-fill { height: 100%; background: linear-gradient(90deg,#B27E33,#D9A04B); width: 0%; transition: width .4s ease; }
+
+  .nsq-main { width: 100%; max-width: 600px; margin: 0 auto; padding: clamp(18px,4vw,28px) clamp(14px,4vw,20px) 56px; flex: 1; }
+  .nsq-fade { animation: nsq-fadein .4s ease; }
+  .nsq-disclaimer { text-align: center; padding: 0 20px 28px; font-size: 11px; color: #8A93A3; line-height: 1.5; }
+
+  .nsq-kicker { font-size: 11px; letter-spacing: .26em; font-weight: 800; margin-bottom: 14px; }
+  .nsq-kicker--amber { color: #D9A04B; }
+
+  /* Intro */
+  .nsq-hero { background: #10182B; color: #F2F4F7; border-radius: 26px; padding: clamp(28px,7vw,44px) clamp(20px,5vw,36px); text-align: center; box-shadow: 0 24px 48px -20px rgba(16,24,43,.5); }
+  .nsq-hero-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(217,160,75,.14); border: 1px solid rgba(217,160,75,.35); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; animation: nsq-float 4s ease-in-out infinite; }
+  .nsq-hero-h1 { font-size: clamp(27px,7.5vw,40px); line-height: 1.08; letter-spacing: -.03em; font-weight: 800; margin: 0 0 14px; text-wrap: pretty; }
+  .nsq-hero-sub { font-family: 'Newsreader', serif; font-style: italic; font-size: clamp(16px,4vw,18px); line-height: 1.5; color: rgba(242,244,247,.65); margin: 0 auto 26px; max-width: 400px; }
+  .nsq-hero-note { margin-top: 16px; font-size: 12px; color: rgba(242,244,247,.5); font-weight: 600; }
+
+  .nsq-btn-amber { display: inline-block; background: #D9A04B; color: #10182B; border: none; padding: 17px clamp(28px,8vw,40px); border-radius: 999px; font-size: 16px; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 10px 24px -8px rgba(217,160,75,.6); transition: background .2s ease, transform .1s ease; text-decoration: none; }
+  .nsq-btn-amber:hover { background: #E5B267; color: #10182B; }
+  .nsq-btn-amber:active { transform: scale(.98); }
+  .nsq-btn-amber--pulse { animation: nsq-pulse 3s ease-in-out infinite; }
+
+  .nsq-review { background: #FFFFFF; border: 1px solid rgba(16,24,43,.1); border-radius: 20px; padding: 20px 22px; margin: 16px 0 0; box-shadow: 0 10px 24px -16px rgba(16,24,43,.18); }
+  .nsq-review-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .nsq-review-avatar { width: 38px; height: 38px; border-radius: 50%; background: #EAEDF2; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #10182B; flex: none; }
+  .nsq-review-name { font-size: 13px; font-weight: 800; }
+  .nsq-review-meta { font-size: 11.5px; color: #8A93A3; font-weight: 600; }
+  .nsq-stars-amber { color: #B27E33; letter-spacing: 1px; }
+  .nsq-review-quote { font-family: 'Newsreader', serif; font-style: italic; font-size: 15.5px; line-height: 1.55; color: #10182B; margin: 0; }
+  .nsq-trust { display: flex; justify-content: center; gap: 8px 18px; margin-top: 16px; font-size: 11.5px; font-weight: 700; color: #8A93A3; flex-wrap: wrap; text-align: center; }
+
+  /* Question */
+  .nsq-q-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; min-height: 24px; }
+  .nsq-back { background: none; border: none; padding: 4px 0; font-family: inherit; font-size: 13px; font-weight: 700; color: #8A93A3; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+  .nsq-back:hover { color: #10182B; }
+  .nsq-q-count { font-size: 11px; letter-spacing: .22em; font-weight: 800; color: #B27E33; margin-left: auto; white-space: nowrap; }
+  .nsq-q-title { font-size: clamp(22px,6vw,30px); line-height: 1.15; letter-spacing: -.025em; font-weight: 800; margin: 0 0 22px; text-wrap: pretty; }
+  .nsq-q-options { display: flex; flex-direction: column; gap: 11px; }
+  .nsq-opt { width: 100%; display: flex; align-items: center; gap: 13px; text-align: left; background: #FFFFFF; border: 1.5px solid rgba(16,24,43,.12); border-radius: 16px; padding: 15px 16px; min-height: 56px; font-size: 15px; font-weight: 600; color: #10182B; font-family: inherit; line-height: 1.4; cursor: pointer; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease, transform .1s ease; box-shadow: 0 2px 6px -2px rgba(16,24,43,.06); }
+  .nsq-opt:hover { border-color: #D9A04B; background: #FDF8F0; box-shadow: 0 8px 18px -8px rgba(217,160,75,.45); }
+  .nsq-opt:active { transform: scale(.985); }
+  .nsq-opt.is-selected { border-color: #D9A04B; background: #FDF8F0; box-shadow: 0 8px 18px -8px rgba(217,160,75,.45); }
+  .nsq-opt-chip { flex: none; width: 30px; height: 30px; border-radius: 9px; background: rgba(217,160,75,.12); border: 1px solid rgba(217,160,75,.35); color: #B27E33; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  .nsq-q-note { margin-top: 18px; display: flex; gap: 12px; background: rgba(217,160,75,.08); border: 1px solid rgba(217,160,75,.35); border-radius: 16px; padding: 15px 16px; }
+  .nsq-q-note-text { font-size: 13px; line-height: 1.55; color: #566072; }
+  .nsq-q-note-lead { font-weight: 800; color: #B27E33; }
+
+  /* Navy interstitial cards */
+  .nsq-navycard { background: #10182B; color: #F2F4F7; border-radius: 26px; padding: clamp(24px,6vw,36px); box-shadow: 0 24px 48px -20px rgba(16,24,43,.5); }
+  .nsq-navycard-h2 { font-size: clamp(22px,6vw,29px); line-height: 1.12; letter-spacing: -.025em; font-weight: 800; margin: 0 0 16px; text-wrap: pretty; }
+  .nsq-navycard-serif { font-family: 'Newsreader', serif; font-style: italic; font-size: 15px; line-height: 1.5; color: rgba(242,244,247,.6); margin: 14px 0 0; }
+  .nsq-mechlist { display: flex; flex-direction: column; }
+  .nsq-mechrow { display: flex; gap: 14px; padding: 13px 0; border-bottom: 1px solid rgba(242,244,247,.1); }
+  .nsq-mechrow--last { border-bottom: none; }
+  .nsq-mechnum { font-family: ui-monospace, Menlo, monospace; font-size: 12px; color: #D9A04B; font-weight: 700; flex: none; padding-top: 2px; }
+  .nsq-mechtext { font-size: 14.5px; line-height: 1.55; color: rgba(242,244,247,.75); }
+  .nsq-mechtext strong { color: #F2F4F7; font-weight: 700; }
+  .nsq-info-body { font-size: 15px; line-height: 1.6; color: rgba(242,244,247,.68); margin: 0 0 18px; }
+  .nsq-info-body strong { color: #F2F4F7; font-weight: 700; }
+  .nsq-info-box { background: rgba(242,244,247,.06); border: 1px solid rgba(242,244,247,.12); border-radius: 18px; padding: 16px 18px; }
+  .nsq-info-box-label { font-size: 10.5px; letter-spacing: .2em; font-weight: 800; color: #D9A04B; margin-bottom: 10px; line-height: 1.5; }
+  .nsq-info-bullets { display: flex; flex-direction: column; gap: 9px; font-size: 14px; font-weight: 600; }
+  .nsq-bullet { display: flex; gap: 10px; align-items: center; }
+  .nsq-bullet-dot { flex: none; width: 5px; height: 5px; border-radius: 50%; background: #D9A04B; }
+
+  /* Analyzing */
+  .nsq-spinner { position: relative; width: 76px; height: 76px; margin: 0 auto 24px; }
+  .nsq-spinner-ring { position: absolute; inset: 0; border-radius: 50%; border: 3px solid rgba(217,160,75,.18); border-top-color: #D9A04B; animation: nsq-spin 1s linear infinite; }
+  .nsq-spinner-icon { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .nsq-analyzing-h2 { font-size: clamp(21px,6vw,27px); letter-spacing: -.02em; font-weight: 800; margin: 0 0 26px; }
+  .nsq-analyze-list { display: flex; flex-direction: column; max-width: 360px; margin: 0 auto; text-align: left; background: #FFFFFF; border: 1px solid rgba(16,24,43,.1); border-radius: 20px; padding: 8px 20px; box-shadow: 0 10px 24px -16px rgba(16,24,43,.18); }
+  .nsq-arow { display: flex; align-items: center; gap: 13px; padding: 13px 0; border-bottom: 1px solid rgba(16,24,43,.07); }
+  .nsq-arow--last { border-bottom: none; }
+  .nsq-acircle { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 2px solid rgba(16,24,43,.2); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: transparent; background: transparent; transition: all .3s ease; }
+  .nsq-arow.is-done .nsq-acircle { background: #D9A04B; border-color: #D9A04B; color: #10182B; }
+  .nsq-alabel { font-size: 14.5px; font-weight: 700; opacity: .35; transition: opacity .3s ease; }
+  .nsq-arow.is-done .nsq-alabel { opacity: 1; }
+
+  /* Results 1 */
+  .nsq-results-head { text-align: center; margin-bottom: 22px; padding-top: 6px; }
+  .nsq-results-head .nsq-kicker { color: #B27E33; margin-bottom: 10px; }
+  .nsq-results-h2 { font-size: clamp(24px,6.5vw,32px); letter-spacing: -.025em; font-weight: 800; margin: 0; text-wrap: pretty; }
+  .nsq-card { background: #FFFFFF; border: 1px solid rgba(16,24,43,.1); border-radius: 24px; padding: clamp(20px,5vw,30px); margin-bottom: 20px; box-shadow: 0 20px 40px -24px rgba(16,24,43,.3); }
+  .nsq-level-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .nsq-level-title { font-size: 14.5px; font-weight: 800; margin-bottom: 3px; }
+  .nsq-level-sub { font-size: 12px; color: #8A93A3; font-weight: 600; }
+  .nsq-level-pill { font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #FFFFFF; background: #3E9E6E; border-radius: 999px; padding: 7px 16px; flex: none; }
+  .nsq-meter { position: relative; height: 12px; border-radius: 999px; background: linear-gradient(90deg,#3E9E6E,#B4A83E,#C98A3B,#C4523E); margin: 18px 0 8px; }
+  .nsq-meter-tick { position: absolute; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,.55); }
+  .nsq-meter-marker { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; border: 5px solid #3E9E6E; box-shadow: 0 2px 8px rgba(16,24,43,.35); transition: left .8s cubic-bezier(.2,.8,.2,1); }
+  .nsq-meter-labels { display: flex; font-size: 9.5px; letter-spacing: .12em; font-weight: 800; color: #8A93A3; margin-bottom: 22px; }
+  .nsq-meter-labels span { width: 25%; text-align: center; }
+  .nsq-verdict { background: rgba(217,160,75,.07); border: 1.5px solid rgba(217,160,75,.45); border-radius: 18px; padding: clamp(14px,4vw,18px); }
+  .nsq-verdict-head { display: flex; align-items: center; gap: 9px; margin-bottom: 8px; }
+  .nsq-verdict-dot { width: 9px; height: 9px; border-radius: 50%; background: #3E9E6E; flex: none; }
+  .nsq-verdict-title { font-size: 15.5px; font-weight: 800; }
+  .nsq-verdict-body { font-size: 13.5px; line-height: 1.55; color: #566072; margin: 0 0 16px; }
+  .nsq-subcards { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,150px),1fr)); gap: 10px; }
+  .nsq-subcard { background: #FFFFFF; border: 1px solid rgba(16,24,43,.08); border-radius: 14px; padding: 13px 14px; }
+  .nsq-subcard-head { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+  .nsq-subcard-label { font-size: 9.5px; letter-spacing: .14em; font-weight: 800; color: #8A93A3; }
+  .nsq-subcard-value { font-size: 13.5px; font-weight: 800; line-height: 1.3; }
+  .nsq-results-foot { margin-top: 12px; font-size: 12px; font-weight: 600; color: #8A93A3; }
+
+  /* Results 2 */
+  .nsq-sol-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; min-height: 24px; }
+  .nsq-sol-head { text-align: center; margin-bottom: 14px; }
+  .nsq-sol-sub { font-family: 'Newsreader', serif; font-style: italic; font-size: 16px; line-height: 1.5; color: #566072; margin: 0 auto; max-width: 400px; }
+  .nsq-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .nsq-chip { font-size: 12px; font-weight: 700; color: #10182B; background: #FFFFFF; border: 1px solid rgba(16,24,43,.14); border-radius: 999px; padding: 7px 14px; }
+
+  .nsq-product { background: #FFFFFF; border: 1px solid rgba(16,24,43,.1); border-radius: 24px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 20px 40px -24px rgba(16,24,43,.3); }
+  .nsq-product-media { background: linear-gradient(180deg,#EAEDF2,#F7F8FA); padding: 26px 20px 0; text-align: center; }
+  .nsq-pouch-img { width: min(210px,55vw); height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 18px 22px rgba(16,24,43,.3)); }
+  .nsq-product-body { padding: 22px clamp(16px,4.5vw,26px) 24px; }
+  .nsq-product-titlerow { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
+  .nsq-product-title { font-size: 18px; font-weight: 800; letter-spacing: -.01em; }
+  .nsq-product-price { font-size: 13px; font-weight: 800; color: #B27E33; flex: none; }
+  .nsq-product-price-unit { color: #8A93A3; font-weight: 700; }
+  .nsq-product-rating { font-size: 12px; color: #8A93A3; font-weight: 600; margin-bottom: 16px; }
+  .nsq-fixlist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .nsq-fix { display: flex; gap: 11px; align-items: flex-start; }
+  .nsq-fix-check { flex: none; width: 20px; height: 20px; border-radius: 50%; background: rgba(217,160,75,.14); border: 1px solid rgba(217,160,75,.4); color: #B27E33; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .nsq-fix-text { font-size: 14px; font-weight: 600; line-height: 1.45; color: #10182B; }
+  .nsq-promo { border: 1.5px dashed #D9A04B; background: rgba(217,160,75,.07); border-radius: 16px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .nsq-promo-eyebrow { font-size: 10px; letter-spacing: .18em; font-weight: 800; color: #8A93A3; margin-bottom: 3px; }
+  .nsq-promo-copy { font-size: 13.5px; font-weight: 700; color: #10182B; }
+  .nsq-promo-code { font-family: ui-monospace, Menlo, monospace; font-size: 15px; font-weight: 700; letter-spacing: .1em; color: #B27E33; background: #FFFFFF; border: 1px solid rgba(217,160,75,.5); border-radius: 10px; padding: 8px 14px; flex: none; }
+  .nsq-product-cta { display: block; text-align: center; background: #D9A04B; color: #10182B; padding: 17px 20px; border-radius: 999px; font-size: 16px; font-weight: 800; animation: nsq-pulse 3s ease-in-out infinite; box-shadow: 0 10px 24px -8px rgba(217,160,75,.5); text-decoration: none; transition: background .2s ease; }
+  .nsq-product-cta:hover { background: #E5B267; color: #10182B; }
+  .nsq-product-guarantee { margin-top: 12px; text-align: center; font-size: 12px; font-weight: 600; color: #8A93A3; line-height: 1.5; }
+  .nsq-retake { background: none; border: none; font-family: inherit; font-size: 12.5px; font-weight: 700; color: #8A93A3; cursor: pointer; text-decoration: underline; }
+  .nsq-retake:hover { color: #10182B; }
+</style>
+
+<script src="{{ 'ns-quiz.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Sleep Quiz",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "promo_code", "label": "Promo code", "default": "QUIZ20" },
+    { "type": "text", "id": "promo_copy", "label": "Promo copy", "default": "20% off your first order" },
+    { "type": "product", "id": "cta_product", "label": "Plan CTA product", "info": "Powers the product card image, price, rating and the Start my 90 nights link. Leave blank to fall back to the bundled pouch render and the store's shop URL." },
+    { "type": "text", "id": "review_name", "label": "Intro review name", "default": "Mark T." },
+    { "type": "textarea", "id": "review_quote", "label": "Intro review quote", "default": "I was skeptical, but after one night I slept straight through to 6am for the first time in years. My wife says the snoring is completely gone." }
+  ],
+  "presets": [
+    { "name": "Sleep Quiz" }
+  ]
+}
+{% endschema %}
