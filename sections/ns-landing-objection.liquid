@@ -1,0 +1,108 @@
+{%- comment -%}
+  ns-landing-objection — the #1 breathing objection, split out of the
+  materials section so it stands on its own. A reassurance card ("What if I
+  can't breathe?") plus a breathing/safety checklist. Compliant: no medical
+  claims, just how the strip behaves.
+{%- endcomment -%}
+<style>
+  .ns-lobj {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 56px) clamp(14px, 4vw, 32px);
+  }
+
+  .ns-lobj__card {
+    background: #FFFFFF;
+    border: 2px solid rgba(16, 24, 43, .1);
+    border-radius: 22px;
+    padding: clamp(24px, 5vw, 36px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(20px, 4vw, 36px);
+    align-items: center;
+  }
+
+  .ns-lobj__kicker {
+    font-size: 11.5px;
+    letter-spacing: .24em;
+    font-weight: 800;
+    color: #B27E33;
+    margin-bottom: 10px;
+  }
+
+  .ns-lobj__heading {
+    font-size: clamp(22px, 4vw, 30px);
+    letter-spacing: -.02em;
+    font-weight: 800;
+    margin: 0 0 12px;
+  }
+
+  .ns-lobj__body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #566072;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .ns-lobj__checks {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ns-lobj__check {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .ns-lobj__check-icon {
+    color: #B27E33;
+    font-weight: 800;
+    font-size: 14px;
+    flex: none;
+    margin-top: 2px;
+  }
+
+  .ns-lobj__check-text {
+    font-size: 14px;
+    color: #566072;
+    line-height: 1.5;
+  }
+</style>
+
+<section class="ns-lobj">
+  <div class="ns-lobj__card">
+    <div>
+      <div class="ns-lobj__kicker">{{ section.settings.q_kicker | default: "THE #1 QUESTION" }}</div>
+      <h3 class="ns-lobj__heading">{{ section.settings.q_heading | default: "&quot;What if I can't breathe?&quot;" }}</h3>
+      <p class="ns-lobj__body">{{ section.settings.q_body | default: "Fair question. Short answer: you're not sealed shut. NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your survival instincts will always win. If your nose is congested, just skip that night." }}</p>
+    </div>
+    <div class="ns-lobj__checks">
+      <div class="ns-lobj__check"><span class="ns-lobj__check-icon">&#10003;</span><span class="ns-lobj__check-text">{{ section.settings.check_1 | default: "You're never sealed shut: a light effort parts your lips" }}</span></div>
+      <div class="ns-lobj__check"><span class="ns-lobj__check-icon">&#10003;</span><span class="ns-lobj__check-text">{{ section.settings.check_2 | default: "Your survival reflexes always override it" }}</span></div>
+      <div class="ns-lobj__check"><span class="ns-lobj__check-icon">&#10003;</span><span class="ns-lobj__check-text">{{ section.settings.check_3 | default: "Nose blocked tonight? Just skip that night" }}</span></div>
+      <div class="ns-lobj__check"><span class="ns-lobj__check-icon">&#10003;</span><span class="ns-lobj__check-text">{{ section.settings.check_4 | default: "Ease in with a lighter seal until it feels natural" }}</span></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing Objection",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "q_kicker", "label": "Kicker", "default": "THE #1 QUESTION" },
+    { "type": "text", "id": "q_heading", "label": "Heading", "default": "\"What if I can't breathe?\"" },
+    { "type": "textarea", "id": "q_body", "label": "Body", "default": "Fair question. Short answer: you're not sealed shut. NightSeals is a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily. Your survival instincts will always win. If your nose is congested, just skip that night." },
+    { "type": "text", "id": "check_1", "label": "Checkmark 1", "default": "You're never sealed shut: a light effort parts your lips" },
+    { "type": "text", "id": "check_2", "label": "Checkmark 2", "default": "Your survival reflexes always override it" },
+    { "type": "text", "id": "check_3", "label": "Checkmark 3", "default": "Nose blocked tonight? Just skip that night" },
+    { "type": "text", "id": "check_4", "label": "Checkmark 4", "default": "Ease in with a lighter seal until it feels natural" }
+  ],
+  "presets": [
+    { "name": "Landing Objection" }
+  ]
+}
+{% endschema %}

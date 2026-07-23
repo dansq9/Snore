@@ -232,8 +232,8 @@
         "cta_label": "Try NightSeals risk-free"
       }
     },
-    "materials": {
-      "type": "ns-landing-materials",
+    "objection": {
+      "type": "ns-landing-objection",
       "settings": {
         "q_kicker": "THE #1 QUESTION",
         "q_heading": "\"What if I can't breathe?\"",
@@ -241,7 +241,12 @@
         "check_1": "You're never sealed shut: a light effort parts your lips",
         "check_2": "Your survival reflexes always override it",
         "check_3": "Nose blocked tonight? Just skip that night",
-        "check_4": "Ease in with a lighter seal until it feels natural",
+        "check_4": "Ease in with a lighter seal until it feels natural"
+      }
+    },
+    "materials": {
+      "type": "ns-landing-materials",
+      "settings": {
         "mat_kicker": "WHY IT WORKS",
         "mat_heading": "How one small strip changes the whole night",
         "mat_intro": "It isn't the tape doing the work. It's what happens the moment your mouth stays closed and every breath goes through your nose.",
@@ -339,6 +344,7 @@
     "shop",
     "reviews_carousel",
     "comparison",
+    "objection",
     "materials",
     "partners",
     "launch_offer",
