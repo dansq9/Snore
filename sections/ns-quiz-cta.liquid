@@ -112,18 +112,10 @@
 
 <section class="ns-quizcta">
   <div class="ns-quizcta__card">
-    <div class="ns-quizcta__icon" aria-hidden="true">
-      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 11l3 3 8-8"/>
-        <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/>
-      </svg>
-    </div>
-
     <div class="ns-quizcta__body">
       <p class="ns-quizcta__kicker">{{ section.settings.kicker | default: 'Not sure where to start?' }}</p>
       <h2 class="ns-quizcta__heading">{{ section.settings.heading | default: 'Take the 2-minute sleep assessment' }}</h2>
       <p class="ns-quizcta__text">{{ section.settings.body | default: 'Answer a few quick questions and get a personalized plan for quieter, more restful nights.' }}</p>
-      <p class="ns-quizcta__meta">{{ section.settings.meta | default: 'Free · No email needed · Results in 2 minutes' }}</p>
     </div>
 
     <div class="ns-quizcta__action">

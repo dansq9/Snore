@@ -219,7 +219,7 @@
     background: transparent; color: #10182B;
     font-size: clamp(12.5px, 3.2vw, 15px); font-weight: 700;
     padding: 16px 14px; border-radius: 999px; border: 2px solid rgba(16, 24, 43, .18);
-    cursor: pointer; white-space: nowrap; transition: opacity .2s;
+    cursor: pointer; white-space: nowrap; text-decoration: none; transition: opacity .2s;
   }
   .ns-pdp__btn-cart:hover { opacity: .88; }
 
@@ -312,7 +312,7 @@
         <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> 3 seconds a night</span>
       </div>
 
-      <p class="ns-pdp__tier-label" id="tiers">{% if product.variants.size == 1 %}{{ section.settings.offer_label | default: 'YOUR LIMITED-TIME OFFER' }}{% else %}CHOOSE YOUR SUPPLY{% endif %}</p>
+      <p class="ns-pdp__tier-label" id="tiers" data-fab-label="{{ section.settings.fab_label | default: 'Save 40%' }}">{% if product.variants.size == 1 %}{{ section.settings.offer_label | default: 'YOUR LIMITED-TIME OFFER' }}{% else %}CHOOSE YOUR SUPPLY{% endif %}</p>
       {%- if product == blank or product.variants.size == 0 -%}
         <div class="ns-pdp__tiers">
           <div class="ns-pdp__tier ns-pdp__tier--active">
@@ -379,7 +379,7 @@
             <span class="ns-pdp__btn-buy-price">{{ ns_default_variant.price | money }}</span>
           {%- endif -%}
         </button>
-        <button type="button" class="ns-pdp__btn-cart" data-lshop-add-to-cart>Add to cart</button>
+        <a href="{{ product.url }}" class="ns-pdp__btn-cart">{{ section.settings.secondary_cta | default: 'Learn more' }}</a>
       </div>
 
       <div class="ns-pdp__trust">
@@ -499,6 +499,8 @@
     { "type": "text", "id": "headline", "label": "Headline", "default": "Start tonight. Wake up different." },
     { "type": "textarea", "id": "subline", "label": "Subline", "default": "Your NightSeals supply at a limited-time price. One strip a night. That's the whole routine." },
     { "type": "text", "id": "offer_label", "label": "Single-offer label", "default": "YOUR LIMITED-TIME OFFER" },
+    { "type": "text", "id": "secondary_cta", "label": "Secondary button", "default": "Learn more" },
+    { "type": "text", "id": "fab_label", "label": "Floating bar label", "default": "Save 40%" },
     { "type": "paragraph", "content": "Gallery uses the offer product's own images. The pickers below are only a fallback when the product has no images." },
     { "type": "image_picker", "id": "main_image", "label": "Fallback main image" },
     { "type": "image_picker", "id": "thumb_1", "label": "Fallback thumbnail 1" },

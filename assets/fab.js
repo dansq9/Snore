@@ -21,9 +21,9 @@
       'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);' +
       'z-index:60;display:flex;align-items:center;gap:8px;' +
       'background:#10182B;color:#F7F8FA;' +
-      'padding:16px 28px;border-radius:999px;' +
+      'padding:18px 38px;border-radius:999px;' +
       'font-family:var(--font-primary,Archivo,system-ui,sans-serif);' +
-      'font-size:15.5px;font-weight:700;text-decoration:none;' +
+      'font-size:17.5px;font-weight:800;text-decoration:none;' +
       'box-shadow:0 8px 32px rgba(16,24,43,.35);' +
       'transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s;' +
       'opacity:0;pointer-events:none;cursor:pointer;white-space:nowrap';
@@ -65,7 +65,11 @@
     var tier    = document.querySelector('.ns-pdp__tier--active');
     var sub     = isSubscribeActive();
 
-    if (labelEl) labelEl.textContent = sub ? 'Subscribe' : 'Buy now';
+    /* A page can override the FAB label via data-fab-label on #tiers / #buy
+       (the landing offer uses "Save 40%"); the PDP falls back to Buy now. */
+    var anchor  = document.getElementById('tiers') || document.getElementById('buy');
+    var custom  = anchor ? anchor.getAttribute('data-fab-label') : '';
+    if (labelEl) labelEl.textContent = custom ? custom : (sub ? 'Subscribe' : 'Buy now');
 
     var detail = '';
     if (tier) {
@@ -74,7 +78,7 @@
         : tier.getAttribute('data-variant-price');
       var nights = tier.getAttribute('data-nights');
       if (price) detail = price;
-      if (nights) detail += (detail ? ' · ' : '') + nights + ' nights';
+      if (nights && !custom) detail += (detail ? ' · ' : '') + nights + ' nights';
     }
     if (priceEl) priceEl.textContent = detail;
     if (sepEl) sepEl.style.display = detail ? '' : 'none';
