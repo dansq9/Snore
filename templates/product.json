@@ -1,12 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product-hero": {
       "type": "ns-product-hero",
-      "settings": {}
+      "settings": {
+        "main_image": "shopify://shop_images/ChatGPTImageJul23_2026_12_59_00AM.png",
+        "thumb_1": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_44_53_AM.png",
+        "thumb_2": "shopify://shop_images/ChatGPTImageJul20_2026_02_08_56AM.png",
+        "thumb_3": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_50_59_AM.png"
+      }
     },
     "proof": {
       "type": "ns-proof-stats",
-      "settings": {},
       "blocks": {
         "stat_1": {
           "type": "stat",
@@ -51,15 +64,23 @@
           }
         }
       },
-      "block_order": ["stat_1", "stat_2", "stat_3", "stat_4", "stat_5", "stat_6"]
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "stat_4",
+        "stat_5",
+        "stat_6"
+      ],
+      "settings": {}
     },
     "reviews": {
       "type": "ns-reviews-carousel",
-      "settings": {},
       "blocks": {
         "rv_1": {
           "type": "image_review",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_04_36_AM.png",
             "caption": "Slept through the night",
             "reviewer": "Mike · Night 41"
           }
@@ -74,6 +95,7 @@
         "rv_3": {
           "type": "image_review",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_18_41_AM.png",
             "caption": "Dry mouth, gone",
             "reviewer": "Rob · Night 12"
           }
@@ -88,6 +110,7 @@
         "rv_5": {
           "type": "image_review",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_12_26_AM.png",
             "caption": "Partner approved",
             "reviewer": "Elise · Night 30"
           }
@@ -102,47 +125,25 @@
         "rv_7": {
           "type": "image_review",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_10_44_AM.png",
             "caption": "Total reset",
             "reviewer": "Dan · Night 90"
           }
         }
       },
-      "block_order": ["rv_1", "rv_2", "rv_3", "rv_4", "rv_5", "rv_6", "rv_7"]
-    },
-    "science": {
-      "type": "ns-science",
-      "settings": {},
-      "blocks": {
-        "sci_1": {
-          "type": "principle",
-          "settings": {
-            "number": "01",
-            "title": "Filters & humidifies",
-            "description": "Every breath through your nose is warmed, moistened and filtered before it reaches your lungs."
-          }
-        },
-        "sci_2": {
-          "type": "principle",
-          "settings": {
-            "number": "02",
-            "title": "Slower, steadier breaths",
-            "description": "Nasal airflow naturally paces your breathing: the slow, steady rhythm deep sleep runs on."
-          }
-        },
-        "sci_3": {
-          "type": "principle",
-          "settings": {
-            "number": "03",
-            "title": "A quieter airway",
-            "description": "Sealed lips may help keep the airway aligned, reducing the open-mouth vibration that contributes to snoring."
-          }
-        }
-      },
-      "block_order": ["sci_1", "sci_2", "sci_3"]
+      "block_order": [
+        "rv_1",
+        "rv_2",
+        "rv_3",
+        "rv_4",
+        "rv_5",
+        "rv_6",
+        "rv_7"
+      ],
+      "settings": {}
     },
     "features": {
       "type": "ns-features",
-      "settings": {},
       "blocks": {
         "feat_1": {
           "type": "feature",
@@ -177,11 +178,18 @@
           }
         }
       },
-      "block_order": ["feat_1", "feat_2", "feat_3", "feat_4"]
+      "block_order": [
+        "feat_1",
+        "feat_2",
+        "feat_3",
+        "feat_4"
+      ],
+      "settings": {
+        "feature_image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_59_38_AM.png"
+      }
     },
     "comparison": {
       "type": "ns-pdp-comparison",
-      "settings": {},
       "blocks": {
         "row_1": {
           "type": "row",
@@ -247,7 +255,51 @@
           }
         }
       },
-      "block_order": ["row_1", "row_2", "row_3", "row_4", "row_5", "row_6", "row_7"]
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4",
+        "row_5",
+        "row_6",
+        "row_7"
+      ],
+      "settings": {}
+    },
+    "science": {
+      "type": "ns-science",
+      "blocks": {
+        "sci_1": {
+          "type": "principle",
+          "settings": {
+            "number": "01",
+            "title": "Filters & humidifies",
+            "description": "Every breath through your nose is warmed, moistened and filtered before it reaches your lungs."
+          }
+        },
+        "sci_2": {
+          "type": "principle",
+          "settings": {
+            "number": "02",
+            "title": "Slower, steadier breaths",
+            "description": "Nasal airflow naturally paces your breathing: the slow, steady rhythm deep sleep runs on."
+          }
+        },
+        "sci_3": {
+          "type": "principle",
+          "settings": {
+            "number": "03",
+            "title": "A quieter airway",
+            "description": "Sealed lips may help keep the airway aligned, reducing the open-mouth vibration that contributes to snoring."
+          }
+        }
+      },
+      "block_order": [
+        "sci_1",
+        "sci_2",
+        "sci_3"
+      ],
+      "settings": {}
     },
     "timeline": {
       "type": "ns-timeline",
@@ -259,7 +311,6 @@
     },
     "faq": {
       "type": "ns-faq",
-      "settings": {},
       "blocks": {
         "faq_1": {
           "type": "faq_item",
@@ -311,7 +362,16 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_6", "faq_7", "faq_8"]
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_6",
+        "faq_7",
+        "faq_8"
+      ],
+      "settings": {}
     },
     "trust": {
       "type": "ns-trust-icons",
@@ -319,8 +379,22 @@
     },
     "marquee": {
       "type": "ns-marquee",
-      "settings": {}
+      "settings": {
+        "content": "#SEALTHENIGHT"
+      }
     }
   },
-  "order": ["product-hero", "proof", "reviews", "features", "comparison", "science", "timeline", "guarantee", "faq", "trust", "marquee"]
+  "order": [
+    "product-hero",
+    "proof",
+    "reviews",
+    "features",
+    "comparison",
+    "science",
+    "timeline",
+    "guarantee",
+    "faq",
+    "trust",
+    "marquee"
+  ]
 }
