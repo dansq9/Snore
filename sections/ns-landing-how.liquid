@@ -152,15 +152,13 @@
   </div>
 </section>
 
+{%- if section.settings.image != blank -%}
 <section class="ns-lhow__media-section">
   <div class="ns-lhow__media">
-    {%- if section.settings.image != blank -%}
-      {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
-    {%- else -%}
-      <div class="ns-lhow__media-placeholder">Close-up: strip being applied to pursed lips</div>
-    {%- endif -%}
+    {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy' }}
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {

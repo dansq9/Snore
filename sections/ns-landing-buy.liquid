@@ -19,7 +19,7 @@
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 11.5l2 2 4-4"></path></svg>
       <h2 class="ns-lbuy__heading">{{ section.settings.heading | default: 'The NightSeals Guarantee' }}</h2>
     </div>
-    <p class="ns-lbuy__body">We're confident NightSeals will change how you sleep. That's why we offer a <span class="ns-lbuy__body-strong">hassle-free, results-backed guarantee.</span> 30 nights. No questions asked.</p>
+    <p class="ns-lbuy__body">We're confident NightSeals will change how you sleep. That's why we offer a <span class="ns-lbuy__body-strong">hassle-free, money-back guarantee.</span> 30 nights. No questions asked.</p>
 
     {%- if product != blank and product.variants.size > 0 -%}
       <div class="ns-lbuy__tiers" id="ns-lbuy-tiers">
@@ -36,8 +36,22 @@
               <span class="ns-lbuy__radio"><span class="ns-lbuy__radio-dot"></span></span>
               <div>
                 <div class="ns-lbuy__tier-label">{{ variant.title }}</div>
-                {%- if variant.metafields.custom.per_night != blank -%}
-                  <div class="ns-lbuy__tier-per">{{ variant.metafields.custom.per_night }} / night</div>
+                {%- liquid
+                  # Per-night price: prefer the merchant metafield; otherwise derive
+                  # it from a night-denominated variant title ("90 Nights", "180-Night
+                  # Supply"). Guarded so a non-night title never yields a wrong number.
+                  assign per_night = variant.metafields.custom.per_night
+                  if per_night == blank
+                    assign title_lc = variant.title | downcase
+                    assign nights = variant.title | split: ' ' | first | split: '-' | first | times: 1
+                    if nights >= 7 and title_lc contains 'night'
+                      assign per_cents = variant.price | divided_by: nights
+                      assign per_night = per_cents | money
+                    endif
+                  endif
+                -%}
+                {%- if per_night != blank -%}
+                  <div class="ns-lbuy__tier-per">{{ per_night }} / night</div>
                 {%- endif -%}
               </div>
             </div>
@@ -60,7 +74,7 @@
       <p class="ns-lbuy__note">Set your Main product (with 30/90/180-night variants) under Theme settings → Shop to enable the tier selector.</p>
     {%- endif -%}
 
-    <div class="ns-lbuy__trust">30-night guarantee · Free shipping $50+ · Hypoallergenic</div>
+    <div class="ns-lbuy__trust">30-night guarantee · One-time purchase · Free shipping $50+</div>
   </div>
 </section>
 
