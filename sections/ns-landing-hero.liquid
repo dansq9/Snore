@@ -29,8 +29,8 @@
       </ul>
 
       <a href="{{ section.settings.cta_url | default: '#tiers' }}" class="ns-lhero__cta">{{ section.settings.cta_text | default: 'Try NightSeals risk-free →' }}</a>
-      <div class="ns-lhero__audience">{{ section.settings.audience_line | default: 'For men who snore, and the partners who put up with it.' }}</div>
-      <div class="ns-lhero__trust">{{ section.settings.trust_line | default: '30-night money-back guarantee · Ships in 3-5 days · Drug-free' }}</div>
+      <div class="ns-lhero__audience">{{ section.settings.audience_line | default: 'For those who snore, and the partners who put up with it.' }}</div>
+      <div class="ns-lhero__trust">{{ section.settings.trust_line | default: '30-night money-back guarantee · Drug-free' }}</div>
     </div>
     <div class="ns-lhero__media">
       {%- if section.settings.hero_image != blank -%}
@@ -176,8 +176,8 @@
     { "type": "text", "id": "check_4", "label": "Checklist 4", "default": "Beard-proof hold · drug-free" },
     { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Try NightSeals risk-free →" },
     { "type": "url", "id": "cta_url", "label": "CTA target", "info": "Defaults to the offer module (#tiers) further down the page." },
-    { "type": "text", "id": "audience_line", "label": "Audience line", "default": "For men who snore, and the partners who put up with it." },
-    { "type": "text", "id": "trust_line", "label": "Trust line", "default": "30-night money-back guarantee · Ships in 3-5 days · Drug-free" },
+    { "type": "text", "id": "audience_line", "label": "Audience line", "default": "For those who snore, and the partners who put up with it." },
+    { "type": "text", "id": "trust_line", "label": "Trust line", "default": "30-night money-back guarantee · Drug-free" },
     { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Falls back to the bundled lifestyle photo." }
   ],
   "presets": [

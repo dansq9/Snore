@@ -13,9 +13,9 @@
     "proof": {
       "type": "ns-proof-stats",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": "9 in 10", "description": "wake up feeling more rested" } },
-        "s2": { "type": "stat", "settings": { "number": "8 in 10", "description": "reported less snoring" } },
-        "s3": { "type": "stat", "settings": { "number": "3 in 4", "description": "report an improved relationship with their partner" } }
+        "s1": { "type": "stat", "settings": { "number": "8 in 10", "description": "reported less snoring" } },
+        "s2": { "type": "stat", "settings": { "number": "3 in 4", "description": "said their partner slept better too" } },
+        "s3": { "type": "stat", "settings": { "number": "4 in 5", "description": "were still taping after 30 nights" } }
       },
       "block_order": ["s1", "s2", "s3"],
       "settings": {}
