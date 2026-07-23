@@ -27,9 +27,9 @@
       <a href="{% render 'shop-url' %}" class="ns-header__shop-btn ns-desktop-only">Shop</a>
 
       <button class="ns-header__cart-btn ns-mobile-only" aria-label="Open cart" type="button" onclick="if(window.NightSeals&&NightSeals.Cart)NightSeals.Cart.open()" style="display:none">
-        <svg width="22" height="24" viewBox="0 0 22 24" fill="none" aria-hidden="true">
-          <path d="M4 7V6a7 7 0 1114 0v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          <rect x="1" y="7" width="20" height="15" rx="3" stroke="currentColor" stroke-width="1.8"/>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5.5 8h13l-1.2 12H6.7L5.5 8z"/>
+          <path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>
         </svg>
         {%- if cart.item_count > 0 -%}
           <span class="ns-header__cart-badge">{{ cart.item_count }}</span>
