@@ -53,17 +53,22 @@
 
 <style>
   .ns-welcome__modal {
-    position: relative;
-    width: min(520px, calc(100% - 32px));
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 40px 100px rgba(16,24,43,.4);
-    animation: ns-fadeup .35s ease;
-    margin: auto;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: min(520px, calc(100% - 32px));
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(16,24,43,.4);
+    animation: ns-welcome-in .35s ease;
+  }
+
+  /* Keeps the -50%/-50% centering throughout the entrance so the modal
+     doesn't jump (a plain translateY fade would drop the centering). */
+  @keyframes ns-welcome-in {
+    from { opacity: 0; transform: translate(-50%, calc(-50% + 14px)); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
   }
 
   .ns-welcome__close {

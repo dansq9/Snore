@@ -26,9 +26,9 @@
     {%- if cart.item_count == 0 -%}
       <div class="ns-cartpage__empty">
         <div class="ns-cart-drawer__empty-icon">
-          <svg width="40" height="44" viewBox="0 0 22 24" fill="none" aria-hidden="true">
-            <path d="M4 7V6a7 7 0 1114 0v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            <rect x="1" y="7" width="20" height="15" rx="3" stroke="currentColor" stroke-width="1.8"/>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5.5 8h13l-1.2 12H6.7L5.5 8z"/>
+            <path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>
           </svg>
         </div>
         <h1 class="ns-cart-drawer__empty-title">Your cart is empty</h1>
@@ -36,6 +36,7 @@
         <a href="{% render 'shop-url' %}" class="ns-btn-primary">Shop mouth tape</a>
       </div>
     {%- else -%}
+      <a href="{% render 'shop-url' %}" class="ns-cartpage__back">&larr; Continue shopping</a>
       <div class="ns-cartpage__head">
         <h1 class="ns-cartpage__title">Your cart</h1>
         <span class="ns-cart-drawer__count">{{ cart.item_count }}</span>
@@ -94,8 +95,6 @@
               </div>
             {%- endfor -%}
           </div>
-
-          <a href="{% render 'shop-url' %}" class="ns-cartpage__continue">&larr; Continue shopping</a>
         </div>
 
         {%- comment -%} ── Right: summary ── {%- endcomment -%}
@@ -114,13 +113,6 @@
             <p class="ns-cartpage__tax-note">Shipping &amp; taxes calculated at checkout.</p>
             <a href="/checkout" class="ns-cart-drawer__checkout-btn">Checkout</a>
             <p class="ns-cart-drawer__guarantee">30-day money-back guarantee</p>
-            <div class="ns-cart-drawer__payment-icons">
-              <div class="ns-payment-icon">VISA</div>
-              <div class="ns-payment-icon">MC</div>
-              <div class="ns-payment-icon">AMEX</div>
-              <div class="ns-payment-icon">APAY</div>
-              <div class="ns-payment-icon">GPAY</div>
-            </div>
           </div>
         </aside>
       </div>
@@ -203,15 +195,15 @@
   .ns-cartpage__controls .ns-cart-item__qty { margin-top: 0; }
   .ns-cartpage__controls .ns-cart-item__remove { margin-top: 0; }
 
-  .ns-cartpage__continue {
+  .ns-cartpage__back {
     display: inline-block;
-    margin-top: 28px;
+    margin: 0 0 18px;
     font-size: 14px;
     font-weight: 600;
     color: #566072;
     text-decoration: none;
   }
-  .ns-cartpage__continue:hover { color: #B27E33; }
+  .ns-cartpage__back:hover { color: #B27E33; }
 
   /* Summary card */
   .ns-cartpage__summary-card {
@@ -243,12 +235,6 @@
 
   .ns-cartpage__summary-card .ns-cart-drawer__checkout-btn { padding: 16px; font-size: 16px; }
   .ns-cartpage__summary-card .ns-cart-drawer__guarantee { margin: 12px 0 10px; }
-
-  /* Payment marks are styled for a dark bg in components.css — restyle for light */
-  .ns-cartpage .ns-payment-icon {
-    color: #8A93A3;
-    border-color: rgba(16,24,43,.18);
-  }
 
   /* Empty state */
   .ns-cartpage__empty {
