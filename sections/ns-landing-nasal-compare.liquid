@@ -1,0 +1,134 @@
+{%- comment -%}
+  ns-landing-nasal-compare — "This is what nasal breathing does" visual.
+  Mouth Breather (red) vs Nasal Breather (green) before/after cards. No emojis.
+  Owner supplies the two photos via the image pickers; tasteful fallbacks
+  render until then.
+{%- endcomment -%}
+<style>
+  .ns-nasalcmp {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: clamp(40px, 7vw, 80px) clamp(14px, 4vw, 32px);
+  }
+
+  .ns-nasalcmp__head {
+    text-align: center;
+    margin-bottom: clamp(28px, 5vw, 44px);
+  }
+
+  .ns-nasalcmp__title {
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: #10182B;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+
+  .ns-nasalcmp__sub {
+    font-size: clamp(15px, 2.4vw, 18px);
+    color: #566072;
+    margin: 0;
+  }
+
+  .ns-nasalcmp__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(16px, 3vw, 24px);
+  }
+  @media (max-width: 640px) {
+    .ns-nasalcmp__grid { grid-template-columns: 1fr; }
+  }
+
+  .ns-nasalcmp__card {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -28px rgba(16, 24, 43, .35);
+    background: #EAEDF2;
+  }
+
+  .ns-nasalcmp__bar {
+    padding: 13px 18px;
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: .01em;
+    color: #FFFFFF;
+  }
+  .ns-nasalcmp__bar--red { background: #E0524A; }
+  .ns-nasalcmp__bar--green { background: #4E8A5F; }
+
+  .ns-nasalcmp__media {
+    aspect-ratio: 4 / 5;
+    background: #EAEDF2;
+  }
+  .ns-nasalcmp__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ns-nasalcmp__ph {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    color: #8A93A3;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+</style>
+
+<section class="ns-nasalcmp">
+  <div class="ns-nasalcmp__head">
+    <h2 class="ns-nasalcmp__title">{{ section.settings.heading | default: 'This is what nasal breathing does' }}</h2>
+    <p class="ns-nasalcmp__sub">{{ section.settings.subheading | default: 'One small strip. A completely different morning.' }}</p>
+  </div>
+
+  <div class="ns-nasalcmp__grid">
+    <div class="ns-nasalcmp__card">
+      <div class="ns-nasalcmp__bar ns-nasalcmp__bar--red">{{ section.settings.before_label | default: 'Mouth Breather' }}</div>
+      <div class="ns-nasalcmp__media">
+        {%- if section.settings.before_image != blank -%}
+          {{ section.settings.before_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.before_label }}
+        {%- else -%}
+          <div class="ns-nasalcmp__ph">{{ section.settings.before_placeholder | default: 'Mouth open, snoring, restless partner' }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="ns-nasalcmp__card">
+      <div class="ns-nasalcmp__bar ns-nasalcmp__bar--green">{{ section.settings.after_label | default: 'Nasal Breather' }}</div>
+      <div class="ns-nasalcmp__media">
+        {%- if section.settings.after_image != blank -%}
+          {{ section.settings.after_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.after_label }}
+        {%- else -%}
+          <div class="ns-nasalcmp__ph">{{ section.settings.after_placeholder | default: 'Mouth sealed, quiet, both sleeping through' }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Nasal Breathing Compare",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "This is what nasal breathing does" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "One small strip. A completely different morning." },
+    { "type": "text", "id": "before_label", "label": "Before label", "default": "Mouth Breather" },
+    { "type": "image_picker", "id": "before_image", "label": "Before image (mouth breather)" },
+    { "type": "text", "id": "before_placeholder", "label": "Before placeholder text", "default": "Mouth open, snoring, restless partner" },
+    { "type": "text", "id": "after_label", "label": "After label", "default": "Nasal Breather" },
+    { "type": "image_picker", "id": "after_image", "label": "After image (nasal breather)" },
+    { "type": "text", "id": "after_placeholder", "label": "After placeholder text", "default": "Mouth sealed, quiet, both sleeping through" }
+  ],
+  "presets": [
+    { "name": "Nasal Breathing Compare" }
+  ]
+}
+{% endschema %}

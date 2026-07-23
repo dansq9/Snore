@@ -21,9 +21,9 @@
       'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);' +
       'z-index:60;display:flex;align-items:center;gap:8px;' +
       'background:#10182B;color:#F7F8FA;' +
-      'padding:16px 28px;border-radius:999px;' +
+      'padding:18px 38px;border-radius:999px;' +
       'font-family:var(--font-primary,Archivo,system-ui,sans-serif);' +
-      'font-size:15.5px;font-weight:700;text-decoration:none;' +
+      'font-size:17.5px;font-weight:800;text-decoration:none;' +
       'box-shadow:0 8px 32px rgba(16,24,43,.35);' +
       'transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s;' +
       'opacity:0;pointer-events:none;cursor:pointer;white-space:nowrap';
@@ -65,7 +65,11 @@
     var tier    = document.querySelector('.ns-pdp__tier--active');
     var sub     = isSubscribeActive();
 
-    if (labelEl) labelEl.textContent = sub ? 'Subscribe' : 'Buy now';
+    /* A page can override the FAB label via data-fab-label on #tiers / #buy
+       (the landing offer uses "Save 40%"); the PDP falls back to Buy now. */
+    var anchor  = document.getElementById('tiers') || document.getElementById('buy');
+    var custom  = anchor ? anchor.getAttribute('data-fab-label') : '';
+    if (labelEl) labelEl.textContent = custom ? custom : (sub ? 'Subscribe' : 'Buy now');
 
     var detail = '';
     if (tier) {
@@ -74,7 +78,7 @@
         : tier.getAttribute('data-variant-price');
       var nights = tier.getAttribute('data-nights');
       if (price) detail = price;
-      if (nights) detail += (detail ? ' · ' : '') + nights + ' nights';
+      if (nights && !custom) detail += (detail ? ' · ' : '') + nights + ' nights';
     }
     if (priceEl) priceEl.textContent = detail;
     if (sepEl) sepEl.style.display = detail ? '' : 'none';
@@ -105,43 +109,34 @@
     var anchor = document.getElementById('tiers') || document.getElementById('buy');
     if (!anchor) return; /* No buy-box on this page — skip FAB */
 
-    /* Trigger on the buy buttons when present, so the FAB appears exactly
-       when they scroll out of view (falls back to the buy-box anchor). */
-    var trigger = document.querySelector('.ns-pdp__ctas') || anchor;
-
     var footer = document.querySelector('footer, .ns-footer');
     var fab    = createFab();
 
     updateFab(fab);
     document.addEventListener('ns:selection', function () { updateFab(fab); });
 
-    var scrolledPast  = false; /* buy actions have scrolled ABOVE the viewport */
-    var footerVisible = false;
+    var scrolledEnough = false; /* user has scrolled a bit past the top */
+    var footerVisible  = false;
 
     function evaluate() {
-      if (scrolledPast && !footerVisible) {
-        showFab(fab);
-      } else {
-        hideFab(fab);
-      }
+      if (scrolledEnough && !footerVisible) { showFab(fab); }
+      else { hideFab(fab); }
     }
 
-    /* Show the FAB only once the buy actions have scrolled ABOVE the top of
-       the viewport — not while they're still below the fold on page load. */
-    var buyObserver = new IntersectionObserver(function (entries) {
-      var entry = entries[0];
-      scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+    /* Appear once the user scrolls a bit (past ~60% of the first screen) —
+       not at the very top — and hide again near the footer. */
+    function onScroll() {
+      scrolledEnough = window.pageYOffset > (window.innerHeight * 0.6);
       evaluate();
-    }, { threshold: 0 });
-    buyObserver.observe(trigger);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-    /* Hide again once the footer comes into view */
     if (footer) {
-      var footerObserver = new IntersectionObserver(function (entries) {
+      new IntersectionObserver(function (entries) {
         footerVisible = entries[0].isIntersecting;
         evaluate();
-      }, { threshold: 0 });
-      footerObserver.observe(footer);
+      }, { threshold: 0 }).observe(footer);
     }
   }
 

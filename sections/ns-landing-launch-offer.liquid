@@ -1,0 +1,157 @@
+{%- comment -%}
+  ns-landing-launch-offer — full-bleed limited-time offer block (ZzzTape-style).
+  Transparent product image on a dark gradient + limited-time pill + big
+  discount line + benefit checklist + CTA. Owner adds the transparent-bg
+  product image and points "Offer product" at the limited-time SKU.
+{%- endcomment -%}
+{%- assign offer_product = section.settings.offer_product -%}
+{%- if offer_product == blank -%}{%- assign offer_product = settings.featured_product -%}{%- endif -%}
+{%- assign ns_offer_url = '#tiers' -%}
+{%- if offer_product != blank -%}{%- assign ns_offer_url = offer_product.url -%}{%- endif -%}
+
+<style>
+  .ns-launch {
+    background: radial-gradient(120% 90% at 50% 0%, #1B2547 0%, #10182B 60%, #0A0F1E 100%);
+    color: #F7F8FA;
+    padding: clamp(44px, 8vw, 80px) clamp(14px, 4vw, 32px);
+    text-align: center;
+  }
+
+  .ns-launch__inner { max-width: 620px; margin: 0 auto; }
+
+  .ns-launch__media {
+    height: min(340px, 62vw);
+    margin: 0 auto clamp(20px, 4vw, 32px);
+  }
+  .ns-launch__media img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .ns-launch__ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(242,244,247,.4); font-size: 13px; text-align: center; padding: 16px;
+    border: 1px dashed rgba(242,244,247,.2); border-radius: 18px;
+  }
+
+  .ns-launch__pill {
+    display: inline-block;
+    background: rgba(217,160,75,.14);
+    border: 1px solid rgba(217,160,75,.4);
+    color: #E5B267;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 999px;
+    margin-bottom: clamp(20px, 4vw, 30px);
+  }
+
+  .ns-launch__discount {
+    font-size: clamp(34px, 7vw, 52px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1.05;
+    margin: 0;
+  }
+  .ns-launch__discount-sub { color: #E5B267; display: block; }
+
+  .ns-launch__body {
+    font-size: clamp(15px, 2.6vw, 17px);
+    line-height: 1.6;
+    color: rgba(242,244,247,.72);
+    margin: clamp(16px, 3vw, 22px) auto clamp(20px, 4vw, 28px);
+    max-width: 48ch;
+    text-wrap: pretty;
+  }
+
+  .ns-launch__checks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 clamp(24px, 4vw, 34px);
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+  .ns-launch__check {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 15px; font-weight: 600; color: rgba(242,244,247,.9);
+  }
+  .ns-launch__check-icon { color: #D9A04B; font-weight: 800; flex: none; }
+
+  .ns-launch__cta {
+    display: block;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    background: #D9A04B;
+    color: #10182B;
+    padding: 17px 24px;
+    border-radius: 999px;
+    font-size: 16.5px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 12px 28px -8px rgba(217,160,75,.5);
+    transition: background .2s;
+  }
+  .ns-launch__cta:hover { background: #E5B267; color: #10182B; }
+
+  .ns-launch__note {
+    font-size: 12.5px;
+    color: rgba(242,244,247,.5);
+    margin: clamp(14px, 3vw, 18px) 0 0;
+  }
+</style>
+
+<section class="ns-launch">
+  <div class="ns-launch__inner">
+    <div class="ns-launch__media">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'NightSeals' }}
+      {%- elsif offer_product != blank and offer_product.featured_image != blank -%}
+        {{ offer_product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: offer_product.title }}
+      {%- else -%}
+        <img src="{{ 'nightseals-pouch-nobg.png' | asset_url }}" alt="NightSeals" width="900" height="900" loading="lazy">
+      {%- endif -%}
+    </div>
+
+    <span class="ns-launch__pill">{{ section.settings.pill | default: 'Launch pricing · limited time' }}</span>
+
+    <p class="ns-launch__discount">{{ section.settings.discount_line | default: '40% OFF' }}<span class="ns-launch__discount-sub">{{ section.settings.product_line | default: 'your 60-night supply' }}</span></p>
+
+    <p class="ns-launch__body">{{ section.settings.body | default: "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time." }}</p>
+
+    <ul class="ns-launch__checks">
+      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span>{{ section.settings.check_1 | default: '30-night money-back guarantee' }}</li>
+      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span>{{ section.settings.check_2 | default: 'Ships in 3-5 days' }}</li>
+      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span>{{ section.settings.check_3 | default: 'Beard-proof, drug-free' }}</li>
+      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span>{{ section.settings.check_4 | default: 'One-time purchase, no subscription' }}</li>
+    </ul>
+
+    <a href="{{ ns_offer_url }}" class="ns-launch__cta">{{ section.settings.cta_text | default: 'Claim 40% off →' }}</a>
+    <p class="ns-launch__note">{{ section.settings.note | default: 'Join thousands sleeping quieter every night.' }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Launch Offer",
+  "tag": "section",
+  "settings": [
+    { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The limited-time SKU. Powers the CTA link and the fallback image. Falls back to the Main product / bundled pouch." },
+    { "type": "image_picker", "id": "image", "label": "Product image (transparent background)" },
+    { "type": "text", "id": "pill", "label": "Pill text", "default": "Launch pricing · limited time" },
+    { "type": "text", "id": "discount_line", "label": "Discount line", "default": "40% OFF" },
+    { "type": "text", "id": "product_line", "label": "Product line", "default": "your 60-night supply" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time." },
+    { "type": "text", "id": "check_1", "label": "Check 1", "default": "30-night money-back guarantee" },
+    { "type": "text", "id": "check_2", "label": "Check 2", "default": "Ships in 3-5 days" },
+    { "type": "text", "id": "check_3", "label": "Check 3", "default": "Beard-proof, drug-free" },
+    { "type": "text", "id": "check_4", "label": "Check 4", "default": "One-time purchase, no subscription" },
+    { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Claim 40% off →" },
+    { "type": "text", "id": "note", "label": "Note under CTA", "default": "Join thousands sleeping quieter every night." }
+  ],
+  "presets": [
+    { "name": "Launch Offer" }
+  ]
+}
+{% endschema %}

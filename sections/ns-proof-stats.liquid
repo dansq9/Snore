@@ -1,6 +1,6 @@
 <style>
   .ns-proof-stats {
-    background: #EAEDF2;
+    background: #10182B;
     padding: clamp(52px, 9vw, 88px) 24px;
   }
 
@@ -15,78 +15,91 @@
     letter-spacing: 0.24em;
     font-weight: 800;
     text-transform: uppercase;
-    color: #B27E33;
+    color: #D9A04B;
     margin: 0 0 14px;
   }
 
   .ns-proof-stats__heading {
-    font-size: clamp(28px, 5.5vw, 48px);
+    font-size: clamp(28px, 5.5vw, 46px);
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    color: #10182B;
-    margin: 0 0 14px;
+    color: #F7F8FA;
+    margin: 0 0 12px;
   }
 
   .ns-proof-stats__subtitle {
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: clamp(16px, 2.2vw, 19px);
+    font-size: clamp(15px, 2.2vw, 18px);
     font-style: italic;
-    color: #566072;
-    margin: 0 0 clamp(36px, 6vw, 56px);
+    color: rgba(242, 244, 247, 0.6);
+    margin: 0 0 clamp(32px, 6vw, 52px);
   }
 
   .ns-proof-stats__grid {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(170px, 1fr);
-    gap: 1px;
-    background: rgba(16, 24, 43, 0.12);
-    border-radius: 18px;
-    overflow: hidden;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .ns-proof-stats__grid::-webkit-scrollbar {
-    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
   }
 
   .ns-proof-stats__tile {
-    background: #F7F8FA;
-    padding: clamp(28px, 4vw, 40px) 24px;
+    padding: clamp(24px, 4vw, 40px) 20px;
     text-align: center;
+    border-left: 1px solid rgba(242, 244, 247, 0.12);
+  }
+
+  .ns-proof-stats__tile:first-child {
+    border-left: none;
   }
 
   .ns-proof-stats__number {
-    font-size: clamp(30px, 5vw, 42px);
+    font-size: clamp(46px, 8vw, 72px);
     font-weight: 800;
-    color: #10182B;
-    line-height: 1.1;
-    margin: 0 0 10px;
+    color: #E5B267;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
   }
 
   .ns-proof-stats__description {
-    font-size: 14px;
+    font-size: clamp(14px, 2vw, 15.5px);
     line-height: 1.45;
-    color: #566072;
+    color: rgba(242, 244, 247, 0.72);
     margin: 0;
   }
 
   .ns-proof-stats__footnote {
     font-size: 11.5px;
-    color: #8A93A3;
-    margin: 20px 0 0;
+    line-height: 1.5;
+    color: rgba(242, 244, 247, 0.4);
+    margin: clamp(28px, 5vw, 44px) 0 0;
     text-align: center;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 700px) {
+    .ns-proof-stats__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ns-proof-stats__tile {
+      border-left: none;
+      border-top: 1px solid rgba(242, 244, 247, 0.12);
+    }
+
+    .ns-proof-stats__tile:first-child {
+      border-top: none;
+    }
   }
 </style>
 
 <div class="ns-proof-stats">
   <div class="ns-proof-stats__inner">
-    <p class="ns-proof-stats__kicker">PROOF</p>
-    <h2 class="ns-proof-stats__heading">Proven by real sleepers</h2>
-    <p class="ns-proof-stats__subtitle">In a recent survey of mouth tape users, here's what they told us.</p>
+    <p class="ns-proof-stats__kicker">{{ section.settings.kicker | default: 'PROOF' }}</p>
+    <h2 class="ns-proof-stats__heading">{{ section.settings.heading | default: 'The results speak for themselves' }}</h2>
+    <p class="ns-proof-stats__subtitle">{{ section.settings.subtitle | default: "In a recent survey of mouth tape users, here's what they told us." }}</p>
 
     <div class="ns-proof-stats__grid">
       {% for block in section.blocks %}
@@ -97,7 +110,7 @@
       {% endfor %}
     </div>
 
-    <p class="ns-proof-stats__footnote">*Based on a recent self-reported survey of mouth tape users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure, or prevent any disease.</p>
+    <p class="ns-proof-stats__footnote">{{ section.settings.footnote | default: '*Based on a recent self-reported survey of mouth tape users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure, or prevent any disease.' }}</p>
   </div>
 </div>
 
@@ -105,7 +118,12 @@
 {
   "name": "Proof Stats",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "PROOF" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The results speak for themselves" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "In a recent survey of mouth tape users, here's what they told us." },
+    { "type": "textarea", "id": "footnote", "label": "Footnote", "default": "*Based on a recent self-reported survey of mouth tape users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure, or prevent any disease." }
+  ],
   "blocks": [
     {
       "type": "stat",
@@ -120,12 +138,9 @@
     {
       "name": "Proof Stats",
       "blocks": [
-        { "type": "stat", "settings": { "number": "9 in 10", "description": "would recommend NightSeals to a friend" } },
-        { "type": "stat", "settings": { "number": "9 in 10", "description": "felt results within their very first week" } },
         { "type": "stat", "settings": { "number": "9 in 10", "description": "wake up feeling more rested" } },
         { "type": "stat", "settings": { "number": "8 in 10", "description": "reported less snoring" } },
-        { "type": "stat", "settings": { "number": "3 in 4", "description": "report an improved relationship with their partner" } },
-        { "type": "stat", "settings": { "number": "9 in 10", "description": "say NightSeals is worth the investment" } }
+        { "type": "stat", "settings": { "number": "3 in 4", "description": "report an improved relationship with their partner" } }
       ]
     }
   ]

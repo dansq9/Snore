@@ -13,19 +13,19 @@
     "proof": {
       "type": "ns-proof-stats",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": "9 in 10", "description": "would recommend NightSeals to a friend" } },
-        "s2": { "type": "stat", "settings": { "number": "9 in 10", "description": "felt results within their very first week" } },
-        "s3": { "type": "stat", "settings": { "number": "9 in 10", "description": "wake up feeling more rested" } },
-        "s4": { "type": "stat", "settings": { "number": "8 in 10", "description": "reported less snoring" } },
-        "s5": { "type": "stat", "settings": { "number": "3 in 4", "description": "report an improved relationship with their partner" } },
-        "s6": { "type": "stat", "settings": { "number": "9 in 10", "description": "say NightSeals is worth the investment" } }
+        "s1": { "type": "stat", "settings": { "number": "9 in 10", "description": "wake up feeling more rested" } },
+        "s2": { "type": "stat", "settings": { "number": "8 in 10", "description": "reported less snoring" } },
+        "s3": { "type": "stat", "settings": { "number": "3 in 4", "description": "report an improved relationship with their partner" } }
       },
-      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6"],
+      "block_order": ["s1", "s2", "s3"],
       "settings": {}
     },
     "symptoms": { "type": "ns-landing-symptoms", "settings": {} },
     "problem": { "type": "ns-landing-problem", "settings": {} },
+    "nasal_compare": { "type": "ns-landing-nasal-compare", "settings": {} },
+    "nasal_fix": { "type": "ns-landing-nasal-fix", "settings": {} },
     "how": { "type": "ns-landing-how", "settings": {} },
+    "timeline": { "type": "ns-timeline", "settings": {} },
     "shop": { "type": "ns-landing-shop", "settings": {} },
     "reviews_carousel": {
       "type": "ns-reviews-carousel",
@@ -45,6 +45,7 @@
     "materials": { "type": "ns-landing-materials", "settings": {} },
     "expectations": { "type": "ns-landing-expectations", "settings": {} },
     "partners": { "type": "ns-landing-reviews", "settings": {} },
+    "launch_offer": { "type": "ns-landing-launch-offer", "settings": {} },
     "quiz_cta": { "type": "ns-quiz-cta", "settings": {} },
     "faq": { "type": "ns-landing-faq", "settings": {} },
     "buy": { "type": "ns-landing-buy", "settings": {} }
@@ -52,16 +53,20 @@
   "order": [
     "hero",
     "proof",
+    "quiz_cta",
     "symptoms",
     "problem",
+    "nasal_compare",
+    "nasal_fix",
     "how",
+    "timeline",
     "shop",
     "reviews_carousel",
     "comparison",
     "materials",
     "expectations",
     "partners",
-    "quiz_cta",
+    "launch_offer",
     "faq",
     "buy"
   ]
