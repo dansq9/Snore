@@ -102,8 +102,12 @@
   /* ------------------------------------------------------------------ */
 
   function init() {
-    var buyBox = document.getElementById('tiers') || document.getElementById('buy');
-    if (!buyBox) return; /* No buy-box on this page — skip FAB */
+    var anchor = document.getElementById('tiers') || document.getElementById('buy');
+    if (!anchor) return; /* No buy-box on this page — skip FAB */
+
+    /* Trigger on the buy buttons when present, so the FAB appears exactly
+       when they scroll out of view (falls back to the buy-box anchor). */
+    var trigger = document.querySelector('.ns-pdp__ctas') || anchor;
 
     var footer = document.querySelector('footer, .ns-footer');
     var fab    = createFab();
@@ -111,25 +115,27 @@
     updateFab(fab);
     document.addEventListener('ns:selection', function () { updateFab(fab); });
 
-    var buyBoxVisible  = true;
-    var footerVisible  = false;
+    var scrolledPast  = false; /* buy actions have scrolled ABOVE the viewport */
+    var footerVisible = false;
 
     function evaluate() {
-      if (!buyBoxVisible && !footerVisible) {
+      if (scrolledPast && !footerVisible) {
         showFab(fab);
       } else {
         hideFab(fab);
       }
     }
 
-    /* Observe the buy-box — FAB appears when it exits viewport */
+    /* Show the FAB only once the buy actions have scrolled ABOVE the top of
+       the viewport — not while they're still below the fold on page load. */
     var buyObserver = new IntersectionObserver(function (entries) {
-      buyBoxVisible = entries[0].isIntersecting;
+      var entry = entries[0];
+      scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
       evaluate();
     }, { threshold: 0 });
-    buyObserver.observe(buyBox);
+    buyObserver.observe(trigger);
 
-    /* Observe the footer — FAB hides when footer is visible */
+    /* Hide again once the footer comes into view */
     if (footer) {
       var footerObserver = new IntersectionObserver(function (entries) {
         footerVisible = entries[0].isIntersecting;
