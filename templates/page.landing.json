@@ -259,30 +259,6 @@
         "item_4_body": "Soft, breathable fabric and a skin-safe, latex-free adhesive. It holds over a beard, peels off clean, and by night two you'll forget it's on."
       }
     },
-    "expectations": {
-      "type": "ns-landing-expectations",
-      "settings": {
-        "kicker": "YOUR FIRST 30 NIGHTS",
-        "heading": "What to expect when you start",
-        "card_1_night": "NIGHT 1-3",
-        "card_1_title": "You'll notice it's there",
-        "card_1_body": "That's normal. Most people are surprised how gentle it feels. Some wake up with less dry mouth as early as night one.",
-        "card_2_night": "NIGHT 7",
-        "card_2_title": "A habit is forming",
-        "card_2_body": "Nasal breathing starts to feel natural. Snoring noticeably reducing. Your partner may comment before you notice yourself.",
-        "card_3_night": "NIGHT 21-30",
-        "card_3_title": "A different baseline",
-        "card_3_body": "Deeper sleep. Less brain fog. More energy in the morning. This is your sleep now, not a temporary fix.",
-        "offer_lead": "Tired of",
-        "offer_head": "waking up exhausted?",
-        "offer_body": "Mouth breathing dries your airway, triggers snoring, and fragments your sleep. NightSeals keeps your lips sealed so your nose can do its job. One strip. Three seconds. Every night.",
-        "offer_pill_1": "Beard-proof",
-        "offer_pill_2": "Hypoallergenic",
-        "offer_pill_3": "No residue",
-        "offer_cta": "Try NightSeals from $0.56/night →",
-        "offer_note": "30-night money-back guarantee"
-      }
-    },
     "partners": {
       "type": "ns-landing-reviews",
       "settings": {
@@ -364,7 +340,6 @@
     "reviews_carousel",
     "comparison",
     "materials",
-    "expectations",
     "partners",
     "launch_offer",
     "faq",
