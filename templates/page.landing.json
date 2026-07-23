@@ -25,7 +25,7 @@
     "nasal_compare": { "type": "ns-landing-nasal-compare", "settings": {} },
     "nasal_fix": { "type": "ns-landing-nasal-fix", "settings": {} },
     "how": { "type": "ns-landing-how", "settings": {} },
-    "timeline": { "type": "ns-timeline", "settings": {} },
+    "timeline": { "type": "ns-timeline", "settings": { "nights": 60 } },
     "shop": { "type": "ns-landing-shop", "settings": {} },
     "reviews_carousel": {
       "type": "ns-reviews-carousel",
@@ -36,7 +36,7 @@
         "r4": { "type": "text_review", "settings": { "quote": "I was nervous about taping my mouth shut. Took two nights to forget it was there.", "name": "Priya N." } },
         "r5": { "type": "image_review", "settings": { "caption": "Partner approved", "reviewer": "Elise · Night 30" } },
         "r6": { "type": "text_review", "settings": { "quote": "It's the cheapest thing in my sleep stack and the one that works.", "name": "Alex D." } },
-        "r7": { "type": "image_review", "settings": { "caption": "Total reset", "reviewer": "Dan · Night 90" } }
+        "r7": { "type": "image_review", "settings": { "caption": "Total reset", "reviewer": "Dan · Night 58" } }
       },
       "block_order": ["r1", "r2", "r3", "r4", "r5", "r6", "r7"],
       "settings": {}

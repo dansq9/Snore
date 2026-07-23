@@ -1,3 +1,14 @@
+{%- comment -%}
+  ns-timeline — "Your N-night upgrade" sleep-quality trajectory chart.
+  Shared by the landing (nights = 60, the limited-time offer) and the PDP
+  (nights = 90). The `nights` setting drives the heading, x-axis and goal
+  labels so each page stays internally consistent with what it sells.
+{%- endcomment -%}
+{%- liquid
+  assign nights = section.settings.nights | default: 90
+  assign day_1 = nights | divided_by: 3
+  assign day_2 = nights | times: 2 | divided_by: 3
+-%}
 <style>
   .ns-timeline {
     padding: clamp(52px, 9vw, 88px) 24px;
@@ -149,8 +160,8 @@
   <div class="ns-timeline__inner">
 
     <div class="ns-timeline__header">
-      <p class="ns-timeline__kicker">THE FIRST 90 NIGHTS</p>
-      <h2 class="ns-timeline__title">Your 90-night upgrade</h2>
+      <p class="ns-timeline__kicker">THE FIRST {{ nights }} NIGHTS</p>
+      <h2 class="ns-timeline__title">Your {{ nights }}-night upgrade</h2>
       <p class="ns-timeline__subtitle">
         <span>Start tonight, feel the difference by <strong id="ns-date-30">---</strong>.</span>
       </p>
@@ -192,15 +203,15 @@
 
         <!-- X-axis labels -->
         <text x="100" y="248" text-anchor="middle" class="nst-ax" fill="#8A93A3" font-weight="600">DAY 0</text>
-        <text x="360" y="248" text-anchor="middle" class="nst-ax" fill="#8A93A3" font-weight="600">DAY 30</text>
-        <text x="600" y="248" text-anchor="middle" class="nst-ax" fill="#8A93A3" font-weight="600">DAY 60</text>
-        <text x="840" y="248" text-anchor="middle" class="nst-ax" fill="#8A93A3" font-weight="600">DAY 90</text>
+        <text x="360" y="248" text-anchor="middle" class="nst-ax" fill="#8A93A3" font-weight="600">DAY {{ day_1 }}</text>
+        <text x="600" y="248" text-anchor="middle" class="nst-ax" fill="#8A93A3" font-weight="600">DAY {{ day_2 }}</text>
+        <text x="840" y="248" text-anchor="middle" class="nst-ax" fill="#8A93A3" font-weight="600">DAY {{ nights }}</text>
 
         <!-- Start label -->
         <text x="120" y="272" text-anchor="middle" class="nst-badge" fill="#D9A04B">YOU ARE HERE</text>
 
         <!-- End label -->
-        <text x="820" y="16" text-anchor="middle" class="nst-badge" fill="#D9A04B">GOAL: NIGHT 90</text>
+        <text x="820" y="16" text-anchor="middle" class="nst-badge" fill="#D9A04B">GOAL: NIGHT {{ nights }}</text>
       </svg>
     </div>
 
@@ -218,7 +229,7 @@
       </div>
 
       <div class="ns-timeline__card ns-timeline__card--dark">
-        <p class="ns-timeline__badge">NIGHT 90 &middot; GOAL</p>
+        <p class="ns-timeline__badge">NIGHT {{ nights }} &middot; GOAL</p>
         <h3 class="ns-timeline__card-title">You stop thinking about it.</h3>
         <p class="ns-timeline__card-desc">It's just part of the routine now: brush, strip, sleep. The snoring discussion is over.</p>
       </div>
@@ -246,7 +257,9 @@
 {
   "name": "Timeline",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    { "type": "number", "id": "nights", "label": "Supply length (nights)", "default": 90, "info": "Drives the heading, x-axis and goal labels. Landing = 60 (the limited-time offer); PDP = 90." }
+  ],
   "presets": [
     {
       "name": "Timeline"
