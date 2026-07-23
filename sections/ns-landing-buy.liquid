@@ -1,81 +1,20 @@
 {%- comment -%}
-  Landing closer: guarantee + single limited-time offer card + minimal footer.
-  The landing sells ONE product (the 60-night limited-time offer), so this
-  block shows a single offer card, not a multi-tier selector. Point "Offer
-  product" at the same SKU used by the shop module (ns-landing-shop). "Add to
-  cart" uses the theme AJAX drawer (window.NsCart). This section also owns the
-  page's minimal footer (medical disclaimer + policy links).
+  Landing closer: a lightweight guarantee reassurance + one compact CTA that
+  points back to the single offer module (#tiers, in ns-landing-shop). It does
+  NOT repeat the price/offer card (that lives in the shop module and the launch
+  offer), so it stays light and can't show a wrong pack. This section also owns
+  the page's minimal footer (medical disclaimer + policy links).
 {%- endcomment -%}
-
-{%- liquid
-  assign offer_product = section.settings.offer_product
-  if offer_product == blank
-    assign offer_product = settings.featured_product
-  endif
-  if offer_product == blank
-    assign offer_product = collections.all.products.first
-  endif
--%}
 
 <section id="buy" class="ns-lbuy">
   <div class="ns-lbuy__inner">
     <div class="ns-lbuy__head">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 11.5l2 2 4-4"></path></svg>
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 11.5l2 2 4-4"></path></svg>
       <h2 class="ns-lbuy__heading">{{ section.settings.heading | default: 'The NightSeals Guarantee' }}</h2>
     </div>
     <p class="ns-lbuy__body">We're confident NightSeals will change how you sleep. That's why we offer a <span class="ns-lbuy__body-strong">hassle-free, money-back guarantee.</span> 30 nights. No questions asked.</p>
 
-    {%- if offer_product != blank -%}
-      {%- liquid
-        assign ns_variant = offer_product.selected_or_first_available_variant
-        assign ns_price = ns_variant.price
-        assign ns_compare = ns_variant.compare_at_price
-
-        # Per-night price, derived from a night-denominated variant title
-        # ("60 Nights"). Rounded to the nearest cent. Guarded so a non-night
-        # title never yields a wrong number.
-        assign per_night = ''
-        assign nights = ns_variant.title | split: ' ' | first | split: '-' | first | times: 1
-        assign title_lc = ns_variant.title | downcase
-        if nights >= 7 and title_lc contains 'night'
-          assign half = nights | divided_by: 2
-          assign per_cents = ns_price | plus: half | divided_by: nights
-          assign per_night = per_cents | money
-        endif
-
-        # Savings percentage off the compare-at price.
-        assign save_pct = 0
-        if ns_compare > ns_price
-          assign save_diff = ns_compare | minus: ns_price
-          assign save_pct = save_diff | times: 100 | divided_by: ns_compare
-        endif
-      -%}
-
-      <div class="ns-lbuy__offer">
-        <div class="ns-lbuy__offer-left">
-          <div class="ns-lbuy__offer-label">{{ ns_variant.title | default: '60 Nights' }}</div>
-          {%- if per_night != blank -%}
-            <div class="ns-lbuy__offer-per">{{ per_night }} / night</div>
-          {%- endif -%}
-        </div>
-        <div class="ns-lbuy__offer-right">
-          {%- if save_pct > 0 -%}
-            <div class="ns-lbuy__offer-save">SAVE {{ save_pct }}%</div>
-          {%- endif -%}
-          <div class="ns-lbuy__offer-price">{{ ns_price | money }}</div>
-          {%- if ns_compare > ns_price -%}
-            <div class="ns-lbuy__offer-compare">{{ ns_compare | money }}</div>
-          {%- endif -%}
-        </div>
-      </div>
-
-      <button type="button" class="ns-lbuy__cta" id="ns-lbuy-add" data-variant-id="{{ ns_variant.id }}">
-        Add to cart · <span id="ns-lbuy-price">{{ ns_price | money }}</span>
-      </button>
-    {%- else -%}
-      <a href="{% render 'shop-url' %}" class="ns-lbuy__cta ns-lbuy__cta--link">Shop NightSeals</a>
-      <p class="ns-lbuy__note">Point "Offer product" at your 60-night limited-time SKU under this section's settings to enable one-tap checkout.</p>
-    {%- endif -%}
+    <a href="{{ section.settings.cta_url | default: '#tiers' }}" class="ns-lbuy__cta">{{ section.settings.cta_label | default: 'Claim your 60-night offer →' }}</a>
 
     <div class="ns-lbuy__trust">30-night money-back guarantee · Drug-free</div>
   </div>
@@ -93,43 +32,26 @@
 </footer>
 
 <style>
-  .ns-lbuy { background: #10182B; color: #F2F4F7; padding: clamp(40px,7vw,88px) clamp(14px,4vw,32px); border-top: 1px solid rgba(217,160,75,.35); }
+  .ns-lbuy { background: #10182B; color: #F2F4F7; padding: clamp(32px,5vw,60px) clamp(14px,4vw,32px); border-top: 1px solid rgba(217,160,75,.35); }
   .ns-lbuy__inner { max-width: 520px; margin: 0 auto; text-align: center; }
   .ns-lbuy__head {
-    display: flex; align-items: center; gap: 16px; justify-content: center;
-    margin-bottom: clamp(20px,4vw,28px);
+    display: flex; align-items: center; gap: 14px; justify-content: center;
+    margin-bottom: clamp(16px,3vw,22px);
   }
-  .ns-lbuy__heading { font-size: clamp(24px,5vw,38px); letter-spacing: -.02em; font-weight: 800; margin: 0; }
+  .ns-lbuy__heading { font-size: clamp(22px,4.4vw,32px); letter-spacing: -.02em; font-weight: 800; margin: 0; }
   .ns-lbuy__body {
-    font-size: clamp(14px,3vw,16px); line-height: 1.55; color: rgba(242,244,247,.65);
-    margin: 0 auto 28px; max-width: 480px; text-wrap: pretty;
+    font-size: clamp(14px,3vw,15.5px); line-height: 1.55; color: rgba(242,244,247,.65);
+    margin: 0 auto 24px; max-width: 460px; text-wrap: pretty;
   }
   .ns-lbuy__body-strong { font-weight: 800; color: #F2F4F7; }
 
-  /* Single limited-time offer card (amber-accented, matches the active tier
-     styling the multi-tier selector used to have). */
-  .ns-lbuy__offer {
-    display: flex; align-items: center; justify-content: space-between; gap: 14px;
-    text-align: left; padding: 18px 20px; margin-bottom: 22px;
-    border-radius: 16px; border: 2px solid #D9A04B; background: rgba(217,160,75,.12);
-  }
-  .ns-lbuy__offer-label { font-size: 18px; font-weight: 800; color: #F2F4F7; }
-  .ns-lbuy__offer-per { font-size: 12.5px; color: rgba(242,244,247,.55); margin-top: 3px; }
-  .ns-lbuy__offer-right { text-align: right; }
-  .ns-lbuy__offer-save { font-size: 11px; font-weight: 800; letter-spacing: .08em; color: #E5B267; margin-bottom: 2px; }
-  .ns-lbuy__offer-price { font-size: 22px; font-weight: 800; color: #F2F4F7; line-height: 1.05; }
-  .ns-lbuy__offer-compare { font-size: 13px; color: rgba(242,244,247,.55); text-decoration: line-through; }
-
   .ns-lbuy__cta {
-    display: block; width: 100%; background: #D9A04B; color: #10182B; text-align: center;
-    padding: 17px 24px; border-radius: 999px; font-size: 16.5px; font-weight: 700;
-    border: none; cursor: pointer; font-family: var(--font-primary); text-decoration: none;
-    box-shadow: 0 8px 24px rgba(217,160,75,.25);
+    display: inline-block; background: #D9A04B; color: #10182B; text-align: center;
+    padding: 15px 34px; border-radius: 999px; font-size: 16px; font-weight: 700;
+    text-decoration: none; box-shadow: 0 8px 24px rgba(217,160,75,.25);
     transition: background .2s, box-shadow .2s;
   }
   .ns-lbuy__cta:hover { background: #E5B267; color: #10182B; box-shadow: 0 10px 28px rgba(217,160,75,.32); }
-  .ns-lbuy__cta--link { width: auto; display: inline-block; }
-  .ns-lbuy__note { font-size: 12px; color: rgba(242,244,247,.5); margin: 14px 0 0; }
   .ns-lbuy__trust { margin-top: 14px; font-size: 12px; color: rgba(242,244,247,.45); }
 
   .ns-lbuy__footer { max-width: 860px; margin: 0 auto; padding: clamp(20px,4vw,40px) clamp(14px,4vw,32px); }
@@ -143,32 +65,13 @@
   .ns-lbuy__footer-links a:hover { color: #566072; }
 </style>
 
-<script>
-  (function () {
-    var addBtn = document.getElementById('ns-lbuy-add');
-    if (!addBtn) return;
-    addBtn.addEventListener('click', function () {
-      var id = addBtn.getAttribute('data-variant-id');
-      if (!id) return;
-      if (window.NsCart && typeof window.NsCart.add === 'function') {
-        window.NsCart.add(id, 1).catch(function () {});
-      } else {
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: parseInt(id, 10), quantity: 1 }] })
-        }).then(function () { window.location.href = '/cart'; });
-      }
-    });
-  })();
-</script>
-
 {% schema %}
 {
   "name": "Landing Buy",
   "settings": [
-    { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The 60-night limited-time SKU. Use the same product as the shop module. Falls back to the store's Main product." },
-    { "type": "text", "id": "heading", "label": "Guarantee heading", "default": "The NightSeals Guarantee" }
+    { "type": "text", "id": "heading", "label": "Guarantee heading", "default": "The NightSeals Guarantee" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Claim your 60-night offer →" },
+    { "type": "url", "id": "cta_url", "label": "CTA target", "info": "Defaults to the offer module higher up the page (#tiers)." }
   ],
   "presets": [
     { "name": "Landing Buy" }
