@@ -334,7 +334,7 @@
     "buy": {
       "type": "ns-landing-buy",
       "settings": {
-        "heading": "The NightSeals Guarantee",
+        "heading": "The NightSeal Guarantee",
         "cta_label": "Claim your 60-night offer →",
         "cta_url": ""
       }
