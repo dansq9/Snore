@@ -9,13 +9,22 @@
  */
 {
   "sections": {
-    "hero": {
-      "type": "ns-home-hero",
+    "ns_hero_cinematic_NyNKMH": {
+      "type": "ns-hero-cinematic",
+      "name": "Cinematic Hero",
       "settings": {
-        "hero_image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_23_50_PM.png",
-        "heading": "Better sleep is right under your nose",
-        "description": "Quieter nights, no dry mouth, and mornings that actually feel like mornings. NightSeals is a single strip of beard-proof mouth tape that trains you to breathe through your nose while you sleep. Try it for 30 nights or get your money back.",
-        "cta_text": "Get NightSeals from $24.95"
+        "hero_image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_02_51_58_PM.png",
+        "image_position": "center",
+        "show_badge": true,
+        "badge_line1": "2,300+ Reviews",
+        "badge_line2": "Beard-friendly · Skin-safe · 30-night guarantee",
+        "headline": "YOUR MOUTH IS RUINING YOUR SLEEP",
+        "subhead_lead": "8 in 10 slept quieter",
+        "subhead_stat": "",
+        "cta_label": "Sleep better · Save 40% →",
+        "cta_url": "",
+        "cta_bg": "#D9A04B",
+        "cta_text_color": "#10182B"
       }
     },
     "ns_product_hero_offer_7xpHyP": {
@@ -440,7 +449,7 @@
     }
   },
   "order": [
-    "hero",
+    "ns_hero_cinematic_NyNKMH",
     "ns_product_hero_offer_7xpHyP",
     "problem",
     "ns_reviews_carousel_P8VQqU",
