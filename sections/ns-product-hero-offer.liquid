@@ -1,0 +1,551 @@
+{%- comment -%}
+  ns-product-hero-offer — single-offer variant of the PDP hero.
+
+  For the limited-time 60-night product, assigned via the "offer" product
+  template (templates/product.offer.json). Unlike ns-product-hero (which
+  renders a 30/90/180 tier selector + Subscribe & Save), this leads with one
+  price lockup — sale price, struck compare-at, save %, and per-night — so a
+  single-SKU product reads clean, the way Hostage Tape's hero does.
+
+  It reuses the tested .ns-pdp__* markup, styles and Buy-now / Add-to-cart JS
+  from the PDP hero, and drives the price live off the product's own variant.
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign nights_count = 0
+  if v.title != blank
+    assign nights_count = v.title | split: ' ' | first | plus: 0
+  endif
+  assign per_night_label = ''
+  if v.metafields.custom.per_night != blank
+    assign per_night_label = v.metafields.custom.per_night
+  elsif nights_count >= 7
+    assign half = nights_count | divided_by: 2
+    assign per_cents = v.price | plus: half | divided_by: nights_count
+    assign per_night_label = per_cents | money
+  endif
+-%}
+
+<style>
+  .ns-pdp {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 48px) 24px;
+  }
+
+  .ns-pdp__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+    column-gap: clamp(32px, 5vw, 56px);
+    row-gap: clamp(16px, 4vw, 28px);
+  }
+
+  /* ── Left column: Gallery ── */
+  .ns-pdp__gallery { position: relative; }
+  @media (min-width: 801px) {
+    .ns-pdp__gallery { position: sticky; top: 96px; align-self: start; }
+  }
+  .ns-pdp__main-img {
+    height: min(460px, 100vw);
+    border-radius: 22px;
+    overflow: hidden;
+    background: #EAEDF2;
+  }
+  .ns-pdp__main-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ns-pdp__thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .ns-pdp__thumb {
+    height: min(120px, 28vw);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #EAEDF2;
+    border: 2px solid transparent;
+    padding: 0;
+    width: 100%;
+    cursor: pointer;
+    display: block;
+    transition: border-color .15s;
+  }
+  .ns-pdp__thumb--active { border-color: #10182B; }
+  .ns-pdp__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .ns-pdp__brand { margin-top: 18px; }
+  .ns-pdp__wordmark {
+    font-weight: 800;
+    font-size: clamp(20px, 2.6vw, 26px);
+    letter-spacing: .18em;
+    color: #10182B;
+    margin: 0;
+  }
+  .ns-pdp__stars-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .ns-pdp__stars-icons { color: #D9A04B; font-size: 16px; letter-spacing: 2px; }
+  .ns-pdp__stars-link { font-size: 13.5px; font-weight: 600; color: #566072; text-decoration: none; }
+  .ns-pdp__stars-link:hover { text-decoration: underline; }
+  .ns-pdp__price-line { font-size: 14px; color: #8A93A3; margin-top: 4px; }
+
+  /* ── Right column: Buy box ── */
+  .ns-pdp__buybox { display: flex; flex-direction: column; }
+  .ns-pdp__description {
+    font-size: clamp(20px, 2.2vw, 24px);
+    font-weight: 700;
+    line-height: 1.35;
+    color: #10182B;
+    margin: 0;
+  }
+  .ns-pdp__highlight {
+    background: #10182B;
+    color: #F7F8FA;
+    padding: 1px 8px 3px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  /* Benefit pills */
+  .ns-pdp__pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0; }
+  .ns-pdp__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1.5px solid rgba(16, 24, 43, .13);
+    font-size: 13px;
+    font-weight: 600;
+    color: #10182B;
+  }
+  .ns-pdp__pill-check { color: #B27E33; font-weight: 800; }
+
+  /* Offer label (also the #tiers scroll anchor for the FAB / CTAs) */
+  .ns-pdp__offer-label {
+    font-size: 12px;
+    letter-spacing: .16em;
+    font-weight: 800;
+    color: #B27E33;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    /* CTAs and the floating bar jump to #tiers; land at the top of the offer. */
+    scroll-margin-top: 96px;
+  }
+  .ns-pdp__offer-label::before {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: #D9A04B;
+    border-radius: 2px;
+    margin-bottom: 12px;
+  }
+
+  /* Single-offer price lockup (no fake tier selector) */
+  .ns-pdp__offer { margin: 0 0 4px; }
+  .ns-pdp__price-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 0 0 6px;
+  }
+  .ns-pdp__price-lg {
+    font-size: clamp(40px, 8vw, 54px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1;
+    color: #10182B;
+  }
+  .ns-pdp__compare { font-size: 20px; color: #8A93A3; text-decoration: line-through; }
+  .ns-pdp__save {
+    align-self: center;
+    background: #D9A04B;
+    color: #10182B;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 999px;
+  }
+  .ns-pdp__offer-sub { font-size: 13.5px; color: #566072; margin: 0; }
+
+  /* Dual CTA buttons */
+  .ns-pdp__ctas {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .ns-pdp__btn-buy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #10182B;
+    color: #F7F8FA;
+    font-size: clamp(12.5px, 3.2vw, 15px);
+    font-weight: 700;
+    padding: 15px 14px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .2s;
+  }
+  .ns-pdp__btn-buy:hover { opacity: 0.88; }
+  .ns-pdp__btn-buy-sep { opacity: 0.45; }
+  .ns-pdp__btn-buy-price { color: #E5B267; font-weight: 800; }
+  .ns-pdp__btn-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: #10182B;
+    font-size: clamp(12.5px, 3.2vw, 15px);
+    font-weight: 700;
+    padding: 15px 14px;
+    border-radius: 999px;
+    border: 2px solid rgba(16, 24, 43, .18);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .2s;
+  }
+  .ns-pdp__btn-cart:hover { opacity: 0.88; }
+
+  /* Trust line */
+  .ns-pdp__trust {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin-top: 16px;
+    font-size: 12.5px;
+    color: #8A93A3;
+    font-weight: 500;
+  }
+  .ns-pdp__trust-item { display: inline-flex; align-items: center; white-space: nowrap; }
+  .ns-pdp__trust-item:not(:last-child)::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #D9A04B;
+    margin-left: 10px;
+    flex: none;
+  }
+
+  /* Accordions */
+  .ns-pdp__accordions { margin-top: 32px; border-top: 1.5px solid rgba(16, 24, 43, .10); }
+  .ns-pdp__accordion { border-bottom: 1.5px solid rgba(16, 24, 43, .10); }
+  .ns-pdp__accordion summary {
+    padding: 18px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #10182B;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+  }
+  .ns-pdp__accordion summary::-webkit-details-marker { display: none; }
+  .ns-pdp__accordion summary::marker { display: none; content: ''; }
+  .ns-pdp__accordion summary::after {
+    content: '+';
+    font-size: 20px;
+    font-weight: 600;
+    color: #B27E33;
+    transition: transform .2s;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+  .ns-pdp__accordion[open] summary::after { content: '\2212'; }
+  .ns-pdp__accordion-body {
+    padding: 0 0 18px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #566072;
+  }
+
+  /* Hidden form */
+  .ns-pdp__form { position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none; }
+</style>
+
+<section class="ns-pdp">
+  <div class="ns-pdp__grid">
+
+    <!-- ── Left column: Gallery ── -->
+    <div class="ns-pdp__gallery">
+      {%- if product != blank and product.images.size > 0 -%}
+        <div class="ns-pdp__main-img">
+          <img id="ns-opdp-main-img"
+               src="{{ product.featured_image | image_url: width: 1200 }}"
+               alt="{{ product.featured_image.alt | escape | default: product.title }}"
+               width="1200" height="1200" loading="eager">
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="ns-pdp__thumbs">
+            {%- for image in product.images limit: 4 -%}
+              <button type="button" class="ns-pdp__thumb{% if image == product.featured_image %} ns-pdp__thumb--active{% endif %}" data-opdp-thumb data-full="{{ image | image_url: width: 1200 }}" aria-label="Show image {{ forloop.index }}">
+                {{ image | image_url: width: 400 | image_tag: loading: 'lazy', alt: image.alt }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        {%- assign fb_main = section.settings.main_image -%}
+        {%- if fb_main != blank -%}{%- assign fb_main_url = fb_main | image_url: width: 1200 -%}{%- else -%}{%- assign fb_main_url = 'nightseals-pouch.png' | asset_url -%}{%- endif -%}
+        {%- if section.settings.thumb_1 != blank -%}{%- assign fb_thumb2_url = section.settings.thumb_1 | image_url: width: 1200 -%}{%- else -%}{%- assign fb_thumb2_url = 'nightseals-pouch-nobg.png' | asset_url -%}{%- endif -%}
+        <div class="ns-pdp__main-img">
+          <img id="ns-opdp-main-img" src="{{ fb_main_url }}" alt="{{ product.title | default: 'NightSeals' }}" width="1200" height="1200" loading="eager">
+        </div>
+        <div class="ns-pdp__thumbs">
+          <button type="button" class="ns-pdp__thumb ns-pdp__thumb--active" data-opdp-thumb data-full="{{ fb_main_url }}" aria-label="Show image 1">
+            <img src="{{ fb_main_url }}" alt="" width="400" height="400" loading="lazy">
+          </button>
+          <button type="button" class="ns-pdp__thumb" data-opdp-thumb data-full="{{ fb_thumb2_url }}" aria-label="Show image 2">
+            <img src="{{ fb_thumb2_url }}" alt="" width="400" height="400" loading="lazy">
+          </button>
+          {%- if section.settings.thumb_2 != blank -%}
+            <button type="button" class="ns-pdp__thumb" data-opdp-thumb data-full="{{ section.settings.thumb_2 | image_url: width: 1200 }}" aria-label="Show image 3">
+              {{ section.settings.thumb_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+            </button>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="ns-pdp__brand">
+        <p class="ns-pdp__wordmark">NIGHTSEALS</p>
+        <div class="ns-pdp__stars-row">
+          <span class="ns-pdp__stars-icons">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <a href="#reviews" class="ns-pdp__stars-link">4.8 &middot; 2,341 reviews</a>
+        </div>
+        {%- if product != blank and product.price_min > 0 -%}
+          <p class="ns-pdp__price-line">{% if per_night_label != blank %}{{ per_night_label }} a night &middot; {% endif %}your quieter nights start here</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <!-- ── Right column: Buy box ── -->
+    <div class="ns-pdp__buybox">
+
+      <!-- Hidden product form -->
+      {%- if product != blank -%}
+      <div class="ns-pdp__form">
+        {% form 'product', product, id: 'ns-opdp-form' %}
+          <input type="hidden" name="id" value="{{ v.id }}" id="ns-opdp-variant-input">
+        {% endform %}
+      </div>
+      {%- endif -%}
+
+      <!-- Description -->
+      <p class="ns-pdp__description">
+        {{ section.settings.description | default: 'Gentle, ' }}<span class="ns-pdp__highlight">{{ section.settings.description_highlight | default: 'beard-proof' }}</span> {{ section.settings.description_tail | default: 'strips that keep your lips sealed overnight, so your nose does the breathing.' }}
+      </p>
+
+      <!-- Benefit pills -->
+      <div class="ns-pdp__pills">
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> May reduce snoring</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> No dry mouth</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> Beard-proof hold</span>
+        <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> 3 seconds a night</span>
+      </div>
+
+      <!-- Single offer lockup -->
+      <p class="ns-pdp__offer-label" id="tiers">{{ section.settings.offer_label | default: 'Your limited-time offer' }}</p>
+      {%- if product == blank or v == blank -%}
+        <div class="ns-pdp__offer">
+          <div class="ns-pdp__price-row"><span class="ns-pdp__price-lg">$29.90</span></div>
+          <p class="ns-pdp__offer-sub">Assign this template to your 60-night product to show its live price.</p>
+        </div>
+      {%- else -%}
+        <div class="ns-pdp__offer">
+          <div class="ns-pdp__price-row">
+            <span class="ns-pdp__price-lg">{{ v.price | money }}</span>
+            {%- if v.compare_at_price > v.price -%}
+              <span class="ns-pdp__compare">{{ v.compare_at_price | money }}</span>
+              {%- assign savings = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price -%}
+              <span class="ns-pdp__save">Save {{ savings }}%</span>
+            {%- endif -%}
+          </div>
+          <p class="ns-pdp__offer-sub">{% if per_night_label != blank %}{{ per_night_label }} / night{% if nights_count > 0 %} &middot; {% endif %}{% endif %}{% if nights_count > 0 %}{{ nights_count }}-night supply{% endif %}</p>
+        </div>
+        {%- comment -%} Feeds the floating buy bar (fab.js reads .ns-pdp__tier--active for price + nights). Inert, never shown. {%- endcomment -%}
+        <div class="ns-pdp__tier--active" data-variant-price="{{ v.price | money }}"{% if nights_count > 0 %} data-nights="{{ nights_count }}"{% endif %} style="display:none"></div>
+      {%- endif -%}
+
+      <!-- Dual CTA buttons -->
+      <div class="ns-pdp__ctas">
+        <button type="button" class="ns-pdp__btn-buy" id="ns-opdp-buy-now">
+          <span class="ns-pdp__btn-buy-label">Buy now</span>
+          {%- if v != blank -%}
+            <span class="ns-pdp__btn-buy-sep" aria-hidden="true">&middot;</span>
+            <span class="ns-pdp__btn-buy-price">{{ v.price | money }}</span>
+          {%- endif -%}
+        </button>
+        <button type="button" class="ns-pdp__btn-cart" data-opdp-add-to-cart>
+          Add to cart
+        </button>
+      </div>
+
+      <!-- Trust line -->
+      <div class="ns-pdp__trust">
+        <span class="ns-pdp__trust-item">100% money-back</span>
+        <span class="ns-pdp__trust-item">Free shipping $50+</span>
+        <span class="ns-pdp__trust-item">Ships in 3-5 days</span>
+      </div>
+
+      <!-- Product accordions -->
+      <div class="ns-pdp__accordions">
+        <details class="ns-pdp__accordion">
+          <summary>How to apply</summary>
+          <div class="ns-pdp__accordion-body">
+            Peel the backing strip apart to expose the adhesive. Place onto dry, lightly pursed lips and press to secure. Sleep comfortably &mdash; the flexible design stays put all night. In the morning, lift a corner and peel gently sideways.
+          </div>
+        </details>
+
+        <details class="ns-pdp__accordion">
+          <summary>Materials &amp; safety</summary>
+          <div class="ns-pdp__accordion-body">
+            Soft, breathable, latex-free fabric with a hypoallergenic, skin-safe acrylic adhesive. For adults who can breathe comfortably through their nose. Skip nights when you're congested or have had a heavy night out.
+          </div>
+        </details>
+
+        <details class="ns-pdp__accordion">
+          <summary>Shipping &amp; returns</summary>
+          <div class="ns-pdp__accordion-body">
+            Orders ship within 24-48 hours from U.S. warehouses, free over $50. Try it for 30 nights. If it's not for you, email us for a full refund. No return label needed.
+          </div>
+        </details>
+
+        <details class="ns-pdp__accordion">
+          <summary>Disclaimer</summary>
+          <div class="ns-pdp__accordion-body">
+            NightSeals is not a medical device and is not intended to diagnose, treat, cure, or prevent any disease or health condition. Do not use if you have difficulty breathing through your nose, severe heart or breathing problems, or after consuming alcohol or sedatives. Remove immediately if you feel discomfort. Consult a healthcare professional before starting any new breathing practice.
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var root = document.currentScript.previousElementSibling;
+    while (root && !(root.classList && root.classList.contains('ns-pdp'))) {
+      root = root.previousElementSibling;
+    }
+    if (!root) root = document.querySelector('.ns-pdp');
+    if (!root) return;
+
+    var variantInput = document.getElementById('ns-opdp-variant-input');
+    var buyBtn = document.getElementById('ns-opdp-buy-now');
+
+    /* ── Gallery thumbnails ── */
+    var thumbs = root.querySelectorAll('[data-opdp-thumb]');
+    var mainImg = document.getElementById('ns-opdp-main-img');
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var full = thumb.getAttribute('data-full');
+        if (full && mainImg) mainImg.src = full;
+        thumbs.forEach(function (t) { t.classList.remove('ns-pdp__thumb--active'); });
+        thumb.classList.add('ns-pdp__thumb--active');
+      });
+    });
+
+    function currentItem() {
+      var id = variantInput ? variantInput.value : null;
+      if (!id) return null;
+      return { id: parseInt(id, 10), quantity: 1 };
+    }
+
+    /* ── Add to cart — opens the drawer (and fires confetti) via NsCart ── */
+    var cartBtn = root.querySelector('[data-opdp-add-to-cart]');
+    if (cartBtn) {
+      cartBtn.addEventListener('click', function () {
+        var item = currentItem();
+        if (!item) return;
+        if (window.NsCart && typeof window.NsCart.add === 'function') {
+          window.NsCart.add(item.id, 1).catch(function () {});
+        } else {
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [item] })
+          })
+            .then(function () { window.location.href = '/cart'; })
+            .catch(function () { window.location.href = '/cart'; });
+        }
+      });
+    }
+
+    /* ── Buy now — checkout with ONLY this item (clear cart, add, go to checkout) ── */
+    if (buyBtn) {
+      buyBtn.addEventListener('click', function () {
+        var item = currentItem();
+        if (!item) return;
+        buyBtn.disabled = true;
+
+        function fail(err) {
+          console.error('[NightSeals] Buy now could not start checkout:', err);
+          buyBtn.disabled = false;
+        }
+
+        function addAndCheckout() {
+          return fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ items: [item] })
+          })
+            .then(function (res) {
+              return res.json().then(function (data) {
+                if (!res.ok) { throw new Error((data && (data.description || data.message)) || 'Add to cart failed'); }
+                return data;
+              });
+            })
+            .then(function () { window.location.href = '/checkout'; });
+        }
+
+        fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
+          .then(function (r) { return r.json(); })
+          .then(function (cart) {
+            if (cart && cart.item_count > 0) {
+              return fetch('/cart/clear.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+              }).then(function () { return addAndCheckout(); });
+            }
+            return addAndCheckout();
+          })
+          .catch(fail);
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product Hero Offer",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Single-offer hero for the limited-time product. Assign the 'offer' template to a one-variant product (Products → your product → Theme templates). The gallery uses the product's own images; the pickers below are only a fallback."
+    },
+    { "type": "text", "id": "offer_label", "label": "Offer label", "default": "Your limited-time offer" },
+    { "type": "text", "id": "description", "label": "Description lead", "default": "Gentle, " },
+    { "type": "text", "id": "description_highlight", "label": "Description highlight", "default": "beard-proof" },
+    { "type": "text", "id": "description_tail", "label": "Description tail", "default": "strips that keep your lips sealed overnight, so your nose does the breathing." },
+    { "type": "image_picker", "id": "main_image", "label": "Fallback main image" },
+    { "type": "image_picker", "id": "thumb_1", "label": "Thumbnail 1" },
+    { "type": "image_picker", "id": "thumb_2", "label": "Thumbnail 2" }
+  ],
+  "presets": [
+    { "name": "Product Hero Offer" }
+  ]
+}
+{% endschema %}
