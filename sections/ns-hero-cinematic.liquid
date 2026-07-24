@@ -1,0 +1,177 @@
+{%- comment -%}
+  ns-hero-cinematic — a full-bleed image hero modelled on the Hostage Tape
+  landing hero: a top social-proof badge, a big bold uppercase headline and a
+  stat subhead overlaid low on the image over a navy scrim, and a full-width
+  CTA. Everything (image, badge, copy, button label/link/colour) is editable,
+  and it ships as a preset so it can be added to any page or swapped in for the
+  existing hero. Brand palette (navy + amber), survey-hedged claim defaults.
+{%- endcomment -%}
+
+{%- liquid
+  case section.settings.image_position
+    when 'top'
+      assign obj_pos = '50% 16%'
+    when 'bottom'
+      assign obj_pos = '50% 84%'
+    else
+      assign obj_pos = '50% 40%'
+  endcase
+  assign img_h = 875
+  if section.settings.hero_image != blank and section.settings.hero_image.width > 0
+    assign img_h = section.settings.hero_image.height | times: 1400 | divided_by: section.settings.hero_image.width
+  endif
+-%}
+
+<section class="ns-herox" style="--herox-cta-bg: {{ section.settings.cta_bg }}; --herox-cta-color: {{ section.settings.cta_text_color }};">
+  <div class="ns-herox__media">
+    {%- if section.settings.hero_image != blank -%}
+      <img class="ns-herox__img" src="{{ section.settings.hero_image | image_url: width: 1400 }}"
+           alt="{{ section.settings.headline | escape }}" loading="eager" width="1400" height="{{ img_h }}"
+           style="object-position: {{ obj_pos }};">
+    {%- else -%}
+      <div class="ns-herox__placeholder">Add your hero image in the section settings</div>
+    {%- endif -%}
+    <div class="ns-herox__scrim" aria-hidden="true"></div>
+  </div>
+
+  {%- if section.settings.show_badge and section.settings.badge_line1 != blank -%}
+    <div class="ns-herox__badge">
+      <p class="ns-herox__badge-1"><span class="ns-herox__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>{{ section.settings.badge_line1 }}</p>
+      {%- if section.settings.badge_line2 != blank -%}
+        <p class="ns-herox__badge-2">{{ section.settings.badge_line2 }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="ns-herox__content">
+    <h1 class="ns-herox__headline">{{ section.settings.headline | default: 'YOUR MOUTH IS RUINING YOUR SLEEP' }}</h1>
+
+    {%- if section.settings.subhead_lead != blank or section.settings.subhead_stat != blank -%}
+      <p class="ns-herox__sub">
+        {%- if section.settings.subhead_lead != blank -%}{{ section.settings.subhead_lead }}{%- endif -%}
+        {%- if section.settings.subhead_stat != blank -%}
+          {%- if section.settings.subhead_lead != blank -%}<br>{%- endif -%}
+          <span class="ns-herox__stat">{{ section.settings.subhead_stat }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    <a class="ns-herox__cta" href="{% if section.settings.cta_url != blank %}{{ section.settings.cta_url }}{% else %}{% render 'shop-url' %}{% endif %}">
+      {{ section.settings.cta_label | default: 'START SLEEPING BETTER · SAVE 40% →' }}
+    </a>
+  </div>
+</section>
+
+<style>
+  .ns-herox {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: #10182B;
+    isolation: isolate;
+  }
+  @media (min-width: 700px)  { .ns-herox { min-height: 720px; } }
+  @media (min-width: 1100px) { .ns-herox { min-height: 780px; } }
+
+  .ns-herox__media { position: absolute; inset: 0; z-index: 0; }
+  .ns-herox__img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
+  .ns-herox__placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: #1c2743; color: rgba(242,244,247,.55); font-size: 15px; text-align: center; padding: 24px;
+  }
+
+  /* Dark navy scrim: readable badge up top, readable headline/CTA at the bottom,
+     the product photo left clear through the middle. */
+  .ns-herox__scrim {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: linear-gradient(to bottom,
+      rgba(16,24,43,.55) 0%,
+      rgba(16,24,43,.10) 16%,
+      rgba(16,24,43,0)   34%,
+      rgba(16,24,43,0)   44%,
+      rgba(16,24,43,.72) 74%,
+      rgba(16,24,43,.95) 100%);
+  }
+
+  .ns-herox__badge {
+    position: absolute; top: clamp(16px, 4vw, 30px); left: 50%; transform: translateX(-50%);
+    z-index: 3; text-align: center; color: #fff;
+    background: rgba(9,13,25,.5);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px; padding: 11px 20px;
+    width: max-content; max-width: calc(100% - 28px);
+  }
+  .ns-herox__badge-1 { margin: 0; font-weight: 800; font-size: clamp(14px, 4vw, 18px); letter-spacing: -.01em; }
+  .ns-herox__stars { color: #F5B301; letter-spacing: 1px; margin-right: 8px; }
+  .ns-herox__badge-2 { margin: 3px 0 0; font-size: clamp(11.5px, 3.2vw, 13.5px); color: rgba(255,255,255,.82); font-weight: 600; }
+
+  .ns-herox__content {
+    position: relative; z-index: 3;
+    width: 100%; max-width: 700px; margin: 0 auto;
+    padding: 0 clamp(18px, 5vw, 28px) clamp(22px, 5vw, 36px);
+    text-align: center; color: #fff;
+  }
+  .ns-herox__headline {
+    margin: 0 0 clamp(10px, 2.5vw, 14px);
+    font-weight: 800; text-transform: uppercase;
+    font-size: clamp(30px, 8.5vw, 56px); line-height: 1.0; letter-spacing: -.015em;
+    text-shadow: 0 2px 30px rgba(0,0,0,.45);
+    text-wrap: balance;
+  }
+  .ns-herox__sub {
+    margin: 0 auto clamp(18px, 4vw, 24px); max-width: 34ch;
+    font-size: clamp(15px, 4vw, 20px); font-weight: 600; line-height: 1.35;
+    color: rgba(255,255,255,.92); text-shadow: 0 1px 16px rgba(0,0,0,.5);
+  }
+  .ns-herox__stat { color: #E5B267; font-weight: 800; }
+
+  .ns-herox__cta {
+    display: block; width: 100%;
+    background: var(--herox-cta-bg, #D9A04B);
+    color: var(--herox-cta-color, #10182B);
+    font-weight: 800; text-transform: uppercase; letter-spacing: .02em;
+    font-size: clamp(15px, 4.2vw, 18px);
+    padding: 17px 22px; border-radius: 14px;
+    text-decoration: none; text-align: center;
+    box-shadow: 0 14px 34px rgba(0,0,0,.35);
+    transition: filter .15s;
+  }
+  .ns-herox__cta:hover { filter: brightness(1.05); }
+</style>
+
+{% schema %}
+{
+  "name": "Cinematic Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Full-bleed background. Use a tall / portrait product or lifestyle photo." },
+    { "type": "select", "id": "image_position", "label": "Image focal point", "default": "center",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "bottom", "label": "Bottom" }
+      ] },
+    { "type": "header", "content": "Top badge" },
+    { "type": "checkbox", "id": "show_badge", "label": "Show top badge", "default": true },
+    { "type": "text", "id": "badge_line1", "label": "Badge line 1", "default": "Loved by thousands of sleepers" },
+    { "type": "text", "id": "badge_line2", "label": "Badge line 2", "info": "Only use real, substantiated numbers or claims.", "default": "Beard-friendly · Skin-safe · 30-night guarantee" },
+    { "type": "header", "content": "Text" },
+    { "type": "text", "id": "headline", "label": "Headline", "default": "YOUR MOUTH IS RUINING YOUR SLEEP" },
+    { "type": "text", "id": "subhead_lead", "label": "Subhead line 1", "default": "In a survey of NightSeals users:" },
+    { "type": "text", "id": "subhead_stat", "label": "Subhead line 2 (highlighted)", "default": "8 in 10 slept quieter and woke up more rested" },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "START SLEEPING BETTER · SAVE 40% →" },
+    { "type": "url", "id": "cta_url", "label": "Button link", "info": "Defaults to your shop page." },
+    { "type": "color", "id": "cta_bg", "label": "Button colour", "default": "#D9A04B" },
+    { "type": "color", "id": "cta_text_color", "label": "Button text colour", "default": "#10182B" }
+  ],
+  "presets": [
+    { "name": "Cinematic Hero" }
+  ]
+}
+{% endschema %}

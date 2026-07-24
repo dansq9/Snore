@@ -190,6 +190,24 @@
       bottom: 14px;
       max-width: 250px;
     }
+    /* Keep the rating on one line at narrow widths (it wrapped at ~360px). */
+    .ns-hero__stars-icons { font-size: 14px; letter-spacing: 1px; }
+    .ns-hero__stars-text { font-size: 12.5px; }
+    /* Fine print (money-back / shipping) stays on ONE line on phones: no wrap,
+       tighter separators, and a size that scales down so it never overflows. */
+    .ns-hero__trust {
+      flex-wrap: nowrap;
+      gap: 5px;
+      font-size: clamp(9px, 2.7vw, 13px);
+      white-space: nowrap;
+    }
+    .ns-hero__trust-item:not(:last-child)::after { margin-left: 5px; }
+  }
+
+  /* Very small phones: allow the rating to sit a touch tighter still. */
+  @media (max-width: 360px) {
+    .ns-hero__stars { gap: 6px; }
+    .ns-hero__stars-text { font-size: 12px; }
   }
 </style>
 
