@@ -1,8 +1,9 @@
 {%- comment -%}
   ns-landing-nasal-fix — "Nasal breathing fixes all of it" education + CTA.
-  Image + the why-nasal-breathing-matters explainer + the simple fix + a soft
-  CTA to the offer (#tiers). Copy kept general-wellness (no disease/treatment
-  claims). Owner supplies the photo/video-still via the image picker.
+  A centered text block: the why-nasal-breathing-matters explainer + the
+  simple fix + a soft CTA to the offer (#tiers). No image by design — the
+  section deliberately renders text only so nothing sits above the heading.
+  Copy kept general-wellness (no disease/treatment claims).
 {%- endcomment -%}
 <style>
   .ns-nasalfix {
@@ -11,35 +12,9 @@
   }
 
   .ns-nasalfix__inner {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(24px, 5vw, 48px);
-    align-items: center;
-  }
-  @media (max-width: 760px) {
-    .ns-nasalfix__inner { grid-template-columns: 1fr; }
-  }
-
-  /* No image: a single centered text block instead of the split layout. */
-  .ns-nasalfix__inner--solo {
-    grid-template-columns: 1fr;
     max-width: 720px;
+    margin: 0 auto;
     text-align: center;
-  }
-
-  .ns-nasalfix__media {
-    aspect-ratio: 1 / 1;
-    border-radius: 20px;
-    overflow: hidden;
-    background: #DfE3EA;
-  }
-  .ns-nasalfix__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .ns-nasalfix__ph {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    text-align: center; padding: 20px; color: #8A93A3; font-size: 13.5px; line-height: 1.5;
   }
 
   .ns-nasalfix__title {
@@ -83,12 +58,7 @@
 </style>
 
 <section class="ns-nasalfix">
-  <div class="ns-nasalfix__inner{% if section.settings.image == blank %} ns-nasalfix__inner--solo{% endif %}">
-    {%- if section.settings.image != blank -%}
-    <div class="ns-nasalfix__media">
-      {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.heading }}
-    </div>
-    {%- endif -%}
+  <div class="ns-nasalfix__inner">
     <div class="ns-nasalfix__content">
       <h2 class="ns-nasalfix__title">{{ section.settings.heading | default: 'Nasal breathing fixes all of it' }}</h2>
       <p class="ns-nasalfix__body">{{ section.settings.body | default: "Your nose filters, warms and humidifies every breath before it reaches your lungs, and it slows your breathing into a calmer, deeper rhythm. It's how your body is built to sleep. The moment your mouth falls open, all of that stops, and the snoring, dry mouth and restless nights follow." }}</p>
@@ -103,8 +73,6 @@
   "name": "Nasal Breathing Fix",
   "tag": "section",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "text", "id": "image_placeholder", "label": "Image placeholder text", "default": "Calm nasal breather, taped, sleeping soundly" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Nasal breathing fixes all of it" },
     { "type": "textarea", "id": "body", "label": "Body", "default": "Your nose filters, warms and humidifies every breath before it reaches your lungs, and it slows your breathing into a calmer, deeper rhythm. It's how your body is built to sleep. The moment your mouth falls open, all of that stops, and the snoring, dry mouth and restless nights follow." },
     { "type": "textarea", "id": "fix", "label": "The fix", "default": "The fix is simple: keep your mouth gently closed at night and breathe through your nose. NightSeals is the easiest way to make sure you do, while you sleep." },
