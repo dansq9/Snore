@@ -1,0 +1,382 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "header": {
+      "type": "ns-lst-header",
+      "settings": {
+        "title": "5 Reasons You Wake Up Tired — And the 3-Second Fix",
+        "dek": "How thousands of sleepers stopped snoring and started waking up rested with NightSeals. In a survey of users, 8 in 10 reported less snoring and 3 in 4 said their partner slept better too.*",
+        "author": "the NightSeals Team",
+        "updated": "Updated recently"
+      }
+    },
+    "herocard": {
+      "type": "ns-lst-herocard",
+      "settings": {
+        "banner": "Loved by thousands of sleepers",
+        "badge": "Thousands sold",
+        "benefit_1": "Quiet Nights",
+        "benefit_2": "Wake Up Ready",
+        "benefit_3": "All-Day Energy",
+        "benefit_4": "Beard-Friendly",
+        "value_line": "Just $0.50 per night for quieter sleep"
+      }
+    },
+    "compare": {
+      "type": "ns-pdp-comparison",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "feature": "Results",
+            "nightseals": "8 in 10 reported less snoring",
+            "cheap": "Inconsistent",
+            "nothing": "Snoring, wake up tired"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "feature": "Comfort",
+            "nightseals": "AirWeave™ breathable mesh",
+            "cheap": "Stiff, plasticky film",
+            "nothing": "Dry mouth, restless sleep"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "feature": "Beard friendly",
+            "nightseals": "SteadyHold™ grips through hair",
+            "cheap": "Won't stick to beards",
+            "nothing": "N/A"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "feature": "Non-toxic",
+            "nightseals": "Hypoallergenic, latex-free",
+            "cheap": "Unknown materials",
+            "nothing": "N/A"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4"
+      ],
+      "settings": {}
+    },
+    "reasons": {
+      "type": "ns-lst-reasons",
+      "blocks": {
+        "intro_transition": {
+          "type": "reason",
+          "settings": {
+            "number": "1",
+            "title": "Your Body Has Been Trying to Fix Your Sleep. Your Mouth Keeps Undoing It.",
+            "body": "Your nose was built for breathing — it warms, filters and humidifies every breath before it reaches your lungs. Your mouth does none of that. When it falls open at night, your breathing turns shallow and ragged, and you wake up foggy and dry-mouthed. Not because you slept too little, but because you breathed the wrong way. NightSeals keeps your lips gently sealed so your nose can do its job all night.",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_25_PM.png"
+          }
+        },
+        "reason_2": {
+          "type": "reason",
+          "settings": {
+            "number": "2",
+            "title": "A Journalist Taped His Mouth Shut for Science. What He Found Changed How We Sleep.",
+            "body": "Journalist James Nestor spent ten days breathing only through his mouth for a Stanford study. His snoring climbed, his sleep fell apart, and he felt terrible. When he switched back to nasal breathing, it reversed within a day. He wrote about it in his bestseller Breath — and it's the same simple principle NightSeals is built on. One strip. One night.",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png"
+          }
+        },
+        "reason_3": {
+          "type": "reason",
+          "settings": {
+            "number": "3",
+            "title": "Why Thousands Chose This Over Every Other Sleep Fix They'd Tried",
+            "body": "A better pillow. Melatonin. An earlier bedtime. Most people have tried them, and most are still tired — because none of them fix the actual problem. NightSeals does one thing: it keeps your mouth closed so you breathe the way your body was designed to. SteadyHold™ adhesive grips through a full beard without ripping; AirWeave™ mesh stays breathable all night. Simple, and it stays put.",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_59_38_AM.png"
+          }
+        },
+        "reason_4": {
+          "type": "reason",
+          "settings": {
+            "number": "4",
+            "title": "The #1 Question Everyone Asks: \"What If I Can't Breathe?\"",
+            "body": "Fair question. Short answer: you're not sealed shut. NightSeals uses a breathable AirWeave™ mesh and a gentle adhesive — a light effort parts your lips, and it peels off in a second. It's a reminder, not a lock, and your instincts always win. It's made for healthy adults who can breathe comfortably through their nose. It isn't for children, and it isn't a treatment for sleep apnea — if you suspect a breathing disorder, talk to your doctor first.",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_44_34_PM_685df520-a5a0-42f3-987e-2877d3f2b637.png"
+          }
+        },
+        "video": {
+          "type": "video",
+          "settings": {
+            "caption": "Watch: How to apply NightSeals"
+          }
+        },
+        "reason_5": {
+          "type": "reason",
+          "settings": {
+            "number": "5",
+            "title": "Why We Built NightSeals",
+            "body": "We were tired of waking up tired — and tired of sleep \"solutions\" that never touched the real cause. So we built the simplest possible fix: a soft, breathable strip that keeps your lips sealed so your nose takes over. It's for everyone who snores, and the partners who put up with it. One strip a night. That's the whole routine.",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_23_50_PM.png"
+          }
+        }
+      },
+      "block_order": [
+        "intro_transition",
+        "reason_2",
+        "reason_3",
+        "reason_4",
+        "video",
+        "reason_5"
+      ],
+      "settings": {
+        "intro": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen — but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it.",
+        "footnote": "*Based on a survey of NightSeals users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure or prevent any disease."
+      }
+    },
+    "proof": {
+      "type": "ns-proof-stats",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "9 in 10",
+            "description": "would recommend NightSeals to a friend"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "8 in 10",
+            "description": "felt a difference within the first week"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "8 in 10",
+            "description": "wake up feeling more rested"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "number": "4 in 5",
+            "description": "reported less snoring"
+          }
+        },
+        "s5": {
+          "type": "stat",
+          "settings": {
+            "number": "3 in 4",
+            "description": "said their partner slept better too"
+          }
+        },
+        "s6": {
+          "type": "stat",
+          "settings": {
+            "number": "4 in 5",
+            "description": "say it's worth it"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ],
+      "settings": {
+        "kicker": "PROVEN BY REAL SLEEPERS",
+        "heading": "The results speak for themselves",
+        "subtitle": "We asked NightSeals users about their first few weeks. Here's what they told us.",
+        "footnote": "*Based on a recent self-reported survey of NightSeals users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure, or prevent any disease."
+      }
+    },
+    "faq": {
+      "type": "ns-landing-faq",
+      "settings": {
+        "kicker": "GOT QUESTIONS?",
+        "heading": "Frequently asked questions",
+        "subheading": "Everything you need to know before your first night.",
+        "faq_1_q": "Will it work with my beard?",
+        "faq_1_a": "Yes. SteadyHold adhesive is engineered to grip overnight and peel off cleanly, even through a full beard — no painful pull, no residue.",
+        "faq_2_q": "Can I still breathe normally with it on?",
+        "faq_2_a": "Yes. The AirWeave mesh is breathable and your lips still part with a light effort. It's a gentle reminder to breathe through your nose, not a seal.",
+        "faq_3_q": "How long until I notice a difference?",
+        "faq_3_a": "Many people feel less dry mouth the very first morning. Snoring and sleep quality usually improve over the first week or two as nasal breathing becomes your default. Give it 30 nights to become a habit.",
+        "faq_4_q": "What if it falls off while I sleep?",
+        "faq_4_a": "It's built to stay put for a full 7-8 hours and flexes with your face as you move, so it holds whether you sleep on your back or your side, then peels off cleanly in the morning.",
+        "faq_5_q": "Is it comfortable to wear?",
+        "faq_5_a": "It's thin, soft and barely there, with rounded edges. Most people forget it's on by the third night.",
+        "faq_6_q": "Is NightSeals made with non-toxic materials?",
+        "faq_6_a": "Yes — a soft, latex-free AirWeave fabric with a hypoallergenic, skin-safe adhesive. Residue-free and tested on sensitive skin.",
+        "faq_7_q": "What if I don't like it?",
+        "faq_7_a": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions."
+      }
+    },
+    "quiz_cta": {
+      "type": "ns-quiz-cta",
+      "settings": {
+        "kicker": "Not sure if mouth tape is right for you?",
+        "heading": "Take the free 2-minute sleep assessment",
+        "body": "Answer a few quick questions and get a personalized read on why you're waking up tired — and whether NightSeals can help.",
+        "meta": "Free · No email needed · Results in 2 minutes",
+        "cta_text": "Take the sleep quiz →",
+        "quiz_url": ""
+      }
+    },
+    "timeline": {
+      "type": "ns-timeline",
+      "settings": {
+        "nights": 60
+      }
+    },
+    "testimonials": {
+      "type": "ns-landing-reviews",
+      "settings": {
+        "rating_text": "4.8 from thousands of verified sleepers",
+        "heading": "Real people. Real results.",
+        "review_1_quote": "Third night in, my wife asked what changed. That's the whole review.",
+        "review_1_name": "James W.",
+        "review_2_quote": "Stays on through a full beard. Every other tape peeled off by 2am. This one stays put.",
+        "review_2_name": "Derek R.",
+        "review_3_quote": "I sat on this for two weeks thinking it was gimmicky. Wish I'd stopped overthinking it sooner.",
+        "review_3_name": "Tom H.",
+        "verified_label": "Verified",
+        "partners_placeholder": "Couple: both sleeping peacefully, same bed",
+        "partners_kicker": "FOR PARTNERS",
+        "partners_heading": "The cheapest marriage counseling you'll ever buy.",
+        "partners_body": "Most of our orders come from the partner who's had enough. Same bedroom. Same bed. Different mornings.",
+        "partners_cta": "Get one for your partner"
+      }
+    },
+    "offer": {
+      "type": "ns-landing-launch-offer",
+      "settings": {
+        "offer_product": "nightseals-60-nights",
+        "image": "shopify://shop_images/Untitled_design_4_-Photoroom_15f3e9b7-cae8-4cdf-8b58-14b4564195a5.png",
+        "rating_text": "4.8 from thousands of sleepers",
+        "proof_tag": "Bestseller",
+        "product_name": "The 60-Night Supply",
+        "pill": "Limited time · while supplies last",
+        "discount_line": "40% OFF",
+        "product_line": "your 60-night supply",
+        "body": "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time.",
+        "check_1": "30-night money-back guarantee",
+        "check_2": "Skin-safe adhesive",
+        "check_3": "Beard-proof",
+        "check_4": "No subscription, ever",
+        "cta_text": "Claim 40% off →",
+        "note": "Join thousands sleeping quieter every night."
+      }
+    },
+    "reviews": {
+      "type": "ns-reviews-carousel",
+      "blocks": {
+        "r1": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_04_36_AM.png",
+            "caption": "Slept through the night",
+            "reviewer": "Mike · Night 41"
+          }
+        },
+        "r2": {
+          "type": "text_review",
+          "settings": {
+            "quote": "Third night in, my wife asked what changed. That's the whole review.",
+            "name": "James W."
+          }
+        },
+        "r3": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_18_41_AM.png",
+            "caption": "Dry mouth, gone",
+            "reviewer": "Rob · Night 12"
+          }
+        },
+        "r4": {
+          "type": "text_review",
+          "settings": {
+            "quote": "I was nervous about taping my mouth shut. Took two nights to forget it was there.",
+            "name": "Priya N."
+          }
+        },
+        "r5": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_12_26_AM.png",
+            "caption": "Partner approved",
+            "reviewer": "Elise · Night 30"
+          }
+        },
+        "r6": {
+          "type": "text_review",
+          "settings": {
+            "quote": "It's the cheapest thing in my sleep stack and the one that works.",
+            "name": "Alex D."
+          }
+        },
+        "r7": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_10_44_AM.png",
+            "caption": "Total reset",
+            "reviewer": "Dan · Night 58"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "r7"
+      ],
+      "settings": {}
+    },
+    "buy": {
+      "type": "ns-landing-buy",
+      "settings": {
+        "offer_product": "nightseals-60-nights",
+        "heading": "Sleep on it for",
+        "highlight": "30 nights",
+        "body": "If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions, no hard feelings.",
+        "cta_label": "Try NightSeals risk-free",
+        "cta_url": ""
+      }
+    }
+  },
+  "order": [
+    "header",
+    "herocard",
+    "compare",
+    "reasons",
+    "proof",
+    "faq",
+    "quiz_cta",
+    "timeline",
+    "testimonials",
+    "offer",
+    "reviews",
+    "buy"
+  ]
+}
