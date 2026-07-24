@@ -7,7 +7,7 @@
 
   .ns-hero__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    grid-template-columns: 1fr 1fr;
     gap: clamp(36px, 6vw, 64px);
     align-items: center;
   }
@@ -179,10 +179,12 @@
     margin: 0;
   }
 
-  /* Once the hero grid stacks to one column (~940px) the image goes
-     full-width; pull the card inside its left edge so it can't hang
-     off-screen. Matches the design's compact 250px card. */
-  @media (max-width: 940px) {
+  /* Stack to one column on phones/tablets and put the IMAGE ABOVE the text.
+     The image goes full-width, so pull the testimonial card inside its left
+     edge so it can't hang off-screen (the design's compact 250px card). */
+  @media (max-width: 900px) {
+    .ns-hero__grid { grid-template-columns: 1fr; }
+    .ns-hero__image-col { order: -1; }
     .ns-hero__quote {
       left: 14px;
       bottom: 14px;

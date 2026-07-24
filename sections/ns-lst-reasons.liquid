@@ -12,13 +12,16 @@
       <p class="ns-lstr__intro">{{ section.settings.intro }}</p>
     {%- endif -%}
 
-    <div class="ns-lstr__media ns-lstr__intro-media">
-      {%- if section.settings.intro_image != blank -%}
+    {%- if section.settings.intro_image != blank -%}
+      <div class="ns-lstr__media ns-lstr__intro-media">
         {{ section.settings.intro_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: '' }}
-      {%- else -%}
+      </div>
+    {%- elsif request.design_mode -%}
+      {%- comment -%} Show the empty slot only in the theme editor, never on the live page. {%- endcomment -%}
+      <div class="ns-lstr__media ns-lstr__intro-media">
         <div class="ns-lstr__ph">{{ section.settings.intro_image_placeholder | default: 'Add an image' }}</div>
-      {%- endif -%}
-    </div>
+      </div>
+    {%- endif -%}
 
     {%- for block in section.blocks -%}
       {%- case block.type -%}

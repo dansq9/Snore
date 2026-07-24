@@ -1,144 +1,131 @@
 /**
- * NightSeals — Floating Action Button (FAB)
+ * NightSeals — Sticky Buy Bar (full-width)
  *
- * A sticky "Buy now" pill that appears once the user scrolls past the
- * buy-box (#tiers or #buy) and hides near the footer.  Uses
- * IntersectionObserver for zero-jank visibility toggling.
+ * A full-width bar pinned to the bottom of the viewport (Hostage-Tape style)
+ * that appears once the user scrolls past the first screen and hides near the
+ * footer or whenever a real buy CTA is already on screen. It mirrors the offer
+ * (discount label + price + per-night) from the on-page buy box, and runs the
+ * express Buy-now flow via buy-now.js when a variant can be resolved —
+ * otherwise the button's href scrolls to the buy box (#tiers / #buy).
  */
 (function () {
   'use strict';
 
+  function textOf(sel) {
+    var el = document.querySelector(sel);
+    return el ? (el.textContent || '').trim() : '';
+  }
+
+  function resolveVariantId() {
+    var input = document.getElementById('ns-lshop-variant-input');
+    if (input && input.value) return input.value;
+    var tier = document.querySelector('.ns-pdp__tier--active[data-variant-id]');
+    if (tier) return tier.getAttribute('data-variant-id');
+    return '';
+  }
+
   /* ------------------------------------------------------------------ */
-  /*  Build FAB element                                                  */
+  /*  Build the bar                                                      */
   /* ------------------------------------------------------------------ */
 
-  function createFab() {
-    var fab = document.createElement('a');
-    fab.id  = 'ns-fab';
-    fab.setAttribute('role', 'button');
-    fab.setAttribute('aria-label', 'Buy now');
-    fab.style.cssText =
-      'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);' +
-      'z-index:60;display:flex;align-items:center;gap:8px;' +
-      'background:#10182B;color:#F7F8FA;' +
-      'padding:18px 38px;border-radius:999px;' +
-      'font-family:var(--font-primary,Archivo,system-ui,sans-serif);' +
-      'font-size:17.5px;font-weight:800;text-decoration:none;' +
-      'box-shadow:0 8px 32px rgba(16,24,43,.35);' +
+  function createBar() {
+    var anchor = document.getElementById('tiers') || document.getElementById('buy');
+    var href = anchor ? ('#' + anchor.id) : '/cart';
+
+    var bar = document.createElement('div');
+    bar.id = 'ns-fab';
+    bar.style.cssText =
+      'position:fixed;left:0;right:0;bottom:0;z-index:60;' +
+      'background:#10182B;border-top:1px solid rgba(242,244,247,.09);' +
+      'box-shadow:0 -6px 26px rgba(16,24,43,.30);' +
+      'transform:translateY(100%);opacity:0;pointer-events:none;' +
       'transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s;' +
-      'opacity:0;pointer-events:none;cursor:pointer;white-space:nowrap';
+      'font-family:var(--font-primary,Archivo,system-ui,sans-serif);' +
+      'padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));';
 
-    fab.innerHTML =
-      '<span id="ns-fab-label">Buy now</span>' +
-      '<span id="ns-fab-sep" style="width:1px;height:16px;background:rgba(242,244,247,.3);margin:0 6px"></span>' +
-      '<span id="ns-fab-price" style="color:#D9A04B"></span>';
+    bar.innerHTML =
+      '<div style="max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px">' +
+        '<div style="min-width:0;color:#F7F8FA;line-height:1.25">' +
+          '<div id="ns-fab-title" style="font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>' +
+          '<div id="ns-fab-sub" style="font-size:12.5px;color:#D9A04B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>' +
+        '</div>' +
+        '<a id="ns-fab-btn" href="' + href + '" role="button" aria-label="Buy now" ' +
+          'style="flex:none;background:#D9A04B;color:#10182B;font-weight:800;font-size:15px;' +
+          'padding:13px 26px;border-radius:999px;text-decoration:none;white-space:nowrap;' +
+          'box-shadow:0 8px 22px rgba(217,160,75,.30)">Buy now &rarr;</a>' +
+      '</div>';
 
-    /* Determine target */
-    var tiers = document.getElementById('tiers');
-    var buy   = document.getElementById('buy');
+    document.body.appendChild(bar);
+    return bar;
+  }
 
-    if (tiers) {
-      fab.href = '#tiers';
-    } else if (buy) {
-      fab.href = '#buy';
+  /* ------------------------------------------------------------------ */
+  /*  Fill copy + wire express checkout                                  */
+  /* ------------------------------------------------------------------ */
+
+  function updateBar(bar) {
+    var titleEl = bar.querySelector('#ns-fab-title');
+    var subEl = bar.querySelector('#ns-fab-sub');
+    var btn = bar.querySelector('#ns-fab-btn');
+
+    var anchor = document.getElementById('tiers') || document.getElementById('buy');
+    var custom = anchor ? anchor.getAttribute('data-fab-label') : '';
+
+    /* Price + per-night, mirrored from the on-page buy box when present. */
+    var price = textOf('.ns-lshop__price');
+    if (!price) {
+      var tier = document.querySelector('.ns-pdp__tier--active');
+      if (tier) price = tier.getAttribute('data-variant-price') || '';
+    }
+    var perNight = textOf('.ns-lshop__offer-sub');
+
+    var title = custom || 'Limited-time offer';
+    if (price) { title += ' · ' + price; }
+    titleEl.textContent = title;
+
+    subEl.textContent = perNight;
+    subEl.style.display = perNight ? '' : 'none';
+
+    /* Express checkout when a variant resolves; else the href scrolls to the
+       buy box (buy-now.js only acts on elements carrying a variant id). */
+    var vid = resolveVariantId();
+    if (vid) {
+      btn.setAttribute('data-ns-buy-now', '');
+      btn.setAttribute('data-variant-id', vid);
     } else {
-      fab.href = '/cart';
+      btn.removeAttribute('data-ns-buy-now');
+      btn.removeAttribute('data-variant-id');
     }
-
-    document.body.appendChild(fab);
-    return fab;
   }
 
   /* ------------------------------------------------------------------ */
-  /*  Label — mirror the PDP selection (price + nights, one-time/sub)    */
+  /*  Visibility                                                         */
   /* ------------------------------------------------------------------ */
 
-  function isSubscribeActive() {
-    var sub = document.querySelector('.ns-pdp__purchase-option[data-purchase="subscribe"]');
-    return !!(sub && sub.querySelector('.ns-pdp__purchase-radio--active'));
-  }
-
-  function updateFab(fab) {
-    var labelEl = fab.querySelector('#ns-fab-label');
-    var priceEl = fab.querySelector('#ns-fab-price');
-    var sepEl   = fab.querySelector('#ns-fab-sep');
-    var tier    = document.querySelector('.ns-pdp__tier--active');
-    var sub     = isSubscribeActive();
-
-    /* A page can override the FAB label via data-fab-label on #tiers / #buy
-       (the landing offer uses "Save 40%"); the PDP falls back to Buy now. */
-    var anchor  = document.getElementById('tiers') || document.getElementById('buy');
-    var custom  = anchor ? anchor.getAttribute('data-fab-label') : '';
-    if (labelEl) labelEl.textContent = custom ? custom : (sub ? 'Subscribe' : 'Buy now');
-
-    var detail = '';
-    if (tier) {
-      var price = (sub && tier.getAttribute('data-sub-price'))
-        ? tier.getAttribute('data-sub-price')
-        : tier.getAttribute('data-variant-price');
-      var nights = tier.getAttribute('data-nights');
-      if (price) detail = price;
-      if (nights && !custom) detail += (detail ? ' · ' : '') + nights + ' nights';
-    }
-    if (priceEl) priceEl.textContent = detail;
-    if (sepEl) sepEl.style.display = detail ? '' : 'none';
-
-    /* Landing offer (custom label): show the label only — no price — but keep
-       the pill at the width it had with the price so it doesn't shrink. 268px
-       (border-box) matches the "Save 40% · $29.90" width; min-width lets a
-       longer label grow if needed. */
-    if (custom) {
-      if (priceEl) priceEl.textContent = '';
-      if (sepEl) sepEl.style.display = 'none';
-      fab.style.boxSizing = 'border-box';
-      fab.style.minWidth = '268px';
-      fab.style.justifyContent = 'center';
-    }
-
-    fab.setAttribute('aria-label', (sub ? 'Subscribe' : 'Buy now') + (detail ? ' ' + detail : ''));
-  }
-
-  /* ------------------------------------------------------------------ */
-  /*  Visibility helpers                                                 */
-  /* ------------------------------------------------------------------ */
-
-  function showFab(fab) {
-    fab.style.transform = 'translateX(-50%) translateY(0)';
-    fab.style.opacity   = '1';
-    fab.style.pointerEvents = '';
-  }
-
-  function hideFab(fab) {
-    fab.style.transform = 'translateX(-50%) translateY(80px)';
-    fab.style.opacity   = '0';
-    fab.style.pointerEvents = 'none';
-  }
-
-  /* ------------------------------------------------------------------ */
-  /*  Init                                                               */
-  /* ------------------------------------------------------------------ */
+  function show(bar) { bar.style.transform = 'translateY(0)'; bar.style.opacity = '1'; bar.style.pointerEvents = ''; }
+  function hide(bar) { bar.style.transform = 'translateY(100%)'; bar.style.opacity = '0'; bar.style.pointerEvents = 'none'; }
 
   function init() {
     var anchor = document.getElementById('tiers') || document.getElementById('buy');
-    if (!anchor) return; /* No buy-box on this page — skip FAB */
+    if (!anchor) return; /* No buy-box on this page — skip the bar */
 
     var footer = document.querySelector('footer, .ns-footer');
-    var fab    = createFab();
+    var bar = createBar();
 
-    updateFab(fab);
-    document.addEventListener('ns:selection', function () { updateFab(fab); });
+    updateBar(bar);
+    document.addEventListener('ns:selection', function () { updateBar(bar); });
 
-    var scrolledEnough = false; /* user has scrolled a bit past the top */
-    var footerVisible  = false;
-    var ctaVisible     = false; /* a real buy CTA is on screen — FAB is redundant */
+    var scrolledEnough = false;
+    var footerVisible = false;
+    var ctaVisible = false; /* a real buy CTA is on screen — the bar is redundant */
 
     function evaluate() {
-      if (scrolledEnough && !footerVisible && !ctaVisible) { showFab(fab); }
-      else { hideFab(fab); }
+      if (scrolledEnough && !footerVisible && !ctaVisible) { show(bar); }
+      else { hide(bar); }
     }
 
-    /* Appear once the user scrolls a bit (past ~60% of the first screen) —
-       not at the very top — and hide again near the footer. */
+    /* Appear once the user scrolls past ~60% of the first screen, not at the
+       very top; hide again near the footer. */
     function onScroll() {
       scrolledEnough = window.pageYOffset > (window.innerHeight * 0.6);
       evaluate();
@@ -153,9 +140,8 @@
       }, { threshold: 0 }).observe(footer);
     }
 
-    /* Hide the FAB whenever a real buy CTA is in view (the offer's Buy now,
-       the closer, or the launch offer) — a floating button that just
-       duplicates a button already on screen is noise. */
+    /* Hide whenever a real buy CTA is in view (the buy box, the closer, or the
+       launch offer) so the bar never covers a button already on screen. */
     var ctaEls = [].slice.call(document.querySelectorAll(
       '#ns-lshop-buy-now, .ns-lbuy__cta, .ns-launch__cta'
     ));

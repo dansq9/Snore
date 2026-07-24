@@ -97,7 +97,7 @@
           "type": "reason",
           "settings": {
             "number": "2",
-            "title": "A Journalist Taped His Mouth Shut for Science. What He Found Changed How We Sleep.",
+            "title": "A Journalist Breathed Only Through His Mouth for 10 Days. What Happened Changed How We Sleep.",
             "body": "Journalist James Nestor spent ten days breathing only through his mouth for a Stanford study. His snoring climbed, his sleep fell apart, and he felt terrible. When he switched back to nasal breathing, it reversed within a day. He wrote about it in his bestseller Breath, and it's the same simple principle NightSeals is built on. One strip. One night.",
             "image": "shopify://shop_images/Screenshot_2026-07-24_at_3.14.37_AM.png",
             "placeholder": "Add an image"
@@ -153,7 +153,7 @@
         "intro": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen, but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it.",
         "intro_image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_12_39_53_AM_e21e538f-3bdc-44ff-a384-cef711907b33.png",
         "intro_image_placeholder": "Add an image",
-        "footnote": "*Based on a survey of people using mouth tape. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure or prevent any disease."
+        "footnote": "*Based on a survey of people using mouth tape. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure or prevent any disease. NightSeals is not affiliated with, endorsed by, or sponsored by James Nestor, the book Breath, or Stanford University."
       }
     },
     "proof": {
@@ -237,8 +237,8 @@
         "faq_6_a": "Yes. A soft, latex-free AirWeave fabric with a hypoallergenic, skin-safe adhesive. Residue-free and tested on sensitive skin.",
         "faq_7_q": "What if I don't like it?",
         "faq_7_a": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions.",
-        "faq_8_q": "What's the return policy?",
-        "faq_8_a": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions."
+        "faq_8_q": "",
+        "faq_8_a": ""
       }
     },
     "quiz_cta": {
@@ -249,7 +249,7 @@
         "body": "",
         "meta": "Free · No email needed · Results in 2 minutes",
         "cta_text": "Take the sleep quiz →",
-        "quiz_url": ""
+        "quiz_url": "shopify://pages/quiz"
       }
     },
     "timeline": {
@@ -322,13 +322,6 @@
             "reviewer": "Mike · Night 41"
           }
         },
-        "r2": {
-          "type": "text_review",
-          "settings": {
-            "quote": "Third night in, my wife asked what changed. That's the whole review.",
-            "name": "James W."
-          }
-        },
         "r3": {
           "type": "image_review",
           "settings": {
@@ -370,7 +363,6 @@
       },
       "block_order": [
         "r1",
-        "r2",
         "r3",
         "r4",
         "r5",
@@ -394,16 +386,16 @@
   "order": [
     "header",
     "herocard",
-    "compare",
     "reasons",
-    "proof",
-    "faq",
-    "quiz_cta",
-    "timeline",
-    "testimonials",
-    "offer",
+    "compare",
     "ns_landing_shop_hx7YJz",
+    "proof",
+    "testimonials",
     "reviews",
+    "timeline",
+    "quiz_cta",
+    "offer",
+    "faq",
     "buy"
   ]
 }
