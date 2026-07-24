@@ -1,0 +1,469 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "ns_hero_cinematic_NyNKMH": {
+      "type": "ns-hero-cinematic",
+      "name": "Cinematic Hero",
+      "settings": {
+        "hero_image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_02_51_58_PM.png",
+        "image_position": "center",
+        "show_badge": true,
+        "badge_line1": "2,300+ Reviews",
+        "badge_line2": "Beard-friendly · Skin-safe · 30-night guarantee",
+        "headline": "YOUR MOUTH IS RUINING YOUR SLEEP",
+        "subhead_lead": "8 in 10 slept quieter",
+        "subhead_stat": "",
+        "cta_label": "Sleep better · Save 40% →",
+        "cta_url": "",
+        "cta_bg": "#D9A04B",
+        "cta_text_color": "#10182B"
+      }
+    },
+    "ns_product_hero_offer_7xpHyP": {
+      "type": "ns-product-hero-offer",
+      "name": "Product Hero Offer",
+      "settings": {
+        "offer_label": "Your limited-time offer",
+        "description": "Gentle,",
+        "description_highlight": "beard-proof",
+        "description_tail": "strips that keep your lips sealed overnight, so your nose does the breathing.",
+        "main_image": "shopify://shop_images/Untitled_design_4_-Photoroom_15f3e9b7-cae8-4cdf-8b58-14b4564195a5.png",
+        "thumb_1": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_44_53_AM.png",
+        "thumb_2": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png"
+      }
+    },
+    "problem": {
+      "type": "ns-problem-section",
+      "blocks": {
+        "problem_1": {
+          "type": "problem_item",
+          "settings": {
+            "number": "01",
+            "title": "Snoring",
+            "description": "An open mouth can narrow the airway and sets soft tissue vibrating. That's the noise that exiles you to the guest room."
+          }
+        },
+        "problem_2": {
+          "type": "problem_item",
+          "settings": {
+            "number": "02",
+            "title": "Dry mouth & morning breath",
+            "description": "Hours of mouth airflow dries out saliva: sandpaper tongue at 3am, rough breath at 7."
+          }
+        },
+        "problem_3": {
+          "type": "problem_item",
+          "settings": {
+            "number": "03",
+            "title": "Light, restless sleep",
+            "description": "Your nose filters, warms and humidifies every breath. Bypass it all night and you wake tired no matter how long you slept."
+          }
+        }
+      },
+      "block_order": [
+        "problem_1",
+        "problem_2",
+        "problem_3"
+      ],
+      "settings": {}
+    },
+    "ns_reviews_carousel_P8VQqU": {
+      "type": "ns-reviews-carousel",
+      "blocks": {
+        "image_review_CbNC9M": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_04_36_AM.png",
+            "caption": "Slept through the night",
+            "reviewer": "Mike · Night 41"
+          }
+        },
+        "text_review_3FG3qi": {
+          "type": "text_review",
+          "settings": {
+            "quote": "Third night in, my wife asked what changed. That’s the whole review.",
+            "name": "James W."
+          }
+        },
+        "image_review_JtG4c6": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_18_41_AM.png",
+            "caption": "Dry mouth, gone",
+            "reviewer": "Rob · Night 12"
+          }
+        },
+        "text_review_dhkjTw": {
+          "type": "text_review",
+          "settings": {
+            "quote": "I was nervous about taping my mouth shut. Took two nights to forget it was there.",
+            "name": "Priya N."
+          }
+        },
+        "image_review_qkamwy": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_12_26_AM.png",
+            "caption": "Partner approved",
+            "reviewer": "Elise · Night 30"
+          }
+        },
+        "text_review_GgGEpG": {
+          "type": "text_review",
+          "settings": {
+            "quote": "It’s the cheapest thing in my sleep stack and the one that works.",
+            "name": "Alex D."
+          }
+        },
+        "image_review_qXT33J": {
+          "type": "image_review",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_10_44_AM.png",
+            "caption": "Total reset",
+            "reviewer": "Dan · Night 90"
+          }
+        }
+      },
+      "block_order": [
+        "image_review_CbNC9M",
+        "text_review_3FG3qi",
+        "image_review_JtG4c6",
+        "text_review_dhkjTw",
+        "image_review_qkamwy",
+        "text_review_GgGEpG",
+        "image_review_qXT33J"
+      ],
+      "name": "Reviews Carousel",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "ns-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "quote_title": "My wife noticed on night one.",
+            "quote_body": "The snoring didn't fully stop until night three, but the difference was immediate. We sleep in the same room again.",
+            "reviewer_name": "Marcus T. · Verified buyer"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "quote_title": "Stays on through a full beard.",
+            "quote_body": "Every other tape peeled off by 2am. This one comes off when I decide it should, and cleanly.",
+            "reviewer_name": "Derek R. · Verified buyer"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "quote_title": "No more 3am dry mouth.",
+            "quote_body": "I used to wake up with my tongue like sandpaper. Gone. I fall asleep in minutes and stay asleep.",
+            "reviewer_name": "Sam K. · Verified buyer"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "ns_timeline_LJjw7c": {
+      "type": "ns-timeline",
+      "name": "Timeline",
+      "settings": {
+        "nights": 90
+      }
+    },
+    "idea": {
+      "type": "ns-idea-section",
+      "settings": {
+        "kicker": "THE IDEA BEHIND NIGHTSEALS",
+        "body": "Your nose filters, warms and paces every breath. Mouth tape exists for one reason: to keep you breathing that way while you sleep."
+      }
+    },
+    "ns_lst_reasons_fhCPLr": {
+      "type": "ns-lst-reasons",
+      "name": "Listicle Reasons",
+      "settings": {
+        "intro": "",
+        "intro_image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_02_27_26_AM.png",
+        "intro_image_placeholder": "Add an image",
+        "footnote": ""
+      }
+    },
+    "faq": {
+      "type": "ns-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is mouth taping safe?",
+            "answer": "For healthy adults who can breathe comfortably through their nose, yes. NightSeals uses a gentle, hypoallergenic adhesive and peels off easily by hand. It's not for children, and it's not a treatment for sleep apnea. If you suspect you have it, talk to your doctor first."
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What if my nose gets congested?",
+            "answer": "Skip that night. Tape is for nights you can breathe freely through your nose. Many sleepers pair NightSeals with a hot shower or nasal rinse before bed during allergy season."
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Will it rip off my beard?",
+            "answer": "No. The adhesive is engineered to hold overnight but release cleanly, even through a full beard. No residue, no wax-strip moments."
+          }
+        },
+        "faq_5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I open my mouth if I need to?",
+            "answer": "Yes. It's a reminder, not a lock. A gentle yawn or deliberate effort parts your lips easily. It just stops the unconscious falling-open while you sleep."
+          }
+        },
+        "faq_6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does a pack last?",
+            "answer": "One strip per night: the 30-pack lasts a month, the 90-pack a quarter, and the 180-pack half a year."
+          }
+        },
+        "faq_7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What's it made of?",
+            "answer": "A soft, breathable, latex-free fabric with a skin-safe acrylic adhesive. Hypoallergenic, residue-free, and tested on sensitive skin."
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_5",
+        "faq_6",
+        "faq_7"
+      ],
+      "settings": {}
+    },
+    "ns_quiz_cta_BPB4AL": {
+      "type": "ns-quiz-cta",
+      "name": "Quiz CTA Card",
+      "settings": {
+        "kicker": "Not sure where to start?",
+        "heading": "Take the 2-minute sleep assessment",
+        "body": "",
+        "meta": "Free · No email needed · Results in 2 minutes",
+        "cta_text": "Start the sleep quiz →",
+        "quiz_url": ""
+      }
+    },
+    "ns_pdp_comparison_y8AiDA": {
+      "type": "ns-pdp-comparison",
+      "blocks": {
+        "row_zRCUz3": {
+          "type": "row",
+          "settings": {
+            "feature": "Stays on all night",
+            "nightseals": "SteadyHold™, all-night hold",
+            "cheap": "Peels off by 2 am",
+            "nothing": "No change"
+          }
+        },
+        "row_6mVat3": {
+          "type": "row",
+          "settings": {
+            "feature": "Beard friendly",
+            "nightseals": "SteadyHold™ grips through hair",
+            "cheap": "Won’t stick to beards",
+            "nothing": "N/A"
+          }
+        },
+        "row_i9JWjG": {
+          "type": "row",
+          "settings": {
+            "feature": "Comfort",
+            "nightseals": "AirWeave™ breathable mesh",
+            "cheap": "Stiff, plasticky film",
+            "nothing": "Unchanged"
+          }
+        },
+        "row_PHJALP": {
+          "type": "row",
+          "settings": {
+            "feature": "Zero residue",
+            "nightseals": "Peels off clean",
+            "cheap": "Leaves sticky residue",
+            "nothing": "Status quo"
+          }
+        },
+        "row_kDAj4Y": {
+          "type": "row",
+          "settings": {
+            "feature": "Non-toxic",
+            "nightseals": "Hypoallergenic, latex-free",
+            "cheap": "Unknown materials",
+            "nothing": "N/A"
+          }
+        },
+        "row_TgQF6X": {
+          "type": "row",
+          "settings": {
+            "feature": "Cost per night",
+            "nightseals": "From $0.56 a night",
+            "cheap": "Cheap price, cheap results",
+            "nothing": "No solution"
+          }
+        },
+        "row_yptqKr": {
+          "type": "row",
+          "settings": {
+            "feature": "Guarantee",
+            "nightseals": "30-night money back",
+            "cheap": "No returns",
+            "nothing": "N/A"
+          }
+        }
+      },
+      "block_order": [
+        "row_zRCUz3",
+        "row_6mVat3",
+        "row_i9JWjG",
+        "row_PHJALP",
+        "row_kDAj4Y",
+        "row_TgQF6X",
+        "row_yptqKr"
+      ],
+      "name": "PDP Comparison",
+      "settings": {}
+    },
+    "ns_lst_reasons_ymEtTF": {
+      "type": "ns-lst-reasons",
+      "name": "Listicle Reasons",
+      "settings": {
+        "intro": "",
+        "intro_image": "shopify://shop_images/Untitled_design_5.png",
+        "intro_image_placeholder": "Add an image",
+        "footnote": ""
+      }
+    },
+    "benefits": {
+      "type": "ns-benefits-rail",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "title": "May reduce snoring",
+            "description": "Sealed lips may help keep the airway clear. Many sleepers notice a difference in the first week."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Less dry mouth",
+            "description": "Wake up without the sandpaper tongue, the water chugging, the morning breath."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Deeper, steadier sleep",
+            "description": "Nasal breathing supports slower, steadier breaths, the kind deep sleep is made of."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Quieter nights for two",
+            "description": "The cheapest marriage counseling you'll ever buy. Partners notice on night one."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ],
+      "settings": {}
+    },
+    "how-it-works": {
+      "type": "ns-how-it-works",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_21_PM.png",
+            "title": "Apply",
+            "description": "Center one strip over closed lips before bed. The adhesive grips through beards. Zero prep."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_25_PM.png",
+            "title": "Breathe",
+            "description": "Your nose takes over: filtered, humidified, quiet airflow all night long. You won't feel a thing."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_28_PM.png",
+            "title": "Wake",
+            "description": "Peels off gently, no residue. No dry mouth, no 3am wake-ups. Just an actual morning person."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {}
+    },
+    "guarantee": {
+      "type": "ns-guarantee-cta",
+      "custom_css": [],
+      "settings": {}
+    },
+    "marquee": {
+      "type": "ns-marquee",
+      "settings": {
+        "content": "#SEALTHENIGHT"
+      }
+    }
+  },
+  "order": [
+    "ns_hero_cinematic_NyNKMH",
+    "ns_product_hero_offer_7xpHyP",
+    "problem",
+    "ns_reviews_carousel_P8VQqU",
+    "reviews",
+    "ns_timeline_LJjw7c",
+    "idea",
+    "ns_lst_reasons_fhCPLr",
+    "faq",
+    "ns_quiz_cta_BPB4AL",
+    "ns_pdp_comparison_y8AiDA",
+    "ns_lst_reasons_ymEtTF",
+    "benefits",
+    "how-it-works",
+    "guarantee",
+    "marquee"
+  ]
+}

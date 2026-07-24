@@ -36,7 +36,11 @@
 
   {%- if section.settings.show_badge and section.settings.badge_line1 != blank -%}
     <div class="ns-herox__badge">
-      <p class="ns-herox__badge-1"><span class="ns-herox__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>{{ section.settings.badge_line1 }}</p>
+      <div class="ns-herox__badge-top">
+        <span class="ns-herox__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        {%- if section.settings.badge_rating != blank -%}<span class="ns-herox__rating">{{ section.settings.badge_rating }}</span>{%- endif -%}
+      </div>
+      <p class="ns-herox__badge-1">{{ section.settings.badge_line1 }}</p>
       {%- if section.settings.badge_line2 != blank -%}
         <p class="ns-herox__badge-2">{{ section.settings.badge_line2 }}</p>
       {%- endif -%}
@@ -100,15 +104,18 @@
   .ns-herox__badge {
     position: absolute; top: clamp(16px, 4vw, 30px); left: 50%; transform: translateX(-50%);
     z-index: 3; text-align: center; color: #fff;
-    background: rgba(9,13,25,.5);
-    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 16px; padding: 11px 20px;
+    background: rgba(9,13,25,.55);
+    -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px);
+    border: 1px solid rgba(217,160,75,.28);
+    border-radius: 18px; padding: 10px 22px;
     width: max-content; max-width: calc(100% - 28px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.30);
   }
-  .ns-herox__badge-1 { margin: 0; font-weight: 800; font-size: clamp(14px, 4vw, 18px); letter-spacing: -.01em; }
-  .ns-herox__stars { color: #F5B301; letter-spacing: 1px; margin-right: 8px; }
-  .ns-herox__badge-2 { margin: 3px 0 0; font-size: clamp(11.5px, 3.2vw, 13.5px); color: rgba(255,255,255,.82); font-weight: 600; }
+  .ns-herox__badge-top { display: flex; align-items: center; justify-content: center; gap: 9px; }
+  .ns-herox__stars { color: #F5B301; font-size: clamp(15px, 4vw, 18px); letter-spacing: 2px; }
+  .ns-herox__rating { font-weight: 800; font-size: clamp(14px, 3.6vw, 17px); color: #fff; }
+  .ns-herox__badge-1 { margin: 5px 0 0; font-weight: 700; font-size: clamp(13px, 3.4vw, 15px); letter-spacing: -.01em; color: rgba(255,255,255,.95); }
+  .ns-herox__badge-2 { margin: 3px 0 0; font-size: clamp(11px, 3vw, 12.5px); color: rgba(255,255,255,.66); font-weight: 600; letter-spacing: .01em; }
 
   .ns-herox__content {
     position: relative; z-index: 3;
@@ -158,7 +165,8 @@
       ] },
     { "type": "header", "content": "Top badge" },
     { "type": "checkbox", "id": "show_badge", "label": "Show top badge", "default": true },
-    { "type": "text", "id": "badge_line1", "label": "Badge line 1", "default": "Loved by thousands of sleepers" },
+    { "type": "text", "id": "badge_rating", "label": "Rating (beside the stars, e.g. 4.8)", "default": "4.8" },
+    { "type": "text", "id": "badge_line1", "label": "Badge line 1 (review count / claim)", "default": "2,300+ reviews" },
     { "type": "text", "id": "badge_line2", "label": "Badge line 2", "info": "Only use real, substantiated numbers or claims.", "default": "Beard-friendly · Skin-safe · 30-night guarantee" },
     { "type": "header", "content": "Text" },
     { "type": "text", "id": "headline", "label": "Headline", "default": "YOUR MOUTH IS RUINING YOUR SLEEP" },
