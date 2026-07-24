@@ -120,7 +120,7 @@
     "nasal_fix": {
       "type": "ns-landing-nasal-fix",
       "settings": {
-        "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_25_PM.png",
+        "image": "",
         "image_placeholder": "Calm nasal breather, taped, sleeping soundly",
         "heading": "Nasal breathing fixes all of it",
         "body": "Your nose filters, warms and humidifies every breath before it reaches your lungs, and it slows your breathing into a calmer, deeper rhythm. It's how your body is built to sleep. The moment your mouth falls open, all of that stops, and the snoring, dry mouth and restless nights follow.",
@@ -160,6 +160,10 @@
         "secondary_cta": "Learn more",
         "fab_label": "Save 40%"
       }
+    },
+    "trust_icons": {
+      "type": "ns-trust-icons",
+      "settings": {}
     },
     "reviews_carousel": {
       "type": "ns-reviews-carousel",
@@ -351,6 +355,7 @@
     "how",
     "timeline",
     "shop",
+    "trust_icons",
     "reviews_carousel",
     "comparison",
     "objection",

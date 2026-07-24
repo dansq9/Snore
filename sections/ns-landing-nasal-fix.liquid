@@ -22,6 +22,13 @@
     .ns-nasalfix__inner { grid-template-columns: 1fr; }
   }
 
+  /* No image: a single centered text block instead of the split layout. */
+  .ns-nasalfix__inner--solo {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+    text-align: center;
+  }
+
   .ns-nasalfix__media {
     aspect-ratio: 1 / 1;
     border-radius: 20px;
@@ -76,14 +83,12 @@
 </style>
 
 <section class="ns-nasalfix">
-  <div class="ns-nasalfix__inner">
+  <div class="ns-nasalfix__inner{% if section.settings.image == blank %} ns-nasalfix__inner--solo{% endif %}">
+    {%- if section.settings.image != blank -%}
     <div class="ns-nasalfix__media">
-      {%- if section.settings.image != blank -%}
-        {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.heading }}
-      {%- else -%}
-        <div class="ns-nasalfix__ph">{{ section.settings.image_placeholder | default: 'Calm nasal breather, taped, sleeping soundly' }}</div>
-      {%- endif -%}
+      {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: section.settings.heading }}
     </div>
+    {%- endif -%}
     <div class="ns-nasalfix__content">
       <h2 class="ns-nasalfix__title">{{ section.settings.heading | default: 'Nasal breathing fixes all of it' }}</h2>
       <p class="ns-nasalfix__body">{{ section.settings.body | default: "Your nose filters, warms and humidifies every breath before it reaches your lungs, and it slows your breathing into a calmer, deeper rhythm. It's how your body is built to sleep. The moment your mouth falls open, all of that stops, and the snoring, dry mouth and restless nights follow." }}</p>
