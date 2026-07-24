@@ -108,7 +108,7 @@
       "type": "ns-landing-nasal-compare",
       "settings": {
         "heading": "This is what nasal breathing does",
-        "subheading": "One small strip. A completely different morning.",
+        "subheading": "Three seconds for a completely different morning.",
         "before_label": "Mouth Breather",
         "before_image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_55_21_PM.png",
         "before_placeholder": "Mouth open, snoring, restless partner",
@@ -131,6 +131,7 @@
     },
     "how": {
       "type": "ns-landing-how",
+      "disabled": true,
       "settings": {
         "kicker": "HOW IT WORKS",
         "heading": "Three seconds. That's the whole routine.",
@@ -293,8 +294,8 @@
     "launch_offer": {
       "type": "ns-landing-launch-offer",
       "settings": {
-        "offer_product": "",
-        "image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_12_59_00_AM-Photoroom.png",
+        "offer_product": "nightseals-60-nights",
+        "image": "shopify://shop_images/Untitled_design_4_-Photoroom_15f3e9b7-cae8-4cdf-8b58-14b4564195a5.png",
         "pill": "Limited time",
         "discount_line": "40% OFF",
         "product_line": "first 60 nights",
