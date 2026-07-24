@@ -99,7 +99,7 @@
             "number": "2",
             "title": "A Journalist Taped His Mouth Shut for Science. What He Found Changed How We Sleep.",
             "body": "Journalist James Nestor spent ten days breathing only through his mouth for a Stanford study. His snoring climbed, his sleep fell apart, and he felt terrible. When he switched back to nasal breathing, it reversed within a day. He wrote about it in his bestseller Breath, and it's the same simple principle NightSeals is built on. One strip. One night.",
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_02_27_26_AM.png",
             "placeholder": "Add an image"
           }
         },
@@ -243,7 +243,7 @@
       "settings": {
         "kicker": "Not sure if mouth tape is right for you?",
         "heading": "Take the free 2-minute sleep assessment",
-        "body": "Answer a few quick questions and get a personalized read on why you're waking up tired, and whether NightSeals can help.",
+        "body": "",
         "meta": "Free · No email needed · Results in 2 minutes",
         "cta_text": "Take the sleep quiz →",
         "quiz_url": ""
@@ -271,7 +271,7 @@
         "partners_kicker": "FOR PARTNERS",
         "partners_heading": "The cheapest marriage counseling you'll ever buy.",
         "partners_body": "Most of our orders come from the partner who's had enough. Same bedroom. Same bed. Different mornings.",
-        "partners_cta": "Get one for your partner"
+        "partners_cta": "Get them for your partner"
       }
     },
     "offer": {
