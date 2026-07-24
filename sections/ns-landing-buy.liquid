@@ -1,22 +1,15 @@
 {%- comment -%}
-  Landing closer: a lightweight guarantee reassurance + one compact CTA that
-  points back to the single offer module (#tiers, in ns-landing-shop). It does
-  NOT repeat the price/offer card (that lives in the shop module and the launch
-  offer), so it stays light and can't show a wrong pack. This section also owns
-  the page's minimal footer (medical disclaimer + policy links).
+  Landing closer: the 30-night guarantee card (mirrors the PDP's
+  ns-guarantee-cta) + the page's minimal footer (medical disclaimer +
+  policy links). The CTA scrolls to the on-page offer module (#tiers) so
+  buy-intent never leaves the advertorial.
 {%- endcomment -%}
 
 <section id="buy" class="ns-lbuy">
-  <div class="ns-lbuy__inner">
-    <div class="ns-lbuy__head">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D9A04B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"></path><path d="M9 11.5l2 2 4-4"></path></svg>
-      <h2 class="ns-lbuy__heading">{{ section.settings.heading | default: 'The NightSeals Guarantee' }}</h2>
-    </div>
-    <p class="ns-lbuy__body">We're confident NightSeals will change how you sleep. That's why we offer a <span class="ns-lbuy__body-strong">hassle-free, money-back guarantee.</span> 30 nights. No questions asked.</p>
-
-    <a href="{{ section.settings.cta_url | default: '#tiers' }}" class="ns-lbuy__cta">{{ section.settings.cta_label | default: 'Claim your 60-night offer →' }}</a>
-
-    <div class="ns-lbuy__trust">30-night money-back guarantee</div>
+  <div class="ns-lbuy__card">
+    <h2 class="ns-lbuy__heading">{{ section.settings.heading | default: 'Sleep on it for' }} <span class="ns-lbuy__highlight">{{ section.settings.highlight | default: '30 nights' }}</span></h2>
+    <p class="ns-lbuy__desc">{{ section.settings.body | default: "If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions, no hard feelings." }}</p>
+    <a href="{{ section.settings.cta_url | default: '#tiers' }}" class="ns-lbuy__cta">{{ section.settings.cta_label | default: 'Try NightSeals risk-free' }}</a>
   </div>
 </section>
 
@@ -32,29 +25,52 @@
 </footer>
 
 <style>
-  .ns-lbuy { background: #10182B; color: #F2F4F7; padding: clamp(32px,5vw,60px) clamp(14px,4vw,32px); border-top: 1px solid rgba(217,160,75,.35); }
-  .ns-lbuy__inner { max-width: 520px; margin: 0 auto; text-align: center; }
-  .ns-lbuy__head {
-    display: flex; align-items: center; gap: 14px; justify-content: center;
-    margin-bottom: clamp(16px,3vw,22px);
+  .ns-lbuy { max-width: 1200px; margin: 0 auto; padding: clamp(24px,5vw,48px) 24px 0; }
+  .ns-lbuy__card {
+    background: #10182B;
+    border-radius: 28px;
+    padding: clamp(32px,6vw,72px) clamp(18px,5vw,48px);
+    text-align: center;
   }
-  .ns-lbuy__heading { font-size: clamp(22px,4.4vw,32px); letter-spacing: -.02em; font-weight: 800; margin: 0; }
-  .ns-lbuy__body {
-    font-size: clamp(14px,3vw,15.5px); line-height: 1.55; color: rgba(242,244,247,.65);
-    margin: 0 auto 24px; max-width: 460px; text-wrap: pretty;
+  .ns-lbuy__heading {
+    font-size: clamp(26px,4.5vw,42px);
+    line-height: 1.08;
+    font-weight: 800;
+    color: #F2F4F7;
+    margin: 0 0 20px;
+    letter-spacing: -.02em;
   }
-  .ns-lbuy__body-strong { font-weight: 800; color: #F2F4F7; }
-
+  .ns-lbuy__highlight {
+    background: #D9A04B;
+    color: #10182B;
+    padding: 0 7px 3px;
+    border-radius: 6px;
+    display: inline-block;
+    transform: rotate(-2deg);
+  }
+  .ns-lbuy__desc {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: rgba(242,244,247,.65);
+    max-width: 520px;
+    margin: 0 auto 28px;
+    text-wrap: pretty;
+  }
   .ns-lbuy__cta {
-    display: inline-block; background: #D9A04B; color: #10182B; text-align: center;
-    padding: 15px 34px; border-radius: 999px; font-size: 16px; font-weight: 700;
-    text-decoration: none; box-shadow: 0 8px 24px rgba(217,160,75,.25);
-    transition: background .2s, box-shadow .2s;
+    display: inline-block;
+    background: #D9A04B;
+    color: #10182B;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: opacity .2s;
   }
-  .ns-lbuy__cta:hover { background: #E5B267; color: #10182B; box-shadow: 0 10px 28px rgba(217,160,75,.32); }
-  .ns-lbuy__trust { margin-top: 14px; font-size: 12px; color: rgba(242,244,247,.45); }
+  .ns-lbuy__cta:hover { opacity: .88; }
 
-  .ns-lbuy__footer { max-width: 860px; margin: 0 auto; padding: clamp(20px,4vw,40px) clamp(14px,4vw,32px); }
+  /* Footer (disclaimer + policy links) */
+  .ns-lbuy__footer { max-width: 860px; margin: 0 auto; padding: clamp(24px,4vw,40px) clamp(14px,4vw,32px); }
   .ns-lbuy__disclaimer { font-size: 11px; line-height: 1.65; color: #8A93A3; max-width: 720px; margin: 0; }
   .ns-lbuy__disclaimer-strong { font-weight: 700; color: #566072; }
   .ns-lbuy__footer-links {
@@ -69,9 +85,11 @@
 {
   "name": "Landing Buy",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Guarantee heading", "default": "The NightSeals Guarantee" },
-    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Claim your 60-night offer →" },
-    { "type": "url", "id": "cta_url", "label": "CTA target", "info": "Defaults to the offer module higher up the page (#tiers)." }
+    { "type": "text", "id": "heading", "label": "Heading lead", "default": "Sleep on it for" },
+    { "type": "text", "id": "highlight", "label": "Highlight (nights)", "default": "30 nights" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions, no hard feelings." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Try NightSeals risk-free" },
+    { "type": "url", "id": "cta_url", "label": "CTA target", "info": "Defaults to the offer module (#tiers)." }
   ],
   "presets": [
     { "name": "Landing Buy" }

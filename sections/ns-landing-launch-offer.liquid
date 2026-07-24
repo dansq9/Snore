@@ -11,10 +11,9 @@
   if offer_product == blank
     assign offer_product = settings.featured_product
   endif
+  # Claim CTA scrolls to the on-page offer module (never the PDP) — the
+  # advertorial already is the product page, so keep buy-intent in-funnel.
   assign ns_offer_url = '#tiers'
-  if offer_product != blank
-    assign ns_offer_url = offer_product.url
-  endif
 
   assign v = offer_product.selected_or_first_available_variant
   assign ns_price = v.price
