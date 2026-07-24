@@ -277,6 +277,7 @@
     },
     "offer": {
       "type": "ns-landing-launch-offer",
+      "disabled": true,
       "settings": {
         "offer_product": "nightseals-60-nights",
         "rating_text": "4.8 from thousands of sleepers",
@@ -293,6 +294,19 @@
         "check_4": "No subscription, ever",
         "cta_text": "Claim 40% off →",
         "note": "Join thousands sleeping quieter every night."
+      }
+    },
+    "ns_landing_shop_hx7YJz": {
+      "type": "ns-landing-shop",
+      "name": "Landing Shop Hero",
+      "settings": {
+        "offer_product": "nightseals-60-nights",
+        "offer_banner": "Limited-time offer · while supplies last",
+        "headline": "Start tonight. Wake up different.",
+        "subline": "Your NightSeals supply at a limited-time price. One strip a night. That's the whole routine.",
+        "offer_label": "YOUR LIMITED-TIME OFFER",
+        "secondary_cta": "Learn more",
+        "fab_label": "Save 40%"
       }
     },
     "reviews": {
@@ -386,6 +400,7 @@
     "timeline",
     "testimonials",
     "offer",
+    "ns_landing_shop_hx7YJz",
     "reviews",
     "buy"
   ]
