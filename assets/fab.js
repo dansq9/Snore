@@ -130,9 +130,10 @@
 
     var scrolledEnough = false; /* user has scrolled a bit past the top */
     var footerVisible  = false;
+    var ctaVisible     = false; /* a real buy CTA is on screen — FAB is redundant */
 
     function evaluate() {
-      if (scrolledEnough && !footerVisible) { showFab(fab); }
+      if (scrolledEnough && !footerVisible && !ctaVisible) { showFab(fab); }
       else { hideFab(fab); }
     }
 
@@ -150,6 +151,21 @@
         footerVisible = entries[0].isIntersecting;
         evaluate();
       }, { threshold: 0 }).observe(footer);
+    }
+
+    /* Hide the FAB whenever a real buy CTA is in view (the offer's Buy now,
+       the closer, or the launch offer) — a floating button that just
+       duplicates a button already on screen is noise. */
+    var ctaEls = [].slice.call(document.querySelectorAll(
+      '#ns-lshop-buy-now, .ns-lbuy__cta, .ns-launch__cta'
+    ));
+    if (ctaEls.length) {
+      var ctaObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { e.target._nsCtaVisible = e.isIntersecting; });
+        ctaVisible = ctaEls.some(function (el) { return el._nsCtaVisible; });
+        evaluate();
+      }, { threshold: 0 });
+      ctaEls.forEach(function (el) { ctaObserver.observe(el); });
     }
   }
 

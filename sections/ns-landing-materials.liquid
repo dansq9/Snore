@@ -39,11 +39,8 @@
 
   .ns-lmat__mat-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
     gap: clamp(14px, 3vw, 22px);
-  }
-  @media (max-width: 560px) {
-    .ns-lmat__mat-grid { grid-template-columns: 1fr; }
   }
 
   .ns-lmat__card {
@@ -141,19 +138,6 @@
       <div class="ns-lmat__card-text">
         <div class="ns-lmat__card-title">{{ section.settings.item_3_title | default: "No more 3am dry mouth" }}</div>
         <div class="ns-lmat__card-body">{{ section.settings.item_3_body | default: "An open mouth dries out all night. Sealed and breathing through your nose, you skip the 2am water grab and the sandpaper throat, and wake up fresh." }}</div>
-      </div>
-    </div>
-    <div class="ns-lmat__card">
-      <div class="ns-lmat__card-media">
-        {%- if section.settings.item_4_image != blank -%}
-          {{ section.settings.item_4_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.item_4_title }}
-        {%- else -%}
-          <div class="ns-lmat__card-ph">{{ section.settings.item_4_ph | default: 'Close-up of the NightSeals strip on soft fabric' }}</div>
-        {%- endif -%}
-      </div>
-      <div class="ns-lmat__card-text">
-        <div class="ns-lmat__card-title">{{ section.settings.item_4_title | default: "Barely there" }}</div>
-        <div class="ns-lmat__card-body">{{ section.settings.item_4_body | default: "Soft, breathable fabric and a skin-safe, latex-free adhesive. It holds over a beard, peels off clean, and by night two you'll forget it's on." }}</div>
       </div>
     </div>
   </div>
@@ -261,33 +245,6 @@
       "id": "item_3_body",
       "label": "Card 3 body",
       "default": "An open mouth dries out all night. Sealed and breathing through your nose, you skip the 2am water grab and the sandpaper throat, and wake up fresh."
-    },
-    {
-      "type": "header",
-      "content": "Card 4 (material)"
-    },
-    {
-      "type": "image_picker",
-      "id": "item_4_image",
-      "label": "Card 4 image"
-    },
-    {
-      "type": "text",
-      "id": "item_4_ph",
-      "label": "Card 4 image placeholder",
-      "default": "Close-up of the NightSeals strip on soft fabric"
-    },
-    {
-      "type": "text",
-      "id": "item_4_title",
-      "label": "Card 4 title (material)",
-      "default": "Barely there"
-    },
-    {
-      "type": "textarea",
-      "id": "item_4_body",
-      "label": "Card 4 body (material)",
-      "default": "Soft, breathable fabric and a skin-safe, latex-free adhesive. It holds over a beard, peels off clean, and by night two you'll forget it's on."
     }
   ],
   "presets": [
