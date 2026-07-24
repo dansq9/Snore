@@ -5,7 +5,7 @@
   }
 
   .ns-proof-stats__inner {
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 0 auto;
     text-align: center;
   }
@@ -36,35 +36,36 @@
     margin: 0 0 clamp(32px, 6vw, 52px);
   }
 
+  /* Card grid (Hostage-style): 3-up on desktop, 2-up on phones. */
   .ns-proof-stats__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+    gap: clamp(12px, 2vw, 18px);
   }
 
   .ns-proof-stats__tile {
-    padding: clamp(24px, 4vw, 40px) 20px;
+    background: rgba(242, 244, 247, 0.05);
+    border: 1px solid rgba(242, 244, 247, 0.07);
+    border-radius: 18px;
+    padding: clamp(26px, 4vw, 40px) clamp(16px, 2.5vw, 24px);
     text-align: center;
-    border-left: 1px solid rgba(242, 244, 247, 0.12);
-  }
-
-  .ns-proof-stats__tile:first-child {
-    border-left: none;
   }
 
   .ns-proof-stats__number {
-    font-size: clamp(46px, 8vw, 72px);
+    font-size: clamp(40px, 6vw, 60px);
     font-weight: 800;
     color: #E5B267;
     line-height: 1;
     letter-spacing: -0.02em;
-    margin: 0 0 16px;
+    margin: 0 0 14px;
+    /* keeps the width steady while the digits count up */
+    font-variant-numeric: tabular-nums;
   }
 
   .ns-proof-stats__description {
-    font-size: clamp(14px, 2vw, 15.5px);
+    font-size: clamp(13.5px, 2vw, 15px);
     line-height: 1.45;
-    color: rgba(242, 244, 247, 0.72);
+    color: rgba(242, 244, 247, 0.7);
     margin: 0;
   }
 
@@ -72,26 +73,16 @@
     font-size: 11.5px;
     line-height: 1.5;
     color: rgba(242, 244, 247, 0.4);
-    margin: clamp(28px, 5vw, 44px) 0 0;
+    margin: clamp(28px, 5vw, 44px) auto 0;
     text-align: center;
     max-width: 720px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
-  @media (max-width: 700px) {
-    .ns-proof-stats__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .ns-proof-stats__tile {
-      border-left: none;
-      border-top: 1px solid rgba(242, 244, 247, 0.12);
-    }
-
-    .ns-proof-stats__tile:first-child {
-      border-top: none;
-    }
+  @media (max-width: 760px) {
+    .ns-proof-stats__grid { grid-template-columns: repeat(2, 1fr); }
+    /* keep "9 in 10" on one line so every card reads consistently */
+    .ns-proof-stats__number { font-size: clamp(26px, 7.6vw, 38px); white-space: nowrap; }
+    .ns-proof-stats__tile { padding: clamp(22px, 6vw, 30px) 12px; }
   }
 </style>
 
@@ -113,6 +104,49 @@
     <p class="ns-proof-stats__footnote">{{ section.settings.footnote | default: '*Based on a recent self-reported survey of mouth tape users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure, or prevent any disease.' }}</p>
   </div>
 </div>
+
+<script>
+  (function () {
+    var nums = [].slice.call(document.querySelectorAll('.ns-proof-stats__number'));
+    if (!nums.length) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    nums.forEach(function (el) {
+      var full = (el.textContent || '').trim();
+      var m = full.match(/\d+/);
+      if (!m || reduce) return; /* nothing numeric, or user prefers no motion — leave as-is */
+      el._nsFull = full;
+      el._nsTarget = parseInt(m[0], 10);
+      el.textContent = full.replace(/\d+/, '0'); /* start from zero */
+    });
+
+    function countUp(el) {
+      if (el._nsDone || el._nsTarget == null) return;
+      el._nsDone = true;
+      var start = null, dur = 1200;
+      function step(ts) {
+        if (start === null) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3); /* easeOutCubic */
+        el.textContent = el._nsFull.replace(/\d+/, Math.round(eased * el._nsTarget));
+        if (p < 1) { requestAnimationFrame(step); }
+        else { el.textContent = el._nsFull; }
+      }
+      requestAnimationFrame(step);
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { countUp(e.target); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      nums.forEach(function (el) { if (el._nsTarget != null) io.observe(el); });
+    } else {
+      nums.forEach(function (el) { if (el._nsFull) el.textContent = el._nsFull; });
+    }
+  })();
+</script>
 
 {% schema %}
 {
