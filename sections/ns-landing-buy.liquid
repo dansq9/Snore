@@ -1,15 +1,26 @@
 {%- comment -%}
   Landing closer: the 30-night guarantee card (mirrors the PDP's
   ns-guarantee-cta) + the page's minimal footer (medical disclaimer +
-  policy links). The CTA scrolls to the on-page offer module (#tiers) so
-  buy-intent never leaves the advertorial.
+  policy links). The CTA runs the express Buy-now flow (clear cart, add the
+  60-night offer, go to checkout) via buy-now.js, falling back to the on-page
+  offer module (#tiers) when no variant resolves or JS is off.
 {%- endcomment -%}
+{%- liquid
+  assign offer_product = section.settings.offer_product
+  if offer_product == blank
+    assign offer_product = settings.featured_product
+  endif
+  if offer_product == blank
+    assign offer_product = collections.all.products.first
+  endif
+  assign v = offer_product.selected_or_first_available_variant
+-%}
 
 <section id="buy" class="ns-lbuy">
   <div class="ns-lbuy__card">
     <h2 class="ns-lbuy__heading">{{ section.settings.heading | default: 'Sleep on it for' }} <span class="ns-lbuy__highlight">{{ section.settings.highlight | default: '30 nights' }}</span></h2>
     <p class="ns-lbuy__desc">{{ section.settings.body | default: "If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions, no hard feelings." }}</p>
-    <a href="{{ section.settings.cta_url | default: '#tiers' }}" class="ns-lbuy__cta">{{ section.settings.cta_label | default: 'Try NightSeals risk-free' }}</a>
+    <a href="{% if section.settings.cta_url != blank %}{{ section.settings.cta_url }}{% else %}#tiers{% endif %}" class="ns-lbuy__cta"{% if section.settings.cta_url == blank and v != blank and v.id %} data-ns-buy-now data-variant-id="{{ v.id }}"{% endif %}>{{ section.settings.cta_label | default: 'Try NightSeals risk-free' }}</a>
   </div>
 </section>
 
@@ -85,6 +96,7 @@
 {
   "name": "Landing Buy",
   "settings": [
+    { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The product the Buy-now CTA checks out (the 60-night offer). Falls back to the store's Main product." },
     { "type": "text", "id": "heading", "label": "Heading lead", "default": "Sleep on it for" },
     { "type": "text", "id": "highlight", "label": "Highlight (nights)", "default": "30 nights" },
     { "type": "textarea", "id": "body", "label": "Body", "default": "If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions, no hard feelings." },

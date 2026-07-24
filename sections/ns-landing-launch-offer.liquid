@@ -212,7 +212,7 @@
       <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span><span>{{ section.settings.check_4 | default: 'No subscription, ever' }}</span></li>
     </ul>
 
-    <a href="{{ ns_offer_url }}" class="ns-launch__cta">{{ section.settings.cta_text | default: 'Claim 40% off →' }}</a>
+    <a href="{{ ns_offer_url }}" class="ns-launch__cta"{% if v != blank and v.id %} data-ns-buy-now data-variant-id="{{ v.id }}"{% endif %}>{{ section.settings.cta_text | default: 'Claim 40% off →' }}</a>
     <p class="ns-launch__note">{{ section.settings.note | default: 'Join thousands sleeping quieter every night.' }}</p>
   </div>
 </section>
