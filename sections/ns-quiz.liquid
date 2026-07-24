@@ -302,7 +302,7 @@
 </div>
 
 <style>
-  .nsq-root { min-height: 100vh; display: flex; flex-direction: column; width: 100%; background: #F7F8FA; color: #10182B; font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .nsq-root { min-height: 100vh; height: 100dvh; display: flex; flex-direction: column; width: 100%; background: #F7F8FA; color: #10182B; font-family: 'Archivo', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
   .nsq-root *, .nsq-root *::before, .nsq-root *::after { box-sizing: border-box; }
   .nsq-root [hidden] { display: none !important; }
 
@@ -316,7 +316,11 @@
   .nsq-progress { height: 4px; background: rgba(16,24,43,.08); }
   .nsq-progress-fill { height: 100%; background: linear-gradient(90deg,#B27E33,#D9A04B); width: 0%; transition: width .4s ease; }
 
-  .nsq-main { width: 100%; max-width: 600px; margin: 0 auto; padding: clamp(18px,4vw,28px) clamp(14px,4vw,20px) 56px; flex: 1; }
+  .nsq-main { width: 100%; max-width: 600px; margin: 0 auto; padding: clamp(14px,3.5vw,24px) clamp(14px,4vw,20px); flex: 1 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; }
+  /* Each screen centers when it fits the viewport, and scrolls (only the
+     main area, not the page) when a screen is genuinely tall — so the
+     intro and question screens sit fully in view with no page scroll. */
+  .nsq-main > .nsq-screen { margin: auto 0; width: 100%; }
   .nsq-fade { animation: nsq-fadein .4s ease; }
   .nsq-disclaimer { text-align: center; padding: 0 20px 28px; font-size: 11px; color: #8A93A3; line-height: 1.5; }
 
@@ -352,6 +356,29 @@
   .nsq-q-title { font-size: clamp(22px,6vw,30px); line-height: 1.15; letter-spacing: -.025em; font-weight: 800; margin: 0 0 22px; text-wrap: pretty; }
   .nsq-q-options { display: flex; flex-direction: column; gap: 11px; }
   .nsq-opt { width: 100%; display: flex; align-items: center; gap: 13px; text-align: left; background: #FFFFFF; border: 1.5px solid rgba(16,24,43,.12); border-radius: 16px; padding: 15px 16px; min-height: 56px; font-size: 15px; font-weight: 600; color: #10182B; font-family: inherit; line-height: 1.4; cursor: pointer; transition: border-color .15s ease, background .15s ease, box-shadow .15s ease, transform .1s ease; box-shadow: 0 2px 6px -2px rgba(16,24,43,.06); }
+
+  /* Short viewports: compact the intro + question screens so the first
+     pages fit within the viewport without page scroll. */
+  @media (max-height: 760px) {
+    .nsq-hero { padding: 22px clamp(18px,5vw,30px); border-radius: 22px; }
+    .nsq-hero-icon { width: 44px; height: 44px; margin-bottom: 10px; }
+    .nsq-kicker { margin-bottom: 10px; }
+    .nsq-hero-h1 { font-size: clamp(23px,6.4vw,30px); margin-bottom: 8px; }
+    .nsq-hero-sub { font-size: 15px; margin-bottom: 16px; }
+    .nsq-hero-note { margin-top: 12px; }
+    .nsq-review { padding: 13px 16px; margin-top: 12px; }
+    .nsq-review-quote { font-size: 14px; }
+    .nsq-trust { margin-top: 12px; }
+    .nsq-q-topbar { margin-bottom: 14px; }
+    .nsq-q-title { margin-bottom: 16px; }
+    .nsq-q-options { gap: 9px; }
+    .nsq-opt { min-height: 50px; padding: 12px 15px; }
+  }
+  @media (max-height: 680px) {
+    .nsq-trust { display: none; }
+    .nsq-hero-sub { margin-bottom: 14px; }
+    .nsq-opt { min-height: 46px; padding: 11px 14px; font-size: 14.5px; }
+  }
   .nsq-opt:hover { border-color: #D9A04B; background: #FDF8F0; box-shadow: 0 8px 18px -8px rgba(217,160,75,.45); }
   .nsq-opt:active { transform: scale(.985); }
   .nsq-opt.is-selected { border-color: #D9A04B; background: #FDF8F0; box-shadow: 0 8px 18px -8px rgba(217,160,75,.45); }
