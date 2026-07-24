@@ -56,6 +56,8 @@
   <script src="{{ 'confetti.js' | asset_url }}" defer></script>
   {%- comment -%} fab.js loads everywhere; it self-gates on a #tiers / #buy anchor, so it activates on the landing (shoppable hero) and PDP but no-ops elsewhere. {%- endcomment -%}
   <script src="{{ 'fab.js' | asset_url }}" defer></script>
+  {%- comment -%} buy-now.js is delegated; it only acts when a [data-ns-buy-now] element is clicked, so it no-ops on pages without one. {%- endcomment -%}
+  <script src="{{ 'buy-now.js' | asset_url }}" defer></script>
   {%- unless is_landing -%}
     <script src="{{ 'welcome-popup.js' | asset_url }}" defer></script>
   {%- endunless -%}

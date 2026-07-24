@@ -12,7 +12,6 @@
     "hero": {
       "type": "ns-landing-hero",
       "settings": {
-        "badge_text": "2,300+ five-star sleepers",
         "heading": "Your mouth falls open at night. That's the problem.",
         "subheading": "You can't feel it happen, but it's why you wake up tired and snoring. The fix takes 3 seconds.",
         "check_1": "Less snoring, quieter nights",
@@ -125,7 +124,6 @@
     "nasal_fix": {
       "type": "ns-landing-nasal-fix",
       "settings": {
-        "image_placeholder": "Calm nasal breather, taped, sleeping soundly",
         "heading": "Nasal breathing fixes all of it",
         "body": "Your nose filters, warms and humidifies every breath before it reaches your lungs, and it slows your breathing into a calmer, deeper rhythm. It's how your body is built to sleep. The moment your mouth falls open, all of that stops, and the snoring, dry mouth and restless nights follow.",
         "fix": "The fix is simple: keep your mouth gently closed at night and breathe through your nose. NightSeals is the easiest way to make sure you do, while you sleep.",
@@ -343,6 +341,7 @@
     "buy": {
       "type": "ns-landing-buy",
       "settings": {
+        "offer_product": "nightseals-60-nights",
         "heading": "Sleep on it for",
         "highlight": "30 nights",
         "body": "If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions, no hard feelings.",

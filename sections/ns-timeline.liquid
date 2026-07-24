@@ -71,8 +71,13 @@
   .nst-axtitle, .nst-ax { font-size: 13px; }
   .nst-badge { font-size: 12px; font-weight: 700; letter-spacing: .08em; }
   @media (max-width: 640px) {
-    .nst-axtitle, .nst-ax { font-size: 25px; }
-    .nst-badge { font-size: 21px; }
+    /* The SVG scales down to phone width, so bump the tick labels to stay
+       legible. Drop the rotated "Sleep quality" title (the High/Med/Low
+       ticks carry the axis) to free the crowded left edge, and shrink the
+       badges a touch so "GOAL: NIGHT 60" doesn't run past the plot. */
+    .nst-ax { font-size: 24px; }
+    .nst-axtitle { display: none; }
+    .nst-badge { font-size: 22px; }
   }
 
   .ns-timeline__cards {
@@ -220,8 +225,9 @@
         <!-- Start label -->
         <text x="120" y="272" text-anchor="middle" class="nst-badge" fill="#D9A04B">YOU ARE HERE</text>
 
-        <!-- End label -->
-        <text x="820" y="16" text-anchor="middle" class="nst-badge" fill="#D9A04B">GOAL: NIGHT {{ nights }}</text>
+        <!-- End label — right-anchored so the wider mobile font never runs
+             past the plot's right edge. -->
+        <text x="890" y="18" text-anchor="end" class="nst-badge" fill="#D9A04B">GOAL: NIGHT {{ nights }}</text>
       </svg>
     </div>
 
