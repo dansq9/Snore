@@ -83,38 +83,54 @@
     <p class="ns-lfaq__sub">{{ section.settings.subheading | default: 'Everything you need to know before your first night.' }}</p>
   </div>
   <div class="ns-lfaq__list">
+    {%- if section.settings.faq_1_q != blank -%}
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_1_q | default: 'What is NightSeals and how does it work?' }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_1_a | default: "NightSeals is a gentle strip you place over your lips before bed so they stay lightly sealed and you breathe through your nose all night. One strip, three seconds. Your nose filters, warms and humidifies the air the way it's meant to, so you snore less and wake up less parched." }}</p>
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_1_q }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_1_a }}</p>
     </details>
+    {%- endif -%}
+    {%- if section.settings.faq_2_q != blank -%}
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_2_q | default: 'Is it safe to sleep with mouth tape?' }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_2_a | default: "For healthy adults who can breathe comfortably through their nose, yes. NightSeals uses a gentle, hypoallergenic adhesive and peels off easily. It's not for children, and it's not a treatment for sleep apnea. If you suspect you have a breathing disorder, talk to your doctor first." }}</p>
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_2_q }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_2_a }}</p>
     </details>
+    {%- endif -%}
+    {%- if section.settings.faq_3_q != blank -%}
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_3_q | default: 'Will it fall off during the night?' }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_3_a | default: "It's built to stay put for a full 7-8 hours. The strip flexes with your face as you move, so it stays sealed whether you sleep on your back or your side, then peels off cleanly in the morning." }}</p>
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_3_q }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_3_a }}</p>
     </details>
+    {%- endif -%}
+    {%- if section.settings.faq_4_q != blank -%}
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_4_q | default: 'What if I need to breathe through my mouth or sip water?' }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_4_a | default: "It's a gentle reminder, not a lock. A deliberate yawn or light effort parts your lips easily, and you can peel it off in a second if you need to. It only stops the unconscious mouth-falling-open while you sleep." }}</p>
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_4_q }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_4_a }}</p>
     </details>
+    {%- endif -%}
+    {%- if section.settings.faq_5_q != blank -%}
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_5_q | default: 'Does it work with a beard or facial hair?' }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_5_a | default: "Yes. The adhesive is engineered to grip and release cleanly even through a full beard or stubble. No painful pull in the morning, no residue left behind." }}</p>
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_5_q }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_5_a }}</p>
     </details>
+    {%- endif -%}
+    {%- if section.settings.faq_6_q != blank -%}
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_6_q | default: 'What are the benefits of nasal breathing during sleep?' }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_6_a | default: "Your nose filters, warms and humidifies every breath and helps you take slower, deeper ones. Sleepers who switch from mouth to nasal breathing commonly report less snoring, less 3am dry mouth, and waking up more rested. (General wellness information, not medical advice.)" }}</p>
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_6_q }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_6_a }}</p>
     </details>
+    {%- endif -%}
+    {%- if section.settings.faq_7_q != blank -%}
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_7_q | default: 'How long until I notice a difference?' }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_7_a | default: "Most people feel less dry mouth the very first morning. Snoring and sleep quality usually improve over the first week or two as nasal breathing becomes your default. Give it 30 nights to become a habit." }}</p>
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_7_q }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_7_a }}</p>
     </details>
+    {%- endif -%}
+    {%- if section.settings.faq_8_q != blank -%}
     <details class="ns-lfaq__item">
-      <summary><span class="ns-lfaq__q">{{ section.settings.faq_8_q | default: "What's the return policy?" }}</span></summary>
-      <p class="ns-lfaq__a">{{ section.settings.faq_8_a | default: "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions." }}</p>
+      <summary><span class="ns-lfaq__q">{{ section.settings.faq_8_q }}</span></summary>
+      <p class="ns-lfaq__a">{{ section.settings.faq_8_a }}</p>
     </details>
+    {%- endif -%}
   </div>
 </section>
 
