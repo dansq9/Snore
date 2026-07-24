@@ -71,7 +71,7 @@
         "body": "Answer a few quick questions and get a personalized plan for quieter, more restful nights.",
         "meta": "Free · No email needed · Results in 2 minutes",
         "cta_text": "Start the sleep quiz →",
-        "quiz_url": ""
+        "quiz_url": "shopify://pages/quiz"
       }
     },
     "symptoms": {
