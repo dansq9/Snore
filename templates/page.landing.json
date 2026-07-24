@@ -75,6 +75,7 @@
     },
     "symptoms": {
       "type": "ns-landing-symptoms",
+      "disabled": true,
       "settings": {
         "kicker": "SOUND FAMILIAR?",
         "heading": "If any of these describe your mornings, your mouth is probably open all night.",
