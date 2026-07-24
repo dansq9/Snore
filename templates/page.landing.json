@@ -108,6 +108,7 @@
     },
     "nasal_compare": {
       "type": "ns-landing-nasal-compare",
+      "disabled": true,
       "settings": {
         "heading": "This is what nasal breathing does",
         "subheading": "Three seconds for a completely different morning.",
@@ -123,6 +124,7 @@
     },
     "nasal_fix": {
       "type": "ns-landing-nasal-fix",
+      "disabled": true,
       "settings": {
         "heading": "Nasal breathing fixes all of it",
         "body": "Your nose filters, warms and humidifies every breath before it reaches your lungs, and it slows your breathing into a calmer, deeper rhythm. It's how your body is built to sleep. The moment your mouth falls open, all of that stops, and the snoring, dry mouth and restless nights follow.",
