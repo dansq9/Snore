@@ -89,7 +89,7 @@
             "number": "1",
             "title": "Your Body Has Been Trying to Fix Your Sleep. Your Mouth Keeps Undoing It.",
             "body": "Your nose was built for breathing. It warms, filters and humidifies every breath before it reaches your lungs. Your mouth does none of that. When it falls open at night, your breathing turns shallow and ragged, and you wake up foggy and dry-mouthed. Not because you slept too little, but because you breathed the wrong way. NightSeals keeps your lips gently sealed so your nose can do its job all night.",
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_12_39_53_AM_e21e538f-3bdc-44ff-a384-cef711907b33.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_02_27_26_AM.png",
             "placeholder": "Add an image"
           }
         },
@@ -99,7 +99,7 @@
             "number": "2",
             "title": "A Journalist Taped His Mouth Shut for Science. What He Found Changed How We Sleep.",
             "body": "Journalist James Nestor spent ten days breathing only through his mouth for a Stanford study. His snoring climbed, his sleep fell apart, and he felt terrible. When he switched back to nasal breathing, it reversed within a day. He wrote about it in his bestseller Breath, and it's the same simple principle NightSeals is built on. One strip. One night.",
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_02_27_26_AM.png",
+            "image": "shopify://shop_images/Screenshot_2026-07-24_at_3.14.37_AM.png",
             "placeholder": "Add an image"
           }
         },
@@ -151,6 +151,8 @@
       ],
       "settings": {
         "intro": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen, but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it.",
+        "intro_image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_12_39_53_AM_e21e538f-3bdc-44ff-a384-cef711907b33.png",
+        "intro_image_placeholder": "Add an image",
         "footnote": "*Based on a survey of people using mouth tape. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure or prevent any disease."
       }
     },
