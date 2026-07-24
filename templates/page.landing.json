@@ -108,10 +108,12 @@
       "type": "ns-landing-nasal-compare",
       "settings": {
         "heading": "This is what nasal breathing does",
-        "subheading": "One small strip. A completely different morning.",
+        "subheading": "Three seconds for a completely different morning.",
         "before_label": "Mouth Breather",
+        "before_image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_55_21_PM.png",
         "before_placeholder": "Mouth open, snoring, restless partner",
         "after_label": "Nasal Breather",
+        "after_image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png",
         "after_placeholder": "Mouth sealed, quiet, both sleeping through"
       }
     },
@@ -129,6 +131,7 @@
     },
     "how": {
       "type": "ns-landing-how",
+      "disabled": true,
       "settings": {
         "kicker": "HOW IT WORKS",
         "heading": "Three seconds. That's the whole routine.",
@@ -142,7 +145,9 @@
     },
     "timeline": {
       "type": "ns-timeline",
-      "settings": { "nights": 60 }
+      "settings": {
+        "nights": 60
+      }
     },
     "shop": {
       "type": "ns-landing-shop",
@@ -250,12 +255,15 @@
         "mat_kicker": "WHY IT WORKS",
         "mat_heading": "How one small strip changes the whole night",
         "mat_intro": "It isn't the tape doing the work. It's what happens the moment your mouth stays closed and every breath goes through your nose.",
+        "item_1_image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_57_49_PM.png",
         "item_1_ph": "Partner sleeping soundly, undisturbed",
         "item_1_title": "Quieter nights",
         "item_1_body": "Snoring is the sound of air fighting past an open mouth. Close it, breathe through your nose, and the racket settles, so the person beside you finally sleeps through.",
+        "item_2_image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_44_34_PM_685df520-a5a0-42f3-987e-2877d3f2b637.png",
         "item_2_ph": "Waking up rested and clear at sunrise",
         "item_2_title": "Clear-headed mornings",
         "item_2_body": "Nose breathing is slower, deeper and calmer than gasping through your mouth. Give your body a full night of it and you wake up sharp instead of foggy.",
+        "item_3_image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_07_45_AM.png",
         "item_3_ph": "Untouched glass of water on the nightstand",
         "item_3_title": "No more 3am dry mouth",
         "item_3_body": "An open mouth dries out all night. Sealed and breathing through your nose, you skip the 2am water grab and the sandpaper throat, and wake up fresh."
@@ -276,22 +284,23 @@
         "partners_placeholder": "Couple: both sleeping peacefully, same bed",
         "partners_kicker": "FOR PARTNERS",
         "partners_heading": "The cheapest marriage counseling you'll ever buy.",
-        "partners_body": "Most of our orders come from the partner who's had enough. They buy it. He tries it. She sleeps through the night for the first time in years. Same bedroom. Same bed. Different mornings.",
+        "partners_body": "Most of our orders come from the partner who's had enough. Same bedroom. Same bed. Different mornings.",
         "partners_cta": "Get one for your partner"
       }
     },
     "launch_offer": {
       "type": "ns-landing-launch-offer",
       "settings": {
-        "offer_product": "",
-        "pill": "Launch pricing · limited time",
+        "offer_product": "nightseals-60-nights",
+        "image": "shopify://shop_images/Untitled_design_4_-Photoroom_15f3e9b7-cae8-4cdf-8b58-14b4564195a5.png",
+        "pill": "Limited time",
         "discount_line": "40% OFF",
-        "product_line": "your 60-night supply",
-        "body": "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time.",
+        "product_line": "first 60 nights",
+        "body": "We're taking 40% off a full 60-night supply for a limited time.",
         "check_1": "30-night money-back guarantee",
-        "check_2": "Latex-free, skin-safe",
-        "check_3": "Beard-proof",
-        "check_4": "No subscription, ever",
+        "check_2": "Wake up refreshed",
+        "check_3": "Reduce snoring",
+        "check_4": "Deeper sleep",
         "cta_text": "Claim 40% off →",
         "note": "Join thousands sleeping quieter every night."
       }
@@ -323,8 +332,9 @@
     "buy": {
       "type": "ns-landing-buy",
       "settings": {
-        "offer_product": "",
-        "heading": "The NightSeals Guarantee"
+        "heading": "The NightSeal Guarantee",
+        "cta_label": "Claim your 60-night offer →",
+        "cta_url": ""
       }
     }
   },
