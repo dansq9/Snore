@@ -120,6 +120,10 @@
     color: #10182B;
     margin: 0 0 12px;
     text-wrap: pretty;
+    /* The FAB and the page's CTAs jump to #tiers, which lives on this
+       headline — so a CTA click lands at the top of the offer (product +
+       price + Buy now framed together) rather than mid-buybox. */
+    scroll-margin-top: 32px;
   }
   .ns-lshop__subline {
     font-size: clamp(15px, 2.2vw, 17px);
@@ -148,14 +152,51 @@
   .ns-pdp__tier-label {
     font-size: 12px;
     letter-spacing: .16em;
-    font-weight: 700;
-    color: #8A93A3;
+    font-weight: 800;
+    color: #B27E33;
     text-transform: uppercase;
-    margin: 0 0 14px;
-    /* FAB / hero CTA jump to #tiers: leave room above so the offer headline +
-       price show and the Buy now / Learn more buttons land comfortably in view. */
-    scroll-margin-top: 90px;
+    margin: 0 0 12px;
   }
+  .ns-pdp__tier-label::before {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: #D9A04B;
+    border-radius: 2px;
+    margin-bottom: 12px;
+  }
+
+  /* Single-variant offer: a static price lockup (no fake selector). */
+  .ns-lshop__offer { margin: 0 0 4px; }
+  .ns-lshop__price-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 0 0 6px;
+  }
+  .ns-lshop__price {
+    font-size: clamp(40px, 8vw, 54px);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1;
+    color: #10182B;
+  }
+  .ns-lshop__compare { font-size: 20px; color: #8A93A3; text-decoration: line-through; }
+  .ns-lshop__save {
+    align-self: center;
+    background: #D9A04B;
+    color: #10182B;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 999px;
+  }
+  .ns-lshop__offer-sub { font-size: 13.5px; color: #566072; margin: 0; }
+
   .ns-pdp__tiers { display: flex; flex-direction: column; gap: 10px; }
   .ns-pdp__tier {
     position: relative;
@@ -202,29 +243,28 @@
   .ns-pdp__tier-compare { font-size: 13.5px; color: #8A93A3; text-decoration: line-through; }
 
   .ns-pdp__ctas {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 10px;
-    margin-top: 22px;
+    display: block;
+    margin-top: clamp(18px, 4vw, 24px);
   }
   .ns-pdp__btn-buy {
     display: flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100%;
     background: #10182B; color: #F7F8FA;
-    font-size: clamp(12.5px, 3.2vw, 15px); font-weight: 700;
-    padding: 16px 14px; border-radius: 999px; border: none; cursor: pointer;
+    font-size: clamp(14px, 3.5vw, 16.5px); font-weight: 700;
+    padding: 17px 20px; border-radius: 999px; border: none; cursor: pointer;
     white-space: nowrap; transition: opacity .2s;
   }
   .ns-pdp__btn-buy:hover { opacity: .88; }
   .ns-pdp__btn-buy-sep { opacity: .45; }
   .ns-pdp__btn-buy-price { color: #E5B267; font-weight: 800; }
   .ns-pdp__btn-cart {
-    display: flex; align-items: center; justify-content: center;
-    background: transparent; color: #10182B;
-    font-size: clamp(12.5px, 3.2vw, 15px); font-weight: 700;
-    padding: 16px 14px; border-radius: 999px; border: 2px solid rgba(16, 24, 43, .18);
-    cursor: pointer; white-space: nowrap; text-decoration: none; transition: opacity .2s;
+    display: block; text-align: center; margin: 0 auto;
+    background: none; color: #566072; border: none;
+    font-size: 13.5px; font-weight: 600;
+    padding: 12px 0 0; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px; transition: color .2s;
   }
-  .ns-pdp__btn-cart:hover { opacity: .88; }
+  .ns-pdp__btn-cart:hover { color: #10182B; }
 
   .ns-pdp__trust {
     display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
@@ -305,7 +345,7 @@
       </div>
       {%- endif -%}
 
-      <h2 class="ns-lshop__headline">{{ section.settings.headline | default: "Start tonight. Wake up different." }}</h2>
+      <h2 class="ns-lshop__headline" id="tiers" data-fab-label="{{ section.settings.fab_label | default: 'Save 40%' }}">{{ section.settings.headline | default: "Start tonight. Wake up different." }}</h2>
       <p class="ns-lshop__subline">{{ section.settings.subline | default: "Your NightSeals supply at a limited-time price. One strip a night. That's the whole routine." }}</p>
 
       <div class="ns-pdp__pills">
@@ -315,7 +355,7 @@
         <span class="ns-pdp__pill"><span class="ns-pdp__pill-check">&#10003;</span> 3 seconds a night</span>
       </div>
 
-      <p class="ns-pdp__tier-label" id="tiers" data-fab-label="{{ section.settings.fab_label | default: 'Save 40%' }}">{% if product.variants.size == 1 %}{{ section.settings.offer_label | default: 'YOUR LIMITED-TIME OFFER' }}{% else %}CHOOSE YOUR SUPPLY{% endif %}</p>
+      <p class="ns-pdp__tier-label">{% if product.variants.size == 1 %}{{ section.settings.offer_label | default: 'YOUR LIMITED-TIME OFFER' }}{% else %}CHOOSE YOUR SUPPLY{% endif %}</p>
       {%- if product == blank or product.variants.size == 0 -%}
         <div class="ns-pdp__tiers">
           <div class="ns-pdp__tier ns-pdp__tier--active">
@@ -326,6 +366,28 @@
               </div>
             </div>
           </div>
+        </div>
+      {%- elsif product.variants.size == 1 -%}
+        {%- assign v = ns_default_variant -%}
+        {%- assign nights_count = v.title | split: ' ' | first | plus: 0 -%}
+        {%- assign per_night_label = '' -%}
+        {%- if v.metafields.custom.per_night != blank -%}
+          {%- assign per_night_label = v.metafields.custom.per_night -%}
+        {%- elsif nights_count > 0 -%}
+          {%- assign half = nights_count | divided_by: 2 -%}
+          {%- assign per_night_cents = v.price | plus: half | divided_by: nights_count -%}
+          {%- assign per_night_label = per_night_cents | money -%}
+        {%- endif -%}
+        <div class="ns-lshop__offer">
+          <div class="ns-lshop__price-row">
+            <span class="ns-lshop__price">{{ v.price | money }}</span>
+            {%- if v.compare_at_price > v.price -%}
+              <span class="ns-lshop__compare">{{ v.compare_at_price | money }}</span>
+              {%- assign savings = v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price -%}
+              <span class="ns-lshop__save">Save {{ savings }}%</span>
+            {%- endif -%}
+          </div>
+          <p class="ns-lshop__offer-sub">{% if per_night_label != blank %}{{ per_night_label }} / night · {% endif %}{{ nights_count }}-night supply</p>
         </div>
       {%- else -%}
       <div class="ns-pdp__tiers">
