@@ -1,0 +1,101 @@
+{%- comment -%}
+  ns-lst-header — advertorial/listicle lead, modelled on the Hostage Tape
+  "5 Reasons" article: dark minimal nav + editorial headline + dek (survey-
+  hedged) + author byline. Owns the listicle template's only top nav (store
+  chrome is suppressed for the listicle template in theme.liquid).
+{%- endcomment -%}
+
+<nav class="ns-lst__nav">
+  <a href="{{ routes.root_url }}" class="ns-lst__wordmark">NIGHTSEALS</a>
+</nav>
+
+<header class="ns-lst-header">
+  <div class="ns-lst-header__inner">
+    <h1 class="ns-lst-header__title">{{ section.settings.title | default: "5 Reasons You Wake Up Tired — And the 3-Second Fix" }}</h1>
+    <p class="ns-lst-header__dek">{{ section.settings.dek | default: "How thousands of sleepers stopped snoring and started waking up rested with NightSeals. In a survey of users, 8 in 10 reported less snoring and 3 in 4 said their partner slept better too.*" }}</p>
+
+    <div class="ns-lst-header__byline">
+      {%- if section.settings.author_image != blank -%}
+        <span class="ns-lst-header__avatar">{{ section.settings.author_image | image_url: width: 96 | image_tag: loading: 'lazy', alt: section.settings.author }}</span>
+      {%- else -%}
+        <span class="ns-lst-header__avatar ns-lst-header__avatar--ph" aria-hidden="true">{{ section.settings.author | default: 'NS' | slice: 0, 2 | upcase }}</span>
+      {%- endif -%}
+      <span class="ns-lst-header__byline-text">
+        <span class="ns-lst-header__author">By {{ section.settings.author | default: 'the NightSeals Team' }}</span>
+        <span class="ns-lst-header__updated">{{ section.settings.updated | default: 'Updated recently' }}</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<style>
+  .ns-lst__nav {
+    background: #10182B;
+    padding: 14px clamp(14px,4vw,32px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ns-lst__wordmark {
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: .14em;
+    color: #F2F4F7;
+    text-decoration: none;
+  }
+  .ns-lst__wordmark:hover { color: #F2F4F7; }
+
+  .ns-lst-header { background: #FFFFFF; padding: clamp(28px,6vw,52px) clamp(16px,5vw,32px) 0; }
+  .ns-lst-header__inner { max-width: 680px; margin: 0 auto; }
+  .ns-lst-header__title {
+    font-size: clamp(28px,6vw,44px);
+    line-height: 1.08;
+    letter-spacing: -.03em;
+    font-weight: 800;
+    color: #10182B;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .ns-lst-header__dek {
+    font-size: clamp(15px,2.4vw,17px);
+    line-height: 1.55;
+    color: #566072;
+    margin: 0 0 24px;
+    text-wrap: pretty;
+  }
+  .ns-lst-header__byline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 0;
+    border-top: 1px solid rgba(16,24,43,.1);
+    border-bottom: 1px solid rgba(16,24,43,.1);
+  }
+  .ns-lst-header__avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    overflow: hidden; flex: none; background: #EAEDF2;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ns-lst-header__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ns-lst-header__avatar--ph { font-size: 14px; font-weight: 800; letter-spacing: .06em; color: #8A93A3; }
+  .ns-lst-header__byline-text { display: flex; flex-direction: column; gap: 2px; }
+  .ns-lst-header__author { font-size: 14.5px; font-weight: 700; color: #10182B; }
+  .ns-lst-header__updated { font-size: 12.5px; color: #8A93A3; }
+</style>
+
+{% schema %}
+{
+  "name": "Listicle Header",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Article headline", "default": "5 Reasons You Wake Up Tired — And the 3-Second Fix" },
+    { "type": "textarea", "id": "dek", "label": "Dek / subtitle", "default": "How thousands of sleepers stopped snoring and started waking up rested with NightSeals. In a survey of users, 8 in 10 reported less snoring and 3 in 4 said their partner slept better too.*" },
+    { "type": "text", "id": "author", "label": "Author", "default": "the NightSeals Team" },
+    { "type": "text", "id": "updated", "label": "Updated label", "default": "Updated recently" },
+    { "type": "image_picker", "id": "author_image", "label": "Author avatar (optional)" }
+  ],
+  "presets": [
+    { "name": "Listicle Header" }
+  ]
+}
+{% endschema %}

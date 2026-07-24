@@ -1,0 +1,169 @@
+{%- comment -%}
+  ns-lst-reasons — the editorial body of the listicle: an intro paragraph
+  then a run of numbered "reason" blocks (image + number + heading + body,
+  alternating sides) plus optional "video" tiles. Modelled on the Hostage
+  Tape "5 reasons" article. All copy lives in blocks so it's fully editable.
+{%- endcomment -%}
+
+<section class="ns-lstr">
+  <div class="ns-lstr__inner">
+    {%- if section.settings.intro != blank -%}
+      <p class="ns-lstr__intro">{{ section.settings.intro }}</p>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'reason' -%}
+          <article class="ns-lstr__item{% cycle 'ns-lstr__item--imgleft', 'ns-lstr__item--imgright' %}" {{ block.shopify_attributes }}>
+            <div class="ns-lstr__media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: block.settings.title }}
+              {%- else -%}
+                <div class="ns-lstr__ph">{{ block.settings.placeholder | default: 'Add an image' }}</div>
+              {%- endif -%}
+            </div>
+            <div class="ns-lstr__body">
+              {%- if block.settings.number != blank -%}<span class="ns-lstr__num">{{ block.settings.number }}</span>{%- endif -%}
+              <h2 class="ns-lstr__title">{{ block.settings.title | default: 'Reason headline' }}</h2>
+              <p class="ns-lstr__text">{{ block.settings.body }}</p>
+            </div>
+          </article>
+
+        {%- when 'video' -%}
+          <div class="ns-lstr__video" {{ block.shopify_attributes }}>
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: image_size: '900x', controls: true, playsinline: true, preload: 'metadata' }}
+            {%- else -%}
+              <div class="ns-lstr__video-thumb">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.caption }}
+                {%- else -%}
+                  <div class="ns-lstr__ph ns-lstr__ph--video">{{ block.settings.caption | default: 'Video' }}</div>
+                {%- endif -%}
+                <span class="ns-lstr__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+              </div>
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}<p class="ns-lstr__video-cap">{{ block.settings.caption }}</p>{%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="ns-lstr__footnote">{{ section.settings.footnote }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .ns-lstr { background: #FFFFFF; padding: clamp(20px,5vw,40px) clamp(16px,5vw,32px); }
+  .ns-lstr__inner { max-width: 680px; margin: 0 auto; }
+
+  .ns-lstr__intro {
+    font-size: clamp(15px,2.5vw,17.5px);
+    line-height: 1.6;
+    color: #10182B;
+    font-weight: 500;
+    margin: 0 0 clamp(28px,6vw,44px);
+    text-wrap: pretty;
+  }
+
+  .ns-lstr__item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(16px,4vw,24px);
+    padding: clamp(24px,5vw,36px) 0;
+    border-top: 1px solid rgba(16,24,43,.1);
+  }
+  .ns-lstr__item:first-of-type { border-top: none; padding-top: 0; }
+
+  .ns-lstr__media { border-radius: 16px; overflow: hidden; background: #EAEDF2; }
+  .ns-lstr__media img { width: 100%; height: auto; display: block; }
+  .ns-lstr__ph {
+    aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+    color: #8A93A3; font-size: 13px; text-align: center; padding: 16px;
+  }
+
+  .ns-lstr__num {
+    display: inline-block;
+    font-size: 12px; font-weight: 800; letter-spacing: .14em;
+    color: #B27E33; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .ns-lstr__title {
+    font-size: clamp(20px,3.4vw,26px);
+    line-height: 1.18;
+    letter-spacing: -.02em;
+    font-weight: 800;
+    color: #10182B;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  .ns-lstr__text {
+    font-size: clamp(15px,2.4vw,16.5px);
+    line-height: 1.6;
+    color: #566072;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  /* Two-column on wider screens, alternating image side. */
+  @media (min-width: 700px) {
+    .ns-lstr__item { grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(24px,4vw,40px); }
+    .ns-lstr__item--imgright .ns-lstr__media { order: 2; }
+  }
+
+  .ns-lstr__video { margin: clamp(24px,5vw,36px) 0; }
+  .ns-lstr__video-thumb {
+    position: relative; border-radius: 16px; overflow: hidden;
+    background: #10182B; aspect-ratio: 16 / 10;
+  }
+  .ns-lstr__video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ns-lstr__ph--video { aspect-ratio: auto; height: 100%; color: rgba(242,244,247,.6); }
+  .ns-lstr__video video { width: 100%; height: auto; border-radius: 16px; display: block; }
+  .ns-lstr__play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 62px; height: 62px; border-radius: 50%;
+    background: rgba(255,255,255,.92); color: #10182B;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ns-lstr__play svg { width: 26px; height: 26px; margin-left: 3px; }
+  .ns-lstr__video-cap { font-size: 13px; font-weight: 600; color: #8A93A3; margin: 10px 0 0; }
+
+  .ns-lstr__footnote { font-size: 11.5px; color: #8A93A3; margin: clamp(24px,5vw,36px) 0 0; line-height: 1.5; }
+</style>
+
+{% schema %}
+{
+  "name": "Listicle Reasons",
+  "tag": "section",
+  "settings": [
+    { "type": "textarea", "id": "intro", "label": "Intro paragraph", "default": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen — but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it." },
+    { "type": "textarea", "id": "footnote", "label": "Footnote", "default": "*Based on a survey of NightSeals users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure or prevent any disease." }
+  ],
+  "blocks": [
+    {
+      "type": "reason",
+      "name": "Reason",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number / kicker", "default": "Reason 1" },
+        { "type": "text", "id": "title", "label": "Heading", "default": "Reason headline" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "placeholder", "label": "Image placeholder text", "default": "Add an image" }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video tile",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Video (optional)" },
+        { "type": "image_picker", "id": "image", "label": "Thumbnail (if no video)" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "Watch: How to apply NightSeals" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Listicle Reasons" }
+  ]
+}
+{% endschema %}
