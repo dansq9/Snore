@@ -12,7 +12,7 @@
     "header": {
       "type": "ns-lst-header",
       "settings": {
-        "title": "5 Reasons You Wake Up Tired — And the 3-Second Fix",
+        "title": "5 Reasons You Wake Up Tired (And the 3-Second Fix)",
         "dek": "How thousands of sleepers stopped snoring and started waking up rested with NightSeals. In a survey of users, 8 in 10 reported less snoring and 3 in 4 said their partner slept better too.*",
         "author": "the NightSeals Team",
         "updated": "Updated recently"
@@ -38,7 +38,7 @@
           "settings": {
             "feature": "Results",
             "nightseals": "8 in 10 reported less snoring",
-            "cheap": "Inconsistent",
+            "cheap": "Hit or miss",
             "nothing": "Snoring, wake up tired"
           }
         },
@@ -64,7 +64,7 @@
           "type": "row",
           "settings": {
             "feature": "Non-toxic",
-            "nightseals": "Hypoallergenic, latex-free",
+            "nightseals": "Skin-safe, latex-free",
             "cheap": "Unknown materials",
             "nothing": "N/A"
           }
@@ -86,7 +86,7 @@
           "settings": {
             "number": "1",
             "title": "Your Body Has Been Trying to Fix Your Sleep. Your Mouth Keeps Undoing It.",
-            "body": "Your nose was built for breathing — it warms, filters and humidifies every breath before it reaches your lungs. Your mouth does none of that. When it falls open at night, your breathing turns shallow and ragged, and you wake up foggy and dry-mouthed. Not because you slept too little, but because you breathed the wrong way. NightSeals keeps your lips gently sealed so your nose can do its job all night.",
+            "body": "Your nose was built for breathing. It warms, filters and humidifies every breath before it reaches your lungs. Your mouth does none of that. When it falls open at night, your breathing turns shallow and ragged, and you wake up foggy and dry-mouthed. Not because you slept too little, but because you breathed the wrong way. NightSeals keeps your lips gently sealed so your nose can do its job all night.",
             "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_25_PM.png"
           }
         },
@@ -95,7 +95,7 @@
           "settings": {
             "number": "2",
             "title": "A Journalist Taped His Mouth Shut for Science. What He Found Changed How We Sleep.",
-            "body": "Journalist James Nestor spent ten days breathing only through his mouth for a Stanford study. His snoring climbed, his sleep fell apart, and he felt terrible. When he switched back to nasal breathing, it reversed within a day. He wrote about it in his bestseller Breath — and it's the same simple principle NightSeals is built on. One strip. One night.",
+            "body": "Journalist James Nestor spent ten days breathing only through his mouth for a Stanford study. His snoring climbed, his sleep fell apart, and he felt terrible. When he switched back to nasal breathing, it reversed within a day. He wrote about it in his bestseller Breath, and it's the same simple principle NightSeals is built on. One strip. One night.",
             "image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png"
           }
         },
@@ -104,7 +104,7 @@
           "settings": {
             "number": "3",
             "title": "Why Thousands Chose This Over Every Other Sleep Fix They'd Tried",
-            "body": "A better pillow. Melatonin. An earlier bedtime. Most people have tried them, and most are still tired — because none of them fix the actual problem. NightSeals does one thing: it keeps your mouth closed so you breathe the way your body was designed to. SteadyHold™ adhesive grips through a full beard without ripping; AirWeave™ mesh stays breathable all night. Simple, and it stays put.",
+            "body": "A better pillow. Melatonin. An earlier bedtime. Most people have tried them, and most are still tired, because none of them fix the actual problem. NightSeals does one thing: it keeps your mouth closed so you breathe the way your body was designed to. SteadyHold™ adhesive grips through a full beard without ripping; AirWeave™ mesh stays breathable all night. Simple, and it stays put.",
             "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_59_38_AM.png"
           }
         },
@@ -113,7 +113,7 @@
           "settings": {
             "number": "4",
             "title": "The #1 Question Everyone Asks: \"What If I Can't Breathe?\"",
-            "body": "Fair question. Short answer: you're not sealed shut. NightSeals uses a breathable AirWeave™ mesh and a gentle adhesive — a light effort parts your lips, and it peels off in a second. It's a reminder, not a lock, and your instincts always win. It's made for healthy adults who can breathe comfortably through their nose. It isn't for children, and it isn't a treatment for sleep apnea — if you suspect a breathing disorder, talk to your doctor first.",
+            "body": "Fair question. Short answer: you're not sealed shut. NightSeals uses a breathable AirWeave™ mesh and a gentle adhesive. A light effort parts your lips, and it peels off in a second. It's a reminder, not a lock, and your instincts always win. It's made for healthy adults who can breathe comfortably through their nose. It isn't for children, and it isn't a treatment for sleep apnea. If you suspect a breathing disorder, talk to your doctor first.",
             "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_44_34_PM_685df520-a5a0-42f3-987e-2877d3f2b637.png"
           }
         },
@@ -128,7 +128,7 @@
           "settings": {
             "number": "5",
             "title": "Why We Built NightSeals",
-            "body": "We were tired of waking up tired — and tired of sleep \"solutions\" that never touched the real cause. So we built the simplest possible fix: a soft, breathable strip that keeps your lips sealed so your nose takes over. It's for everyone who snores, and the partners who put up with it. One strip a night. That's the whole routine.",
+            "body": "We were tired of waking up tired, and tired of sleep \"solutions\" that never touched the real cause. So we built the simplest possible fix: a soft, breathable strip that keeps your lips sealed so your nose takes over. It's for everyone who snores, and the partners who put up with it. One strip a night. That's the whole routine.",
             "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_23_50_PM.png"
           }
         }
@@ -142,7 +142,7 @@
         "reason_5"
       ],
       "settings": {
-        "intro": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen — but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it.",
+        "intro": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen, but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it.",
         "footnote": "*Based on a survey of NightSeals users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure or prevent any disease."
       }
     },
@@ -214,7 +214,7 @@
         "heading": "Frequently asked questions",
         "subheading": "Everything you need to know before your first night.",
         "faq_1_q": "Will it work with my beard?",
-        "faq_1_a": "Yes. SteadyHold adhesive is engineered to grip overnight and peel off cleanly, even through a full beard — no painful pull, no residue.",
+        "faq_1_a": "Yes. SteadyHold adhesive is engineered to grip overnight and peel off cleanly, even through a full beard, no painful pull, no residue.",
         "faq_2_q": "Can I still breathe normally with it on?",
         "faq_2_a": "Yes. The AirWeave mesh is breathable and your lips still part with a light effort. It's a gentle reminder to breathe through your nose, not a seal.",
         "faq_3_q": "How long until I notice a difference?",
@@ -224,7 +224,7 @@
         "faq_5_q": "Is it comfortable to wear?",
         "faq_5_a": "It's thin, soft and barely there, with rounded edges. Most people forget it's on by the third night.",
         "faq_6_q": "Is NightSeals made with non-toxic materials?",
-        "faq_6_a": "Yes — a soft, latex-free AirWeave fabric with a hypoallergenic, skin-safe adhesive. Residue-free and tested on sensitive skin.",
+        "faq_6_a": "Yes. A soft, latex-free AirWeave fabric with a hypoallergenic, skin-safe adhesive. Residue-free and tested on sensitive skin.",
         "faq_7_q": "What if I don't like it?",
         "faq_7_a": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions."
       }
@@ -234,7 +234,7 @@
       "settings": {
         "kicker": "Not sure if mouth tape is right for you?",
         "heading": "Take the free 2-minute sleep assessment",
-        "body": "Answer a few quick questions and get a personalized read on why you're waking up tired — and whether NightSeals can help.",
+        "body": "Answer a few quick questions and get a personalized read on why you're waking up tired, and whether NightSeals can help.",
         "meta": "Free · No email needed · Results in 2 minutes",
         "cta_text": "Take the sleep quiz →",
         "quiz_url": ""
