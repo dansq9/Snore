@@ -75,6 +75,7 @@
     },
     "symptoms": {
       "type": "ns-landing-symptoms",
+      "disabled": true,
       "settings": {
         "kicker": "SOUND FAMILIAR?",
         "heading": "If any of these describe your mornings, your mouth is probably open all night.",
@@ -91,6 +92,7 @@
     },
     "problem": {
       "type": "ns-landing-problem",
+      "disabled": true,
       "settings": {
         "kicker": "THE PROBLEM",
         "heading": "What mouth breathing does to you every single night",
@@ -110,9 +112,11 @@
         "heading": "This is what nasal breathing does",
         "subheading": "Three seconds for a completely different morning.",
         "before_label": "Mouth Breather",
+        "before_video": "shopify://files/videos/getchatly-6a62b2257bd186a35349c776.mp4",
         "before_image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_55_21_PM.png",
         "before_placeholder": "Mouth open, snoring, restless partner",
         "after_label": "Nasal Breather",
+        "after_video": "shopify://files/videos/getchatly-6a62b2bc7bd186a35349c92e.mp4",
         "after_image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png",
         "after_placeholder": "Mouth sealed, quiet, both sleeping through"
       }
@@ -296,7 +300,10 @@
       "type": "ns-landing-launch-offer",
       "settings": {
         "offer_product": "nightseals-60-nights",
+        "rating_text": "2,300+ five-star sleepers",
+        "proof_tag": "Bestseller",
         "image": "shopify://shop_images/Untitled_design_4_-Photoroom_15f3e9b7-cae8-4cdf-8b58-14b4564195a5.png",
+        "product_name": "The 60-Night Supply",
         "pill": "Limited time",
         "discount_line": "40% OFF",
         "product_line": "first 60 nights",
