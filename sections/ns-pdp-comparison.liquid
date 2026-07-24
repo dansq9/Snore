@@ -35,38 +35,36 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
-    padding-bottom: 8px;
-    /* Right-edge fade hints there's more to swipe to on mobile */
-    -webkit-mask-image: linear-gradient(to right, #000 93%, transparent);
-    mask-image: linear-gradient(to right, #000 93%, transparent);
+    padding: 4px 0 8px;
   }
 
   .ns-pdp-compare__grid {
     display: grid;
-    grid-template-columns: 0.95fr 1.15fr 1fr 1fr;
-    min-width: 560px;
+    /* minmax(0,…) lets the tracks shrink below their content's min-width so the
+       copy WRAPS and all four columns fit the screen instead of overflowing
+       (the way Hostage's table does). NightSeals is the widest so it reads as
+       the emphasized card. */
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.3fr) minmax(0, 0.85fr) minmax(0, 0.9fr);
     width: 100%;
-  }
-
-  @media (max-width: 600px) {
-    .ns-pdp-compare__cell { padding: 12px 12px; font-size: 12.5px; }
-    .ns-pdp-compare__cell--feature { font-size: 13px; }
-    .ns-pdp-compare__grid { min-width: 520px; }
   }
 
   .ns-pdp-compare__cell {
     padding: 16px 18px;
     font-size: 13.5px;
     color: #8A93A3;
-    display: flex;
-    align-items: center;
+    display: block;
+    min-width: 0;
+    overflow-wrap: break-word;
   }
 
   .ns-pdp-compare__cell--hdr {
     font-size: 13.5px;
     font-weight: 600;
     color: #566072;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    text-align: center;
   }
 
   .ns-pdp-compare__cell--hdr-ns {
@@ -76,7 +74,10 @@
     text-transform: uppercase;
     color: #F7F8FA;
     background: #10182B;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    text-align: center;
     border-radius: 16px 16px 0 0;
   }
 
@@ -86,13 +87,14 @@
     color: #10182B;
   }
 
+  /* NightSeals column = one solid dark card (like Hostage's), the wordmark
+     header cap flowing straight into dark, light-text cells. */
   .ns-pdp-compare__cell--ns {
     font-size: 14px;
     font-weight: 600;
-    color: #10182B;
-    background: #fff;
-    border-left: 2px solid rgba(16, 24, 43, .10);
-    border-right: 2px solid rgba(16, 24, 43, .10);
+    color: #F7F8FA;
+    background: #10182B;
+    border-top: 1px solid rgba(242, 244, 247, .09);
   }
 
   .ns-pdp-compare__cell--ns-last {
@@ -104,13 +106,23 @@
   }
 
   .ns-pdp-compare__cell--ns.ns-pdp-compare__cell--even {
-    background: #fff;
+    background: #10182B;
   }
 
   .ns-pdp-compare__check {
     color: #B27E33;
     font-weight: 700;
     margin-right: 6px;
+  }
+
+  /* Phones: tighter padding + type so the four columns fit without a scroll.
+     Placed last so it wins over the base cell rules above. */
+  @media (max-width: 600px) {
+    .ns-pdp-compare__cell { padding: 11px 7px; font-size: 11px; }
+    .ns-pdp-compare__cell--feature { font-size: 11.5px; }
+    .ns-pdp-compare__cell--hdr { font-size: 10px; }
+    .ns-pdp-compare__cell--hdr-ns { font-size: 9.5px; letter-spacing: .03em; padding-left: 5px; padding-right: 5px; }
+    .ns-pdp-compare__cell--ns { font-size: 11.5px; }
   }
 </style>
 
