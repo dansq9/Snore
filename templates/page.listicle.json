@@ -14,12 +14,14 @@
       "settings": {
         "title": "5 Reasons You Wake Up Tired (And the 3-Second Fix)",
         "dek": "How thousands of sleepers stopped snoring and started waking up rested with NightSeals. In a survey of users, 8 in 10 reported less snoring and 3 in 4 said their partner slept better too.*",
-        "author": "the NightSeals Team",
-        "updated": "Updated recently"
+        "author": "Dan D., Founder",
+        "updated": "Updated 3 Days Ago",
+        "author_image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_12_26_20_AM.png"
       }
     },
     "herocard": {
       "type": "ns-lst-herocard",
+      "disabled": true,
       "settings": {
         "banner": "Loved by thousands of sleepers",
         "badge": "Thousands sold",
@@ -87,7 +89,8 @@
             "number": "1",
             "title": "Your Body Has Been Trying to Fix Your Sleep. Your Mouth Keeps Undoing It.",
             "body": "Your nose was built for breathing. It warms, filters and humidifies every breath before it reaches your lungs. Your mouth does none of that. When it falls open at night, your breathing turns shallow and ragged, and you wake up foggy and dry-mouthed. Not because you slept too little, but because you breathed the wrong way. NightSeals keeps your lips gently sealed so your nose can do its job all night.",
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_17_25_PM.png"
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_12_39_53_AM_e21e538f-3bdc-44ff-a384-cef711907b33.png",
+            "placeholder": "Add an image"
           }
         },
         "reason_2": {
@@ -96,7 +99,8 @@
             "number": "2",
             "title": "A Journalist Taped His Mouth Shut for Science. What He Found Changed How We Sleep.",
             "body": "Journalist James Nestor spent ten days breathing only through his mouth for a Stanford study. His snoring climbed, his sleep fell apart, and he felt terrible. When he switched back to nasal breathing, it reversed within a day. He wrote about it in his bestseller Breath, and it's the same simple principle NightSeals is built on. One strip. One night.",
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png"
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_07_46_21_PM.png",
+            "placeholder": "Add an image"
           }
         },
         "reason_3": {
@@ -105,7 +109,8 @@
             "number": "3",
             "title": "Why Thousands Chose This Over Every Other Sleep Fix They'd Tried",
             "body": "A better pillow. Melatonin. An earlier bedtime. Most people have tried them, and most are still tired, because none of them fix the actual problem. NightSeals does one thing: it keeps your mouth closed so you breathe the way your body was designed to. SteadyHold™ adhesive grips through a full beard without ripping; AirWeave™ mesh stays breathable all night. Simple, and it stays put.",
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_59_38_AM.png"
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_23_2026_12_59_00_AM-Photoroom.png",
+            "placeholder": "Add an image"
           }
         },
         "reason_4": {
@@ -114,7 +119,8 @@
             "number": "4",
             "title": "The #1 Question Everyone Asks: \"What If I Can't Breathe?\"",
             "body": "Fair question. Short answer: you're not sealed shut. NightSeals uses a breathable AirWeave™ mesh and a gentle adhesive. A light effort parts your lips, and it peels off in a second. It's a reminder, not a lock, and your instincts always win. It's made for healthy adults who can breathe comfortably through their nose. It isn't for children, and it isn't a treatment for sleep apnea. If you suspect a breathing disorder, talk to your doctor first.",
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_44_34_PM_685df520-a5a0-42f3-987e-2877d3f2b637.png"
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_12_47_15_AM.png",
+            "placeholder": "Add an image"
           }
         },
         "video": {
@@ -129,7 +135,8 @@
             "number": "5",
             "title": "Why We Built NightSeals",
             "body": "We were tired of waking up tired, and tired of sleep \"solutions\" that never touched the real cause. So we built the simplest possible fix: a soft, breathable strip that keeps your lips sealed so your nose takes over. It's for everyone who snores, and the partners who put up with it. One strip a night. That's the whole routine.",
-            "image": "shopify://shop_images/ChatGPT_Image_Jul_20_2026_02_23_50_PM.png"
+            "image": "shopify://shop_images/Untitled_design_5.png",
+            "placeholder": "Add an image"
           }
         }
       },
@@ -226,7 +233,9 @@
         "faq_6_q": "Is NightSeals made with non-toxic materials?",
         "faq_6_a": "Yes. A soft, latex-free AirWeave fabric with a hypoallergenic, skin-safe adhesive. Residue-free and tested on sensitive skin.",
         "faq_7_q": "What if I don't like it?",
-        "faq_7_a": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions."
+        "faq_7_a": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions.",
+        "faq_8_q": "What's the return policy?",
+        "faq_8_a": "Try it for 30 nights. If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions."
       }
     },
     "quiz_cta": {
@@ -269,9 +278,9 @@
       "type": "ns-landing-launch-offer",
       "settings": {
         "offer_product": "nightseals-60-nights",
-        "image": "shopify://shop_images/Untitled_design_4_-Photoroom_15f3e9b7-cae8-4cdf-8b58-14b4564195a5.png",
         "rating_text": "4.8 from thousands of sleepers",
         "proof_tag": "Bestseller",
+        "image": "shopify://shop_images/Untitled_design_4_-Photoroom_15f3e9b7-cae8-4cdf-8b58-14b4564195a5.png",
         "product_name": "The 60-Night Supply",
         "pill": "Limited time · while supplies last",
         "discount_line": "40% OFF",
