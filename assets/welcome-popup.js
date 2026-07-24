@@ -41,6 +41,9 @@
     setTimeout(function () {
       popup.style.display = 'block';
       document.body.style.overflow = 'hidden';
+      /* Mark as seen the moment it opens, so it only appears on the first-entry
+         page — navigating to another page this session won't show it again. */
+      sessionStorage.setItem(STORAGE_KEY, '1');
     }, DELAY_MS);
 
     /* -------------------------------------------------------------- */

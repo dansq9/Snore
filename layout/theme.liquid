@@ -33,6 +33,9 @@
   {%- endcomment -%}
   {%- assign is_landing = false -%}
   {%- if template.suffix == 'landing' or template.suffix == 'quiz' or template.suffix == 'listicle' -%}{%- assign is_landing = true -%}{%- endif -%}
+  {%- comment -%} The welcome popup shows on every page EXCEPT the quiz funnel (the landing/listicle keep it, even though they suppress the store chrome). {%- endcomment -%}
+  {%- assign is_quiz = false -%}
+  {%- if template.suffix == 'quiz' -%}{%- assign is_quiz = true -%}{%- endif -%}
 
   {%- unless is_landing -%}
     {% section 'announcement-bar' %}
@@ -48,7 +51,7 @@
   {%- endunless -%}
 
   {% render 'cart-drawer' %}
-  {%- unless is_landing -%}
+  {%- unless is_quiz -%}
     {% render 'welcome-popup' %}
   {%- endunless -%}
 
@@ -59,7 +62,7 @@
   <script src="{{ 'fab.js' | asset_url }}" defer></script>
   {%- comment -%} buy-now.js is delegated; it only acts when a [data-ns-buy-now] element is clicked, so it no-ops on pages without one. {%- endcomment -%}
   <script src="{{ 'buy-now.js' | asset_url }}" defer></script>
-  {%- unless is_landing -%}
+  {%- unless is_quiz -%}
     <script src="{{ 'welcome-popup.js' | asset_url }}" defer></script>
   {%- endunless -%}
 </body>
