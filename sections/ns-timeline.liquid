@@ -89,12 +89,21 @@
   }
 
   .ns-timeline__card {
-    flex: 1;
-    min-width: min(300px, 80vw);
+    flex: 0 0 84%;
+    box-sizing: border-box;
     scroll-snap-align: start;
     background: #F7F8FA;
     border-radius: 18px;
     padding: 28px 24px;
+  }
+  /* Tablet: two cards with the third peeking. */
+  @media (min-width: 600px) {
+    .ns-timeline__card { flex-basis: 46%; }
+  }
+  /* Desktop: all three side by side, no scroll. */
+  @media (min-width: 820px) {
+    .ns-timeline__cards { overflow-x: visible; }
+    .ns-timeline__card { flex: 1 1 0; }
   }
 
   .ns-timeline__card--dark {

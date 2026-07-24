@@ -82,6 +82,19 @@
     }
     if (priceEl) priceEl.textContent = detail;
     if (sepEl) sepEl.style.display = detail ? '' : 'none';
+
+    /* Landing offer (custom label): show the label only — no price — but keep
+       the pill at the width it had with the price so it doesn't shrink. 268px
+       (border-box) matches the "Save 40% · $29.90" width; min-width lets a
+       longer label grow if needed. */
+    if (custom) {
+      if (priceEl) priceEl.textContent = '';
+      if (sepEl) sepEl.style.display = 'none';
+      fab.style.boxSizing = 'border-box';
+      fab.style.minWidth = '268px';
+      fab.style.justifyContent = 'center';
+    }
+
     fab.setAttribute('aria-label', (sub ? 'Subscribe' : 'Buy now') + (detail ? ' ' + detail : ''));
   }
 
