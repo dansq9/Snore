@@ -92,6 +92,7 @@
     },
     "problem": {
       "type": "ns-landing-problem",
+      "disabled": true,
       "settings": {
         "kicker": "THE PROBLEM",
         "heading": "What mouth breathing does to you every single night",
