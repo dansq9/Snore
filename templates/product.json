@@ -24,53 +24,29 @@
         "stat_1": {
           "type": "stat",
           "settings": {
-            "number": "9 in 10",
-            "description": "would recommend NightSeals to a friend"
+            "number": "8 in 10",
+            "description": "reported less snoring"
           }
         },
         "stat_2": {
           "type": "stat",
           "settings": {
-            "number": "9 in 10",
-            "description": "felt results within their very first week"
+            "number": "3 in 4",
+            "description": "said their partner slept better too"
           }
         },
         "stat_3": {
           "type": "stat",
           "settings": {
-            "number": "9 in 10",
-            "description": "wake up feeling more rested"
-          }
-        },
-        "stat_4": {
-          "type": "stat",
-          "settings": {
-            "number": "8 in 10",
-            "description": "reported less snoring"
-          }
-        },
-        "stat_5": {
-          "type": "stat",
-          "settings": {
-            "number": "3 in 4",
-            "description": "report an improved relationship with their partner"
-          }
-        },
-        "stat_6": {
-          "type": "stat",
-          "settings": {
-            "number": "9 in 10",
-            "description": "say NightSeals is worth the investment"
+            "number": "4 in 5",
+            "description": "were still taping after 30 nights"
           }
         }
       },
       "block_order": [
         "stat_1",
         "stat_2",
-        "stat_3",
-        "stat_4",
-        "stat_5",
-        "stat_6"
+        "stat_3"
       ],
       "settings": {}
     },

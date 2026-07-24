@@ -339,8 +339,10 @@
     "buy": {
       "type": "ns-landing-buy",
       "settings": {
-        "heading": "The NightSeal Guarantee",
-        "cta_label": "Claim your 60-night offer →",
+        "heading": "Sleep on it for",
+        "highlight": "30 nights",
+        "body": "If you're not sleeping quieter and waking up better, email us and we'll refund every cent. No return label, no questions, no hard feelings.",
+        "cta_label": "Try NightSeals risk-free",
         "cta_url": ""
       }
     }
