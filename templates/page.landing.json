@@ -12,7 +12,6 @@
     "hero": {
       "type": "ns-landing-hero",
       "settings": {
-        "badge_text": "2,300+ five-star sleepers",
         "heading": "Your mouth falls open at night. That's the problem.",
         "subheading": "You can't feel it happen, but it's why you wake up tired and snoring. The fix takes 3 seconds.",
         "check_1": "Less snoring, quieter nights",

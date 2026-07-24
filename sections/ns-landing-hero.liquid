@@ -14,10 +14,6 @@
 <header class="ns-lhero">
   <div class="ns-lhero__grid">
     <div class="ns-lhero__col">
-      <div class="ns-lhero__badge">
-        <span class="ns-lhero__badge-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <span class="ns-lhero__badge-text">{{ section.settings.badge_text | default: '2,300+ five-star sleepers' }}</span>
-      </div>
       <h1 class="ns-lhero__heading">{{ section.settings.heading | default: "Your mouth falls open at night. That's the problem." }}</h1>
       <p class="ns-lhero__sub">{{ section.settings.subheading | default: "You can't feel it happen, but it's why you wake up tired and snoring. The fix takes 3 seconds." }}</p>
 
@@ -73,18 +69,6 @@
     gap: clamp(28px,5vw,48px);
     align-items: center;
   }
-  .ns-lhero__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(217,160,75,.15);
-    border: 1px solid rgba(217,160,75,.35);
-    border-radius: 999px;
-    padding: 6px 14px;
-    margin-bottom: clamp(14px,3vw,22px);
-  }
-  .ns-lhero__badge-stars { color: #D9A04B; font-size: 12px; letter-spacing: 1px; }
-  .ns-lhero__badge-text { font-size: 12px; font-weight: 600; color: rgba(242,244,247,.7); }
 
   .ns-lhero__heading {
     font-size: clamp(28px,5.5vw,48px);
@@ -166,7 +150,6 @@
 {
   "name": "Landing Hero",
   "settings": [
-    { "type": "text", "id": "badge_text", "label": "Badge text", "default": "2,300+ five-star sleepers" },
     { "type": "textarea", "id": "heading", "label": "Heading", "default": "Your mouth falls open at night. That's the problem." },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "You can't feel it happen, but it's why you wake up tired and snoring. The fix takes 3 seconds." },
     { "type": "text", "id": "check_1", "label": "Checklist 1", "default": "Less snoring, quieter nights" },
