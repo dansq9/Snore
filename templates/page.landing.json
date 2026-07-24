@@ -55,6 +55,7 @@
         "s2",
         "s3"
       ],
+      "disabled": true,
       "settings": {
         "kicker": "PROOF",
         "heading": "The results speak for themselves",
