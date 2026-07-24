@@ -1,27 +1,62 @@
 {%- comment -%}
-  ns-landing-launch-offer — full-bleed limited-time offer block (ZzzTape-style).
-  Transparent product image on a dark gradient + limited-time pill + big
-  discount line + benefit checklist + CTA. Owner adds the transparent-bg
-  product image and points "Offer product" at the limited-time SKU.
+  ns-landing-launch-offer — full-bleed limited-time offer block.
+  Dark gradient + social-proof badge + product identity + transparent
+  product image + limited-time pill + big discount + price lockup
+  (strikeout + per-night) + benefit checklist + CTA. Price is read live
+  from the offer product (or the Main product) when it has a compare-at
+  price; otherwise the price strip is hidden.
 {%- endcomment -%}
-{%- assign offer_product = section.settings.offer_product -%}
-{%- if offer_product == blank -%}{%- assign offer_product = settings.featured_product -%}{%- endif -%}
-{%- assign ns_offer_url = '#tiers' -%}
-{%- if offer_product != blank -%}{%- assign ns_offer_url = offer_product.url -%}{%- endif -%}
+{%- liquid
+  assign offer_product = section.settings.offer_product
+  if offer_product == blank
+    assign offer_product = settings.featured_product
+  endif
+  assign ns_offer_url = '#tiers'
+  if offer_product != blank
+    assign ns_offer_url = offer_product.url
+  endif
+
+  assign v = offer_product.selected_or_first_available_variant
+  assign ns_price = v.price
+  assign ns_compare = v.compare_at_price
+  assign nights_count = 0
+  if v.title != blank
+    assign nights_count = v.title | split: ' ' | first | plus: 0
+  endif
+  assign per_night_label = ''
+  if v != blank and nights_count >= 7
+    assign half = nights_count | divided_by: 2
+    assign per_cents = ns_price | plus: half | divided_by: nights_count
+    assign per_night_label = per_cents | money
+  endif
+-%}
 
 <style>
   .ns-launch {
     background: radial-gradient(120% 90% at 50% 0%, #1B2547 0%, #10182B 60%, #0A0F1E 100%);
     color: #F7F8FA;
-    padding: clamp(44px, 8vw, 80px) clamp(14px, 4vw, 32px);
+    padding: clamp(40px, 7vw, 76px) clamp(14px, 4vw, 32px);
     text-align: center;
   }
 
   .ns-launch__inner { max-width: 620px; margin: 0 auto; }
 
+  /* Social-proof badge */
+  .ns-launch__proof {
+    display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: clamp(18px, 4vw, 26px);
+  }
+  .ns-launch__stars { color: #E5B267; font-size: 13px; letter-spacing: 2px; }
+  .ns-launch__proof-text { font-size: 13px; font-weight: 600; color: rgba(242,244,247,.72); }
+  .ns-launch__proof-tag {
+    font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    color: #10182B; background: #E5B267; border-radius: 999px; padding: 3px 9px;
+  }
+
   .ns-launch__media {
-    height: min(340px, 62vw);
-    margin: 0 auto clamp(20px, 4vw, 32px);
+    height: min(300px, 56vw);
+    margin: 0 auto clamp(14px, 3vw, 20px);
   }
   .ns-launch__media img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .ns-launch__ph {
@@ -30,6 +65,13 @@
     color: rgba(242,244,247,.4); font-size: 13px; text-align: center; padding: 16px;
     border: 1px dashed rgba(242,244,247,.2); border-radius: 18px;
   }
+
+  /* Product identity (wordmark + name) */
+  .ns-launch__identity {
+    font-size: 12.5px; font-weight: 700; letter-spacing: .04em;
+    color: rgba(242,244,247,.7); margin: 0 0 clamp(16px, 3vw, 22px);
+  }
+  .ns-launch__wordmark { letter-spacing: .16em; font-weight: 800; color: #F7F8FA; }
 
   .ns-launch__pill {
     display: inline-block;
@@ -42,7 +84,7 @@
     text-transform: uppercase;
     padding: 8px 16px;
     border-radius: 999px;
-    margin-bottom: clamp(20px, 4vw, 30px);
+    margin-bottom: clamp(16px, 3vw, 22px);
   }
 
   .ns-launch__discount {
@@ -54,29 +96,55 @@
   }
   .ns-launch__discount-sub { color: #E5B267; display: block; }
 
+  /* Price lockup: sale price + struck compare + per-night */
+  .ns-launch__price {
+    display: inline-flex; align-items: baseline; flex-wrap: wrap;
+    justify-content: center; gap: 6px 12px;
+    margin: clamp(14px, 3vw, 18px) 0 0;
+  }
+  .ns-launch__price-now { font-size: clamp(26px, 5vw, 34px); font-weight: 800; color: #F7F8FA; letter-spacing: -.01em; }
+  .ns-launch__price-was { font-size: 18px; color: rgba(242,244,247,.5); text-decoration: line-through; }
+  .ns-launch__price-per {
+    font-size: 13px; font-weight: 700; color: #10182B;
+    background: #E5B267; border-radius: 999px; padding: 4px 10px;
+    align-self: center;
+  }
+
   .ns-launch__body {
-    font-size: clamp(15px, 2.6vw, 17px);
+    font-size: clamp(14px, 2.4vw, 16px);
     line-height: 1.6;
     color: rgba(242,244,247,.72);
-    margin: clamp(16px, 3vw, 22px) auto clamp(20px, 4vw, 28px);
+    margin: clamp(14px, 3vw, 20px) auto clamp(20px, 4vw, 26px);
     max-width: 48ch;
     text-wrap: pretty;
   }
 
+  /* Benefit checklist — tidy aligned grid with amber circle-check badges */
   .ns-launch__checks {
     list-style: none;
     padding: 0;
-    margin: 0 0 clamp(24px, 4vw, 34px);
-    display: inline-flex;
-    flex-direction: column;
-    gap: 10px;
+    margin: 0 auto clamp(24px, 4vw, 34px);
+    max-width: 340px;
+    display: grid;
+    gap: 12px;
     text-align: left;
   }
   .ns-launch__check {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 15px; font-weight: 600; color: rgba(242,244,247,.9);
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    align-items: start;
+    gap: 11px;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(242,244,247,.92);
+    line-height: 1.35;
   }
-  .ns-launch__check-icon { color: #D9A04B; font-weight: 800; flex: none; }
+  .ns-launch__check-icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(217,160,75,.18); color: #E5B267;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; flex: none; margin-top: 1px;
+  }
 
   .ns-launch__cta {
     display: block;
@@ -104,6 +172,14 @@
 
 <section class="ns-launch">
   <div class="ns-launch__inner">
+    <div class="ns-launch__proof">
+      <span class="ns-launch__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="ns-launch__proof-text">{{ section.settings.rating_text | default: '2,300+ five-star sleepers' }}</span>
+      {%- if section.settings.proof_tag != blank -%}
+        <span class="ns-launch__proof-tag">{{ section.settings.proof_tag }}</span>
+      {%- endif -%}
+    </div>
+
     <div class="ns-launch__media">
       {%- if section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'NightSeals' }}
@@ -114,17 +190,27 @@
       {%- endif -%}
     </div>
 
+    <p class="ns-launch__identity"><span class="ns-launch__wordmark">NIGHTSEALS</span>{%- if section.settings.product_name != blank %} &middot; {{ section.settings.product_name }}{% endif -%}</p>
+
     <span class="ns-launch__pill">{{ section.settings.pill | default: 'Launch pricing · limited time' }}</span>
 
     <p class="ns-launch__discount">{{ section.settings.discount_line | default: '40% OFF' }}<span class="ns-launch__discount-sub">{{ section.settings.product_line | default: 'your 60-night supply' }}</span></p>
 
+    {%- if v != blank and ns_price > 0 -%}
+      <div class="ns-launch__price">
+        <span class="ns-launch__price-now">{{ ns_price | money }}</span>
+        {%- if ns_compare > ns_price -%}<span class="ns-launch__price-was">{{ ns_compare | money }}</span>{%- endif -%}
+        {%- if per_night_label != blank -%}<span class="ns-launch__price-per">{{ per_night_label }} / night</span>{%- endif -%}
+      </div>
+    {%- endif -%}
+
     <p class="ns-launch__body">{{ section.settings.body | default: "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time." }}</p>
 
     <ul class="ns-launch__checks">
-      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span>{{ section.settings.check_1 | default: '30-night money-back guarantee' }}</li>
-      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span>{{ section.settings.check_2 | default: 'Latex-free, skin-safe' }}</li>
-      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span>{{ section.settings.check_3 | default: 'Beard-proof, drug-free' }}</li>
-      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span>{{ section.settings.check_4 | default: 'No subscription, ever' }}</li>
+      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span><span>{{ section.settings.check_1 | default: '30-night money-back guarantee' }}</span></li>
+      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span><span>{{ section.settings.check_2 | default: 'Latex-free, skin-safe' }}</span></li>
+      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span><span>{{ section.settings.check_3 | default: 'Beard-proof' }}</span></li>
+      <li class="ns-launch__check"><span class="ns-launch__check-icon">&#10003;</span><span>{{ section.settings.check_4 | default: 'No subscription, ever' }}</span></li>
     </ul>
 
     <a href="{{ ns_offer_url }}" class="ns-launch__cta">{{ section.settings.cta_text | default: 'Claim 40% off →' }}</a>
@@ -137,15 +223,18 @@
   "name": "Launch Offer",
   "tag": "section",
   "settings": [
-    { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The limited-time SKU. Powers the CTA link and the fallback image. Falls back to the Main product / bundled pouch." },
+    { "type": "product", "id": "offer_product", "label": "Offer product", "info": "The limited-time SKU. Powers the CTA link, the price strip (when it has a compare-at price) and the fallback image. Falls back to the Main product." },
+    { "type": "text", "id": "rating_text", "label": "Social-proof text", "default": "2,300+ five-star sleepers" },
+    { "type": "text", "id": "proof_tag", "label": "Proof tag (optional)", "default": "Bestseller", "info": "Small pill next to the rating, e.g. Bestseller. Clear to hide." },
     { "type": "image_picker", "id": "image", "label": "Product image (transparent background)" },
+    { "type": "text", "id": "product_name", "label": "Product name", "default": "The 60-Night Supply", "info": "Shown next to the NIGHTSEALS wordmark." },
     { "type": "text", "id": "pill", "label": "Pill text", "default": "Launch pricing · limited time" },
     { "type": "text", "id": "discount_line", "label": "Discount line", "default": "40% OFF" },
     { "type": "text", "id": "product_line", "label": "Product line", "default": "your 60-night supply" },
     { "type": "textarea", "id": "body", "label": "Body", "default": "We built NightSeals to make nasal breathing effortless for everyone who's tried and given up. To launch it, we're taking 40% off a full 60-night supply for a limited time." },
     { "type": "text", "id": "check_1", "label": "Check 1", "default": "30-night money-back guarantee" },
     { "type": "text", "id": "check_2", "label": "Check 2", "default": "Latex-free, skin-safe" },
-    { "type": "text", "id": "check_3", "label": "Check 3", "default": "Beard-proof, drug-free" },
+    { "type": "text", "id": "check_3", "label": "Check 3", "default": "Beard-proof" },
     { "type": "text", "id": "check_4", "label": "Check 4", "default": "No subscription, ever" },
     { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Claim 40% off →" },
     { "type": "text", "id": "note", "label": "Note under CTA", "default": "Join thousands sleeping quieter every night." }

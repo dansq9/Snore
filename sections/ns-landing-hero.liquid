@@ -24,12 +24,12 @@
       <ul class="ns-lhero__checklist">
         <li class="ns-lhero__check"><span class="ns-lhero__check-icon">&#10003;</span>{{ section.settings.check_1 | default: 'Less snoring, quieter nights' }}</li>
         <li class="ns-lhero__check"><span class="ns-lhero__check-icon">&#10003;</span>{{ section.settings.check_2 | default: 'No more 3am dry mouth' }}</li>
-        <li class="ns-lhero__check"><span class="ns-lhero__check-icon">&#10003;</span>{{ section.settings.check_3 | default: 'Stays put all night &middot; drug-free' }}</li>
+        <li class="ns-lhero__check"><span class="ns-lhero__check-icon">&#10003;</span>{{ section.settings.check_3 | default: 'Stays put all night' }}</li>
       </ul>
 
       <a href="{{ section.settings.cta_url | default: '#tiers' }}" class="ns-lhero__cta">{{ section.settings.cta_text | default: 'Try NightSeals risk-free →' }}</a>
       <div class="ns-lhero__audience">{{ section.settings.audience_line | default: 'For those who snore, and the partners who put up with it.' }}</div>
-      <div class="ns-lhero__trust">{{ section.settings.trust_line | default: '30-night money-back guarantee · Drug-free' }}</div>
+      <div class="ns-lhero__trust">{{ section.settings.trust_line | default: '30-night money-back guarantee' }}</div>
     </div>
     <div class="ns-lhero__media">
       {%- if section.settings.hero_image != blank -%}
@@ -171,11 +171,11 @@
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "You can't feel it happen, but it's why you wake up tired and snoring. The fix takes 3 seconds." },
     { "type": "text", "id": "check_1", "label": "Checklist 1", "default": "Less snoring, quieter nights" },
     { "type": "text", "id": "check_2", "label": "Checklist 2", "default": "No more 3am dry mouth" },
-    { "type": "text", "id": "check_3", "label": "Checklist 3", "default": "Stays put all night · drug-free" },
+    { "type": "text", "id": "check_3", "label": "Checklist 3", "default": "Stays put all night" },
     { "type": "text", "id": "cta_text", "label": "CTA label", "default": "Try NightSeals risk-free →" },
     { "type": "url", "id": "cta_url", "label": "CTA target", "info": "Defaults to the offer module (#tiers) further down the page." },
     { "type": "text", "id": "audience_line", "label": "Audience line", "default": "For those who snore, and the partners who put up with it." },
-    { "type": "text", "id": "trust_line", "label": "Trust line", "default": "30-night money-back guarantee · Drug-free" },
+    { "type": "text", "id": "trust_line", "label": "Trust line", "default": "30-night money-back guarantee" },
     { "type": "image_picker", "id": "hero_image", "label": "Hero image", "info": "Falls back to the bundled lifestyle photo." }
   ],
   "presets": [
