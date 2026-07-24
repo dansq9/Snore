@@ -12,6 +12,14 @@
       <p class="ns-lstr__intro">{{ section.settings.intro }}</p>
     {%- endif -%}
 
+    <div class="ns-lstr__media ns-lstr__intro-media">
+      {%- if section.settings.intro_image != blank -%}
+        {{ section.settings.intro_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: '' }}
+      {%- else -%}
+        <div class="ns-lstr__ph">{{ section.settings.intro_image_placeholder | default: 'Add an image' }}</div>
+      {%- endif -%}
+    </div>
+
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when 'reason' -%}
@@ -62,8 +70,10 @@
     line-height: 1.6;
     color: #10182B;
     font-weight: 500;
-    margin: 0 0 clamp(20px,4vw,32px);
-    text-wrap: pretty;
+    margin: 0 auto clamp(20px,4vw,32px);
+    max-width: 60ch;
+    text-align: center;
+    text-wrap: balance;
   }
 
   /* Each step: header -> image -> text, with a divider before it. */
@@ -89,6 +99,9 @@
 
   .ns-lstr__media { border-radius: 16px; overflow: hidden; background: #EAEDF2; margin: 0 0 clamp(16px,3vw,20px); }
   .ns-lstr__media img { width: 100%; height: auto; display: block; }
+  /* Intro image sits between the centered intro and the first step, with a bit
+     more breathing room before Reason 1's divider. */
+  .ns-lstr__intro-media { margin-bottom: clamp(24px,5vw,36px); }
   .ns-lstr__ph {
     aspect-ratio: 4 / 3;
     display: flex; align-items: center; justify-content: center;
@@ -130,6 +143,8 @@
   "tag": "section",
   "settings": [
     { "type": "textarea", "id": "intro", "label": "Intro paragraph", "default": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen, but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it." },
+    { "type": "image_picker", "id": "intro_image", "label": "Intro image (below the intro paragraph)" },
+    { "type": "text", "id": "intro_image_placeholder", "label": "Intro image placeholder text", "default": "Add an image" },
     { "type": "textarea", "id": "footnote", "label": "Footnote", "default": "*Based on a survey of NightSeals users. Individual results may vary. NightSeals is a general wellness product and is not intended to diagnose, treat, cure or prevent any disease." }
   ],
   "blocks": [
