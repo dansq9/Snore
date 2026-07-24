@@ -6,14 +6,6 @@
   in blocks so it's fully editable.
 {%- endcomment -%}
 
-{%- liquid
-  assign ns_offer = section.settings.offer_product
-  if ns_offer == blank
-    assign ns_offer = collections.all.products.first
-  endif
-  assign ns_v = ns_offer.selected_or_first_available_variant
--%}
-
 <section class="ns-lstr">
   <div class="ns-lstr__inner">
     {%- if section.settings.intro != blank -%}
@@ -63,21 +55,6 @@
             {%- endif -%}
             {%- if block.settings.caption != blank -%}<p class="ns-lstr__video-cap">{{ block.settings.caption }}</p>{%- endif -%}
           </div>
-
-        {%- when 'cta' -%}
-          {%- if ns_v != blank and ns_v.id -%}
-            <div class="ns-lstr__cta-block" {{ block.shopify_attributes }}>
-              <a href="#tiers" class="ns-lstr__cta" data-ns-buy-now data-variant-id="{{ ns_v.id }}">
-                <span class="ns-lstr__cta-label">{{ block.settings.label | default: 'Try NightSeals risk-free' }}</span>
-                <span class="ns-lstr__cta-price">{{ ns_v.price | money }}{%- if ns_v.compare_at_price > ns_v.price -%}<s>{{ ns_v.compare_at_price | money }}</s>{%- endif -%}</span>
-              </a>
-              {%- if block.settings.note != blank -%}<p class="ns-lstr__cta-note">{{ block.settings.note }}</p>{%- endif -%}
-            </div>
-          {%- elsif request.design_mode -%}
-            <div class="ns-lstr__cta-block" {{ block.shopify_attributes }}>
-              <p class="ns-lstr__cta-note">Set an Offer product on this section to show the inline buy button.</p>
-            </div>
-          {%- endif -%}
       {%- endcase -%}
     {%- endfor -%}
 
@@ -160,22 +137,6 @@
   .ns-lstr__play svg { width: 26px; height: 26px; margin-left: 3px; }
   .ns-lstr__video-cap { font-size: 13px; font-weight: 600; color: #8A93A3; margin: 10px 0 0; text-align: center; }
 
-  /* Inline buy button — breaks the article rhythm so every scroll depth has a way to buy. */
-  .ns-lstr__cta-block { padding: clamp(22px,4vw,30px) 0; text-align: center; }
-  .ns-lstr__cta {
-    display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
-    max-width: 460px; margin: 0 auto;
-    background: #D9A04B; color: #10182B;
-    font-size: clamp(15px,2.4vw,16.5px); font-weight: 800; letter-spacing: -.01em;
-    padding: 15px 28px; border-radius: 999px; text-decoration: none;
-    box-shadow: 0 10px 26px rgba(217,160,75,.28);
-    transition: background .2s, box-shadow .2s;
-  }
-  .ns-lstr__cta:hover { background: #E5B267; box-shadow: 0 12px 30px rgba(217,160,75,.34); }
-  .ns-lstr__cta-price { font-weight: 700; }
-  .ns-lstr__cta-price s { opacity: .55; font-weight: 600; margin-left: 6px; }
-  .ns-lstr__cta-note { font-size: 12.5px; color: #8A93A3; margin: 11px 0 0; }
-
   .ns-lstr__footnote { font-size: 11.5px; color: #8A93A3; margin: clamp(24px,5vw,36px) 0 0; line-height: 1.5; border-top: 1px solid rgba(16,24,43,.12); padding-top: clamp(20px,4vw,28px); }
 </style>
 
@@ -184,7 +145,6 @@
   "name": "Listicle Reasons",
   "tag": "section",
   "settings": [
-    { "type": "product", "id": "offer_product", "label": "Offer product (for inline buy buttons)", "info": "The product the inline buy buttons check out. Falls back to the first product." },
     { "type": "textarea", "id": "intro", "label": "Intro paragraph", "default": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen, but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it." },
     { "type": "image_picker", "id": "intro_image", "label": "Intro image (below the intro paragraph)" },
     { "type": "text", "id": "intro_image_placeholder", "label": "Intro image placeholder text", "default": "Add an image" },
@@ -209,14 +169,6 @@
         { "type": "video", "id": "video", "label": "Video (optional)" },
         { "type": "image_picker", "id": "image", "label": "Thumbnail (if no video)" },
         { "type": "text", "id": "caption", "label": "Caption", "default": "Watch: How to apply NightSeals" }
-      ]
-    },
-    {
-      "type": "cta",
-      "name": "Inline buy button",
-      "settings": [
-        { "type": "text", "id": "label", "label": "Button label", "default": "Try NightSeals risk-free" },
-        { "type": "text", "id": "note", "label": "Note under button", "default": "60-night supply · 30-night money-back guarantee" }
       ]
     }
   ],

@@ -130,20 +130,6 @@
             "caption": "Watch: How to apply NightSeals"
           }
         },
-        "cta_1": {
-          "type": "cta",
-          "settings": {
-            "label": "Try NightSeals risk-free",
-            "note": "60-night supply · 30-night money-back guarantee"
-          }
-        },
-        "cta_2": {
-          "type": "cta",
-          "settings": {
-            "label": "Start sleeping quieter tonight",
-            "note": "60-night supply · 30-night money-back guarantee"
-          }
-        },
         "reason_5": {
           "type": "reason",
           "settings": {
@@ -158,15 +144,12 @@
       "block_order": [
         "intro_transition",
         "reason_2",
-        "cta_1",
         "reason_3",
         "reason_4",
-        "cta_2",
         "video",
         "reason_5"
       ],
       "settings": {
-        "offer_product": "nightseals-60-nights",
         "intro": "Millions of people quietly wreck their sleep every night without knowing it. Tonight, your mouth will fall open. You won't feel it happen, but tomorrow you will. Here are the reasons it keeps happening, and the simple thing that stops it.",
         "intro_image": "shopify://shop_images/ChatGPT_Image_Jul_24_2026_12_39_53_AM_e21e538f-3bdc-44ff-a384-cef711907b33.png",
         "intro_image_placeholder": "Add an image",
